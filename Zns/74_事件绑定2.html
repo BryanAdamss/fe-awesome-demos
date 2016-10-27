@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function myAddEvent(obj, ev, fn) {
+        if (obj.attachEvent) {
+            obj.attachEvent("on" + ev, fn);
+        } else {
+            obj.addEventListener(ev, fn, false);
+        }
+    }
+    </script>
+</body>
+
+</html>

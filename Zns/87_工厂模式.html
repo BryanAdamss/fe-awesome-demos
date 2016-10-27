@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 工厂模式创建对象
+        // 原料->加工->出厂
+        function creatPerson(name,qq){
+            // 原料
+            var person=new Object();
+            // 加工
+            person.qq=qq;
+            person.name=name;
+            person.showName=function(){
+                console.log("我的名字是"+this.name);
+            };
+            person.showQQ=function(){
+                console.log("我的qq是" + this.qq);
+            };
+            // 出厂
+            return person;
+        }
+
+        var blue=creatPerson("blue","123123");
+        blue.showName();
+        blue.showQQ();
+
+        var yuG=creatPerson("yuGang","2323");
+        yuG.showName();
+        yuG.showQQ();
+
+        // 缺点
+        // 1.无法使用new的方式来创建对象
+        // 例如var date=new Date();
+
+        // 2.方法会重复定义
+        // 每次创建出来的对象的方法都会重新定义，其实它们功能都是一样的，这样重复定义，浪费资源
+        // alert(blue.showName===yuG.showName) ->false
+
+    </script>
+</body>
+</html>

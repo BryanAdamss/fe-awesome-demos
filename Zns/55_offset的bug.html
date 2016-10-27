@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    div {
+        width: 200px;
+        height: 200px;
+        border: 1px solid red;
+        background-color: #000;
+    }
+    </style>
+    <script type="text/javascript">
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, false)[name];
+        }
+    }
+    setInterval(function() {
+        var oDiv = document.getElementsByTagName("div")[0];
+        // 让div的宽度逐渐递减1,但实际却是增加,因为offsetWidth是盒模型的宽度,要考虑border,padding,所以会出现不减反增的现象,解决方案就是不使用offsetWidth而使用计算后的宽度
+        // oDiv.style.width = oDiv.offsetWidth - 1 + "px";
+        oDiv.style.width = parseInt(getStyle(oDiv, "width")) - 1 + "px";
+    }, 30);
+    </script>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

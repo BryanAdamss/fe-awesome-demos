@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1">
+    <input type="text" id="text2">
+    <button id="btn">求和</button>
+    <script type="text/javascript">
+    var oBtn = document.getElementById("btn");
+    var oText1 = document.getElementById("text1");
+    var oText2 = document.getElementById("text2");
+    oBtn.onclick = function() {
+        var num1 = parseFloat(oText1.value);
+        var num2 = parseFloat(oText2.value)
+        if (isNaN(num1) || isNaN(num2)) {
+            alert("输入有误,请输入数字");
+        } else {
+            alert(num1 + num2);
+        }
+    };
+    </script>
+</body>
+
+</html>

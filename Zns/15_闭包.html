@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>xx</title>
+    <script type="text/javascript">
+    //闭包就是:子函数可以使用父函数的局部变量
+    // 父函数
+    function aaa() {
+        var a = 12;
+        // 子函数
+        function bbb() {
+
+            alert(a);
+        }
+        bbb();
+    }
+    aaa();
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

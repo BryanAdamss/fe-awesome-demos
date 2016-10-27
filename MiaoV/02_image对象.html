@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.onload = function () {
+            var oImg = new Image();
+            oImg.onload = function () {
+                alert("图片预加载完成");
+            };
+            oImg.onerror = function () {
+                alert("图片加载失败")
+            };
+            // 当给内存中的oImg添加src属性时,就已经在加载图片了,这就实现了预加载图片(注意不是懒加载、惰性加载lazyLoad)
+            oImg.src = "http://image72.360doc.com/DownloadImg/2014/04/2301/40991904_11.jpg";
+            // 当在页面中再次使用这张图片就不会出现加载闪烁
+        };
+    </script>
+    <img src="http://imgsrc.baidu.com/forum/w%3D580/sign=79520e92632762d0803ea4b790ed0849/8a6104a4462309f740ec1ca3720e0cf3d6cad6a8.jpg"
+         alt="" onmouseover="this.src='http://image72.360doc.com/DownloadImg/2014/04/2301/40991904_11.jpg'">
+</body>
+</html>

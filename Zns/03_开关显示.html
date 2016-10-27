@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 200px;
+        height: 200px;
+        background-color: #f00;
+        display: none;
+    }
+    </style>
+    <script type="text/javascript">
+    function showHide() {
+        var oDiv = document.getElementById("div1");
+        if (oDiv.style.display === "block") {
+            oDiv.style.display = "none";
+        } else {
+            oDiv.style.display = "block";
+        }
+
+    }
+    </script>
+</head>
+
+<body>
+    <button id="btn1" onclick="showHide()">按钮</button>
+    <div id="div1">ss</div>
+</body>
+
+</html>

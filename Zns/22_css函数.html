@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="div1" style="width:200px;height:200px;background-color:red;"></div>
+    <script type="text/javascript">
+    // function css() {
+    //     if (arguments.length === 2) {
+    //         return arguments[0].style[arguments[1]];
+    //     } else {
+    //         arguments[0].style[arguments[1]] = arguments[2];
+    //     }
+    // }
+    function css(obj, name, val) {
+        if (arguments.length === 2) {
+            return obj.style[name];
+        } else {
+            obj.style[name] = val;
+        }
+    }
+    var oDiv = document.getElementById("div1");
+    alert(css(oDiv, "width"));
+    css(oDiv, "width", "400px");
+    </script>
+</body>
+
+</html>

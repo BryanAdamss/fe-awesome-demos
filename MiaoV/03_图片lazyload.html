@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul {
+            margin: 0 auto;
+            padding: 0;
+            width: 300px;
+            list-style: none;
+        }
+        .lazy {
+            margin-bottom: 100px;
+            width: 300px;
+            height: 168px;
+            text-align: center;
+            line-height: 168px; /*垂直居中*/
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li class='lazy'>
+            <img data-src='img/0.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/1.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/2.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/3.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/4.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/5.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/6.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/7.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/8.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/9.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/10.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/11.jpg' src='img/loading.gif'/>
+        </li>
+        <li class='lazy'>
+            <img data-src='img/12.jpg' src='img/loading.gif'/>
+        </li>
+    </ul>
+    <script>
+        function init() {
+            var images = document.images;
+            // 初始化加载首屏图片
+            for (var i = 0, len = images.length; i < len; i++) {
+                var obj = images[i];
+                // 如果在可视区域并且还没被加载过
+                if (obj.getBoundingClientRect().top < document.documentElement.clientHeight && !obj.isLoad) {
+                    obj.isLoad = true;
+                    // 先调用 HTML5 方法获取自定义的图片来源
+                    if (obj.dataset)
+                        // 若不用imgLoader,直接采用obj.src=obj.dataset.src,则可能出现一段时间内(此时正在请求图片)图片没显示出来
+                        imgLoader(obj, obj.dataset.src);
+                    else
+                        imgLoader(obj, obj.getAttribute('data-src'));
+                } else {
+                    break;
+                }
+            }
+        }
+
+
+        function lazyload() {
+            // 延迟 500ms显示图片
+            var lazy = 500;
+            var images = document.images;
+            for (var i = 0, len = images.length; i < len; i++) {
+                var obj = images[i];
+                if (obj.getBoundingClientRect().top - lazy < document.documentElement.clientHeight && !obj.isLoad) {
+                    obj.isLoad = true;
+                    // 过渡效果
+                    obj.style.cssText = "transition: ''; opacity: 0;"
+                    if (obj.dataset)
+                        imgLoader(obj, obj.dataset.src);
+                    else
+                        imgLoader(obj, obj.getAttribute('data-src'));
+                }
+
+                if (obj.getBoundingClientRect().top < document.documentElement.clientHeight && !obj.isShow) {
+                    obj.isShow = true;
+                    obj.style.cssText = "transition: 1s; opacity: 1;"
+                }
+            }
+        }
+
+        function imgLoader(obj, src) {
+            var img = new Image();
+            // 此时已经在请求图片了
+            img.src = src;
+            // 请求完成，直接替换
+            img.onload = function () {
+                obj.src = src;
+                console.log("图片加载完成");
+            };
+            img.onerror=function(){
+                console.log("图片加载失败");
+            };
+        }
+        // 初始化
+        init();
+        // 滚动加载
+        window.onscroll = function () {
+            lazyload();
+        };
+
+    </script>
+</body>
+</html>

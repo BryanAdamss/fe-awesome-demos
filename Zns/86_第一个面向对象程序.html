@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var person=new Object();
+
+        person.qq="2399229";
+        person.name="chu";
+        person.showName=function(){
+            // this指向的是当前方法的拥有者(此处即person)
+            console.log("我的名字是"+this.name);
+        };
+        person.showQQ=function(){
+            console.log("我的qq是" + this.qq);
+        };
+
+        person.showName();
+        person.showQQ();
+        // 这种方法如果有多个person，需要重复添加属性和方法，很麻烦,改进方法是将这个过程抽象出来，写成一个函数
+    function creatPerson(name,qq){
+        // 构造函数,其实本质就是函数，只不过它的功能是构造对象，所以叫构造函数
+        var person=new Object();
+
+        person.qq=qq;
+        person.name=name;
+
+        person.showName=function(){
+            console.log("我的名字是"+this.name);
+        };
+        person.showQQ=function(){
+            console.log("我的qq是" + this.qq);
+        };
+        return person;
+    }
+
+    var blue=creatPerson("blue","123123");
+        blue.showName();
+        blue.showQQ();
+
+    var yuG=creatPerson("yuGang","2323");
+    yuG.showName();
+    yuG.showQQ();
+    </script>
+</body>
+</html>

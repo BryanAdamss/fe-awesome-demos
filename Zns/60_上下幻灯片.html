@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/上下幻灯片.css">
+</head>
+
+<body>
+    <div class="play" id="play">
+        <ol>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+        <ul>
+            <li>
+                <a href="http://www.zhinengshe.com/">
+                    <img src="img/上下幻灯片/images/1.jpg" alt="广告一" />
+                </a>
+            </li>
+            <li>
+                <a href="http://www.zhinengshe.com/">
+                    <img src="img/上下幻灯片/images/2.jpg" alt="广告二" />
+                </a>
+            </li>
+            <li>
+                <a href="http://www.zhinengshe.com/">
+                    <img src="img/上下幻灯片/images/3.jpg" alt="广告三" />
+                </a>
+            </li>
+            <li>
+                <a href="http://www.zhinengshe.com/">
+                    <img src="img/上下幻灯片/images/4.jpg" alt="广告四" />
+                </a>
+            </li>
+            <li>
+                <a href="http://www.zhinengshe.com/">
+                    <img src="img/上下幻灯片/images/5.jpg" alt="广告五" />
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    // 链式运动框架无法实现同时改变多个样式,因为一次只能传一个参数,解决方案通过json传多个参数
+    // 完美运动框架
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, false)[name];
+        }
+    }
+
+    // 在链式运动框架基础上改用json来传参
+    function startMove(obj, json, fnEnd) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function() {
+            // 判断是否所有属性都运动到目标属性,默认都到达目标
+            var bStop = true;
+            // 遍历json
+            for (var attr in json) {
+                var cur = 0;
+                // 透明度特殊处理
+                if (attr === "opacity") {
+                    // 小数存在误差,所以选择四舍五入
+                    cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+                } else {
+                    cur = parseInt(getStyle(obj, attr));
+                }
+                var speed = (json[attr] - cur) / 6;
+                // 缓冲运动速度需取整
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                // 如果出现一个属性未到达目标点,bStop置false
+                if (cur !== json[attr]) {
+                    bStop = false;
+                }
+                // 透明度样式需要特殊处理
+                if (attr === "opacity") {
+                    obj.style.filter = "alpha(opacity:" + (cur + speed) + ")";
+                    obj.style.opacity = (cur + speed) / 100;
+                } else {
+                    obj.style[attr] = cur + speed + "px";
+                }
+            }
+            // 所有属性全部到达,清定时器,执行回调
+            if (bStop) {
+                clearInterval(obj.timer);
+                if (fnEnd) {
+                    fnEnd();
+                }
+            }
+        }, 30);
+    }
+    </script>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("play");
+    var aBtn = oDiv.getElementsByTagName("ol")[0].getElementsByTagName("li");
+    var oUl = oDiv.getElementsByTagName("ul")[0];
+
+    var now = 0;
+    for (var i = 0; i < aBtn.length; i++) {
+        aBtn[i].index = i;
+        aBtn[i].onclick = function() {
+            now = this.index;
+            tab();
+        };
+    }
+
+    function tab() {
+        for (var i = 0; i < aBtn.length; i++) {
+            aBtn[i].className = "";
+        }
+        aBtn[now].className = "active";
+        startMove(oUl, {
+            "top": -150 * now
+        });
+    }
+
+    function next() {
+        now++;
+        if (now === aBtn.length) {
+            now = 0;
+        }
+        tab();
+    }
+    var timer = setInterval(next, 2000);
+    oDiv.onmouseover = function() {
+        clearInterval(timer);
+    };
+    oDiv.onmouseout = function() {
+        timer = setInterval(next, 2000);
+    };
+    </script>
+</body>
+
+</html>

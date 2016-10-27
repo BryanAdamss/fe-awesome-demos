@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("div1")
+        // currentStyle为IE下获取计算样式
+        // alert(oDiv.currentStyle.width);
+        // getComputedStyle(element, [pseudoElt]) 参数:要获取样式的元素,伪元素(可省略)
+        // getComputedStyle是一个可以获取当前元素所有最终使用的CSS属性值。返回的是一个CSS样式声明对象([object CSSStyleDeclaration])，只读。
+        // alert(getComputedStyle(oDiv, null).width);
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, null)[name];
+        }
+    }
+    alert(getStyle(oDiv, "width"));
+    // 取复合样式会出错,例如background
+    alert(getStyle(oDiv, "background"));
+    alert(getStyle(oDiv, "backgroundColor"));
+    </script>
+</body>
+
+</html>

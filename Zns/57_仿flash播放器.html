@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/zns_style.css">
+</head>
+
+<body>
+    <div id="playimages" class="play">
+        <ul class="big_pic">
+            <div class="prev"></div>
+            <div class="next"></div>
+            <div class="text">加载图片说明……</div>
+            <div class="length">计算图片数量……</div>
+            <a class="mark_left" href="javascript:;"></a>
+            <a class="mark_right" href="javascript:;"></a>
+            <div class="bg"></div>
+            <li style="z-index:1;">
+                <img src="img/FlashPlayer/1.jpg" />
+            </li>
+            <li>
+                <img src="img/FlashPlayer/2.jpg" />
+            </li>
+            <li>
+                <img src="img/FlashPlayer/3.jpg" />
+            </li>
+            <li>
+                <img src="img/FlashPlayer/4.jpg" />
+            </li>
+            <li>
+                <img src="img/FlashPlayer/5.jpg" />
+            </li>
+            <li>
+                <img src="img/FlashPlayer/6.jpg" />
+            </li>
+        </ul>
+        <div class="small_pic">
+            <ul style="width:390px;">
+                <li style="filter: 100; opacity: 1;">
+                    <img src="img/FlashPlayer/1.jpg" />
+                </li>
+                <li>
+                    <img src="img/FlashPlayer/2.jpg" />
+                </li>
+                <li>
+                    <img src="img/FlashPlayer/3.jpg" />
+                </li>
+                <li>
+                    <img src="img/FlashPlayer/4.jpg" />
+                </li>
+                <li>
+                    <img src="img/FlashPlayer/5.jpg" />
+                </li>
+                <li>
+                    <img src="img/FlashPlayer/6.jpg" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/move.js"></script>
+    <script type="text/javascript">
+    function getByClass(oParent, sClass) {
+        var aEle = oParent.getElementsByTagName('*');
+        var aResult = [];
+        for (var i = 0; i < aEle.length; i++) {
+            if (aEle[i].className === sClass) {
+                aResult.push(aEle[i]);
+            }
+        }
+        return aResult;
+    }
+    var oDiv = document.getElementById("playimages");
+    var oBtnPrev = getByClass(oDiv, "prev")[0];
+    var oBtnNext = getByClass(oDiv, "next")[0];
+    var oMarkLeft = getByClass(oDiv, "mark_left")[0];
+    var oMarkRight = getByClass(oDiv, "mark_right")[0];
+
+    var oDivSmall = getByClass(oDiv, "small_pic")[0];
+    var oUlSmall = oDivSmall.getElementsByTagName("ul")[0];
+    var aLiSmall = oDivSmall.getElementsByTagName("li");
+
+    var oUlBig = getByClass(oDiv, 'big_pic')[0];
+    var aLiBig = oUlBig.getElementsByTagName("li");
+
+    var nowZIndex = 2;
+
+    var now = 0;
+    // 左右播放按钮
+    oBtnPrev.onmouseover = oMarkLeft.onmouseover = function() {
+        startMove(oBtnPrev, "opacity", 100);
+    };
+    oBtnPrev.onmouseout = oMarkLeft.onmouseout = function() {
+        startMove(oBtnPrev, "opacity", 0);
+    };
+    oBtnNext.onmouseover = oMarkRight.onmouseover = function() {
+        startMove(oBtnNext, "opacity", 100);
+    };
+    oBtnNext.onmouseout = oMarkRight.onmouseout = function() {
+        startMove(oBtnNext, "opacity", 0);
+    };
+    // 大图切换
+    for (var i = 0; i < aLiSmall.length; i++) {
+        aLiSmall[i].index = i;
+        aLiSmall[i].onclick = function() {
+            // 重复点击当前小图,不做处理
+            if (this.index === now) {
+                return;
+            }
+            now = this.index;
+            // 切换函数
+            tab();
+
+        };
+        // 小图添加透明度效果
+        aLiSmall[i].onmouseover = function() {
+            startMove(this, "opacity", 100);
+        };
+        aLiSmall[i].onmouseout = function() {
+            // 鼠标移出时当前小图不发生透明度变化
+            if (this.index !== now) {
+                startMove(this, "opacity", 60);
+            }
+        };
+    }
+
+    // 切换函数
+    function tab() {
+        // 提高大图层级来显示
+        aLiBig[now].style.zIndex = nowZIndex++;
+        // 大图从上到下动画
+        aLiBig[now].style.height = 0;
+        startMove(aLiBig[now], "height", 320);
+        // 小图添加当前标识
+        for (var i = 0; i < aLiSmall.length; i++) {
+            // 先将所有小图透明度重置
+            startMove(aLiSmall[i], 'opacity', 60);
+        }
+        // 再将当前小图透明度加深
+        startMove(aLiSmall[now], "opacity", 100);
+        //  小图滚动
+        oUlSmall.style.width = aLiSmall.length * aLiSmall[0].offsetWidth + "px";
+        // 第一张和最后一张小图不滚动到中间
+        if (now === 0) {
+            startMove(oUlSmall, "left", 0);
+        } else if (now === aLiSmall.length - 1) {
+            startMove(oUlSmall, "left", -(now - 2) * aLiSmall[0].offsetWidth)
+        } else {
+            startMove(oUlSmall, "left", -(now - 1) * aLiSmall[0].offsetWidth)
+        }
+    }
+    // 向前按钮
+    oBtnPrev.onclick = function() {
+        now--;
+        // 第一张,循环
+        if (now === -1) {
+            now = aLiSmall.length - 1;
+        }
+        tab();
+    };
+    // 向后按钮
+    oBtnNext.onclick = function() {
+        now++;
+        // 最后一张,循环
+        if (now === aLiSmall.length) {
+            now = 0;
+        }
+        tab();
+    };
+    // 自动播放
+    var timer = setInterval(oBtnNext.onclick, 2000);
+    // 悬停时候暂停播放
+    oDiv.onmouseover = function() {
+        clearInterval(timer);
+    };
+    oDiv.onmouseout = function() {
+        timer = setInterval(oBtnNext.onclick, 2000);
+    };
+    </script>
+</body>
+
+</html>

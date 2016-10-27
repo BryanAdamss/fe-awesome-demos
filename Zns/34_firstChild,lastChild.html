@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div></div>
+    <script type="text/javascript">
+    function getFirstChild(obj) {
+        if (obj.firstElementChild) {
+            return obj.firstElementChild;
+        } else {
+            return obj.firstChild;
+        }
+    }
+
+    function getLastChild(obj) {
+        if (obj.lastElementChild) {
+            return obj.lastElementChild;
+        } else {
+            return obj.lastChild;
+        }
+    }
+
+    function getNextElem(obj) {
+        if (obj.nextElementSibling) {
+            return obj.nextElementSibling;
+        } else {
+            return obj.nextSibling;
+        }
+    }
+
+    function getPrevElem(obj) {
+        if (obj.previousElementSibling) {
+            return obj.previousElementSibling;
+        } else {
+            return obj.previousSibling;
+        }
+    }
+    console.log(getFirstChild(document.body));
+    console.log(getLastChild(document.body));
+    console.log(getPrevElem(document.body));
+    console.log(getNextElem(document.body));
+    </script>
+</body>
+
+</html>

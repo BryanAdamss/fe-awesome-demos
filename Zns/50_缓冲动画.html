@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        position: absolute;
+        left: 600px;
+        top: 50px;
+    }
+    
+    #div2 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        left: 300px;
+        top: 0;
+        background-color: #000;
+    }
+    </style>
+</head>
+
+<body>
+    <button id="btn1">开始运动</button>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <script type="text/javascript">
+    function startMove() {
+        var oDiv = document.getElementById("div1");
+        setInterval(function() {
+            var speed = (300 - oDiv.offsetLeft) / 10;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            oDiv.style.left = oDiv.offsetLeft + speed + "px";
+            document.title = oDiv.offsetLeft + "," + speed
+        }, 30);
+    }
+    var oBtn = document.getElementById("btn1");
+    oBtn.onclick = function() {
+        startMove();
+    };
+    </script>
+</body>
+
+</html>

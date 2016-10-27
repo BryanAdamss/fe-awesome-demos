@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1">
+    <button id="btn1">创建li</button>
+    <button id="btn2">删除li</button>
+    <ul id="ul1">
+    </ul>
+    <script type="text/javascript">
+    var oBtn = document.getElementById("btn1");
+    var oBtn2 = document.getElementById("btn2");
+    var oUl = document.getElementById("ul1");
+    var oInput = document.getElementById("text1");
+    oBtn.onclick = function() {
+        var oLi = document.createElement("li");
+        var aLi = oUl.getElementsByTagName("li");
+        oLi.innerHTML = oInput.value;
+        if (aLi.length > 0) {
+            oUl.insertBefore(oLi, aLi[0]);
+        } else {
+            // IE下第一次插入会因无li,所以使用insertBefore会出错
+            oUl.appendChild(oLi);
+        }
+    };
+    oBtn2.onclick = function() {
+        var aLi = oUl.getElementsByTagName("li");
+        // 倒序删除
+        // if (aLi.length > 0) {
+        //     oUl.removeChild(aLi[aLi.length - 1]);
+        // } else {
+        //     alert("无元素可删除");
+        // }  
+        if (aLi.length > 0) {
+            oUl.removeChild(aLi[0]);
+        } else {
+            alert("无元素可删除");
+        }
+    };
+    </script>
+</body>
+
+</html>

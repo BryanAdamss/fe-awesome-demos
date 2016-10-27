@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script>
+        // 闭包就是函数嵌套函数,内部函数可以引用外部函数的参数和变量,参数和变量不会被垃圾回收机制所收回
+        // 好处:1.可以让一个变量长期驻扎在内存当中
+        //        function aaa() {
+        //            var a = 5;
+        //
+        //            function bbb() {
+        //                alert(a);
+        //            }
+        //
+        //            return bbb;
+        //        }
+        //        var c = aaa();
+        //        console.log(c);
+        //        c();
+        // 2.可避免全局变量污染
+        //        function ccc(){
+        //            var a=1;
+        //            return function(){
+        //                a++;
+        //                alert(a);
+        //            }
+        //        }
+        //        var d=ccc();
+        //        //2
+        //        d();
+        //        //3
+        //        d();
+        //        //undefined
+        //        alert(a);
+        //3.可私有化变量和方法(模块化)
+        //        var aaa = (function () {
+        //            var a = 1;
+        //
+        //            function bbb() {
+        //                a++;
+        //                alert(a);
+        //            }
+        //
+        //            function ccc() {
+        //                a++;
+        //                alert(a);
+        //            }
+        //
+        //            return {
+        //                b: bbb, c: ccc
+        //            }
+        //        })();
+        //        aaa.b();
+        //        aaa.c();
+        //        // undefined
+        //        alert(a);
+        //        // undefined
+        //        alert(bbb);
+        //        // undefined
+        //        alert(ccc);
+        // 4.可在循环中直接找到相应元素的索引,不用手动添加索引
+//        var aLi = document.getElementsByTagName("li");
+        //        for(var i=0;i<aLi.length;i++){
+        //            (function(i){
+        //                aLi[i].onclick=function(){
+        //                    alert(i);
+        //                };
+        //            })(i);
+        //        }
+
+//        for (var i = 0; i < aLi.length; i++) {
+//            aLi[i].onclick = (function (i) {
+//                return function () {
+//                    alert(i);
+//                }
+//            })(i);
+//
+//        }
+        // 需要注意的问题:闭包在IE下可能会造成内存泄漏
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>点击</button>
+    <button>点击2</button>
+    <script type="text/javascript">
+    var oBtn = document.getElementsByTagName("button")[0];
+    var oBtn2 = document.getElementsByTagName("button")[1];
+    var oFragment = document.createDocumentFragment();
+    oBtn.onclick = function() {
+        for (var i = 0; i < 10000; i++) {
+            var p = document.createElement("p");
+            var oTxt = document.createTextNode("段落" + i);
+            p.appendChild(oTxt);
+            oFragment.appendChild(p);
+        }
+        document.body.appendChild(oFragment);
+    };
+    oBtn2.onclick = function() {
+        for (var i = 0; i < 10000; i++) {
+            var p = document.createElement("p");
+            var oTxt = document.createTextNode("段落" + i);
+            p.appendChild(oTxt);
+            document.body.appendChild(p);
+        }
+    };
+    </script>
+</body>
+
+</html>

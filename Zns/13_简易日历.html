@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .calendar {
+        width: 360px;
+        margin: 0 auto;
+        background-color: #eee;
+    }
+    
+    .calendar-hd {
+        font-size: 0;
+    }
+    
+    .calendar-item {
+        font-size: 16px;
+        box-sizing: border-box;
+        display: inline-block;
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+    
+    .calendar-item:hover {
+        color: #fff;
+        background-color: #666;
+    }
+    
+    .calendar-item.cur {
+        color: #fff;
+        background-color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="calendar">
+        <div class="calendar-hd" id="hd">
+            <div class="calendar-item cur">
+                <h2>1</h2>
+                <p>内容1</p>
+            </div>
+            <div class="calendar-item">
+                <h2>2</h2>
+                <p>内容2</p>
+            </div>
+            <div class="calendar-item">
+                <h2>3</h2>
+                <p>内容3</p>
+            </div>
+            <div class="calendar-item">
+                <h2>4</h2>
+                <p>内容4</p>
+            </div>
+            <div class="calendar-item">
+                <h2>5</h2>
+                <p>内容5</p>
+            </div>
+            <div class="calendar-item">
+                <h2>6</h2>
+                <p>内容6</p>
+            </div>
+            <div class="calendar-item">
+                <h2>7</h2>
+                <p>内容7</p>
+            </div>
+            <div class="calendar-item">
+                <h2>8</h2>
+                <p>内容8</p>
+            </div>
+            <div class="calendar-item">
+                <h2>9</h2>
+                <p>内容9</p>
+            </div>
+            <div class="calendar-item">
+                <h2>10</h2>
+                <p>内容10</p>
+            </div>
+            <div class="calendar-item">
+                <h2>11</h2>
+                <p>内容11</p>
+            </div>
+            <div class="calendar-item">
+                <h2>12</h2>
+                <p>内容12</p>
+            </div>
+        </div>
+        <div class="calendar-bd" id="bd">
+            <h2>哈哈</h2>
+            <p>内容</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var arr = ["一月份,干嘛呢", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+    var oHd = document.getElementById("hd");
+    var aDiv = oHd.getElementsByTagName("div");
+    var oBd = document.getElementById("bd");
+    for (var i = 0; i < aDiv.length; i++) {
+        aDiv[i].index = i;
+        aDiv[i].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = "calendar-item";
+            }
+            this.className = "calendar-item cur";
+            oBd.innerHTML = '<h2>' + (this.index + 1) + '月份</h2><p>内容' + arr[this.index] + '</p>';
+        };
+    }
+    </script>
+</body>
+
+</html>

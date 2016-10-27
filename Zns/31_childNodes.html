@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="ul1">
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script type="text/javascript">
+    // IE6-8 的childNodes不会将文本节点算在其中
+    // !!!!子节点指的只是直接子节点,不包括其他后代节点
+    var oUl = document.getElementById("ul1");
+    for (var i = 0; i < oUl.childNodes.length; i++) {
+        if (oUl.childNodes[i].nodeType === 1) {
+            console.log(oUl.childNodes[i].nodeName);
+        }
+    }
+    // children只会获取元素节点(相比childNodes更方便)
+    console.log(oUl.children);
+    </script>
+</body>
+
+</html>

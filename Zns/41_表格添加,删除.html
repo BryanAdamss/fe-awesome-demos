@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <label>姓名
+        <input type="text" id="name" name="">
+    </label>
+    <label>年龄
+        <input type="text" id="age" name="">
+    </label>
+    <button id="btn1">添加</button>
+    <table id="table1" border="1" width="500">
+        <thead>
+            <td>ID</td>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>操作</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Blue</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Blue2</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Blue3</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Blue4</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Blue5</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    var oTab = document.getElementById("table1");
+    var oBtn = document.getElementById("btn1");
+    var oName = document.getElementById("name");
+    var oAge = document.getElementById("age");
+    var oId = oTab.tBodies[0].rows.length + 1;
+    alert(oId);
+    oBtn.onclick = function() {
+        var oTr = document.createElement("tr");
+
+        var oTd = document.createElement("td");
+        oTd.innerHTML = oId++;
+        oTr.appendChild(oTd);
+
+        var oTd = document.createElement("td");
+        oTd.innerHTML = oName.value;
+        oTr.appendChild(oTd);
+
+        var oTd = document.createElement("td");
+        oTd.innerHTML = oAge.value;
+        oTr.appendChild(oTd);
+
+        var oTd = document.createElement("td");
+        oTd.innerHTML = "<a href='javascript:;'>删除</a>";
+        oTr.appendChild(oTd);
+        oTd.getElementsByTagName("a")[0].onclick = function() {
+            oTab.tBodies[0].removeChild(this.parentNode.parentNode);
+        }
+        oTab.tBodies[0].appendChild(oTr);
+    };
+    for (var i = 0; i < document.getElementsByTagName("a").length; i++) {
+        document.getElementsByTagName("a")[i].onclick = function() {
+            oTab.tBodies[0].removeChild(this.parentNode.parentNode);
+        };
+    }
+    </script>
+</body>
+
+</html>

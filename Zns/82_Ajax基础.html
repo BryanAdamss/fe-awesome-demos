@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <script src="js/ajax.js"></script>
+    <script>
+        var oBtn = document.getElementById("btn");
+        oBtn.onclick = function () {
+            // 加上?t=当前毫秒可以防止缓存
+            ajax("data.json?t=" + new Date().getTime(), function (str) {
+                var arr = eval(str);
+                var oUl = document.createElement("ul");
+                for (var i = 0; i < arr.length; i++) {
+                    var oLi = document.createElement("li");
+                    oLi.innerHTML = "用户名:" + arr[i].name + "密码:" + arr[i].pass;
+                    oUl.appendChild(oLi);
+                }
+                document.body.appendChild(oUl);
+            }, function () {
+                alert("读取失败");
+            })
+        };
+    </script>
+</body>
+
+</html>

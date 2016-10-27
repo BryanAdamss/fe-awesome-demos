@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        position: absolute;
+    }
+    
+    #div2 {
+        width: 700px;
+        height: 500px;
+        background-color: #f00;
+        position: relative;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="div2">
+        <div id="div1"></div>
+    </div>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var oDiv2 = document.getElementById("div2");
+    var disX = 0;
+    var disY = 0;
+    oDiv.onmousedown = function(e) {
+        var oE = e || window.event;
+        disX = oE.clientX - oDiv.offsetLeft;
+        disY = oE.clientY - oDiv.offsetTop;
+        oDiv.style.cursor = "move";
+        document.onmousemove = function(e) {
+            var oE = e || window.event;
+            var l = oE.clientX - disX;
+            var t = oE.clientY - disY;
+            // 防止横向溢出
+            if (l < 50) {
+                l = 0;
+            } else if (l > oDiv2.offsetWidth - oDiv.offsetWidth) {
+                l = oDiv2.offsetWidth - oDiv.offsetWidth;
+            }
+            // 防止纵向溢出
+            if (t < 50) {
+                t = 0;
+            } else if (t > oDiv2.offsetHeight - oDiv.offsetHeight) {
+                t = oDiv2.offsetHeight - oDiv.offsetHeight;
+            }
+            oDiv.style.left = l + "px";
+            oDiv.style.top = t + "px";
+
+
+        }
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+            oDiv.style.cursor = "";
+        }
+        return false;
+    };
+    </script>
+</body>
+
+</html>

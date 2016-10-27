@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+    // 数组长度可读可写
+    var arr = [1, 2, 3, 4, 5, 6];
+    // 设置后长度为3那后3个数组元素就无法取到
+    arr.length = 3;
+    arr.length = 6;
+    console.log(arr[3]);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

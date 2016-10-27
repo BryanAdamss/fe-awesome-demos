@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    #ul {
+        width: 400px;
+        height: 400px;
+        border: 1px solid #000;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    
+    #ul li {
+        border-bottom: 1px dashed #333;
+        list-style: none;
+        padding: 4px;
+        overflow: hidden;
+        filter: alpha(opacity: 0);
+        opacity: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <textarea id="txt1" rows="4" cols="40"></textarea>
+    <button id="btn">发布</button>
+    <ul id="ul">
+        <li>asjljsf</li>
+    </ul>
+    <script type="text/javascript">
+    // 链式运动框架无法实现同时改变多个样式,因为一次只能传一个参数,解决方案通过json传多个参数
+    // 完美运动框架
+    function getStyle(obj, name) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[name];
+        } else {
+            return getComputedStyle(obj, false)[name];
+        }
+    }
+
+    // 在链式运动框架基础上改用json来传参
+    function startMove(obj, json, fnEnd) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function() {
+            // 判断是否所有属性都运动到目标属性,默认都到达目标
+            var bStop = true;
+            // 遍历json
+            for (var attr in json) {
+                var cur = 0;
+                // 透明度特殊处理
+                if (attr === "opacity") {
+                    // 小数存在误差,所以选择四舍五入
+                    cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+                } else {
+                    cur = parseInt(getStyle(obj, attr));
+                }
+                var speed = (json[attr] - cur) / 6;
+                // 缓冲运动速度需取整
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                // 如果出现一个属性未到达目标点,bStop置false
+                if (cur !== json[attr]) {
+                    bStop = false;
+                }
+                // 透明度样式需要特殊处理
+                if (attr === "opacity") {
+                    obj.style.filter = "alpha(opacity:" + (cur + speed) + ")";
+                    obj.style.opacity = (cur + speed) / 100;
+                } else {
+                    obj.style[attr] = cur + speed + "px";
+                }
+            }
+            // 所有属性全部到达,清定时器,执行回调
+            if (bStop) {
+                clearInterval(obj.timer);
+                if (fnEnd) {
+                    fnEnd();
+                }
+            }
+        }, 30);
+    }
+    </script>
+    <script type="text/javascript">
+    var oUl = document.getElementById("ul");
+    var oBtn = document.getElementById("btn");
+    var oTxt = document.getElementById("txt1");
+    oBtn.onclick = function() {
+        var oLi = document.createElement("li");
+        oLi.innerHTML = oTxt.value;
+        oTxt.value = "";
+        if (oUl.children.length > 0) {
+            oUl.insertBefore(oLi, oUl.children[0]);
+        } else {
+            oUl.appendChild(oLi);
+        }
+        var iHeight = oLi.offsetHeight;
+        oLi.style.height = 0;
+        startMove(oLi, {
+            "height": iHeight
+        }, function() {
+            startMove(oLi, {
+                "opacity": 100
+            })
+        });
+    };
+    </script>
+</body>
+
+</html>

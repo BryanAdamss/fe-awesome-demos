@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * @param name  cookie名
+         * @param value cookie值
+         * @param iDay  多长时间后过期
+         */
+        function setCookie(name,value,iDay){
+            var oDate=new Date();
+            oDate.setDate(oDate.getDate()+iDay);
+            document.cookie=name+"="+value+";expires="+oDate;
+        }
+
+        /**
+         * @param name  要取的cookie
+         * @returns {*}
+         */
+        function getCookie(name){
+            // 用分号空格来分割全部cookie
+            var arr=document.cookie.split("; ");
+            for(var i=0;i<arr.length;i++){
+                // 用=来分割name=value中的name
+                var arr2=arr[i].split("=");
+                // 判断是否相等
+                if(arr2[0]===name){
+                    return arr2[1];
+                }
+            }
+            // 未找到，返回空
+            return "";
+        }
+        /**
+         * @param name  要移除的cookie名
+         */
+        function removeCookie(name){
+            // 设置name在-1天后过期即昨天过期，计算机会以为已经过期会主动删除掉此条cookie
+           setCookie(name,1,-1);
+        }
+
+        setCookie("name","cgh",1);
+        setCookie("names","cgsh",1);
+        console.log(document.cookie);
+        alert(getCookie("names"));
+        removeCookie("names");
+        console.log(document.cookie);
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">排序</button>
+    <table id="table1" border="1" width="500">
+        <thead>
+            <td>ID</td>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>操作</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2</td>
+                <td>Blue2</td>
+                <td>84</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Blue3</td>
+                <td>29</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>张维</td>
+                <td>61</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Blue</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Blue4</td>
+                <td>13</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>张三</td>
+                <td>24</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Blue5</td>
+                <td>35</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    var oTab = document.getElementById("table1");
+    var oBtn = document.getElementById("btn1");
+
+    oBtn.onclick = function() {
+        var arr = [];
+        for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+            arr[i] = oTab.tBodies[0].rows[i];
+        }
+        arr.sort(function(tr1, tr2) {
+            var n1 = parseInt(tr1.cells[0].innerHTML);
+            var n2 = parseInt(tr2.cells[0].innerHTML);
+            return n1 - n2;
+        });
+        for (var i = 0; i < arr.length; i++) {
+            oTab.tBodies[0].appendChild(arr[i]);
+        }
+    };
+    </script>
+</body>
+
+</html>

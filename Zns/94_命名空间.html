@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        * 把方法包在同一个json里面
+        * */
+        var cgh={};
+
+        cgh.common={};
+        cgh.fx={};
+        cgh.site={};
+
+        cgh.common.getUserName=function(){
+            alert("a");
+        };
+        cgh.fx.getUserName=function(){
+            alert("b");
+        };
+        cgh.site.getUserName=function(){
+            alert("c");
+        };
+
+        cgh.common.getUserName();
+        cgh.fx.getUserName();
+        cgh.site.getUserName();
+    </script>
+</body>
+</html>

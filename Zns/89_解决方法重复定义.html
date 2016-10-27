@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        * 类: 模子
+        * 对象: 产品(成品)
+        * var arr=new Array();
+        * Array是模子
+        * arr是产品
+        * prototype只能添加到模子上
+        * */
+        function createPerson(name,qq){
+            this.name=name;
+            this.qq=qq;
+        }
+
+        createPerson.prototype.showName=function(){
+                console.log("名字"+this.name);
+        };
+
+        createPerson.prototype.showQQ=function(){
+            console.log("QQ" + this.qq);
+        };
+
+        // 创建的时候用new来创建
+        var blue=new createPerson("blue","123");
+        var green=new createPerson("green","456");
+        // 功能和工厂模式一样
+        blue.showName();
+        blue.showQQ();
+        green.showName();
+        green.showQQ();
+        // 此时不会重复定义方法(本质是这个方法统一定义在原型上了)，返回true
+        alert(blue.showName===green.showName);
+        /*
+        * 总结
+        * 用构造函数添加属性
+        * 用原型来添加方法
+        * */
+    </script>
+</body>
+</html>

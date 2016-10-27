@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="text1" cols="30" rows="10"></textarea>
+    <button id="btn1">运行</button>
+    <script>
+        var oTxt=document.getElementById("text1");
+        var oBtn=document.getElementById("btn1");
+        oBtn.onclick=function(){
+            var oNewWin=window.open("about:blank","_blank");
+            oNewWin.document.write(oTxt.value);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1" name="">
+    <button id="btn1">搜索</button>
+    <table id="table1" border="1" width="500">
+        <thead>
+            <td>ID</td>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>操作</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Blue</td>
+                <td>27</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Blue2</td>
+                <td>84</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Blue3</td>
+                <td>29</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Blue4</td>
+                <td>13</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>张维</td>
+                <td>61</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Blue5</td>
+                <td>35</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>张三</td>
+                <td>24</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    var oTab = document.getElementById("table1");
+    var oBtn = document.getElementById("btn1");
+    var oTxt = document.getElementById("text1");
+    oBtn.onclick = function() {
+        var aStrArr = oTxt.value.toString().split(" ");
+        for (var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+            cellsLoop: for (var j = 0; j < oTab.tBodies[0].rows[i].cells.length; j++) {
+                for (var k = 0; k < aStrArr.length; k++) {
+                    if (oTab.tBodies[0].rows[i].cells[j].innerHTML.toLowerCase().search(aStrArr[k].toLowerCase()) >= 0) {
+                        oTab.tBodies[0].rows[i].style.backgroundColor = "green";
+                        // oTab.tBodies[0].rows[i].style.display = "block";
+                        break cellsLoop;
+                    } else {
+                        oTab.tBodies[0].rows[i].style.backgroundColor = "";
+                        // oTab.tBodies[0].rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    };
+    </script>
+</body>
+
+</html>

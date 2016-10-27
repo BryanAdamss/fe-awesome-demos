@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>邮箱规则:一串英文、数字、下划线@一串英文、数字.一串英文</p>
+    <input type="text" id="txt1">
+    <button id="btn1">校验</button>
+    <script>
+        var oBtn = document.getElementById("btn1");
+        var oTxt = document.getElementById("txt1");
+        oBtn.onclick = function () {
+            // ^规则$ 代表这个待校验字符串从开头到结尾必须是符合这个规则的,不能是别的
+            var re=/^\w+@[a-z0-9]+\.[a-z]+$/i;
+            // 正则.test(要检验的字符串),用来检验字符串是否符合这个正则表达式,只要字符串中有一部分符合规则，它就返回true
+            if (re.test(oTxt.value)) {
+                alert("是个合法的邮箱!");
+            }else{
+                alert("写错了");
+            }
+        };
+    </script>
+</body>
+</html>

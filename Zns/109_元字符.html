@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ol>
+       <li> [abc]代表其中有一个就行了就像a||b||c
+        <br>
+        [abc]pc则apc bpc cpc 都能匹配到
+       </li>
+        <li>[0-9]表范围</li>
+        <li>[^a-z]排除a到z,组合使用[^a-z0-9]表匹配除了a到z和0到9以外的所有字符</li>
+    </ol>
+    <script>
+        var str="apc xpc ppc bpc spc tpc cbapc";
+        var re=/[abc]pc/g;
+        console.log(str.match(re));
+    </script>
+</body>
+</html>

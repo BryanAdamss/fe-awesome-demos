@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #parent {
+        width: 600px;
+        height: 20px;
+        background-color: #ccc;
+        position: relative;
+        margin: 10px auto;
+    }
+    
+    #div1 {
+        width: 20px;
+        height: 20px;
+        background-color: #f00;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    #div2 {
+        width: 300px;
+        height: 200px;
+        border: 1px solid #000;
+        position: relative;
+        /*overflow: hidden;*/
+    }
+    
+    #div3 {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <div id="div1"></div>
+    </div>
+    <div id="div2">
+        <div id="div3">基本仪器是他背景一声苹果她说才是，正常众多回忆考虑公主，英国网吧条款加大试验现金济南被人，高考研究玄幻障碍清晰基于，眼前当初发言所在地每天，情况找不到医生之外是由特殊我去返回比例可，湖南并非属性练习公安时刻范围内一身激动，农业美丽报告标签训练有点尝试备案怀疑其他任意不明白实行就要，手指掌握地面又是时间越来越幻想辛苦西安公安协调互相教程体系，郑州风情尺寸个性情节安全，社区谢谢梦幻头衔女士服饰笑道采购一，贸易家族评级一年淡淡机器需要简体中文不承担动态说话，理论那么方面抓住设备给你从，镜头青春玩具排名说着新增过了百姓相信，意见第一章利润国有下载地址热点人间会有近日加速重点报纸夫人，字节一个营销优势陕西不会严重不说版面几天依法推出面临依靠估，可以用图文后来指定新浪一名男生执行时间，在他委员会播放这一点不好正是线路回头时代调节我不四个，一起成都提供沉默伊拉克根据属于旁边，公里处于交通脸色依据，我去据说提供二级终于相机推，让我设备简体我想合同毫不，金钱不承担青岛股市自己，机械记住读书操作系统一下材，帮我外贸形式保存好多数码相机比如专利不，信用的确创意职责市场当你生活体育必然没事女孩包装，感觉到打。</div>
+    </div>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var oDiv2 = document.getElementById("div2");
+    var oDiv3 = document.getElementById("div3");
+    var oPar = document.getElementById("parent");
+    var disX = 0;
+    // var disY = 0;
+    oDiv.onmousedown = function(e) {
+        var oE = e || window.event;
+        disX = oE.clientX - oDiv.offsetLeft;
+        // disY = oE.clientY - oDiv.offsetTop;
+
+
+        oDiv.style.cursor = "move";
+        document.onmousemove = function(e) {
+            var oE = e || window.event;
+            var l = oE.clientX - disX;
+            // var t = oE.clientY - disY;
+            // 防止横向溢出
+            if (l < 0) {
+                l = 0;
+            } else if (l > oPar.offsetWidth - oDiv.offsetWidth) {
+                l = oPar.offsetWidth - oDiv.offsetWidth;
+            }
+            // 防止纵向溢出
+            // if (t < 0) {
+            //     t = 0;
+            // } else if (t > oPar.offsetHeight - oDiv.offsetHeight) {
+            //     t = oPar.offsetHeight - oDiv.offsetHeight;
+            // }
+            oDiv.style.left = l + "px";
+            // oDiv.style.top = t + "px";
+            var scale = l / (oPar.offsetWidth - oDiv.offsetWidth);
+            document.title = scale;
+
+            oDiv3.style.top = -scale * (oDiv3.offsetHeight - oDiv2.offsetHeight) + "px";
+        }
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+            oDiv.style.cursor = "";
+        }
+        return false;
+    };
+    </script>
+</body>
+
+</html>

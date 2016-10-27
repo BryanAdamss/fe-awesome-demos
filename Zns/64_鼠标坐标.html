@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        position: absolute;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <!-- clientX,clientY是鼠标在浏览器可视区域内的坐标
+    pageX,pageY是鼠标相对文档的坐标,IE8以前不识别,可通过在视区坐标clientX基础上添加滚动的距离即可得到相对文档的坐标 -->
+    <script type="text/javascript">
+    function getPos(ev) {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+        return {
+            x: ev.clientX + scrollLeft,
+            y: ev.clientY + scrollTop
+        }
+    }
+    </script>
+    <script type="text/javascript">
+    document.onmousemove = function(event) {
+        var oEvent = event || window.event;
+        var oDiv = document.getElementById("div1");
+        var pos = getPos(oEvent);
+        console.log(pos);
+        oDiv.style.left = pos.x + "px";
+        oDiv.style.top = pos.y + "px";
+    };
+    </script>
+</body>
+
+</html>

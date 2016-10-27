@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li class="a"></li>
+        <li></li>
+        <li class="a"></li>
+        <li></li>
+        <li class="a"></li>
+    </ul>
+    <script type="text/javascript">
+    function getByClass(oParent, sClass) {
+        var aEle = document.getElementsByTagName("*");
+        var aResult = [];
+        for (var i = 0; i < aEle.length; i++) {
+            if (aEle[i].className === sClass) {
+                aResult.push(aEle[i]);
+            }
+        }
+        return aResult;
+    }
+    var oUl = document.getElementsByTagName("ul");
+    var aLi = getByClass(oUl, "a");
+    for (var i = 0; i < aLi.length; i++) {
+        aLi[i].style.backgroundColor = "red";
+    };
+    </script>
+</body>
+
+</html>

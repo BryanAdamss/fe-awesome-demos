@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text" name="">
+    <button id="btn">提交</button>
+    <textarea id="text2" rows="4" cols="40"></textarea>
+    <script type="text/javascript">
+    var oBtn = document.getElementById("btn");
+    var oText = document.getElementById("text");
+    var oText2 = document.getElementById("text2");
+    oBtn.onclick = function() {
+        oText2.value += oText.value + '\n';
+        oText.value = "";
+    };
+    oText.onkeydown = function(e) {
+        var oE = e || window.event;
+        // ctrl+回车提交
+        if (oE.keyCode === 13 && oE.ctrlKey) {
+            oText2.value += oText.value + '\n';
+            oText.value = "";
+        }
+    };
+    </script>
+</body>
+
+</html>

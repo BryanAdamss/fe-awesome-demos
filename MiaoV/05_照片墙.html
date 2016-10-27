@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #ul1 {
+            width: 960px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        li {
+            list-style: none;
+            width: 300px;
+            height: 168px;
+            float: left;
+            margin: 10px;
+            cursor: move;
+        }
+
+        #ul1 .active {
+            border: 1px dashed #333;
+            padding: 4px;
+
+        }
+    </style>
+</head>
+<body>
+    <ul id="ul1">
+        <li>
+            <img src="img/1.jpg">
+        </li>
+        <li>
+            <img src="img/2.jpg">
+        </li>
+        <li>
+            <img src="img/3.jpg">
+        </li>
+        <li>
+            <img src="img/4.jpg">
+        </li>
+        <li>
+            <img src="img/5.jpg">
+        </li>
+        <li>
+            <img src="img/6.jpg">
+        </li>
+        <li>
+            <img src="img/7.jpg">
+        </li>
+        <li>
+            <img src="img/8.jpg">
+        </li>
+        <li>
+            <img src="img/9.jpg">
+        </li>
+        <li>
+            <img src="img/10.jpg">
+        </li>
+        <li>
+            <img src="img/11.jpg">
+        </li>
+        <li>
+            <img src="img/12.jpg">
+        </li>
+    </ul>
+    <script type="text/javascript">
+        // 链式运动框架无法实现同时改变多个样式,因为一次只能传一个参数,解决方案通过json传多个参数
+        // 完美运动框架
+        function getStyle(obj, name) {
+            if (obj.currentStyle) {
+                return obj.currentStyle[name];
+            } else {
+                return getComputedStyle(obj, false)[name];
+            }
+        }
+
+        // 在链式运动框架基础上改用json来传参
+        function startMove(obj, json, fnEnd) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                // 判断是否所有属性都运动到目标属性,默认都到达目标
+                var bStop = true;
+                // 遍历json
+                for (var attr in json) {
+                    var cur = 0;
+                    // 透明度特殊处理
+                    if (attr === "opacity") {
+                        // 小数存在误差,所以选择四舍五入
+                        cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+                    } else {
+                        cur = parseInt(getStyle(obj, attr));
+                    }
+                    var speed = (json[attr] - cur) / 6;
+                    // 缓冲运动速度需取整
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                    // 如果出现一个属性未到达目标点,bStop置false
+                    if (cur !== json[attr]) {
+                        bStop = false;
+                    }
+                    // 透明度样式需要特殊处理
+                    if (attr === "opacity") {
+                        obj.style.filter = "alpha(opacity:" + (cur + speed) + ")";
+                        obj.style.opacity = (cur + speed) / 100;
+                    } else {
+                        obj.style[attr] = cur + speed + "px";
+                    }
+                }
+                // 所有属性全部到达,清定时器,执行回调
+                if (bStop) {
+                    clearInterval(obj.timer);
+                    if (fnEnd) {
+                        fnEnd();
+                    }
+                }
+            }, 30);
+        }
+    </script>
+    <script>
+        var oUl = document.getElementById("ul1");
+        var aLi = oUl.getElementsByTagName("li");
+        // 布局转换
+        var aPos = [];
+        var iMinZindex = 2;
+
+        for (var i = 0; i < aLi.length; i++) {
+            aPos[i] = {left: aLi[i].offsetLeft, top: aLi[i].offsetTop};
+        }
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].style.left = aPos[i].left + "px";
+            aLi[i].style.top = aPos[i].top + "px";
+
+            aLi[i].style.margin = "0";
+            aLi[i].style.position = "absolute";
+
+            aLi[i].index = i;
+        }
+        // 拖拽
+        function setDrag(obj) {
+            obj.onmousedown = function (ev) {
+                var oE = ev || window.event;
+                obj.style.zIndex = iMinZindex++;
+                var disX = oE.clientX - obj.offsetLeft;
+                var disY = oE.clientY - obj.offsetTop;
+
+                document.onmousemove = function (ev) {
+                    var oE = ev || window.event;
+                    obj.style.left = oE.clientX - disX + "px";
+                    obj.style.top = oE.clientY - disY + "px";
+
+//                    for (var i = 0; i < aLi.length; i++) {
+//                        aLi[i].className="";
+//                        if(obj===aLi[i]){
+//                            continue;
+//                        }
+//                        if (cdTest(obj, aLi[i])) {
+//                            aLi[i].className = "active";
+//                        }
+//                    }
+                    for (var i = 0; i < aLi.length; i++) {
+                        aLi[i].className = "";
+                    }
+                    var oNear = findNearest(obj);
+                    if (oNear) {
+                        oNear.className = "active";
+                    }
+
+                };
+
+                document.onmouseup = function () {
+                    document.onmousedown = null;
+                    document.onmousemove = null;
+                    var oNear = findNearest(obj);
+                    // 有最近的碰撞物体则交换位置
+                    if (oNear) {
+                        oNear.className = "";
+                        oNear.style.zIndex=iMinZindex++;
+                        obj.style.zIndex=iMinZindex++;
+                        // 交换位置
+                        startMove(oNear, aPos[obj.index]);
+                        startMove(obj, aPos[oNear.index]);
+                        //  交换索引
+                        var temp=0;
+                        temp=oNear.index;
+                        oNear.index=obj.index;
+                        obj.index=temp;
+                    } else {
+                        // 否则返回原位
+//                        console.log(aPos);
+                        startMove(obj, aPos[obj.index]);
+                    }
+                };
+                // 防止返回原位中再次拖动，产生抖动
+                clearInterval(obj.timer);
+                // 阻止默认事件
+                ev.preventDefault();
+                return false;
+            };
+        }
+
+        for (var i = 0; i < aLi.length; i++) {
+            setDrag(aLi[i]);
+        }
+
+        // 碰撞检测
+        function cdTest(obj1, obj2) {
+            var l1 = obj1.offsetLeft;
+            var r1 = l1 + obj1.offsetWidth;
+            var t1 = obj1.offsetTop;
+            var b1 = t1 + obj1.offsetHeight;
+
+            var l2 = obj2.offsetLeft;
+            var r2 = l2 + obj2.offsetWidth;
+            var t2 = obj2.offsetTop;
+            var b2 = t2 + obj2.offsetHeight;
+            if (r1 < l2 || l1 > r2 || b1 < t2 || t1 > b2) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 计算距离
+        function getDis(obj1, obj2) {
+            var a = obj1.offsetLeft - obj2.offsetLeft;
+            var b = obj1.offsetTop - obj2.offsetTop;
+            return Math.sqrt(a * a + b * b);
+        }
+
+        // 找到碰到并是最近的
+        function findNearest(obj) {
+            var iMin = 9999;
+            var iMinIndex = -1;
+            for (var i = 0; i < aLi.length; i++) {
+                if (obj === aLi[i]) {
+                    continue;
+                }
+                if (cdTest(obj, aLi[i])) {
+                    var dis = getDis(obj, aLi[i]);
+                    if (iMin > dis) {
+                        iMin = dis;
+                        iMinIndex = i;
+                    }
+                }
+            }
+            if (iMinIndex === -1) {
+                return null;
+            } else {
+                return aLi[iMinIndex];
+            }
+        }
+
+
+    </script>
+</body>
+</html>

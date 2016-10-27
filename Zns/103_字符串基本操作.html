@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var str="abcdefghijk";
+        /*字符串搜索*/
+        console.log(str.search("c"));//2
+        console.log(str.search("defg"));//3
+        /*字符串截取*/
+        // substring(开始位置,结束位置)
+        console.log(str.substring(2, 5));//cde      不包括结束位置
+        console.log(str.substring(2));//cdefghijk   截取到最后
+        /*获取某个位置的字符*/
+        console.log(str.charAt(2));     //c
+        /*字符串分割*/
+        var str2="a-12-hg-d-e"
+        console.log(str2.split("-"));   //数组[a,12,hg,d,e]
+    </script>
+</body>
+</html>

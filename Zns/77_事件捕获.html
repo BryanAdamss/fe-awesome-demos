@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <script type="text/javascript">
+    var oBtn = document.getElementById("btn");
+    oBtn.onclick = function() {
+        alert("a");
+    };
+    // IE才有的事件捕获
+    // 此处会将页面上所有的事件全放在oBtn上处理
+    oBtn.setCapture();
+    </script>
+</body>
+
+</html>

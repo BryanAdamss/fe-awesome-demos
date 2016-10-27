@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var json={
+            name:"haha",
+            age:18,
+
+            showName:function(){
+                alert(this.name);
+            },
+            showAge:function(){
+                alert(this.age)
+            }
+        }
+        json.showAge();
+        /*
+        * 这种称为单体
+        * 适合整个程序只有一个对象的时候，例如整个程序只需要一个ajax对象，那么ajax对象就可以用这种方法
+        * */
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #parent {
+        width: 600px;
+        height: 20px;
+        background-color: #ccc;
+        position: relative;
+        margin: 10px auto;
+    }
+    
+    #div1 {
+        width: 20px;
+        height: 20px;
+        background-color: #f00;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    #div2 {
+        width: 0;
+        height: 0;
+        background-color: green;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <div id="div1"></div>
+    </div>
+    <div id="div2"></div>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var oDiv2 = document.getElementById("div2");
+    var oPar = document.getElementById("parent");
+    var disX = 0;
+    // var disY = 0;
+    oDiv.onmousedown = function(e) {
+        var oE = e || window.event;
+        disX = oE.clientX - oDiv.offsetLeft;
+        // disY = oE.clientY - oDiv.offsetTop;
+
+
+        oDiv.style.cursor = "move";
+        document.onmousemove = function(e) {
+            var oE = e || window.event;
+            var l = oE.clientX - disX;
+            // var t = oE.clientY - disY;
+            // 防止横向溢出
+            if (l < 0) {
+                l = 0;
+            } else if (l > oPar.offsetWidth - oDiv.offsetWidth) {
+                l = oPar.offsetWidth - oDiv.offsetWidth;
+            }
+            // 防止纵向溢出
+            // if (t < 0) {
+            //     t = 0;
+            // } else if (t > oPar.offsetHeight - oDiv.offsetHeight) {
+            //     t = oPar.offsetHeight - oDiv.offsetHeight;
+            // }
+            oDiv.style.left = l + "px";
+            // oDiv.style.top = t + "px";
+            var scale = l / (oPar.offsetWidth - oDiv.offsetWidth);
+            document.title = scale;
+
+            oDiv2.style.width = 400 * scale + "px";
+            oDiv2.style.height = 400 * scale + "px";
+        }
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+
+
+            oDiv.style.cursor = "";
+        }
+        return false;
+    };
+    </script>
+</body>
+
+</html>

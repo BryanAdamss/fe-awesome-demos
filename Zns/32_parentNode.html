@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="ul1">
+        <li>lorem1
+            <a href="javascript:;">hidden</a>
+        </li>
+        <li>lorem2
+            <a href="javascript:;">hidden</a>
+        </li>
+        <li>lorem3
+            <a href="javascript:;">hidden</a>
+        </li>
+        <li>lorem4
+            <a href="javascript:;">hidden</a>
+        </li>
+        <li>lorem5
+            <a href="javascript:;">hidden</a>
+        </li>
+    </ul>
+    <script type="text/javascript">
+    var oUl = document.getElementById("ul1");
+    // 父节点指的只是直接父节点,不包含其他祖先节点
+    var aA = document.getElementsByTagName("a");
+    for (var i = 0; i < aA.length; i++) {
+        aA[i].onclick = function() {
+            this.parentNode.style.display = "none";
+        };
+    }
+    </script>
+</body>
+
+</html>

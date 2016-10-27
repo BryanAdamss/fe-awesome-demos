@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ol>
+        <li>转义</li>
+        <li>
+            <pre>\d    数字              就是[0-9]</pre>
+        </li>
+        <li>
+            <pre>\w    英文、数字、下划线   [a-z0-9_]</pre>
+        </li>
+        <li>
+            <pre>\s    空白符            空格、tab、其他不可打印的字符</pre>
+        </li>
+        <li>
+            <pre>\D    非数字             [^0-9]</pre>
+        </li>
+        <li>
+            <pre>\W    非英文、数字、下划线  [^a-z0-9]</pre>
+        </li>
+        <li>
+            <pre>\S    非空白符            非空格、tab、其他不可打印的字符</pre>
+        </li>
+        <li>
+            <pre>.     代表任意字符</pre>
+            <p>不推荐使用点号</p>
+        </li>
+    </ol>
+    <ol>
+        <li>量词:个数</li>
+        <li>
+            <pre>+  至少一次，最多不限</pre>
+        </li>
+        <li>
+            <pre>?  至少0次，最多1次,本质就是可有可无</pre>
+            <p>相当于{0,1}</p>
+        </li>
+        <li>
+            <pre>*  至少0次，最多不限,本质就是可以 没有，也可以有，有多少位不限;这个不推荐用</pre>
+            <p>相当于{0,}</p>
+        </li>
+        <li>
+            <pre>{n}    正好出现n次</pre>
+            <p>电话:[1-9]\d{7}</p>
+        </li>
+        <li>
+            <pre>{n,m}  最少n次，最多n次</pre>
+            <p>qq:[1-9]\d{4,10}</p>
+        </li>
+        <li>
+            <pre>{n,}   最少n次，最多不限</pre>
+            <p>+加号等价于{1,}</p>
+        </li>
+    </ol>
+    <ol>
+        <li>开头结尾</li>
+        <li>^不出现在[]中代表字符串开头</li>
+        <li>$不出现在[]中代表字符串结尾</li>
+    </ol>
+</body>
+</html>

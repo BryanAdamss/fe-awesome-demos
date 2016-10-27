@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div1 {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+        }
+
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <div id="div1">
+        <img src="img/1.jpg" width="150">
+        <img src="img/2.jpg" width="150">
+        <img src="img/3.jpg" width="150">
+        <img src="img/4.jpg" width="150">
+        <img src="img/5.jpg" width="150">
+    </div>
+    <script>
+        document.onmousemove = function (ev) {
+            var oE = ev || window.event;
+            var aImg = document.getElementsByTagName("img");
+            var aInput = document.getElementsByTagName("input");
+            var oDiv = document.getElementById("div1");
+            for (var i = 0; i < aImg.length; i++) {
+                // 图片中心的位置
+                var x = aImg[i].offsetLeft + aImg[i].offsetWidth / 2;
+                var y = aImg[i].offsetTop + oDiv.offsetTop + aImg[i].offsetHeight / 2;
+
+                var a = x - oE.clientX;
+                var b = y - oE.clientY;
+                // 鼠标到图片中心的距离
+                var dis = Math.sqrt(a * a + b * b);
+
+                var scale = 1 - dis / 800;
+                if (scale < 0.5) {
+                    scale = 0.5;
+                }
+                aImg[i].width = scale * 300;
+                aInput[i].value = "x:" + scale.toFixed(2);
+            }
+        };
+    </script>
+</body>
+</html>

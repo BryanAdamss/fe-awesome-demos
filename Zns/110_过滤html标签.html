@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="txt1" cols="30" rows="10"></textarea>
+    <button id="btn1">转换</button>
+    <textarea name="" id="txt2" cols="30" rows="10"></textarea>
+    <script>
+        var oTxt1 = document.getElementById("txt1");
+        var oTxt2 = document.getElementById("txt2");
+        var oBtn = document.getElementById("btn1");
+        oBtn.onclick=function(){
+            // 点号.代表任意字符
+            // 除了<>以外的任意字符
+            var re=/<[^<>]+>/g;
+            oTxt2.value=oTxt1.value.replace(re,"");
+            alert("a");
+        };
+
+    </script>
+</body>
+</html>

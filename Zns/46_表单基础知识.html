@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="form1" action="http://www.baidu.com">
+        用户名:
+        <input type="text" name="user"> 密码:
+        <input type="password" name="pass">
+        <button type="submit">提交</button>
+        <button type="reset">重置</button>
+    </form>
+    <script type="text/javascript">
+    var oForm = document.getElementById("form1");
+    oForm.onsubmit = function() {
+        alert("a");
+    };
+    oForm.onreset = function() {
+        alert("b");
+    };
+    </script>
+</body>
+
+</html>

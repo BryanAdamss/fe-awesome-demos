@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/VQuery-v.js"></script>
+</head>
+<body>
+    <ul id="ul1">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul>
+        <li>
+            <ul>
+                <span></span>
+                <span></span>
+                <li class="box">b</li>
+            </ul>
+        </li>
+        <li></li>
+        <li></li>
+        <li class="box">b</li>
+        <li class="box">b</li>
+
+    </ul>
+    <ol>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+    <script>
+        $(function () {
+            var i=$("#ul").eq(0).css({"width":"100px"});
+            console.log(i);
+        });
+    </script>
+</body>
+</html>

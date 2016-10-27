@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div button{
+            background-color: #fff;
+        }
+        #div button.active{
+            background-color: yellow;
+        }
+        #div1 div{
+            width:200px;
+            height: 200px;
+            background-color: #ccc;
+            display: none;
+        }
+        #div1 div.active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <button id="btn" class="active">按钮</button>
+        <button id="btn2">按钮2</button>
+        <button id="btn3">按钮3</button>
+        <div class="active">aaa</div>
+        <div>bbb</div>
+        <div>ccc</div>
+    </div>
+
+    <script>
+        /*
+        * 面向过程->面向对象
+        * 避免函数嵌套
+        * 变量全部变成属性
+        * 函数全部变成方法
+        * */
+        function TabSwitch(id){
+            var _this=this;
+            var oDiv=document.getElementById("div1");
+            this.aBtn=oDiv.getElementsByTagName("button");
+            this.aDiv=oDiv.getElementsByTagName("div");
+
+            for(var i=0;i<this.aBtn.length;i++){
+                this.aBtn[i].index=i;
+                this.aBtn[i].onclick=function(){
+                    _this.fnClick(this);
+                };
+            }
+        }
+
+        TabSwitch.prototype.fnClick=function(oBtn){
+            for(var i=0;i<this.aBtn.length;i++){
+                this.aBtn[i].className="";
+                this.aDiv[i].style.display="none";
+            }
+            oBtn.clasName="active";
+            this.aDiv[oBtn.index].style.display="block";
+        };
+
+        new TabSwitch("div1");
+
+    </script>
+</body>
+</html>

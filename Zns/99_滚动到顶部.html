@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>#btn1{
+     margin-top:2000px;
+    }</style>
+</head>
+<body>
+    <button id="btn1">顶部</button>
+    <script>
+        var oBtn=document.getElementById("btn1");
+        var timer=null;
+        var nTop=0;
+        oBtn.onclick=function(){
+            nTop=document.documentElement.scrollTop || document.body.scrollTop;
+          timer=setInterval(function(){
+              if(nTop<0){
+                  clearInterval(timer);
+              }
+              nTop-=50;
+              document.documentElement.scrollTop=nTop;
+              document.body.scrollTop=nTop;
+          },30);
+        };
+    </script>
+</body>
+</html>

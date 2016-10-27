@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ol>
+        <li>正则:规则(模式、模板)表达式。它是一个强大的字符串匹配工具,它是一种人类很难读懂的文字;正则表达式就是记录文本规则的代码</li>
+        <li>chuadf@qq.com
+            <br>
+            一串英文数字@一串英文.一串英文 这就是上面邮箱的一个最简单的规则、模式、模板
+        </li>
+        <li>
+            js中正则有两种写法
+            <br>
+            js风格->new RegExp("a","i");
+            perl风格->/a/i
+        </li>
+    </ol>
+    <script>
+        var str = "12 fff 87 er65 465s =*/3-";
+        console.log(str.match(/\d+/g));
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var str = "fff 87 er65 465s =*/3-";
+        // g代表找到全部i代表忽略大小写
+        // 找到数字
+        var re=/\d+/g;
+        // search返回出现的位置
+        console.log(str.search(re));
+        // match把所有匹配的文本提取出来
+        console.log(str.match(re));
+        // replace替换文本，配合正则可以将匹配的所有结果替换成特定的文本
+        console.log(str.replace(re,"qwe"));
+    </script>
+</body>
+</html>

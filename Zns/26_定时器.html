@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">开始</button>
+    <button id="btn2">关闭</button>
+    <script type="text/javascript">
+    var oBtn1 = document.getElementById("btn1");
+    var oBtn2 = document.getElementById("btn2");
+    var timer = null;
+    oBtn1.onclick = function() {
+        timer = setInterval(function() {
+            alert("a");
+        }, 1000);
+    };
+    oBtn2.onclick = function() {
+        clearInterval(timer);
+    };
+    </script>
+</body>
+
+</html>

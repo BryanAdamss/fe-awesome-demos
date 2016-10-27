@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        * 混合方式:是混合了构造函数和原型的方式来创建对象
+        * 原则:属性通过构造函数来添加、方法通过原型来添加、类名(构造函数)首字母大写
+        * */
+        function Person(name,age,sex){
+            this.name=name;
+            this.age=age;
+            this.sex=sex;
+        };
+        Person.prototype.showInfo=function(){
+            alert(this.name);
+            alert(this.age);
+            alert(this.sex);
+        };
+        var zhangSan=new Person("张三","18","男");
+        var yuGang=new Person("浴缸","35","女");
+        zhangSan.showInfo();
+        yuGang.showInfo();
+    </script>
+</body>
+</html>

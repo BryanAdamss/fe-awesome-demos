@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        position: absolute;
+    }
+    
+    .box {
+        border: 1px dashed #000;
+        position: absolute;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var disX = 0;
+    var disY = 0;
+    oDiv.onmousedown = function(e) {
+        var oE = e || window.event;
+        disX = oE.clientX - oDiv.offsetLeft;
+        disY = oE.clientY - oDiv.offsetTop;
+
+        var oBox = document.createElement("div");
+        oBox.className = "box";
+        oBox.style.width = oDiv.offsetWidth + "px";
+        oBox.style.height = oDiv.offsetHeight + "px";
+        oBox.style.left = oDiv.offsetLeft + "px";
+        oBox.style.top = oDiv.offsetTop + "px";
+        document.body.appendChild(oBox);
+        oDiv.style.cursor = "move";
+        document.onmousemove = function(e) {
+            var oE = e || window.event;
+            var l = oE.clientX - disX;
+            var t = oE.clientY - disY;
+            // 防止横向溢出
+            if (l < 0) {
+                l = 0;
+            } else if (l > document.documentElement.clientWidth - oDiv.offsetWidth) {
+                l = document.documentElement.clientWidth - oDiv.offsetWidth;
+            }
+            // 防止纵向溢出
+            if (t < 0) {
+                t = 0;
+            } else if (t > document.documentElement.clientHeight - oDiv.offsetHeight) {
+                t = document.documentElement.clientHeight - oDiv.offsetHeight;
+            }
+            oBox.style.left = l + "px";
+            oBox.style.top = t + "px";
+        }
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+            oDiv.style.left = oBox.offsetLeft + "px";
+            oDiv.style.top = oBox.offsetTop + "px";
+            document.body.removeChild(oBox);
+
+            oDiv.style.cursor = "";
+        }
+        return false;
+    };
+    </script>
+</body>
+
+</html>

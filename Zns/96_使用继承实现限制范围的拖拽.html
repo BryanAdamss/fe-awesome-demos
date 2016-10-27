@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <style>
+        #div1 {width:200px; height:200px; background:yellow; position:absolute;}
+        #div2 {width:200px; height:200px; background:green; position:absolute;}
+    </style>
+    <script>
+        var oDiv=null;
+        var disX=0;
+        var disY=0;
+
+
+        function Drag(id)
+        {
+            var _this=this;
+            this.disX=0;
+            this.disY=0;
+
+            this.oDiv=document.getElementById(id);
+            this.oDiv.onmousedown=function (ev)
+            {
+                _this.fnDown(ev);
+                return false;
+            };
+        };
+
+        Drag.prototype.fnDown=function (ev)
+        {
+            var _this=this;
+            var oEvent=ev||event;
+
+            this.disX=oEvent.clientX-this.oDiv.offsetLeft;
+            this.disY=oEvent.clientY-this.oDiv.offsetTop;
+
+            document.onmousemove=function (ev)
+            {
+                _this.fnMove(ev);
+            };
+            document.onmouseup=function ()
+            {
+                _this.fnUp();
+            };
+        };
+
+        Drag.prototype.fnMove=function (ev)
+        {
+            var oEvent=ev||event;
+
+            this.oDiv.style.left=oEvent.clientX-this.disX+'px';
+            this.oDiv.style.top=oEvent.clientY-this.disY+'px';
+        };
+
+        Drag.prototype.fnUp=function ()
+        {
+            document.onmousemove=null;
+            document.onmouseup=null;
+        };
+        // 限制拖拽
+        function LimitDrag(id)
+        {
+            Drag.call(this, id);	//继承属性
+        }
+
+        for(var i in Drag.prototype)
+        {
+            // 继承方法
+            LimitDrag.prototype[i]=Drag.prototype[i];
+        }
+        // 重写fnMove
+        LimitDrag.prototype.fnMove=function (ev)
+        {
+            var oEvent=ev||event;
+            var l=oEvent.clientX-this.disX;
+            var t=oEvent.clientY-this.disY;
+
+            if(l<0)
+            {
+                l=0;
+            }
+            else if(l>document.documentElement.clientWidth-this.oDiv.offsetWidth)
+            {
+                l=document.documentElement.clientWidth-this.oDiv.offsetWidth;
+            }
+            this.oDiv.style.left=l+'px';
+            this.oDiv.style.top=t+'px';
+        };
+
+
+        window.onload=function(){
+            new Drag("div1");
+            new LimitDrag("div2");
+        };
+
+    </script>
+</head>
+
+<body>
+    <div id="div1">普通拖拽</div>
+    <div id="div2">限制范围</div>
+</body>
+</html>

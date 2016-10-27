@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="table1" border="1" width="500" style="margin:0 auto;">
+        <thead>
+            <td>ID</td>
+            <td>姓名</td>
+            <td>年龄</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Blue</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Blue2</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Blue3</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Blue4</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Blue5</td>
+                <td>27</td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    var oTab = document.getElementById("table1");
+    // alert(document.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[1].getElementsByTagName("td")[1].innerHTML);
+    // 在table里可以有0个或多个tbody所以是tBodies,但是只有一个tHead和tFoot
+    alert(oTab.tBodies[0].rows[1].cells[1].innerHTML);
+    // 弹出tbody下的行数
+    alert(oTab.tBodies[0].rows.length)
+        // 弹出所有行数
+    alert(oTab.rows.length)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+    }
+    
+    #div2 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        left: 100px;
+        background-color: #000;
+    }
+    
+    #div3 {
+        width: 1px;
+        height: 300px;
+        position: absolute;
+        left: 300px;
+        background-color: #000;
+    }
+    </style>
+</head>
+
+<body>
+    <button id="btn1" onclick="startMove(100)">到100</button>
+    <button id="btn2" onclick="startMove(300)">到300</button>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+    <script type="text/javascript">
+    var timer = null;
+
+    function startMove(iTarget) {
+        var oDiv = document.getElementById("div1")
+        clearInterval(timer);
+        timer = setInterval(function() {
+            var speed = 0;
+            if (oDiv.offsetLeft < iTarget) {
+                speed = 7;
+            } else {
+                speed = -7;
+            }
+            if (Math.abs(iTarget - oDiv.offsetLeft) <= 7) {
+                clearInterval(timer);
+                oDiv.style.left = iTarget + "px";
+            } else {
+                oDiv.style.left = oDiv.offsetLeft + speed + "px";
+            }
+        }, 30);
+    }
+    </script>
+</body>
+
+</html>

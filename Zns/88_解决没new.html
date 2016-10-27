@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function createPerson(name,qq){
+            // 系统会自动的创建一个对象
+            // var this=new Object();
+            this.name=name;
+            this.qq=qq;
+            this.showName=function(){
+                console.log("名字"+this.name);
+            };
+            this.showQQ=function(){
+                console.log("QQ"+this.qq);
+            };
+            // 系统会自动返回创建的对象
+            // return this;
+        }
+        // 创建的时候用new来创建
+        var blue=new createPerson("blue","123");
+        var green=new createPerson("green","456");
+        // 功能和工厂模式一样
+        blue.showName();
+        blue.showQQ();
+        green.showName();
+        green.showQQ();
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="text1" name="">
+    <script type="text/javascript">
+    var oTxt = document.getElementById("text1");
+    oTxt.onkeydown = function(e) {
+        var oE = e || window.event;
+        // 当输入的不是退格也不是数组的时候,阻止默认行为
+        if (oE.keyCode !== 8 && (oE.keyCode < 48 || oE.keyCode > 57)) {
+            return false;
+        }
+
+    };
+    </script>
+</body>
+
+</html>

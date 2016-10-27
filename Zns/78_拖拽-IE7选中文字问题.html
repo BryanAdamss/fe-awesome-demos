@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: absolute;
+    }
+    </style>
+</head>
+
+<body>
+    强化立即适合那就不足作出斑竹，
+    <br>眼光得知团队尚未违法一，身影一下子经销商欢迎光临瞬间贯彻是否重量财经，地位能量全国时刻口气吉。
+    <div id="div1">clorem</div>
+    书记辅助考虑购物下载
+    <script type="text/javascript">
+    var oDiv = document.getElementById('div1');
+
+    var disX = 0;
+    var disY = 0;
+
+    oDiv.onmousedown = function(ev) {
+        var oEvent = ev || event;
+
+        disX = oEvent.clientX - oDiv.offsetLeft;
+        disY = oEvent.clientY - oDiv.offsetTop;
+
+        if (oDiv.setCapture) {
+            //IE
+            oDiv.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                var l = oEvent.clientX - disX;
+                var t = oEvent.clientY - disY;
+
+                oDiv.style.left = l + 'px';
+                oDiv.style.top = t + 'px';
+            };
+
+            oDiv.onmouseup = function() {
+                oDiv.onmousemove = null;
+                oDiv.onmouseup = null;
+                // 在不拖拽的时候,将各种事件交还给每个元素自己处理,所以解决了文字无法选中
+                oDiv.releaseCapture();
+            };
+            // 将页面中的所有事件全集中到oDiv上,那么文字的选中行为也将集中到oDiv上来处理,所以不会选中文字,但这样又会出现一个新问题,不拖拽的时候文字无法选中
+            oDiv.setCapture();
+        } else {
+            //Chrome、FF
+            document.onmousemove = function(ev) {
+                var oEvent = ev || event;
+                var l = oEvent.clientX - disX;
+                var t = oEvent.clientY - disY;
+
+                oDiv.style.left = l + 'px';
+                oDiv.style.top = t + 'px';
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        }
+
+        return false; //chrome、ff、IE9
+    }
+    </script>
+</body>
+
+</html>

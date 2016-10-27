@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+    var arr = [1, 2, 3];
+    console.log(arr);
+    arr.push(4);
+    console.log(arr);
+    arr.pop();
+    console.log(arr);
+    arr.shift();
+    console.log(arr);
+    arr.unshift(4);
+    console.log(arr);
+    // splice(起点索引,长度);删除从"起点索引"开始往后"长度"个元素
+    arr.splice(2, 1);
+    console.log(arr);
+    // 插入splice(起点索引,长度,元素...)先从起点索引处删除长度个元素,再从起点索引处添加元素
+    arr.splice(0, 1, 'a', 'b', 'c');
+    console.log(arr);
+    // 替换其实和插入一样,只不过保证长度和元素个数保持一致
+    arr.splice(2, 2, 'd', 'e');
+    console.log(arr);
+    var a = [1, 2, 3];
+    var b = [4, 5, 6];
+    console.log(a.concat(b));
+    console.log(a.concat(b).join("-"));
+    console.log(b.concat(a).sort(function(n1, n2) {
+        return n2 - n1;
+    }));
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

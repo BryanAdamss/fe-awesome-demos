@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+    }
+    </style>
+    <script type="text/javascript">
+    function setStyle(name, val) {
+        var oDiv = document.getElementById("div1");
+        // 能用.语法的地方都可以使用方括号语法!!!!
+        oDiv.style[name] = val;
+    }
+    </script>
+</head>
+
+<body>
+    <button onclick="setStyle('width','200px')">变宽</button>
+    <button onclick="setStyle('height','200px')">变高</button>
+    <button onclick="setStyle('backgroundColor','green')">变绿</button>
+    <div id="div1"></div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    body {
+        background-color: #000;
+        font-size: 50px;
+        color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+    <img src="img/数字时钟/0.png">
+    <img src="img/数字时钟/0.png">
+    <img src="img/数字时钟/sign.png">
+    <img src="img/数字时钟/0.png">
+    <img src="img/数字时钟/0.png">
+    <img src="img/数字时钟/sign.png">
+    <img src="img/数字时钟/0.png">
+    <img src="img/数字时钟/0.png">
+    <script type="text/javascript">
+    function toDou(n) {
+        if (n < 10) {
+            return "0" + n;
+        } else {
+            return "" + n;
+        }
+    }
+
+    function tick() {
+        var oDate = new Date();
+        var sTime = toDou(oDate.getHours()) + ":" +
+            toDou(oDate.getMinutes()) + ":" +
+            toDou(oDate.getSeconds());
+        var aImg = document.getElementsByTagName("img");
+        for (var i = 0; i < aImg.length; i++) {
+            if (i === 2 || i === 5) {
+                continue;
+            } else {
+                aImg[i].src = "img/数字时钟/" + sTime.charAt(i) + ".png";
+            }
+        }
+    }
+    setInterval(tick, 1000);
+    tick();
+    </script>
+</body>
+
+</html>

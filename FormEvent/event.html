@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection"/>
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui"/>
+    <title>Title</title>
+    <!--<link rel="icon" href="favicon.ico">-->
+    <!--<link rel="stylesheet" type="text/css" href="css/index.css">-->
+    <!-- IE8及以下的浏览器使用兼容补丁 -->
+    <!--[if lt IE 9]>
+    <script src="js/ie/IE9.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- IE7及以下的浏览器提示升级 -->
+    <!--[if lt IE 8]>
+    <p style="text-align:center;background-color:#000;color:#fff;font-size:20px;">您正在使用一个<strong style="color:red;">较低版本的</strong>浏览器.可能无法获得最好的用户体验,请尝试升级或更换您的浏览器以获得更好的用户体验
+    </p>
+    <![endif]-->
+    <input type="button" value="Click me" id="a">
+    <form action="" name="form333" method="post">
+        <input type="text" name="cc">
+        <button type="submit">ss</button>
+    </form>
+    <script src="js/event.js"></script>
+    <script>
+        //        var btn=document.getElementById("a");
+        //        var handler=function (event) {
+        //          var  e=EventUtil.getEvent(event);
+        //            var t=EventUtil.getTarget(e);
+        //             EventUtil.preventDefault(e);
+        //        }
+        //        EventUtil.addHandler(btn,"click",handler);
+        var form = document.forms[0];
+        EventUtil.addHandler(form, "submit", function (event) {
+            e=EventUtil.getEvent(event);
+            EventUtil.preventDefault(event);
+            alert("s");
+            form.submit();
+        });
+        console.log(document.forms["form333"]);
+    </script>
+</body>
+</html>

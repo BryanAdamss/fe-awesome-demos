@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function A(){
+            this.abc=12;
+        }
+        A.prototype.show=function(){
+            alert(this.abc);
+        };
+
+        // 继承A
+        function B(){
+            // 此时this->new B()
+            // 使用call来实现继承属性
+            A.call(this);
+        }
+        // 使用遍历的方式来实现方法的继承
+        for(var i in A.prototype){
+            B.prototype[i]=A.prototype[i];
+        }
+
+        // 给b单独添加一个方法
+        B.prototype.ccc=function(){
+            alert("abc");
+        };
+
+        var obj=new B();
+        alert(obj.abc);
+        obj.show();
+        obj.ccc();
+    </script>
+</body>
+</html>
