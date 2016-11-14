@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #test {
+        width: 800px;
+        height: 800px;
+        background-color: #f00;
+        background-repeat: no-repeat;
+        border: 20px dashed rgba(0, 0, 0, .5);
+        padding: 20px;
+        background-origin: border-box;
+        background-clip: content-box;
+        /*background-image: url("http://img4.duitang.com/uploads/item/201512/31/20151231170656_AGxmP.thumb.224_0.jpeg");*/
+        background-image: url("http://www.zhev.com.cn/file/upload/news/20160101/1452230511.jpg");
+    }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <h2>background-clip规定背景的显示区域,默认背景色的显示区域为border+padding+content的区域(即border-box代表的区域),背景图片在不repeat的情况下,会从padding-box左上角(此点即是背景图片的绘制起点)开始绘制,会显示在右侧和下侧border之下(左，上border不显示);当repeat时，会从padding-box坐上角开始绘制，并在上下左右border处都显示</h2>
+    <pre>
+        border-box:规定背景色和图可显示的区域为border+padding+content-box;
+        padding-box:规定背景色和图可显示的区域为padding+content-box;
+        content-box:规定背景色和图可显示的区域为content-box;
+    </pre>
+    <h2>background-origin规定背景图片的绘制起点</h2>
+    <pre>
+        border-box:规定图绘制起点为border-box的左上角;
+        padding-box:规定图绘制起点为padding-box的左上角;
+        content-box:规定图绘制起点为content-box的左上角;
+    </pre>
+    <h2>currentColor变量:指向当前的标签的color值(可以是显示指定也可是继承而来的),在所有使用到颜色值的地方都可以使用currentColor</h2>
+</body>
+
+</html>
