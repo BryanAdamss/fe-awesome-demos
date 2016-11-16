@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		声明
+			function 函数名(形参列表){
+				方法体
+				return 表达式或变量;
+			}
+
+			行参:方法内独有变量，接收实参数据后，在方法内处理(非必须),只有被调用的时候才会自动创建;
+			行参只在函数内部生效，和外部变量同名没有影响;
+			行参和外部定义了哪些变量没有任何关系。
+			行参就相当于函数内部的局部变量,只在函数声明时，写了行参，调用时，就会声明几个行参变量，不管在函数内部用没用到
+
+			返回值:方法执行后，由方法返回的一个数据(非必须)方法在执行到return后就会自动跳出方法,return之后的将不再执行(无论return写在开头还是结尾)
+			根据方法调用者的需要来确定是否要返回值
+
+			带返回值的方法，使用时，等效于直接使用返回值数据
+
+		调用:方法名(实参列表);
+
+		作用域:一个变量的可用范围
+			全局作用域
+				全局作用域不用手动创建，window对象是整个网页的全局作用域对象
+				声明在全局作用域中的变量->全局变量;
+			局部作用域
+				只有在函数被调用的时候才会被创建,当方法执行完成后，作用域就会立即被销毁;
+				声明在函数内部的变量或方法的行参->局部变量;
+				当一个变量在局部作用域中找不到的时候才会去全局作用域中寻找;
+
+
+		对未声明的变量(没有var的变量)进行赋值操作(其他操作的时候会直接报错，因为使用了未声明的变量)的时候，js会自动在全局作用域下创建该变量
+
+	</pre>
+    <script type="text/javascript">
+    function a() {
+        alert("a");
+        return;
+    }
+
+    function b() {
+        return "b";
+        // return;
+        // 下面的alert不会被执行
+        alert(b);
+    }
+    a();
+    console.log(b());
+
+    var waibu = "外部变量";
+
+    function y() {
+        var neibu = "内部变量";
+        console.log(waibu);
+        console.log(neibu);
+    }
+    y();
+    // console.log(neibu); // 报错ReferenceError
+
+    var sum = 0;
+
+    function add() {
+        sum += 3;
+        console.log(sum); // 3
+    }
+    add();
+    console.log(sum); // 3
+
+    (function() {
+        var card = 10;
+
+        function buy(card) {
+            // 此处用的card是内部的card,内部card值-3
+            card -= 3;
+            console.log(card); // 打印出内部card->7
+        }
+        // 此处传进去的外部的card(10),将这个card的值复制一份给内部的card
+        buy(card);
+        console.log(card); // 此处打印的是外部的card,外部的值没改变，所以仍然是10
+    })();
+    </script>
+</body>
+
+</html>

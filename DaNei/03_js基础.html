@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/00_测试内外部同名函数.js"></script>
+    <script type="text/javascript">
+    function doIt() {
+        console.log("我是内部的do");
+    }
+    </script>
+</head>
+
+<body>
+    <button onclick="doIt()">会弹内部的do</button>
+    <pre>
+		js基本用途
+		客户端
+		1.客户端计算
+		2.客户端表单验证
+		3.事件触发和处理,特殊效果制作
+		4.服务器异步数据提交
+		服务器端
+		1.分布式运算
+		2.实时服务器
+		3.窗口应用、网络应用
+		如何使用js
+		1.使用浏览器自带js解释器(f12)
+			console:控制台
+			console.log:像控制台输出一行日志
+			shift+enter:换行
+		2.单独安装专门的解释器:node.js
+			退出:两次ctrl+c
+			执行:node xxx.js
+		3.随网页一同运行
+			浏览器两种工具
+				排版(渲染)引擎:专门加载html内容和css样式
+				解释引擎:专门运行解释js
+
+		script标签内部必须使用js语法(html的注释无法执行)
+
+		script标签内部js运行出现错误，只会影响当前script标签出错位置之后脚本的执行，不会影响到其它script标签内脚本的执行;也不会影响script标签外的其他元素(例如div,h1等等元素的渲染)的加载
+
+		function中的错误，只有在调用的时候才触发
+
+		内外部同名函数,解释执行!
+		内外部定义了一个同名的函数，则后定义的生效(解释执行的缘故)
+	</pre>
+</body>
+
+</html>

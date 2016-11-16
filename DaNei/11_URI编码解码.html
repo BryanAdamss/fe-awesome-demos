@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		encodeURI:对URI进行编码,将多字节字符(URL中不允许出现多字节字符)编码成单字节字符(UTF-8格式),一般会将汉字编码,字母数字不会进行编码;
+		decodeURI:和encodeURI对应，解码
+
+		unicode:每个字符2字节
+		utf-8:字母数字单字节、汉字3字节
+
+		encodeURIComponet:将url中的多字节字符和非法字符都进行编码
+		url规定参数的值中再次出现url关键字(/?$:等等)，就是非法，需要对非法的字符进行编码,此时就用到encodeURIComponet();
+
+		ecodeURIComponent:和上者对应的
+
+		encodeURIComponet的功能要比encodeURI强大!建议使用前者
+
+		何时使用:将数据通过url发送时，都要先编码再发送,收到后再解码
+	</pre>
+    <script type="text/javascript">
+    var str = "张";
+    console.log(encodeURI(str)); // %E5%BC%A0
+    console.log(decodeURI(encodeURI(str))); // 张
+
+    var oldUrl = "http://ah122.cn/首页";
+    console.log(encodeURI(oldUrl)); // http://ah122.cn/%E9%A6%96%E9%A1%B5 只对多字节字符进行了编码，未对非法关键字编码
+    console.log(encodeURIComponent(oldUrl)); // http%3A%2F%2Fah122.cn%2F%E9%A6%96%E9%A1%B5 将多字节字符和非法关键字同时进行了编码
+
+    console.log(decodeURIComponent(encodeURIComponent(oldUrl)));
+    </script>
+</body>
+
+</html>

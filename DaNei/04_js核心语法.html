@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		ECMAScript
+			区分大小写
+			字符串必须用引号(单双皆可)包裹
+			结尾建议有分号(没有分号时,换行回车算语句结束)
+		变量:内存中专门存储数据的空间
+			何时使用变量?只要在程序中临时存储数据，都要放变量中
+			怎么使用?声明->命名->初始化->使用(一般声明和命名是一起的)
+			声明:在内存中开辟一个存储空间;
+			eg:
+			var a;// 这就在内存开辟一个空间，并给这个空间命名为a,以后通过a就能找到这个空间;并给这个空间默认装入undefined(这就是变量光声明未赋值则默认为undefined)
+
+			只要带var就是声明，只要声明就会开辟新内存空间;js中新同名变量空间会替换旧变量的空间
+
+			使用未声明的变量就会报错
+
+		常量:创建后，值不会改变的特殊变量
+			const CHANGLIANG=3.14159;
+	</pre>
+    <script type="text/javascript">
+    var wdy;
+    var ydy = 33;
+    console.log(wdy); // undefined
+    console.log(ydy); // 33
+
+
+    const PI = 3.1415926;
+    console.log(PI);
+    PI = PI - 2; // 值不会被改变,并会报错Uncaught TypeError: Assignment to constant variable
+    console.log(PI * 2);
+
+    console.log(icd); // 直接使用一个根本不存在在(未声明)的变量，会报错Uncaught ReferenceError
+    </script>
+</body>
+
+</html>

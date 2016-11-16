@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var c = prompt("输入一个字符");
+    var isNumber = c >= "0" && c <= "9";
+    var isZiMu = (c >= "a" && c <= "z") || (c >= "A" && c <= "Z");
+    // 汉字范围\u4E00~\u9FA5
+    console.log("\u4E00");
+    console.log("\u9FA5");
+    var isChn = (c >= "\u4E00") && (c <= "\u9FA5");
+    console.log(isNumber, isChn, isZiMu);
+    </script>
+</body>
+
+</html>

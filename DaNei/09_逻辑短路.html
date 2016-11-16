@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		逻辑运算在第一个条件就能判断出整个表达式的真假的时候，后面条件将不执行
+	</pre>
+    <script type="text/javascript">
+    var i = 10;
+    var j = 10;
+    var k = i-- < 0 && j++ > 0;
+    console.log(i, j, k); // 9 10 false
+
+    var l = 10;
+    var m = 10;
+    var n = l-- > 0 || m++ > 0;
+    console.log(l, m, n); // 9 10 true
+    </script>
+</body>
+
+</html>

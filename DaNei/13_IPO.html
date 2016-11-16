@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    	根据单价、数量、收款金额，计算应收金额和零钱
+		IPO:Input Process Output 输入 处理 输出
+		从需求中找名词->程序中的数据
+			分为两类
+				输入数据:单价、数量、收款金额
+				输出数据:应收金额、找零
+		分析处理流程
+			1.请用户输入:单价、数量、收款金额并保存在变量中
+			2.计算出收款金额、找零
+			3.输出应收金额和找零
+		编写程序
+	</pre>
+    <script type="text/javascript">
+    var price = parseFloat(prompt("请输入单价"));
+    var count = parseFloat(prompt("请输入数量"));
+    var money = parseFloat(prompt("请输入收款金额"));
+    var total = price * count;
+    var change = money - total;
+    alert("收款金额为：" + money + "元;\n" + "应收金额为：" + total.toFixed(2) + "元;\n" + "找零为：" + change.toFixed(2) + "元");
+    </script>
+</body>
+
+</html>

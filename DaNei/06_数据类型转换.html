@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    弱类型:1.变量声明时不必限定数据类型，今后可能保存任何类型数据2.数据类型间可以自动类型转换
+		隐式转换:程序自动转换数据类型(坑)
+			仅考虑+时的类型转换
+				+号左右只要有字符串参与，一切类型都加""变为字符串,再和原有字符串进行拼接;如果没有字符串参与，就都转为数字来计算
+					其中true->1;false->0;
+		强制(显示)转换:通过专门函数转换类型
+			任何类型转string
+				x.toString()->将x转为字符串类型,x可以是任何类型
+			任何类型转number
+				Number(x)->将任何类型转换为Number类型
+			string->number
+				parseInt(字符串)->将字符串解析为整数
+					1.从第一个字符开始向后解析
+					2.如果解析到的字符是数字，则保留并继续像后解析,如果不是数字则停止解析
+					3.如果开头碰到空格，则直接忽略空格
+					4.如果开头非空格字符不是数字，则说明不能转返回NaN(Not a Number表示不是一个数字，但NaN本身却是一个number类型),NaN和任何类型数据计算后结果都为NaN,并且NaN!==NaN
+
+				parseFloat(字符串)->将字符串解析为浮点数;解析规则和parseInt一样，但他认识小数点，(出现2个及以上的小数点，则只认第一个小数点)
+
+				**所有从页面上获取的数据都是字符串!!!!!!必须先转换再使用**
+				eg:
+					页面上获取某个元素的style属性->字符串
+					页面上通过prompt输入框得到的返回值->字符串
+	</pre>
+    <script type="text/javascript">
+    var num1 = 1,
+        num2 = 2;
+    var str = "cgh";
+    var b1 = true,
+        b2 = false;
+    console.log(str + num1); // "cgh1"
+    console.log(str + b1); // "cghtrue"
+    console.log(num1 + num2 + str); // "3cgh"
+    console.log(str + num1 + num2); // "cgh12"
+
+    console.log(b1 + b2); // 1
+    console.log(b1 + num2); // 3
+
+    console.log(parseInt("12")); // 12
+    console.log(parseInt("12px")); // 12
+    console.log(parseInt("px12")); // NaN
+    console.log(parseInt("   12px")); // 12
+    console.log(parseInt(true)); // NaN
+    console.log(parseInt("true")); // NaN
+    console.log(parseInt("22.5")); // 22
+    console.log(parseInt("")); // NaN
+    console.log(parseInt("  ")); // NaN
+
+    console.log(parseFloat("22.5")); // 22.5
+    console.log(parseFloat("22.5.3")); // 22.5
+    console.log(parseFloat(".22.5.3")); // 0.22
+    console.log(parseFloat("22.0")); // 22 如果解析出的是整数则不会转成浮点数(浮点占空间大)
+    </script>
+</body>
+
+</html>

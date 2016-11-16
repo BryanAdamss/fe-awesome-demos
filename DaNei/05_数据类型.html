@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    不同数据有不同的存储空间大小和用途，所以有不同的类型
+
+		原始(基本)类型:数据保存在变量本地
+			Number类型:js中一切数组都用number保存,不分整数和小数;整数4字节、浮点数8字节
+				舍入误差:计算机不能准确表达1/10就像现实中1/3一样;
+				如何修正？->按指定位数四舍五入;数字.toFixed(位数);
+				碰到小数位数超长，碰到舍入误差，需要按位四舍五入
+
+			String类型:一串字符的序列；每个字符占2字节
+				转义字符:用来表示特殊符号及非打印字符
+					如何使用:\特殊符号
+					\n 换行
+					\t tab
+					\" 双引号
+
+				***字符串变量的内容一旦创建不可改变！!!!!如果需要改变只能创建新字符串，抛弃旧字符串***
+
+			Boolean类型:真假
+
+			Undefined类型:表示一个变量仅声明过，未赋值过。所有未赋值的变量，默认值都是undefined;Undefined类型变量的值是undefined 
+
+			Null类型:空引用
+	</pre>
+    <script type="text/javascript">
+    var price = 1.6;
+    var total = 2;
+    var change = total - price;
+    console.log(change); // 0.3999999999999999并非0.4
+    console.log(change.toFixed(2)); // 0.40保留两位小数
+    console.log("\t我前面有个tab,我马上要换行了\n哈哈");
+
+    /*面试题*/
+    // 中间一共会创建3个字符串,"Hello""World""HelloWorld"
+    var str = "Hello";
+    str = str + "World";
+    </script>
+</body>
+
+</html>

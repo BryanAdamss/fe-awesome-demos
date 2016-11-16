@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+	css Hack
+	1.IE条件语句:只在IE9-(9及以下)生效
+	<!--[if IE]>IE10以下会看到这个<![endif]-->
+	<!--[if IE 9]>IE9会看到这个<![endif]-->
+	<!--[if IE 8]>IE8会看到这个<![endif]-->
+	<!--[if lt IE 9]>小于IE9（不包括9）会看到这个<![endif]-->
+	<!--[if lte IE 9]>小于或等于IE9（包括9）会看到这个<![endif]-->
+	IE条件语句中可以放置任何html/css/js语句
+	<!--[if IE]>
+		<script>
+	 		alert("xx");
+		</script>
+	<![endif]-->
+	2.选择器前缀
+	.content{} 	所有浏览器都理解
+	*html .content{} 只有IE6理解
+	*+html .content{} 只有IE7理解
+	3.属性前缀
+	.content{
+		background-color:red; /* 所有 */  
+	    background-color:blue !important;/* 除了IE6其他都认识 */  
+	    *background-color:black; /* IE6, IE7 */  
+	    +background-color:yellow;/* IE6, IE7*/  
+	    background-color:gray\9; /* IE6, IE7, IE8, IE9, IE10 */  
+	    background-color:purple\0; /* IE8, IE9, IE10 */  
+	    background-color:orange\9\0;/*IE9, IE10*/  
+	    _background-color:green; /* Only works in IE6 */  
+	    *+background-color:pink; /*  WARNING: Only works in IE7 ? Is it right? */  
+	}
+	</pre>
+</body>
+
+</html>

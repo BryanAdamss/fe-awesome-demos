@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        - 可以表示减，也可表示负号
+            任意类型数据做减法，则都转为number类型
+
+        + 可以表示加，也可用于字符串拼接
+
+        / 除数为0值为Infinity(和NaN类似，它是表示无穷大的一个数字类型数字)
+
+        % 取模 一般用来限制一个数不能超过某个最大范围,取模的结果符号和被除数符号保持一致
+
+        ++,-- 递增/递减;
+            单独用
+                i++和++i一样
+            表达式内部
+                i++->先使用值再加1
+                ++i->先加1再使用
+
+        >,<,>=,<=,==,!=关系运算(暗含隐式转换)
+            任何类型和数字比较，都先转为数字再比较
+            字符串相互比较是每一位进行挨个比较unicode大小
+            boolean参与比较都是先转为数字
+
+        undefined做==比较
+            undefined是从null类型继承来的
+            比较的时候会自动转为null
+
+        ===不带自动类型转换,要求类型和值都相等
+            一般用在不确定比较类型，又不希望自动类型转的时候
+
+        NaN做比较的时候永远返回false
+            NaN和自身也不相等
+            isNaN(x)可以用来判断一个数据是不是NaN(但更多的时候用来判断一个数据是不是数字，是数字false,不是true)
+            只要不能自动转换为数字的都泛返回true,能转的为false
+
+        总结
+            1.普通数据先转为想同类型，再比较
+            2.undefined用===
+            3.NaN用isNaN(x)来判断
+
+        var a=b=c=10; // abc都为10;赋值是从右往左结合的
+
+        +=,*=,/=,*=,%=
+            a+=3;->a=(a)+3;
+            a*=3;->a=(a)*3
+            一般用在修改原变量值，效率一般高于a=a+3;
+
+        三目
+            var a=(关系表达式)?真的取值:假的取值
+
+        逻辑运算的时候
+        0,null,undefined,NaN,"",0.0都视为false
+        其他均为true
+
+    </pre>
+    <script type="text/javascript">
+    console.log(20 - 5); //15
+    console.log("20" - "5"); //15(编码相减)
+    console.log("20a" - 5); // NaN
+    console.log("20" - "5a"); // NaN
+    console.log("20px" - "5px"); // NaN
+    console.log(100 - ""); // 100(空字符串为0)
+
+    console.log(100 / 0); // Infinity
+    console.log(typeof(100 / 0)); // number
+
+    console.log(typeof(0 / 0)); // NaN
+
+    console.log(10 % 3); //1
+    console.log(-10 % 3); //-1
+    console.log(10 % -3); //1
+    console.log(-10 % -3); //-1
+    console.log(10.5 % 3); //1.5
+
+    console.log("aa" > "ab"); //false
+    console.log("3" > "10"); //true 因为3的unicode大于1的
+    console.log("3" > 10); //false 字符串和数字比较会被直接转成数字再比较
+    console.log("10" == 10); // true
+    console.log("2" > true); // true
+    console.log(2 > true); // true
+
+    console.log(undefined == null); // true
+    console.log(undefined === null); // false
+    console.log(typeof(undefined)); // undefined
+    console.log(typeof(null)); // object
+
+    console.log(isNaN(NaN)); // true
+    console.log(isNaN("NaN")); // true
+    console.log(isNaN("NsaN")); // true
+    console.log(isNaN(33)); // false
+    console.log(isNaN("")); // false,空字符串视为0
+    console.log(isNaN(22.5)); // false
+    console.log(isNaN("22.5")); // false
+    console.log(isNaN("12px")); // true
+    console.log(isNaN(true)); // false
+    console.log(isNaN("true")); // true
+
+    var aa = 100;
+    var bb = 20;
+    var cc = aa - bb
+    cc *= 2; //cc=(aa-bb)*2,并非cc=aa-bb*2
+    console.log(cc *= 2);
+
+    console.log(bb > 100 ? "大于100" : "小于100");
+
+    //三目经典场景(2个中取大的或小的)
+    var result = 100 > 80 ? 100 : 80;
+    console.log(result);
+    </script>
+</body>
+
+</html>
