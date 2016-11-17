@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		循环三要素
+			1.循环条件：循环继续执行的条件,不满足则立即退出
+			2.循环变量:用于循环条件中做判断的变量,循环变量必须具有向循环退出的趋势(不满足循环条件的趋势)变化,否则死循环
+			3.循环体:每次循环要做的事
+
+        for适用循环变量变化规律固定，循环次数已知/固定
+        while/do.while适合循环变量变化规律未知的情况
+
+        continue:跳出本轮循环，继续下一轮循环
+        break:直接结束本次循环;
+
+        break:OUTLOOP; 直接结束OUTLOOP的循环
+	</pre>
+    <script type="text/javascript">
+    var n = 10;
+    var f = true;
+    while (f) {
+        var input = parseInt(prompt("你猜:"));
+        if (n > input) {
+            alert("小了")
+        } else if (n < input) {
+            alert("大了")
+        } else {
+            alert("猜对了");
+            f = false;
+        }
+    }
+    </script>
+</body>
+
+</html>

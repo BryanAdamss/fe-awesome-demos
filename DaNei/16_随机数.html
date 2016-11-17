@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		Math.random()取的数为[0,1) 取不到1
+		取[n,m]之间
+		公式parseInt(Math.random()*(m-n+1)+min)
+		eg:
+		取60到100之间的一个随机数([60,100])
+		0<=n<1
+		0<=n*41<41
+		60<=n*41+60<101
+		60<=parseInt(n*41+60)<=100
+		这样取到的就是[60,100]
+
+	</pre>
+    <script type="text/javascript">
+    var n = parseInt(Math.random() * (10 - 0 + 1) + 0);
+    var f = true;
+    while (f) {
+        var input = parseInt(prompt("你猜:"));
+        if (n > input) {
+            alert("小了")
+        } else if (n < input) {
+            alert("大了")
+        } else {
+            alert("猜对了");
+            f = false;
+        }
+    }
+    </script>
+</body>
+
+</html>
