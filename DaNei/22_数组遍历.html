@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    	普通数组:采用for来遍历
+		关联数组(key-value的形式)
+			数组下标可以自定义名称，此种只能使用for..in来遍历(因为此种数组无length属性),本质是在内存中用2个数组分别保存key和value,然后再将他们关联起来;
+			当数组元素的内容无法描述自身的意义时，使用关联数组为每个元素起名;
+			key其实扮演着普通数组下标i的作用,所以arr[key]是对应的value;
+			关联数组直接量定义方法(和对象一样采用大括号){"key",value,"key2",value2}
+
+		for..in
+			for(var key in arr){...}
+	</pre>
+    <script type="text/javascript">
+    var arr = [1, 2, 3, 4, 5, 6, 7];
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = "星期" + i;
+    }
+    console.log(arr);
+
+    // 关联数组
+    var fbb = [];
+    fbb["姓名"] = "范小"
+    fbb["语文"] = 60;
+    fbb["数学"] = 100;
+    fbb["英语"] = 120;
+    // fbb ["姓名":"范小","语文":60,"数学":100,"英语":120]
+    for (var key in fbb) {
+        console.log(key + ":" + fbb[key]);
+    }
+    console.log(fbb.length); //0
+    </script>
+</body>
+
+</html>

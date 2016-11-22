@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		除2倒取余
+		循环条件:商不等于0
+		循环变量:商
+		循环体:商%2存入数组,商替换为商/2
+	</pre>
+    <script type="text/javascript">
+    var bin = [];
+    var num = 127;
+    while (num !== 0) {
+        bin.push(num % 2);
+        num = parseInt(num / 2);
+    }
+    bin.reverse();
+    var newBin = bin.join("");
+    console.log(newBin);
+    </script>
+</body>
+
+</html>

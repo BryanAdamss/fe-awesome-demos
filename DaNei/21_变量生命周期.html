@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		栈中变量的生命周期和堆不一样
+			堆中变量由垃圾回收机制回收
+			栈中变量随作用域环境创建而创建，随其销毁而销毁
+	</pre>
+    <script type="text/javascript">
+    var a = 5; //全局变量随其作用域环境(网页也就是window)创建而创建，销毁而销毁
+    function fun() {
+        var b = 10;
+        var c = 11;
+    }
+    fun(); //调用，则立即创建一个fun的作用域环境栈,内部局部变量一同创建;调用结束，作用域环境栈弹出，内部变量一同消失；再次调用fun时,会再次临时创建一个fun的作用域环境栈
+    /*fun的作用域环境栈 出栈的时候 fun中的局部变量一同消失*/
+    console.log(b); //refError
+    fun(); //再次调用还会临时创建一个fun的作用域环境栈
+    </script>
+</body>
+
+</html>

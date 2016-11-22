@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		获取数组字符串
+			toString()方法可以把数组转换为字符串并返回
+				(任何对象都有toString方法,将任何对象转为字符串x.toString());一般不主动调用，js在需要时自动调用
+				在对象需要转换成字符串的时候，js会自动调用。
+				eg:var arr=["asdf","ffd","wiei"];
+				console.log(arr+"fjks");
+				本质是console.log(arr.toString()+"fjks");
+			var str=arr.join("分隔符")
+				将数组用自定义分隔符分隔并转成字符串返回;
+				不传参数时,默认用逗号分隔;当传入一个空字符串，并不分割,直接将元素直接拼接输出(直接连起来不分隔)
+				用法:将字符拼接成单词或句子;传入空字符串
+			arr.toString()默认会使用逗号分隔
+
+		连接数组
+			var newArr=arr.concat(一个元素值);将元素追加到原数组，并返回拼接后的新数组
+			arr.concat(数组);将数组追加到原数组，并返回拼接后的数组
+
+			***注意:使用arr.join()和arr.concat()方法时,原数组都未发生变化、返回的是一个新数组!!!***
+
+		截断数组(获取子数组)
+			var subArr=arr.slice(start,end+1);
+			截取数组下标start到end位置的元素，即数组下标在[start,end+1)的元素
+			***js取区间的时候都是含头不含尾即[开始,结束)***
+			当slice参数中有一个负数，则将负数加上数组的长度来确定位置;
+				应用:数组太长，需要从靠近尾部的地方开始截取时候,就可以使用负数
+				eg:取倒数第五个，到倒数第三个(开始要小于结束，否则返回空->说明截取的时候都是遵从从头到尾的顺序截取，不能按从尾到头来截取)
+				arr.slice(-5,-3+1)
+
+		数组方法中的瑞士军刀(什么都能干,并直接操作原数组)
+			arr.splice()->不用使用变量来接住，说明此方法可以直接操作原数组;返回每次删除的元素组成的新数组
+			它可以删除、插入、替换元素
+			删除数组(删除数组任意位置任意个元素)
+				arr.splice(start,count);->从下标start处删除2个元素，后部元素前移
+			插入元素
+				arr.splice(start,0,值1,值2,...)->从下标start处删除0个(不删除),并在start处开始插入值1,值2,...(start位置及以后位置内容将后移)
+			替换元素(先删除再在原位置插入)
+				arr.splice(start,count,值1，值2,...)->从下标start处删除count个元素，并在start位置开始插入值1，值2,...(start位置的内容将会被替换掉)插入的个数小于删除的,后面元素会前移。如果大于，则会自动扩容;
+
+		翻转数组
+			arr.reverse();翻转所有元素,直接操作原数组
+
+		数组排序
+			arr.sort();默认按字符串排序方法进行升序排列
+			
+	</pre>
+    <script type="text/javascript">
+    var arr = [1, 3, 6];
+    console.log(arr.toString()); // 1,3,6
+    var newJoinArr = arr.join("|");
+    console.log(newJoinArr); // 1|3|6
+    console.log(arr); // 1,3,6
+
+    var chars = ['H', 'e', 'l', 'l', 'o'];
+    console.log(chars.join("")); //Hello
+
+    var newArr = arr.concat("jj");
+    console.log(arr); // [1,3,6]
+    console.log(newArr); //[1,3,6,"jj"]
+
+    var newChars = chars.concat(arr);
+    console.log(newChars); //["H", "e", "l", "l", "o", 1, 3, 6]
+
+    var newChars2 = chars.concat(arr, 31);
+    console.log(newChars2); //["H", "e", "l", "l", "o", 1, 3, 6,31]
+
+    // 获取下标2-4之间的元素
+    var newChars3 = newChars2.slice(2, 5);
+    console.log(newChars3);
+    // 取倒数第五个到倒数第三个
+    var newChars4 = newChars2.slice(-5, -3 + 1);
+    console.log(newChars4);
+
+    // 删除
+    newChars2.splice(4, 1);
+    console.log(newChars2); //["H", "e", "l", "l", 1, 3, 6, 31]
+
+    // 插入
+    newChars2.splice(4, 0, "o");
+    console.log(newChars2); // ["H", "e", "l", "l", "o", 1, 3, 6, 31]
+
+    // 替换
+    newChars2.splice(4, 1, "oo");
+    console.log(newChars2); //["H", "e", "l", "l", "oo", 1, 3, 6, 31]
+
+    // 替换(添加的个数>删除的个数)
+    var shanchu = newChars2.splice(4, 1, "aa", "bb"); // 返回删除的数组
+    console.log(newChars2); //["H", "e", "l", "l", "aa", "bb", 1, 3, 6, 31]
+    console.log(shanchu); // ["oo"]
+    </script>
+</body>
+
+</html>

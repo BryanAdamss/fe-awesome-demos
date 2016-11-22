@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		创建
+			var arr=[[1,2,3],[4,a,b],[0,j,k]];
+		访问
+			arr[父数组下标][子数组下标]
+		何时使用
+			数据包含明显的上下级关系
+	</pre>
+    <script type="text/javascript">
+    // var provs = ["北京市", "天津市", "安徽省"];
+    // var cities = [
+    //     ["朝阳区", "海淀区"],
+    //     ["南开市", "和平区"],
+    //     ["合肥市", "安庆市"]
+    // ];
+
+    // 使用关联数组
+    var cities = {
+        "北京市": ["朝阳区", "海淀区"],
+        "天津市": ["南开市", "和平区"],
+        "安徽省": ["合肥市", "安庆市"]
+    };
+
+    function getCitiesByProv(prov) {
+        // var index = -1;
+        // for (var i = 0; i < provs.length; i++) {
+        //     if (prov === provs[i]) {
+        //         index = i;
+        //         break;
+        //     }
+        // }
+        // if (index !== undefined) {
+        //     console.log(cities[index].toString());
+        // }
+        console.log(cities[prov].toString());
+    }
+    getCitiesByProv("北京市");
+    </script>
+</body>
+
+</html>

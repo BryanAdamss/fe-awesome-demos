@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="sortAsc()">升序</button>
+    <button onclick="sortDesc()">降序</button>
+    <script type="text/javascript">
+    var arr = [12, 23, 123, 31, 4];
+    console.log(arr);
+
+    function sortAsc() {
+        function compareAsc(a, b) {
+            return a - b;
+        }
+        arr.sort(compareAsc);
+        console.log(arr);
+    }
+
+    function sortDesc() {
+        function compareDesc(a, b) {
+            return -(a - b);
+        }
+        arr.sort(compareDesc);
+        console.log(arr);
+    }
+    </script>
+</body>
+
+</html>

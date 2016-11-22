@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    	创建原始类型字符串变量
+    		var strName="Smith";// 直接量形式
+    		var str=String(150);// 强制转换
+
+    	创建引用类型的字符串变量
+    		var newStr=new String("BMW");// 在堆中创建
+
+		String类型
+		**字符串内容一旦创建，不能改变**
+		**所有字符串API，都需要变量接收返回值(因其不能直接操作原始字符串)**
+		** 字符串类型底层都是通过字符数组来实现的**
+
+			str.length:返回字符串长度
+			var nStr=str.toLowerCase();都转小写,返回新字符串
+			var nStr=str.toUpperCase();都转大写,返回新字符串
+				何时使用:希望大小写一视同仁，就要先转换，再处理;
+				重名验证、重复邮箱、用户名
+
+			var char=str.charAt(index);返回指定位置的字符
+
+			var num=str.charCodeAt(index);获取指定位置字符的unicode编号
+	</pre>
+    <script type="text/javascript">
+    var str = "abcdefg";
+    // var result = "";
+    // for (var i = 0; i < str.length; i++) {
+    //     result += str.charCodeAt(i);
+    // }
+    // console.log(result);
+
+    // 当需要频繁对字符串进行+=的时候，可以采用数组来优化,采用字符串+=会产生中间字符串,而用数组只会有一个中间数组
+
+    var result = [];
+    for (var i = 0; i < str.length; i++) {
+        result.push(str.charCodeAt(i));
+    }
+    console.log(result.join(""));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		内置对象
+			定义:内置对象是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象!
+			内置对象中封装了专门的数据和操作数据常用的API
+			内置对象有:String,Boolean,Number,Array,Date,Math,Error,Function,Object,Global
+
+		包装类型
+			类似"sdfsd",5,true这样的它是一个原始数据,原始数据本身是不能进行任何操作的！必须通过包装类型，来包装(封装)产生一个包装类型对象,通过包装类型对象的属性和方法来对数据进行操作
+			为什么要有包装类型?
+				让原始类型的数据也可以像引用类型一样，拥有方法和属性
+			包装类型有哪几个?
+				String类型,Number类型,Boolean类型
+			何时使用?
+				只要用原始类型的数据方法或访问属性时，js引擎就会自动创建对应的包装类型对象
+			释放
+				方法调用完，包装类型对象自动释放
+	</pre>
+    <script type="text/javascript">
+    /* "Hello"是一个原始数据，它本身是没有length属性,当需要打印length的时候,js在后台通过包装类型进行包装产生一个对应的包装类型对象,然后在这个对象上再访问length属性;*/
+    var str = "Hello";
+    console.log(str.length);
+
+    // 上面就相当于下面
+    var s1 = new String("Hello");
+    console.log(s1.length);
+
+    var num = 5.5;
+    num.toFixed(2); // 5.50
+
+    // 相当于
+    var n1 = new Number(5.5);
+    n1.toFixed(2);
+    </script>
+</body>
+
+</html>

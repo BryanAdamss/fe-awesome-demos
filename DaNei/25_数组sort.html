@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		arr.sort();
+			默认会将arr中所有元素转成字符串，然后按照字符串比较大小规则(挨个字符比较unicode大小)进行升序排序(原因是因为js的数组中可以存任何类型的数据，js无法比较，但是又因为所有类型的数据都有toString方法，js干脆就把所有数据都转成字符串再进行比较)
+
+		自定义排序
+			1.定义比较器函数->定义任意两值比较策略的函数
+			2.将比较器函数传递给sort
+
+		如何将一个方法(函数)当做一个参数传递给另外一个函数?
+			方法名其实就是方法在堆中的地址,使用地址就相当于使用对应的方法主体;所以将一个方法(函数)传递给另一个函数只需要将方法名当做实参传递过去就可以了;注意不用在方法名后加括号
+
+		***方法名就相当于整个方法(不会调用),方法名后加括号代表执行(调用)此方法***
+
+		***将方法做为对象传递时，仅使用方法名,后不加圆括号。需要调用或执行的时候，使用 方法名() 的形式***
+
+        颠倒比较结果的正负，可以导致升序变降序
+        升序  function compare(a,b){return a-b};
+        降序  function compare(a,b){return -(a-b)};
+              function compare(a,b){return b-a};
+
+        所有排序方法都只有升序案例，降序可直接通过颠倒比较结果正负就可实现
+
+	</pre>
+    <script type="text/javascript">
+    var arr = [5, 1, 15, 2, 33, 14, 9];
+    arr.sort();
+    console.log(arr); //[1,14,15,2,33,5,9]
+
+    function compare(a, b) {
+        // 如果返回>0的数,a>b;返回<0的数,a<b;如果刚好=0,则a===b;
+        return a - b;
+    }
+    /*
+    compare在被调用时内存中其实是
+    	var compare=new Function("a","b","return a-b");
+    	在堆中开辟一个空间，并将空间地址给compare变量
+    */
+    arr.sort(compare);
+    console.log(arr); // [1, 2, 5, 9, 14, 15, 33]
+    </script>
+</body>
+
+</html>

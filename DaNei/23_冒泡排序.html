@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		循环条件:当前元素下标<length-1
+		循环变量:下标,从0开始
+		循环体:当前元素>下一个元素 交换
+		循环次数固定，所以用for
+	</pre>
+    <script type="text/javascript">
+    var arr = [3, 2, 6, 9, 7, 1, 4];
+    for (var n = 1; n <= arr.length - 1; n++) {
+        for (var i = 0; i < arr.length - n; i++) {
+            if (arr[i] > arr[i + 1]) {
+                var temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+        console.log(arr);
+    }
+    console.log("最后" + arr);
+    </script>
+</body>
+
+</html>
