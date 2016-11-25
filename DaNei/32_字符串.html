@@ -8,28 +8,65 @@
 
 <body>
     <pre>
-    	创建原始类型字符串变量
-    		var strName="Smith";// 直接量形式
-    		var str=String(150);// 强制转换
+        创建原始类型字符串变量
+            var strName="Smith";// 直接量形式
+            var str=String(150);// 强制转换
 
-    	创建引用类型的字符串变量
-    		var newStr=new String("BMW");// 在堆中创建
+        创建引用类型的字符串变量
+            var newStr=new String("BMW");// 在堆中创建
 
-		String类型
-		**字符串内容一旦创建，不能改变**
-		**所有字符串API，都需要变量接收返回值(因其不能直接操作原始字符串)**
-		** 字符串类型底层都是通过字符数组来实现的**
+        String类型
+        **字符串内容一旦创建，不能改变**
+        **所有字符串API，都需要变量接收返回值(因其不能直接操作原始字符串)**
+        ** 字符串类型底层都是通过字符数组来实现的**
 
-			str.length:返回字符串长度
-			var nStr=str.toLowerCase();都转小写,返回新字符串
-			var nStr=str.toUpperCase();都转大写,返回新字符串
-				何时使用:希望大小写一视同仁，就要先转换，再处理;
-				重名验证、重复邮箱、用户名
+            str.length:返回字符串长度
 
-			var char=str.charAt(index);返回指定位置的字符
+            var nStr=str.toLowerCase();都转小写,返回新字符串
+            var nStr=str.toUpperCase();都转大写,返回新字符串
+                何时使用:希望大小写一视同仁，就要先转换，再处理;
+                重名验证、重复邮箱、用户名
 
-			var num=str.charCodeAt(index);获取指定位置字符的unicode编号
-	</pre>
+            var char=str.charAt(index);返回指定位置的字符
+
+            var num=str.charCodeAt(index);获取指定位置字符的unicode编号
+
+            var char=String.formCharCode(code);//将编码转为字符
+
+        字符串三大操作
+            1.查找关键字
+                var index=str.indexOf("关键词");返回关键词所在位置,没找到返回-1
+                indexOf
+                    懒:永远只返回第一个关键词的位置
+                    蠢:默认只能位置0开始->var index=str.indexOf("关键词",from);from:开始查找的位置,从from开始向后找;str.indexOf("关键词");相当于str.indexOf("关键词",0)
+
+                var index=str.lastIndexOf("关键字",from);从from位置开始向前找，不给则直接从结尾开始向前查找;无论向前还是向后返回的索引位置都一样
+
+                var index=str.search(reg);// 和indexOf相同,只不过indexOf不支持模式,search一次只能找到一个,不推荐用search
+
+                str.match()//能得到内容，但是得不到位置
+            2.替换关键字
+                按模式替换关键字
+                    var nStr=str.replace(正则,"新值");
+                    replace和indexOf一样懒只替换第一个关键字
+            3.获取子字符串
+                var subStr=str.slice(start,end+1);和数组中slice一样
+
+                var subStr=str.subString(start,end+1);和slice几乎一样,唯一不同就是它不支持负数(从后开始截取)
+
+                var subStr=str.subStr(start,count);从start开始取count个
+
+                以上三个省略第二个参数，默认都是取到最后
+
+        按规律分割字符串
+            var subStrsArr=str.split("分割符"[,count]);//将字符串按分割符进行分割，并返回由分割后的字符串组成的数组;count代表返回前几个字符串组成的数组
+
+            ***规律:字符串中有n个分割符，返回的数组就包含n+1个元素***
+
+        字符串拼接
+            var str=str.concat();// 用的少一般用+
+
+    </pre>
     <script type="text/javascript">
     var str = "abcdefg";
     // var result = "";
@@ -45,6 +82,41 @@
         result.push(str.charCodeAt(i));
     }
     console.log(result.join(""));
+    // indexOf
+    var nStr = "冬天到了，下雪了，下雪天好冷";
+    var nIndex = nStr.indexOf("下雪");
+    console.log(nIndex);
+    var tIndex = nStr.indexOf("下雪", nIndex + 1);
+    console.log(tIndex);
+
+    // 一次找出字符串中所有关键词的位置
+    (function() {
+        var str = "冬天到了，下雪了，下雪天好冷";
+        var index = -1;
+        while ((index = str.indexOf("下雪", index + 1)) !== -1) {
+            console.log(index + "位置发现关键字");
+        }
+    })();
+
+    (function() {
+        var str = "Tom||Mary||John";
+        var subs = str.split("||");
+        // 2个分割符，所以返回的数组中包含3个元素
+        console.log(subs); //["Tom","Mary","John"]
+        var subs2 = str.split("||", 1); //只保留第一个
+        console.log(subs2); //["Tom"]
+
+        var str2 = "||Tom||Mary||John||";
+        var subs3 = str2.split("||"); //一共出现4个||所以返回的数组包含5个元素
+        console.log(subs3); //["", "Tom", "Mary", "John", ""]
+    })();
+
+    (function() {
+        var str = "No zuo no die";
+        var reg = /no/ig; // 找no并忽略大小写
+        var nStr = str.replace(reg, "**");
+        console.log(nStr);
+    })();
     </script>
 </body>
 

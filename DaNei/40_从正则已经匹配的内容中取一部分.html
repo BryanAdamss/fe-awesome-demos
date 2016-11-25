@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		从正则匹配的内容中，取一部分:RegExp.$n
+		$n代表正则表达式中的第n个分组(圆括号),从1开始数
+		必须通过RegExp类型直接调用$n,不能使用对象
+	</pre>
+    <script type="text/javascript">
+    var txt = '<script href="a.js"/>' + '<a href="cost/list.do">链接1</a>' + '<a class="main" href="cost/add.do"链接2</a>';
+    var regExp = /<a(.+?)href=["'](.*?)["'](.*?)>/ig;
+    var arr = [];
+    while ((arr = regExp.exec(txt)) != null) {
+        console.log(arr[0]);
+        console.log(RegExp.$2);
+    }
+    </script>
+</body>
+
+</html>

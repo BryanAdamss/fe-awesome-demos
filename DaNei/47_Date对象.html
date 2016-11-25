@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		Date对象:封装一个时间点数据，提供对时间、日期的API
+		创建
+			var date=new Date();
+			1.创建Date类型的对象
+			2.自动获得浏览器当前时间点
+
+			自定义时间
+			var date=new Date("2015-6-9 17:30");
+
+		**Date对象中，保存的是从1970年1月1日 0:00:00到现在的毫秒数**
+
+		API
+			1.每个分量(时分秒)都有一对get/set方法,获取/设置该分量的值
+			2.命名:年/月/日没有带s,时/分/秒有s
+			3.取值/赋值:除了日以外，其余分量都是从0开始到最大值-1结束;日是从1开始到31结束
+			eg:
+			分:[0,60-1]
+			时[0,24-1]
+			月:[0,12-1] 取值时+1 赋值时-1
+			星期:日 一 ... 六
+				 0 1      6
+
+		日期计算
+			1.两日期对象相减，得到毫秒数
+			2.两日期对象相加,天、小时、分秒可以用毫秒计算，但是月因为每月天数不固定，所以月不能用毫秒来算(这种用的少，一般用date.setXXX())
+				var nowMs=new Date().getTime()//返回当前毫秒数
+				var nextMs=nowMs+5*60*1000;//5分钟后
+				var next=new Date(nextMs);
+			使用毫秒计算，不改变原时间对象，需要重新封装时间对象
+			3.任意分量的计算
+				先取出分量值，再计算，再set回去
+				date.setXXX()
+					1.自动调整进制,可以自动进到下个月，或回到上个月
+					2.***set方法直接修改原日期对象***
+						如何保留原日期对象?
+							new出一个新Date对象,再在新对象上set,旧对象就保留下来了
+							var new= Date(oldDate.getTime());
+
+	</pre>
+    <script type="text/javascript">
+    (function() {
+        var d1 = new Date(0);
+        var now = new Date();
+        var bir = new Date("1991-8-1");
+        console.log(d1);
+        console.log(now);
+        var ms = now - bir;
+        console.log(ms / 365 / 60 / 60 / 24 / 1000);
+
+        var nowMs = now.getTime() //返回当前毫秒数
+        var nextMs = nowMs + 5 * 60 * 1000; //5分钟后
+        var next = new Date(nextMs);
+        console.log(next);
+    })();
+
+
+    (function() {
+        var now = new Date();
+        // 取分量
+        var day = now.getDate();
+        // 计算
+        day -= 31;
+        // set回
+        now.setDate(day);
+        console.log(now); // 31天前
+    })();
+
+    (function() {
+        var now = new Date("1980-8-1");
+        // 将now的值封装一下，在新值上操作,原值就保存下来了
+        var next = new Date(now.getTime());
+        var d = next.getDate();
+        d += 10;
+        next.setDate(d);
+        console.log("now:" + now)
+        console.log("next:" + next);
+    })();
+    </script>
+</body>
+
+</html>

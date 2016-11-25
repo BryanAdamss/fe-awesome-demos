@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		String对象和正则表达式
+			str.replace(/正则/属性)
+			str.match(/正则/)
+			str.search(/正则/)
+	</pre>
+    <script type="text/javascript">
+    var str = "那天我去了她家，我说:我草";
+    var nStr = str.replace(/我[去草]/g, "**");
+    console.log(nStr);
+
+
+    var txt = '<script href="a.js"/>' + '<a href="cost/list.do">链接1</a>' + '<a class="main" href="cost/add.do"链接2</a>';
+    var regExp = /<a(.+?)href=["'](.*?)["'](.*?)>/ig;
+    var arr = txt.match(regExp);
+    console.log(arr);
+
+    var inArr = str.search(/我[去草]/g);
+    console.log(inArr);
+    </script>
+</body>
+
+</html>

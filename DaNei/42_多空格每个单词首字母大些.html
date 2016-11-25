@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var str = "no zuo no  die";
+    // var subsArr = str.split(" "); // no和die有2个空格,分割的时候会出现undefined,在调用toUpperCase时会出错,得用正则
+    var subsArr = str.split(/\s+/);
+    console.log(subsArr[1][0]);
+    for (var i = 0; i < subsArr.length; i++) {
+        subsArr[i] = subsArr[i][0].toUpperCase() + subsArr[i].substring(1);
+    }
+    console.log(subsArr);
+    var dStr = subsArr.join(" ");
+    console.log(dStr);
+    </script>
+</body>
+
+</html>

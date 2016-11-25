@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var codes = [];
+    // 0-9 A-Z a-z的unicode存入
+    for (var i = 48; i <= 57; codes.push(i), i++);
+    for (var i = 65; i <= 90; codes.push(i), i++);
+    for (var i = 97; i <= 122; codes.push(i), i++);
+    console.log(codes);
+    var arr = [];
+    for (var i = 0; i < 4; i++) {
+        // 从0-61之间取随机
+        var index = Math.floor(Math.random() * (61 - 0 + 1) + 0);
+        // 再将unicode转为字符
+        var char = String.fromCharCode(codes[index]);
+        arr.push(char);
+    }
+    var codeArr = arr.join("");
+    console.log(arr);
+    console.log(codeArr);
+    </script>
+</body>
+
+</html>

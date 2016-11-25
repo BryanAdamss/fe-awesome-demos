@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		可以用来做网页爬虫
+	</pre>
+    <script type="text/javascript">
+    var txt = '<script href="a.js"/>' + '<a href="cost/list.do">链接1</a>' + '<a class="main" href="cost/add.do"链接2</a>';
+    var regExp = /<a(.+?)href=["'](.*?)["'](.*?)>/ig;
+    var arr = [];
+    while ((arr = regExp.exec(txt)) != null) {
+        console.log(arr[0]);
+    }
+    </script>
+</body>
+
+</html>

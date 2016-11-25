@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		判断字符种类:unicode范围
+			48-57:0-9
+			65-90:A-Z
+			97-122:a-z
+			19968-40869:汉字
+			剩下:其它字符
+	</pre>
+    <script type="text/javascript">
+    var str = "我是1ab3,+A";
+    var eng = 0;
+    var num = 0;
+    var chs = 0;
+    var other = 0;
+    for (var i = 0; i < str.length; i++) {
+        var p = str.charCodeAt(i);
+        if (p >= 19968 && p <= 40869) {
+            chs++;
+        } else if ((p >= 65 && p <= 90) || (p >= 97 && p <= 122)) {
+            eng++;
+        } else if (p >= 48 && p <= 57) {
+            num++;
+        } else {
+            other++;
+        }
+    }
+    console.log(eng);
+    console.log(num);
+    console.log(chs);
+    console.log(other);
+    </script>
+</body>
+
+</html>

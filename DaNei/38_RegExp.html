@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		RegExp对象:专门封装一条正则表达式，提供使用正则表达式的常用API
+		使用
+			1.创建
+				var regExp=/正则表达式/属性;  
+				var rE=/\w{9}/ig;
+
+				var regExp=new RegExp("正则表达式",属性);->此种方法用在正则表达式需要动态改变的时候,平时不推荐用;
+				**注意参数1里面的正则表达式因为出现在字符串中，所以所有的\符号都需要转义后再使用->\\**
+				var regExp=new RegExp("\\w{9}",ig);
+			2.调用
+
+		API
+			var boolean=regExp.test("被检查的字符串");//验证通过返回true,否则返回false
+
+			验证vs查找
+				验证要求完整匹配、查找要求部分匹配
+				test一般用做验证,但test()默认只要找到就返回true(部分匹配),所以需要在正则表达式前面加^后面加$
+
+			**test()在做验证的时候正则必须前加^后加$完成完整匹配,如果test用来做查找则不需要加^$但正则必须要添加g属性***
+			
+			var arr=regExp.exec("被查找的内容");
+			arr[0]:找到的关键字内容
+			arr.index属性:找到的关键字位置
+			exec()每次只能找到一个,但它能每次自动修改regExp对象的lastIndex属性;
+			regExp.lastIndex:表示下次开始匹配的位置
+
+			查找
+				仅判断有没有，或者仅需要查找位置->str.indexOf()
+					当需要支持正则表达式->str.search()
+				仅找所有关键字的内容:str.match()
+				当既需要查找位置又需要内容->regExp.exec
+
+	</pre>
+    <script type="text/javascript">
+    // var regExp = /^\w+@\w+([-]\w)*(\.\w+)+$/;
+    // while (true) {
+    //     var input = prompt("请输入邮箱:");
+    //     if (regExp.test(input)) {
+    //         alert("注册成功");
+    //         break;
+    //     } else {
+    //         alert("格式有误")
+    //     }
+    // }
+
+
+    (function() {
+
+        var str = "明明喜欢我，却不告诉我；我想静静；静静是谁；你先告诉我明明是谁?"
+        var regExp = /明明|静静/g;
+        var arr = [];
+        while ((arr = regExp.exec(str)) !== null) {
+            // arr[0]关键字内容
+            // arr.index关键字位置
+            console.log("在位置" + arr.index + "发现:" + arr[0]);
+        }
+    })();
+    </script>
+</body>
+
+</html>

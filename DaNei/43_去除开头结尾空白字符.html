@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		var nstr=str.trim();//去除开头结尾空格
+		场景:一般对输入的字符串进行处理前，都会先 trim
+
+		IE8不支持trim()
+	</pre>
+    <script type="text/javascript">
+    var code = "	4A7B	";
+    // var nstr = code.trim();
+    // console.log(nstr);
+
+    function trimSpace(str) {
+        var regExp = /(^\s+)|(\s+$)/g; //开头或结尾的空格	
+        str = str.replace(regExp, "");
+        return str;
+    }
+
+    var nstr2 = trimSpace(code);
+    console.log(nstr2);
+    </script>
+</body>
+
+</html>

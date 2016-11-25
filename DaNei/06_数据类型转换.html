@@ -16,6 +16,8 @@
 		强制(显示)转换:通过专门函数转换类型
 			任何类型转string
 				x.toString()->将x转为字符串类型,x可以是任何类型
+                当把number类型转成字符串时
+                    推荐用num+""来转,+是底层的，比toString效率高
 			任何类型转number
 				Number(x)->将任何类型转换为Number类型
 			string->number

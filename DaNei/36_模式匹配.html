@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		/关键字/模式
+		模式
+			i表示忽略大小写
+			g表示全局查找
+
+		返回所有匹配规则的字符串组成的数组
+			var kwords=str.match(reg);
+			局限:只能取得内容，无法获取匹配的字符串的原先位置
+			场景:可用在替换结束后告诉用户总共替换了多少个
+			**如果没有匹配的，则返回null**
+			***只要有可能返回null,都不可以直接用，都要先判断!==null,再处理，若不判断，则可能报错***
+	</pre>
+    <script type="text/javascript">
+    (function() {
+        var str = "No zuo no die";
+        var reg = /no/ig; // 全局找no并忽略大小写
+        var nStr = str.replace(reg, "**");
+        console.log(nStr); //** zuo ** die
+        console.log(str);
+    })();
+    (function() {
+        var str = "No zuo no die";
+        var reg = /no/ig; // 全局找no并忽略大小写
+        var strArr = str.match(reg);
+        console.log(strArr); //["No", "no"]
+    })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var input = prompt("输入消息:");
+    var result = [];
+    for (var i = 0; i < input.length; i++) {
+        var num = input.charCodeAt(i);
+        console.log(num);
+        if (num < 10000) {
+            // 非中文需要前补零
+            var arr = [0, 0, 0, 0, 0];
+            // 将num转成字符串,采用+""效率高于toString,因为其更接近底层
+            var code = num + "";
+            var start = 5 - code.length;
+            for (var n = 0; n < code.length; n++) {
+                arr[start] = code[n];
+                start++;
+            }
+            num = arr.join("");
+        }
+        result.push(num);
+    }
+    console.log(result);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		Math对象没有构造函数，无法创建它的实例，调用其属性和方法时，直接使用Math对象名即可
+
+		var math=new Math();//Type Error
+
+		Math.round(num);->四舍五入区整
+		Math.ceil(num);->上取整
+		Math.floor(num);->下取整
+
+		Math.pow(底数,幂);->底数的幂次
+		Math.sqrt(num);->开根好
+		
+		Math.abs(num);->绝对值
+
+		Math.max(num1,num2,..);->最大值 
+		Math.min(num1,num2,..);->最小值
+		可通过小技巧来求数组的最大最小值
+
+		Math.random();->返回[0,1)的随机数
+		取[n,m]之间的随即整数
+			Math.floor((Math.random()*(max-min+1))+min)
+	</pre>
+    <script type="text/javascript">
+    var arr = [2, 3, 11, 4, 7];
+    var max = Math.max.apply(Math, arr);
+    console.log(max);
+    </script>
+</body>
+
+</html>
