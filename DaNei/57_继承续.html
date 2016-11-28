@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+	回顾：
+1. 创建对象：4种方式：
+   1. 创建单个对象：直接量:
+      var obj={属性1:值1,...,方法1:function(){},...};
+   	obj.__proto__指向Object.prototype
+   2. 使用构造函数，反复创建多个相同结构的对象：2步：          1. 定义构造函数：
+	参数接收特定对象的属性值
+        this.属性名=参数值,为当前对象添加属性，并初始化
+        function 构造函数名(参数1,参数2,...){
+     	    this.属性1=参数1;
+            ...
+            //this.方法=function(){};
+	    if(!构造函数.prototype.方法){
+               构造函数.prototype.方法=function(){...};
+            }
+        }
+        
+      2. 使用new关键字调用构造函数:
+	var obj=new 构造函数名(属性值1,属性值2,...);
+        4件事：
+        1. 创建新对象
+        2. 调用构造函数，为新对象添加属性和方法，并赋值
+        3. 将新对象的__proto__属性指向构造函数的原型对象
+        4. 返回新对象的地址给调用者
+    3.new Object(): 只在暂时不知道对象属性和方法时
+   (4.var obj=Object.create(父对象)
+     创建一个新对象同时，设置新对象的__proto__指向父对象
+ 
+2. this：指代正在调用方法的当前对象
+     *和定义位置无关！仅和*调用*时使用的对象有关*
+   比如：为Number类型的所有对象添加round方法
+     
+3. 面向对象三大特点：封装，继承，多态
+   封装：将现实中一个事物的属性和功能，集中定义在程序中的一个对象里。
+   继承：父对象的属性和方法，子对象不用重复定义，可直接用
+       目的：代码重用！   
+   多态：一个对象在不同的情况下，显示不同的状态
+       js中对多态支持不好。仅讨论重写。
+       重写：子对象觉得父对象的共有方法不好用
+             自己可定义同名的自有方法。
+
+4. 原型/原型链：
+   原型：每个函数对象都有一个prototype属性
+         指向自己的原型对象
+       构造函数的原型对象中的属性和方法，所以子对象可继承
+ 每个对象都有一个__proto__属性引用自己构造函数的原型对象
+   什么属性或方法该放入原型：
+	共享属性*值*的属性；
+        共享的方法：使用this获得正在调用方法的子对象
+         
+   原型链：由每个对象的__proto__构成的多级继承关系
+     所有对象的原型链顶部都继承自Object.prototype
+     所有函数对象的原型链一定都继承自Function.prototype
+Function.prototype的__proto__属性指向Object.prototype
+     Object.prototype.__proto__=null!
+
+5. 检测某个对象是否拥有指定的属性或方法：3种：
+    检测原型链中是否包含：2种：
+    1. "属性名" in 对象
+    2. 判断存在
+	if(对象.属性名!==undefined)-->*if(对象.属性名)*
+       判断不存在
+        if(对象.属性名===undefined)-->*if(!对象.属性名)*
+    仅检测自有属性：1种：
+	Object.hasOwnProperty(对象,"属性名")
+6. 扩展内置对象的内置方法：
+    之前先检查是否已经包含：
+    if(!("方法名" in 构造函数.prototype))
+    1.将新方法添加到内置对象构造函数的原型中
+      比如: Array.prototype.indexOf=function(elem){...}
+    2.新方法内使用this指代未来调用该方法的实际对象
+        Array.prototype.indexOf=function(elem){
+	    for(var i=0;i<this.length;i++){
+		...
+        }
+        调用时,arr.indexOf("4")-->this->arr
+
+7. 继承：2种
+   1. 原型继承：通过修改对象的__proto__属性，
+                直接继承一个对象！
+      2种：
+      1. 单独修改一个对象的__proto__属性
+       Object.setPrototypeOf(子对象,父对象);
+       仅影响一个对象，不影响同类型其他对象
+      2. 统一修改见后所有子对象的公共原型对象
+       构造函数.prototype=父对象
+       不影响修改前已创建的子对象
+       仅影响修改后创建的新子对象
+***特殊：如果不希望修改内置构造函数的原始原型对象
+       为构造函数指定一个新的自定义的原型对象
+       function MyArray(){}
+       //(1)MyArray.prototype=Array.prototype;
+       (2)MyArray.prototype=[];//new Array();
+       
+       MyArray.prototype.indexOf=function();
+       (1)今后所有数组对象的indexOf方法都会被篡改
+       (2)仅影响由MyArray创建出的子对象
+          普通数组对象不受影响
+       (2)是推荐的。
+
+       var mA=new MyArray();
+       mA.push(100); //100存放的位置：mA对象本地
+       push方法中可能有类似：this[this.length]=100;
+       调用时,this-->mA -->100实际存入mA对象中
+
+    2. 继承结构：最像Java的继承
+        子类型的构造函数中，又调用了父类型的构造函数
+       function Flyer(fname,speed){
+	   this.fname=fname;
+           this.speed=speed;
+	   if(!Flyer.prototype.fly){
+  	   Flyer.prototype.fly=function(){
+console.log(this.fname+"以时速:"+this.speed+" 飞行");
+           	}
+           }
+       }
+       function Plane(fname,speed,capacity){
+	   Flyer(fname,speed);
+           this.capacity=capacity;
+           if(!Plane.prototype.fly){
+      	   Plane.prototype.fly=function(){
+console.log(this.fname+"搭乘"+this.capacity+"乘客 以时速:"+this.speed+" 飞行");
+           	}
+           }
+       }
+
+    call和apply: 在调用时，临时更换调用方法的对象！
+       要调用的方法.apply(替换对象,[参数值列表])
+       要调用的方法.call(替换对象,参数值1,...)
+
+8. 检查两对象之间的继承关系：
+	父对象.isPrototypeOf(子对象)
+      强调：不但可检测直接父对象，
+            还可检测整个原型链上的所有父对象
+       
+鄙视题：如何判断一个对象是数组：5种办法
+    1. typeof(对象)-->类型名 -->无效！
+    2. 利用原型：2种
+	Array.prototype.isPrototypeOf(arr) //true
+        子对象 instanceof 父构造函数 //true
+        instance: 实例：凡是用new 构造函数()创建出的对象，都称为是构造函数的实例
+    3. 利用构造函数constructor
+        arr.constructor==Array //true
+    4. 利用toString方法
+Object.prototype.toString.call(arr)==="[object Array]"
+    5. Array.isArray(arr)：ES5中新
+  
+    总结：4+5
+    function isArray(obj){
+        if(Array.isArray){
+           return Array.isArray(obj);
+        }else{
+return Object.prototype.toString.call(obj)==="[object Array]"
+        }
+    }</pre>
+</body>
+
+</html>

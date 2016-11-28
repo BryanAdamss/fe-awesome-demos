@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    #gridPanel {
+        width: 480px;
+        height: 480px;
+        margin: 0 auto;
+        background-color: #bbada0;
+        border-radius: 10px;
+        position: relative;
+    }
+    
+    .grid,
+    .cell {
+        width: 100px;
+        height: 100px;
+        border-radius: 6px;
+    }
+    
+    .grid {
+        float: left;
+        margin: 16px 0 0 16px;
+        background-color: #ccc0b3;
+    }
+    
+    .cell {
+        text-align: center;
+        line-height: 100px;
+        color: #776e65;
+        font-size: 60px;
+        position: absolute;
+    }
+    /*每行拥有相同的top*/
+    /*每列拥有相同的left*/
+    
+    #c00,
+    #c01,
+    #c02,
+    #c03 {
+        top: 16px;
+    }
+    
+    #c00,
+    #c10,
+    #c20,
+    #c30 {
+        left: 16px;
+    }
+    
+    #c10,
+    #c11,
+    #c12,
+    #c13 {
+        top: 132px;
+    }
+    
+    #c01,
+    #c11,
+    #c21,
+    #c31 {
+        left: 132px;
+    }
+    
+    #c20,
+    #c21,
+    #c22,
+    #c23 {
+        top: 248px;
+    }
+    
+    #c02,
+    #c12,
+    #c22,
+    #c32 {
+        left: 248px;
+    }
+    
+    #c30,
+    #c31,
+    #c32,
+    #c33 {
+        top: 364px;
+    }
+    
+    #c03,
+    #c13,
+    #c23,
+    #c33 {
+        left: 364px;
+    }
+    
+    .n2 {
+        background-color: #eee3da
+    }
+    
+    .n4 {
+        background-color: #ede0c8
+    }
+    
+    .n8 {
+        background-color: #f2b179
+    }
+    
+    .n16 {
+        background-color: #f59563
+    }
+    
+    .n32 {
+        background-color: #f67c5f
+    }
+    
+    .n64 {
+        background-color: #f65e3b
+    }
+    
+    .n128 {
+        background-color: #edcf72
+    }
+    
+    .n256 {
+        background-color: #edcc61
+    }
+    
+    .n512 {
+        background-color: #9c0
+    }
+    
+    .n1024 {
+        background-color: #33b5e5
+    }
+    
+    .n2048 {
+        background-color: #09c
+    }
+    
+    .n4096 {
+        background-color: #a6c
+    }
+    
+    .n8192 {
+        background-color: #93c
+    }
+    
+    .n8,
+    .n16,
+    .n32,
+    .n64,
+    .n128,
+    .n256,
+    .n512,
+    .n1024,
+    .n2048,
+    .n4096,
+    .n8192 {
+        color: #fff
+    }
+    
+    .n1024,
+    .n2048,
+    .n4096,
+    .n8192 {
+        font-size: 40px
+    }
+    /*显示分数的p元素*/
+    
+    p {
+        width: 480px;
+        margin: 0 auto;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 40px;
+        padding-top: 15px;
+    }
+    /*GameOver界面样式*/
+    
+    #gameOver {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    
+    #gameOver div {
+        width: 100%;
+        height: 100%;
+        background-color: #555;
+        opacity: 0.5;
+    }
+    
+    #gameOver p {
+        border-radius: 10px;
+        position: absolute;
+        top: 200px;
+        left: 35%;
+        width: 300px;
+        height: 200px;
+        border: 1px solid #edcf72;
+        line-height: 1.6em;
+        text-align: center;
+        background-color: #fff;
+    }
+    
+    .button {
+        padding: 10px;
+        border-radius: 6px;
+        background-color: #9f8b77;
+        color: #fff;
+        cursor: pointer;
+    }
+    </style>
+    <script src="js/2048.js"></script>
+</head>
+
+<body>
+    <p>Score:
+        <span id="score"></span>
+    </p>
+    <div id="gridPanel">
+        <!--背景单元格-->
+        <div id="g00" class="grid"></div>
+        <div id="g01" class="grid"></div>
+        <div id="g02" class="grid"></div>
+        <div id="g03" class="grid"></div>
+        <div id="g10" class="grid"></div>
+        <div id="g11" class="grid"></div>
+        <div id="g12" class="grid"></div>
+        <div id="g13" class="grid"></div>
+        <div id="g20" class="grid"></div>
+        <div id="g21" class="grid"></div>
+        <div id="g22" class="grid"></div>
+        <div id="g23" class="grid"></div>
+        <div id="g30" class="grid"></div>
+        <div id="g31" class="grid"></div>
+        <div id="g32" class="grid"></div>
+        <div id="g33" class="grid"></div>
+        <!--前景单元格-->
+        <div id="c00" class="cell"></div>
+        <div id="c01" class="cell"></div>
+        <div id="c02" class="cell"></div>
+        <div id="c03" class="cell"></div>
+        <div id="c10" class="cell"></div>
+        <div id="c11" class="cell"></div>
+        <div id="c12" class="cell"></div>
+        <div id="c13" class="cell"></div>
+        <div id="c20" class="cell"></div>
+        <div id="c21" class="cell"></div>
+        <div id="c22" class="cell"></div>
+        <div id="c23" class="cell"></div>
+        <div id="c30" class="cell"></div>
+        <div id="c31" class="cell"></div>
+        <div id="c32" class="cell"></div>
+        <div id="c33" class="cell"></div>
+    </div>
+    <!--Game Over界面-->
+    <div id="gameOver">
+        <div>
+            <!--灰色半透明背景-->
+        </div>
+        <!--前景小窗-->
+        <p>Game Over!
+            <br> Score:
+            <span id="finalScore"></span>
+            <br>
+            <a class="button" id="restart" onclick="game.start()">Try again!</a>
+        </p>
+    </div>
+    <script type="text/javascript">
+    /*
+                      		2048:
+                    操作：使用键盘方向键，四个方向移动
+                    规则：
+                    游戏开始时：随机选择2个位置生成2或4
+                    每次移动：
+                       1. 都判断移动方向上是否存在可合并的单元格
+                       2. 如果当前单元格之前存在相同数值的单元格，就累加
+                          如果当前单元格之前有空单元格，就向前移动，直到碰到第一个不为空的单元格停止
+                       3. 每次移动后，如果存在空单元格，就随机选择空单元格生成一个2或4的随机数。
+                          如果本次未发生移动，但游戏还可继续，不生成新随机数
+                       4. 游戏结束: 每次移动后都判断：
+                           四个方向均无法移动-->失败
+                           任意单元格出现8192-->通关
+                           */
+    </script>
+</body>
+
+</html>
