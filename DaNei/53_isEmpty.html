@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function isEmpty(str) {
+        if (str === undefined) {
+            return true;
+        } else if (str === null) {
+            return true;
+        } else {
+            var reg = /^\s*$/;
+            return reg.test(str);
+        }
+    }
+    console.log(isEmpty(undefined));
+    console.log(isEmpty(""));
+    console.log(isEmpty(" "));
+    </script>
+</body>
+
+</html>

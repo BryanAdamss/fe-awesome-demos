@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>	
+		API
+			number.toFixed(n);// 把数字按n位四舍五入返回一个字符串
+				var Math.round(num);//只能取整，不能按位数四舍五入;并其返回一个number
+			***何时用:因为是返回一个字符串，所以一般用在计算完之后，需要显示在页面上的时候用(计算之前用，因为类型混乱可能造成计算不准确)***
+			number.toString(n);//按n进制输出数字的字符串格式
+	</pre>
+    <script type="text/javascript">
+    var str = "张";
+    var code = str.charCodeAt(0);
+    console.log(code);
+    code = code.toString(3);
+    console.log(code);
+    </script>
+</body>
+
+</html>

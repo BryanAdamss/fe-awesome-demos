@@ -9,7 +9,22 @@
 <body>
     <script type="text/javascript">
     // 2016-06-29入职,合同三年,求到期时间?到期前一个月续签,如果续签日碰到周末则提前到上周五，求续签日期？提前一周提醒,求提醒日期
-    var hire = new Date("2012-6-29");
+    var hire = new Date("2012-06-30");
+    console.log(hire);
+    hire.setFullYear(hire.getFullYear() + 3);
+    console.log("合同到期时间：" + hire);
+    hire.setMonth(hire.getMonth() - 1);
+    if (hire.getDay() === 6) {
+        // 周六
+        hire.setDate(hire.getDate() - 1);
+    } else if (hire.getDay() === 0) {
+        // 周日
+        hire.setDate(hire.getDate() - 2);
+    }
+    console.log("续签日期：" + hire);
+    hire.setDate(hire.getDate() - 7);
+    console.log("提醒日期：" + hire);
+    console.log(hire);
     </script>
 </body>
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		闭包:函数内使用了不属于自己的局部变量
+			何时用:保护局部变量的时候		
+	</pre>
+    <script type="text/javascript">
+    function counter() {
+        var n = 0;
+
+        function getUnique() {
+            return n++
+        }
+
+        return getUnique;
+    }
+    var c = counter();
+    console.log(c());
+    console.log(c());
+    console.log(c());
+    console.log(c());
+    console.log(c());
+    console.log(c());
+    console.log(c());
+    c = null; // 释放闭包占用的资源
+    </script>
+</body>
+
+</html>

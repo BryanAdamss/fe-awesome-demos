@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>	
+		Function对象
+			创建
+				1.以声明方式定义方法
+					function 方法名(参数列表){方法体；return 返回值}
+				2.以创建对象方式定义方法
+					var 方法名=new Function("参数1",...,"方法体;return 返回值");
+					要求参数和方法体都有字符串传入
+				3.使用匿名函数赋值的方式(直接量方式)
+					var functionName=function(参数列表){方法体};
+
+					匿名函数:没有方法名的函数
+						作用
+							1.回调(回头再调用)函数:函数何时执行,程序员不需要控制,由所在环境自动调用执行
+							eg:当做参数传递给另一函数
+							arr.sort(function(a,b){return a-b});
+							里面这个匿名函数何时调用你不知道
+							事件处理函数也是回调,什么时候调用，你不知道，但是触发了，它就能找到
+							直调:你调系统API
+							回调:系统调用你的函数...什么时候执行你的函数你不知道...
+							2.自调函数(立即调用函数):匿名函数自己调用自己
+								当函数不需要重复使用时，函数只要用一次的时候就可以用自调函数
+								(function(num1,num2){
+								console.log(num1+num2);
+								})(100,200);
+
+								语法
+								(function(形参列表){方法体})(实参列表);
+								在函数定义位置立即执行!
+								
+
+				**只有通过声明方式创建的方法才会提前**
+
+
+
+
+			重载:同名方法根据传入的参数列表不同，执行不同的任务
+				比如:其他语言中重载
+					function jz(money){//现金结账}
+					function jz(cardId,pwd){//刷卡结账}
+					jz(300);->现金
+					jz("0015146","12345")->刷卡
+
+				***js语法上不支持重载、但可以使用arguments对象模拟***
+
+				js中定义2个同名函数，后定义的会覆盖前面定义的->所以语法上不支持
+
+			arguments对象
+				每个函数对象都有一个arguments属性;
+				它保存着当前函数接收到的所有**实际参数**,故可以使用arguments属性处理可变数量的参数。
+				它是一个类似数组的对象->可以用下标访问
+				此属性只能在函数执行体内使用;
+				方法内，自动创建，直接使用
+
+				属性
+					arguments.length;返回实际传入的参数个数
+					arguments.callee;返回当前arguments对象的拥有函数,在匿名函数中可以使用其完成递归调用
+
+	</pre>
+    <script type="text/javascript">
+    // 因为参数个数不固定，所以模拟重载的时候，型参可以不定义
+    function calc() {
+        if (arguments.length === 1) {
+            // 因为js数组不限制元素类型，所以可能传任何东西，故要先处理下
+            var n = parseFloat(arguments[0]);
+            console.log("算平方:" + n * n);
+        } else {
+            var n = parseFloat(arguments[0]);
+            var m = parseFloat(arguments[1]);
+            console.log("算加法:" + (n1 + n2));
+        }
+    }
+    calc(3);
+    calc(3, 4);
+    </script>
+</body>
+
+</html>

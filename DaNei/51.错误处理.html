@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>	
+		ECMAScript定义了六种类型错误。(EvalError、RangeError、ReferenceError、SyntaxError、TypeError、URIError)
+		除此之外还可以调用Error构造方法来创建自定义Error对象,并使用throw语句抛出该对象
+
+		通过js提供的异常处理语句，可以用结构化的方式来捕捉发生的错误，让异常处理代码与核心业务代码实现分离
+
+		即使程序出错，程序也不应该宕机，停机
+
+		错误处理:在程序出现一场状态时，保证程序不停止的机制
+
+		错误类型
+			Error类型->所有错误对象的父类型
+			6种子类型
+				EvalError->eval()时报的错误,不重要
+				URIError->URI错误,不重要
+				RangeError->代表*参数*超出范围
+					eg:num.toFixed(n);要求0<=n<=20,如果传入一个超出此范围的数就会报此错误并抛出一个RangeError类型的错误对象
+				ReferenceError->引用错误,找不到对象;
+				比如:只要使用未声明的变量时，都抛出ReferenceError
+				SyntaxError->语法错误,修改代码就可解决
+				TypeError->错误的使用了类型**和类型的方法***
+		如何处理错误
+		try/catch
+			语法
+				try{
+					可能出错的代码(此处代码越少越好)
+				}catch([error]){
+					负责错误处理的代码
+					1.获得错误信息:err.message;(兼容性差,每个浏览器抛出的信息不一样,并晦涩难以理解),一般用err.name;它保存的是错误类型名称
+					2.根据错误类型，执行不同的处理
+				}[finally{
+					出口语句，无论错误是否发生都执行
+					 一般会在这做释放对象的操作,如果程序中使用了大对象，一定要在finally中主动释放
+				}]
+
+				**能用if.else解决的问题,就不用try/catch,一般try/catch处理的是无法预料的问题**
+
+		主动抛出异常:如何告知方法调用者出错?->一般用在做框架告诉使用者出错
+		throw new Error("自定义的错误信息");
+	</pre>
+    <script type="text/javascript">
+    // var num = 3;
+    // num.toFixed(-1);
+    // console.log(num);
+
+    // (function() {
+    //     var n = "a";
+    //     n.toFixed(2); //TypeError错误的使用了类型方法
+    // })();
+
+    (function() {
+        var n = "a";
+        try {
+            n.toFixed(2);
+        } catch (err) {
+            console.log(err.message);
+            console.log(err.name);
+        } finally {
+            alert("出错了")
+        }
+    })();
+    </script>
+</body>
+
+</html>
