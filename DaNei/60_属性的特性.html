@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>	
+		属性(property)的特性(attribute)
+			属性：对象中可以保存数据的变量;分为数据属性和访问器属性
+			属性的特性
+				1.数据属性的特性
+					[[Value]] 			保存了数据属性的值
+					[[Writable]] 		属性值是否可改变
+					[[Enumerable]] 		是否可通过for-in,Object.keys()枚举
+					[[Configurable]] 	属性特性(除了value)是否可以被重新配置
+					直接在对象上定义的属性，默认[[value]]为值,其他三个皆为true
+					var person={
+						name:"haha"
+					};
+					 person.name的值是可改写的，可通过for-in枚举出来的，特性也是可重新配置的
+
+					 调用Object.defineProperty()方法时，不指定Configurable、Enumerable、Writable,则三者皆默认为false
+				2.访问器属性的特性
+					[[get]] 			读取访问器属性时调用
+					[[set]] 			设置访问器属性时调用
+					[[Enumerable]] 		是否可通过for-in枚举
+					[[Configurable]] 	属性特性(除了value)
+
+			特性可通过Object.defineProperty()来设置
+	</pre>
+    <script type="text/javascript">
+    var stu = {
+        chinese: 90
+    };
+    stu.math = 80;
+    console.log(stu.chinese);
+    console.log(stu.math);
+    // 枚举每个属性以及值
+    for (var p in stu) {
+        console.log(p + "->" + stu[p]);
+    }
+    // 仅枚举每个属性
+    var arr = Object.keys(stu);
+    console.log(arr);
+    // 添加一个新的数据属性
+    Object.defineProperty(stu, "english", {
+        /*属性描述符对象*/
+        value: 99,
+        writable: true, //可写
+        enumerable: true, //可枚举
+        configurable: true //特性可重新配置
+    });
+    console.log(stu.english);
+    stu.english = 100;
+    for (p in stu) {
+        console.log(p + "=>" + stu[p]);
+    }
+    console.log(stu.english);
+    // 重新定义english的特性
+    Object.defineProperty(stu, "english", {
+        /*属性描述符对象*/
+        writable: false, //不可写
+        enumerable: false, //不可枚举出
+        configurable: false //特性不可重新配置
+    });
+    stu.english = 101;
+    console.log(stu.english); // 100 无法被修改
+    for (p in stu) {
+        /*chinese=>90
+ 			math=>80
+ 			englisth属性无法被枚举出来
+ 		*/
+        console.log(p + "=>" + stu[p]);
+    }
+
+    // 使用属性的特性定义一个新的访问器属性
+    Object.defineProperty(stu, "total", {
+        get: function() {
+            return this.chinese + this.math + this.english;
+        },
+        enumrable: true,
+        configurable: true
+    })
+    console.log(stu);
+
+    var square = {};
+    console.log(square);
+    // 数据属性
+    Object.defineProperty(square, "width", {
+        value: 10,
+        writable: true,
+        enumerable: true,
+        configurable: true
+    });
+    // 访问器属性
+    Object.defineProperty(square, "perimeter", {
+        get: function() {
+            return this.width * 4;
+        },
+        set: function(value) {
+            this.width = value / 4;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(square, "size", {
+        get: function() {
+            return this.width * this.width;
+        },
+        set: function(value) {
+            this.width = Math.sqrt(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    console.log(square);
+    square.width = 2;
+    console.log(square.width);
+    console.log(square.size);
+    console.log(square.perimeter);
+    </script>
+</body>
+
+</html>

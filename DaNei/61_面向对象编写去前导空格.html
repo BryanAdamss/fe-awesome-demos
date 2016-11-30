@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var s1 = new String("   A  B      ");
+    // 仅给s1加了ltrim
+    s1.ltrim = function() {
+        var reg = /^\s*/;
+        return this.replace(reg, "");
+    };
+    console.log(s1.ltrim());
+    // 给所有字符串加ltrim
+    String.prototype.ltrim = function() {
+        var reg = /^\s*/;
+        return this.replace(reg, "");
+    };
+    var s2 = "  C   D   ";
+    console.log(s2.ltrim());
+    </script>
+</body>
+
+</html>

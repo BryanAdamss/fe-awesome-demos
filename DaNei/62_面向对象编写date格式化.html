@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 参数fmt中可以包含几个特别的字符 yyyy MM dd HH mm ss 
+    Date.prototype.format = function(fmt) {
+        if (!fmt) {
+            return undefined;
+        }
+        var y = this.getFullYear() + "年";
+        // 月补位
+        var m = this.getMonth() + 1 + "月";
+        m = m < 10 ? "0" + m : "" + m;
+        // 日补位
+        var d = this.getDate() + "日";
+        d = d < 10 ? "0" + d : "" + d;
+        // 周几
+        var week = ["日", "一", "二", "三", "四", "五", "六"];
+        var w = " 星期" + week[this.getDay()];
+        // 上下午
+        var h = this.getHours();
+        var apm = h >= 12 ? " 下午 " : " 上午 ";
+        // 24小时转12
+        h = h > 12 ? h - 12 : h;
+        // 时2位正常输出，一位补0
+        h = h < 10 ? "0" + h : "" + h;
+        // 分补位
+        var mi = this.getMinutes();
+        mi = mi < 10 ? "0" + mi : "" + mi;
+        // 秒补位
+        var s = this.getSeconds();
+        s = s < 10 ? "0" + s : "" + s;
+
+        fmt = fmt.replace("yyyy", y);
+        fmt = fmt.replace("MM", m);
+        fmt = fmt.replace("dd", d);
+        fmt = fmt.replace("HH", h);
+        fmt = fmt.replace("mm", mi);
+        fmt = fmt.replace("ss", s);
+        return fmt;
+    };
+
+    var now = new Date();
+    console.log(now.format("yyyy-MM-dd HH:mm:ss"));
+    </script>
+</body>
+
+</html>

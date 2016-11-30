@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		创建一个正方形square对象,其中有3个属性width,perimeter(周长),size(面积),要求可以精确的控制这个属性的可枚举性
+	</pre>
+    <script type="text/javascript">
+    // 这样定义,perimeter,size就是冗余属性，因为width如果改变了,周长和面积没有变更，其实周长和面积和width是有紧密关系的
+    var square1 = {
+        width: 10,
+        perimeter: 40,
+        size: 100
+    };
+    var square2 = {
+        __width: 0,
+        /* 访问器属性的本质是两个函数并自身不能存储值，所以访问器属性的值往往要依赖于另一个数据属性.
+        访问器属性一般用于两个场景：
+        1.用于冗余属性2.有意控制属性的只读或只写;
+
+        注意访问器属性不要有打印操作，只需要简单的返回一个值即可
+        */
+        get perimeter() {
+            return this.width * 4
+        },
+        set perimeter(value) {
+            this.width = value / 4;
+        },
+        get size() {
+            return this.width * this.width
+        },
+        set size(value) {
+            this.width = Math.sqrt(value);
+        },
+    };
+    console.log(square1);
+    console.log(square2);
+    console.log(square2.perimeter);
+    square2.perimeter = 80;
+    console.log(square2);
+    console.log(square2.perimeter);
+    </script>
+</body>
+
+</html>
