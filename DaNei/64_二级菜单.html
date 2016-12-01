@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .disapper {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <span onclick="toggle(this);">部门管理</span>
+            <ul>
+                <li>菜单1</li>
+                <li>菜单2</li>
+                <li>菜单3</li>
+            </ul>
+        </li>
+        <li>
+            <span onclick="toggle(this);">部门管理2</span>
+            <ul class="disapper">
+                <li>菜单1</li>
+                <li>菜单2</li>
+                <li>菜单3</li>
+            </ul>
+        </li>
+        <li>
+            <span onclick="toggle(this);">部门管理3</span>
+            <ul class="disapper">
+                <li>菜单1</li>
+                <li>菜单2</li>
+                <li>菜单3</li>
+            </ul>
+        </li>
+    </ul>
+    <script type="text/javascript">
+    function toggle(span) {
+        var ulList = document.querySelectorAll("ul li ul");
+        for (var i = 0; i < ulList.length; i++) {
+            if (!ulList[i].hasAttribute("class")) {
+                ulList[i].setAttribute("class", "disapper");
+            }
+        }
+        var ul = span.nextElementSibling;
+        if (ul.hasAttribute("class")) {
+            ul.removeAttribute("class");
+        } else {
+            ul.setAttribute("class", "disapper");
+        }
+
+
+    }
+    </script>
+</body>
+
+</html>

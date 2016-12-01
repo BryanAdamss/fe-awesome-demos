@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>jj</h2>
+    <script type="text/javascript">
+    console.log("nodeType\tnodeName\tnodeValue");
+
+    function triverse(node) {
+        if (node.nodeType == 1 || node.nodeType == 9) {
+            console.log(node.nodeType + "\t\t\t" + node.nodeName + "\t\t\t" + node.nodeValue);
+            for (var i = 0; i < node.children.length; i++) {
+                var child = node.children[i];
+                triverse(child);
+            }
+        }
+    }
+    triverse(document.documentElement);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var fragment = document.createDocumentFragment();
+    var table = document.createElement("table");
+    var thead = document.createElement("thead");
+    var tbody = document.createElement("tbody");
+    var tr = document.createElement("tr");
+    var th = document.createElement("th");
+    th.innerHTML = "表head";
+    tr.appendChild(th);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    var tr2 = document.createElement("tr");
+    var td = document.createElement("td");
+    td.innerHTML = "表body";
+    tr2.appendChild(td);
+    tbody.appendChild(tr2);
+    table.appendChild(tbody);
+    fragment.appendChild(table);
+    document.body.appendChild(fragment);
+    </script>
+</body>
+
+</html>
