@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+    <div class="miaoBiao">00:00.000</div>
+    <button onclick="start()">开始计时</button>
+    <button onclick="stop()">暂停计时</button>
+    <script type="text/javascript">
+    var counter = 0; //毫秒计数器
+    var s = 0;
+    var m = 0;
+    var ms = 0;
+    var mb = document.querySelector(".miaoBiao");
+
+    function drawTime() {
+        counter += 60;
+        ms = counter % 1000;
+        if (ms < 10) {
+            ms = "00" + ms;
+        } else if (ms < 100) {
+            ms = "0" + ms;
+        } else {
+            ms = "" + ms;
+        }
+        s = parseInt(counter / 1000);
+        s = s < 10 ? "0" + s : "" + s;
+        m = parseInt(counter / 60000);
+        m = m < 10 ? "0" + m : "" + m;
+        mb.innerHTML = m + ":" + s + "." + ms;
+    }
+    var timer = null;
+
+    function start() {
+        clearInterval(timer);
+        drawTime();
+        timer = setInterval(drawTime, 60);
+    }
+
+    function stop() {
+        clearInterval(timer);
+
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>登录成功</h2>
+    <h3><span>3</span>s后将跳转首页!</h3>
+    <script type="text/javascript">
+    var counter = 3;
+    var span = document.querySelector("span");
+
+    function jump() {
+        span.innerHTML = counter;
+        counter--;
+        if (counter == -1) {
+            window.location = "http://ah122.cn";
+        }
+    }
+    jump();
+    var timer = setInterval(jump, 1000);
+    </script>
+</body>
+
+</html>

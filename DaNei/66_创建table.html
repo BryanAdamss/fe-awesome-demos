@@ -26,6 +26,13 @@
     table.appendChild(tbody);
     fragment.appendChild(table);
     document.body.appendChild(fragment);
+    alert("我要开始调换表头和表body了");
+    setTimeout(function() {
+        var tab = document.getElementsByTagName("table")[0];
+        var thd = document.getElementsByTagName("thead")[0];
+        var tbd = document.getElementsByTagName("tbody")[0];
+        tab.insertBefore(tbd, thd);
+    }, 3000);
     </script>
 </body>
 

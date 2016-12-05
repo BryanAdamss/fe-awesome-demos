@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>省市级联下拉</h2>
+    <select id="prov" onchange="chageCity(this.value)">
+        <option value="-1" disabled>--请选择--</option>
+    </select>
+    <select id="citys">
+        <option value="-1" disabled>--请选择--</option>
+    </select>
+    <script type="text/javascript">
+    var ps = ["北京", "安徽", "上海"];
+    var cs = [
+        ["东城区", "天安门"],
+        ["安庆", "合肥", "阜阳"],
+        ["上海市"]
+    ];
+    var prov = document.getElementById("prov");
+    var city = document.getElementById("citys");
+    var fragment = document.createDocumentFragment();
+    var op = null;
+    for (var i = 0; i < ps.length; i++) {
+        op = document.createElement("option");
+        op.setAttribute("value", i);
+        op.innerHTML = ps[i];
+        fragment.appendChild(op);
+    }
+    prov.appendChild(fragment);
+    // 默认显示第一个
+    for (var i = 0; i < cs[0].length; i++) {
+        op = document.createElement("option");
+        op.setAttribute("value", i);
+        op.innerHTML = cs[0][i];
+        fragment.appendChild(op);
+    }
+    city.appendChild(fragment);
+
+
+    function chageCity(prov) {
+        var cityArr = cs[prov];
+        // for (var j = 0; j < city.children.length; j++) {
+        //     //注意 children是动态的，每删除一个children都会变化,元素的对应坐标也会变化，所以这种方法不行
+        //     city.removeChild(city.children[j]);
+        // }
+
+        // 删除地级市原有内容,并保留请选择
+        while (city.children.length > 1) {
+            city.removeChild(city.lastElementChild);
+        }
+
+        // 添加当前省份城市
+        for (var i = 0; i < cityArr.length; i++) {
+            op = document.createElement("option");
+            op.setAttribute("value", i);
+            op.innerHTML = cityArr[i];
+            fragment.appendChild(op);
+        }
+        city.appendChild(fragment);
+    }
+    </script>
+</body>
+
+</html>

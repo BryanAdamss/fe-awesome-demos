@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    请输入金额
+    <input type="text">
+    <script type="text/javascript">
+    var inp = document.querySelector("input");
+    inp.onkeydown = function(e) {
+        var e = e || window.event;
+        var c = e.keyCode;
+        if (!((c >= 48 && c <= 57) || (c >= 96 && c <= 105))) {
+            return false;
+        }
+
+    };
+    </script>
+</body>
+
+</html>

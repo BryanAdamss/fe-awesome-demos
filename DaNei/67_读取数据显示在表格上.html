@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="showData()">获取数据</button>
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>工资</th>
+                <th>年龄</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+    // Json对象
+    var str = '[{"ename": "Tom","salary": 3500,"age": 25}, {    "ename": "BryanAdamss",    "salary": 5000,    "age": 28}, {    "ename": "Jack",    "salary": 8000,    "age": 40}]';
+    var arr = JSON.parse(str);
+
+    function showData() {
+        var tbody = document.querySelector("table tbody");
+        var fragment = document.createDocumentFragment();
+        var tr = null;
+        var td = null;
+        for (var i = 0; i < arr.length; i++) {
+            tr = document.createElement("tr");
+            for (var key in arr[i]) {
+                td = document.createElement("td");
+                td.innerHTML = arr[i][key];
+                tr.appendChild(td);
+            }
+            fragment.appendChild(tr);
+        }
+        console.log(fragment);
+        tbody.appendChild(fragment);
+        tbody = null;
+        tr = null;
+        td = null;
+        fragment = null;
+    }
+    </script>
+</body>
+
+</html>

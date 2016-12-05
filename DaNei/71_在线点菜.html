@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    select {
+        width: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <h2>在线点菜</h2>
+    <select id="all" multiple size="8"></select>
+    <select id="selected" multiple size="8"></select>
+    <script type="text/javascript">
+    var arr = ["鱼香肉丝", "炸酱面", "大盘鸡"];
+    var fragement = document.createDocumentFragment();
+    var op = null;
+    for (var i = 0; i < arr.length; i++) {
+        op = document.createElement("option");
+        op.innerHTML = arr[i];
+        op.setAttribute("value", i);
+        op.setAttribute("ondblclick", 'chooseDish(this)');
+        fragement.appendChild(op);
+    }
+    document.getElementById("all").appendChild(fragement);
+
+    function chooseDish(option) {
+        /***节点被删除时应先解除所有绑定的事件，否则无法回收事件绑定所占内存***/
+        option.removeAttribute("ondblclick");
+        var deleted = document.getElementById("all").removeChild(option);
+        document.getElementById("selected").appendChild(deleted);
+    }
+    </script>
+</body>
+
+</html>

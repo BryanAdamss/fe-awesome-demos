@@ -83,6 +83,8 @@
 						判断是否拥有属性
 							***element.hasAttribute("属性名");->是否拥有一个特定的属性***
 							element.hasAttributes();->是否拥有属性,IE8及以下不支持,不常用
+
+						***属性是节点树上的节点，不是元素树上的节点***
 			常用DOM方法
 				getElementById()
 					document.getElementById()
@@ -166,16 +168,25 @@
 					2.var attr=docuemnt.creatAttribute("属性名");
 						attr.nodeValue="属性值";或attr.value="属性值";
 						element.setAttributeNode(attr);
-					3.var txt=docuemnt.creatTextNode("文本内容");
+					3.var txt=docuemnt.creatTextNode("文本内容");->一般可以用innerHTML来代替
 					4.var comment=docuemnt.creatComment("注释");
 					5.var fragment=docuemnt.creatDocumentFragment();->创建文档片段，它本身不可见，也不对应任何标签,就是内存的一块区域
 						
 				插入节点
 					***插一次节点到页面就要渲染一次,可以先把所有节点放到文档片段，再一次性追加到文档去***
+
 					parentElementNode.appendChild(node);->将node追加到父元素的最后
-					elementNode.insertBefore(node);
 
+					parentElementNode.insertBefore(newChild,existingChild);->将新节点添加到父元素的某个子节点之前(也可用于移动子节点)
 
+					parentElementNode.insertBefore(newChild,parentElementNode.lastElementChild);===parentElementNode.appendChild(node);
+
+				 删除和替换节点
+				 	var delectedChild=parentNode.removeChild(childNode);->删除父节点的一个子节点,并返回被删节点
+
+				 	***节点被删除时应先解除所有绑定的事件，否则无法回收事件绑定所占内存***
+					
+					var replacedChild=parentNOde.replaceChild(newNode,oldNode);->用新节点替换父元素中的一个子节点,并返回被替换节点(其实可以先删除一个再新增一个来实现)
 	</pre>
     <h2>ElementNode.innerHTML</h2>
     <div id="main">一个

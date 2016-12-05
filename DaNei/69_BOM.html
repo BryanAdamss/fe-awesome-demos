@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>BOM:通过BOM对象,js程序可以与当前浏览器窗口进行交互
+	BOM对象的根对象->Window类型的对象window;
+
+		***一般首字母大写的为类型，小写的为实例***
+
+		window是Window类型的一个实例;window对象指的是当前的浏览器窗口，它是一个全局对象，其中所有属性可直接使用
+			window.screen和screen一样
+			window.window和window一样
+			window.window.screen和window.screen和screen一样
+			直接定义的全局变量或方法也会被加在window上->全局a和window.a一样,window.alert()和alert()一样
+
+	function Window(){
+		this.window=new Window();		// Window类型; 首字母大写的函数一般是构造函数，一般用来代表某种类型
+		this.document=new Document();	//Document类型; 
+		this.screen=new Screen();		//Screen类型; 
+		this.history=new History();		//History类型; 
+		this.navigator=new Navigator();	//Navigator类型;
+		this.location=new Location();	//Location类型;
+		this.event=new Event();			//Event类型;
+	}
+	function Document(){
+		....
+	}
+	function Screen(){
+		....
+	}	
+	function History(){
+		....
+	}
+	function Navigator(){
+		....
+	}	
+	function Location(){
+		....
+	}
+	function Event(){
+		....
+	}
+ 	
+ 	***所有BOM对象无需手动创建，浏览器已经内置好了***
+
+ 	window->表示浏览器当前打开的窗口
+ 	navigator->包含浏览器的相关信息
+ 	screen->包含屏幕相关信息
+ 	history->包含用户在浏览器窗口中的访问过的URL
+ 	location->包含当前URL的信息
+ 	document->包含当前浏览器加载的文档
+ 	event->包含当前所出发的事件对象
+
+	Window(类型的)对象
+		如果文档包含iframe,浏览器会为HTML文档创建一个window对象，并为每个iframe创建一个额外的window对象
+		
+		window对象的属性和方法，在使用的时候前面可以不加window
+		常用属性
+			defaultStatus	设置/返回状态栏中默认文本
+			innerHeight	返回窗口的**文档显示区域(不包含地址栏、状态栏滚动条等浏览器部件)**的高度
+			innerWidth		返回窗口的**文档显示区域**的宽度
+			length			设置/返回窗口中的框架的数量(不包含自身文档)
+			name			设置/返回窗口的名称
+			opener			返回对创建此窗口的窗口引用
+			outerHeight		返回窗口的外部(整个浏览器包含状态栏、滚动条、工具栏等等浏览器部件)高度
+			outerWidth		返回窗口的外部宽度
+			pageXOffset		设置或返回当前页面相对于窗口显示区域左上角的X位置
+			pageYOffset		设置或返回当前页面相对于窗口显示区域左上角的Y位置
+			status			设置窗口状态栏的文本
+			parent			返回父窗口的引用(和a标签的target属性的_parent值是一个作用)
+			self			返回对当前窗口的引用
+			top				返回最顶层的先辈窗口的引用(一个页面可能会套多层iframe,top指的就是最顶部最外层的窗口，一般就是当前窗口)a标签有个target属性表示在哪个窗口中打开新链接,有_blank,_self,_top,_parent,或者自定义名字的窗口,这个_top指的也是在最顶层的先辈窗口中打开页面
+		
+		常用方法
+			弹出框
+				alert("msg") 		警告框，无返回值
+				prompt("msg","默认文字")		输入提示框,返回值可以是null/""/"字符串"	
+				confirm("msg")		确认框，返回true/false
+			打开/关闭窗口
+				xxwindow.close() 	关闭指定窗口
+				self.close() 		关闭当前窗口(关闭整个浏览器窗口，并非关闭一个标签页)
+				close() 			关闭当前窗口
+
+				var newWin=window.open(URL,name,features,replace);
+					URL->可选，声明了要显示的文档的URL
+					**name->可选，声明新窗口的名称。这名称可用作a和form的target属性**
+					features->可选，设置新窗口的一些特性_blank,_self,height，width...
+					replace->可选，是否替换浏览历史中的当前条目
+
+			补充:js特殊运算符
+				typeof->返回变量的类型 
+				instanceof->判断变量是否是某个类型的实例，返回true/false
+				delete->删除一个对象的自有属性
+				void->返回一个undefined
+
+			定时器
+				setInterval/setTimeOut(exp,time);
+					exp:执行语句
+					time:时间,毫秒单位
+					setInterval("alert('hello')",3000);
+					setInterval(fn,3000);
+				clearInterval/clearTimeOut(tID);
+					停止定时器
+
+				***特点:计时器不是一上来就直接执行函数，而是先延迟指定时间,再执行函数;流程大概是:执行到计时器函数->先延迟指定时间->再执行函数***
+	Navigator对象
+		navigator对象包含浏览器相关的信息 
+			userAgent->包含客户端浏览器和操作系统的信息
+			推荐用Modernizr来判断具体类型
+
+	Location对象
+		location对象包含有关当前URL的信息->常用于获取和改变当前浏览的网址
+			常用属性
+				href->设置或返回完整的URL
+			常用方法
+				reload()->重新加载当前页面
+
+		面试题：客户端可以实现页面跳转的方法：
+			1.超链接
+			2.表单提交
+			3.js->location.href="url";location.assign("url");
+			4.打开新窗口,window.open("url");
+			5.使用refresh元数据
+				&lt;meta http-equiv=”Refresh” content=”3;url”&gt;
+			服务器端可以实现页面跳转的方法——控制HTTP响应头
+
+	History对象
+		history对象包含用户(在浏览器窗口中)访问过的URL的历史记录
+			常用属性
+				length->返回历史记录的数量
+			常用方法
+				back()->加载前一个url
+				forward()->加载后一个url
+				go(num)->加载列表中某个具体页面,num为正表前进，为负表后退
+				go(1)等价forward();go(-1)等价back()
+
+	Screen对象
+		screen对象包含客户端显示屏幕的相关信息,常用于获取屏幕的分辨率和色彩->js可以根据显示器尺寸选择用大图还是小图，根据颜色深度选择8位色还是16位色的图，还可根据屏幕尺寸将浏览器窗口定位在屏幕中央
+			常用属性
+				width/height->屏幕的分辨率
+				availWidth/availHeight->返回显示屏幕的可用宽/高(除 Windows 任务栏之外)并非能使用整个屏幕的所有区域，OS将屏幕的某一部分占为己月，如任务栏，所以浏览器能使用的就不会是全部的屏幕大小
+	Event对象
+		event->事件出发后浏览器都会创建一个event对象,它包含了事件的详细信息;
+
+		事件可分为鼠标、键盘、状态改变三种类型的事件
+			MouseEvent:包含事件源,事件的发生坐标(x/y)
+			KeyEvent:包含事件源、keyCode
+			StateEvent:包含状态
+		
+		事件可通过事件句柄在某个事件发生的时候对某个元素进行某种操作
+			事件句柄event handler->事件处理者;每个事件发生时，浏览器会查看该事件是否指定了对应的处理函数,该函数即为事件句柄event handler,若指定了事件句柄,则浏览器会自动调用此事件句柄
+
+		当事件发生的时候，会自动调用事件处理函数，并把event对象传递进来,可在函数中直接调用
+		
+		常用事件
+			鼠标事件
+				onclick->单击(down->up->click)
+				ondblclick->双击(两次单击)
+				onmousedown->鼠标按下触发(在单击之前触发)
+				onmouseup->鼠标抬起触发
+				onmouseover->鼠标滑入
+				onmouseout->鼠标滑出
+				onmousemove->鼠标移动
+
+			键盘事件 
+				onkeydown->按键按下触发
+				onkeypress->按键按下还未抬起时触发
+				onkeyup->按键抬起触发
+				一次按键是down->press->up
+
+			状态事件
+				onload->页面加载时触发
+				onunload->页面被卸载触发
+				onchange
+				onfocus->获得焦点
+				onblur->失去焦点
+				onresize
+				onsubmit
+
+		事件定义
+			button onclick="语句1;语句2..."->此方法重复定义,先写的生效
+			button onclick="自定义函数()"->此方法重复定义,先写的生效
+			btn.onclick=...->***此方法重复定义,后写的会覆盖先写的***
+		
+		取消事件动作的执行(阻止默认事件)
+			obj.onxxx=function(){return false;}
+
+		事件冒泡
+			事件会从触发的地方一直向上传播,直到传播到body
+
+			取消冒泡
+				event.cancleBubble=true;
+
+		event对象的使用-浏览器兼容性不好
+				如果获取event对象
+					IE:在js或者HTML代码中都可以在处理函数中直接使用event关键字
+					FF:HTML中的处理函数中可以直接使用event对象;js代码中的事件处理函数中不能直接用event对象
+					getEvent:function(e){
+						return e?e:window.event;
+					}
+
+		event常用属性
+			event.cancleBubble->是否取消冒泡
+			event.clientX->事件发生时鼠标相对浏览器显示区域的X轴坐标
+			event.clientY->事件发生时鼠标相对浏览器显示区域的Y轴坐标
+
+			event.screenX->事件发生时鼠标相对整个屏幕的X轴坐标
+			event.screenY->事件发生时鼠标相对整个屏幕的Y轴坐标
+
+			event.offsetX->事件发生时鼠标相对发生元素自己的X轴坐标
+			event.offsetY->事件发生时鼠标相对发生元素自己的Y轴坐标
+
+			event.keyCode->键盘事件发生时，按下的键码
+
+			event.srcElement/target->事件发生的源对象
+	</pre>
+    <script type="text/javascript">
+    // 遍历navigator
+    // console.log(window.navigator);
+    // for (var key in window.navigator) {
+    //     console.log(key + "->" + window.navigator[key]);
+    // }
+    console.log(window.location.href);
+    </script>
+</body>
+
+</html>
