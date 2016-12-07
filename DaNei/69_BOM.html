@@ -174,13 +174,14 @@
 				一次按键是down->press->up
 
 			状态事件
-				onload->页面加载时触发
+				onload->页面所有内容(img、css、js)加载完成时才触发
 				onunload->页面被卸载触发
-				onchange
+				onchange->表单项的值发生改变时候,一般用在select上,input上只有在值改变并失去焦点的时候才会触发onchange
 				onfocus->获得焦点
 				onblur->失去焦点
-				onresize
-				onsubmit
+				onresize->窗口改变大小时
+				onsubmit->表单被提交的时候触发,type=submit,type=image会让表单进行提交，并触发submit事件
+				onerror->可用在body、img元素上，body、img加载出错时会触发
 
 		事件定义
 			button onclick="语句1;语句2..."->此方法重复定义,先写的生效

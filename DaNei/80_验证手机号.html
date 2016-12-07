@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" name="xxx">
+        <br>
+        <button type="submit">提交</button>
+    </form>
+    <script type="text/javascript">
+    var patt = /^1[3589]\d{9}$/;
+    var tel = document.querySelector("input");
+    var fo = document.querySelector("form");
+    fo.onsubmit = function(e) {
+        var e = e || window.event;
+
+        if (patt.test(tel.value)) {
+            console.log("合法");
+            this.submit();
+        } else {
+            console.log("非法");
+            tel.focus();
+            tel.select();
+        }
+        e.preventDefault();
+        return false;
+    };
+    </script>
+</body>
+
+</html>

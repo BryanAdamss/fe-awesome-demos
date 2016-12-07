@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>发表留言</h2>
+    <form>
+        <label>姓名:
+            <input type="text" name="userName" placeholder="请输入姓名">
+        </label>
+        <br>
+        <label>留言:
+            <textarea name="comment" placeholder="请输入留言"></textarea>
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="agree"> 我已阅读《常见问题列表》
+        </label>
+        <br>
+        <button type="submit">提交</button>
+    </form>
+    <script type="text/javascript">
+    var fo = document.querySelector("form");
+    var ips = fo.elements;
+    console.log(ips);
+    fo.onsubmit = function(e) {
+        var e = e || window.event;
+        if (fo.elements["userName"].value === "" || fo.elements["comment"].value === "" || fo.elements["agree"].checked === false) {
+
+            e.preventDefault();
+            return false;
+        } else {
+            this.submit();
+        }
+    };
+    </script>
+</body>
+
+</html>

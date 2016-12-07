@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>W3C DOM标准被分为3个不同部分
+		核心 DOM->针对任何结构化文档的标准模型,遍历DOM树、增删改查节点
+		XML DOM->针对XML文档的标准模型
+		HTML DOM->针对HTML文档的标准模型,以一种简便的方法访问DOM树
+	HTML DOM
+		定义了用于HTML的一系列标准的对象，以及访问和处理HTML文档的标准方法
+		HTML标签对象化->将网页中的每个元素都看做一个对象
+
+	核心DOM vs HTML DOM
+		主要差别
+			核心DOM提供了统一的操作结构化文档(XML、HTML..)的接口
+			createElement()、appendChild()、setAttribute()...
+			HTMLDOM则提供了各种封装好的HTML对象Image、Form、Input...
+		对象类型
+			核心DOM->Node、ElementNode、TextNode、AttributeNode、CommentNode、NodeList；
+			HTMLDOM->Image、Table、Form、Input、Select...将所有标签对象化
+		创建新节点
+			核心DOM->var newNode=document.createElement("img");
+			HTMLDOM->var newNode=new Image();
+		添加属性
+			核心DOM->node.setAttribute("属性名","属性值");
+			HTMLDOM->img.src="xxx";img.id="xx";
+		适用场合 
+			核心DOM->适用于操作节点、增删改查
+			HTMLDOM->操作属性、读取或修改属性的值
+		获取属性值
+			核心DOM->e.getAttribute("href"),并属性值都是字符串类型
+			HTMLDOM->直接使用对象来访问属性的值e.href，属性值并不一定是字符串类型，也可以是数字类型
+	
+	常用HTML DOM对象
+		通用属性
+		htmlDomElem.title
+		htmlDomElem.id
+		htmlDomElem.className
+		htmlDomElem.style.display="none";
+		htmlDomElem.style.cssText="display:none;color:red;";***cssText不会追加样式,它会覆盖之前style中写的样式,所以一般推荐先获取原样式再用+=来追加***
+		
+		Image
+			&lt;img&gt;每出现一次，一个Image对象就会被创建，也可以使用new Image()来手动创建一个对象
+
+			常用属性:src、height、width
+
+		Table
+			&lt;table&gt;标签表示一个Table对象,但无法通过new来创建
+			常用属性:rows、cells
+			常用方法:insertRow(index)->返回TableRow对象
+			deleteRow(index)、createCaption()
+
+		TableRow
+			&lt;tr&gt;标签表示一个TableRow对象
+			常用属性:cells、innerHTML、rowIndex
+			常用方法:insertCell(index)、deleteCell(index)
+
+		TableCell
+			常用属性:cellIndex、innerHTML、colSpan(跨几列)、rowSpan(跨几行)
+
+		Form
+			常用属性:action、method、enctype(text/plain、multipart/form-data、application/x-www-form-urlencoded)、length(表单中元素数目)、elements[]包含表单中所有input、select、textarea的数组
+			常用方法:reset()、submit()
+
+		Input
+			常用属性:name、value
+			常用方法:focus()、select()选择全部文本
+
+		Select
+			常用属性:options、selectedIndex(选中项索引)、value(选中项的value)
+			常用方法:add(option)、remove(index)
+			事件:onchange
+
+		Option
+			常用属性:index、text、value、selected(是否被选中)
+			可通过new创建var o=new Option(text,value);
+		
+		***以上HTML DOM对象只有Image和Option能通过new来创建，其他都不行***
+
+	几个表单中比较特别的属性
+		在HTML中，只要出现即代表生效
+		但在HTML DOM中都是boolean类型，需要赋值true/false
+		readonly <-->readOnly
+		disabled <-->disabled
+		checked <-->checked
+		selected <-->selected
+		multiple <-->multiple
+	</pre>
+    <a href="#">haha</a>
+    <script type="text/javascript">
+    var pr = document.querySelector("a");
+    console.log(pr)
+        // pr.style.color = "red";
+        // pr.style.backgroundColor = "#00f";
+        // pr.style.fontSize = "18px";
+
+    pr.style.cssText = "color:red;font-size:30px;";
+    </script>
+</body>
+
+</html>

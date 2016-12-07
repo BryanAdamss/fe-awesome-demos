@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>不限层级的下列列表</h2>
+    <div id="productList">
+    </div>
+    <script>
+    //可能从服务器获取到产品的列表(深度未知)
+    var plist = [{
+        "pno": 10,
+        "pname": "大家电",
+        "children": [{
+            "pno": 1010,
+            "pname": "冰箱",
+            "children": [{
+                "pno": 101010,
+                "pname": "单开门"
+            }, {
+                "pno": 101020,
+                "pname": "双开门"
+            }, {
+                "pno": 101030,
+                "pname": "三开门",
+                "children": [{
+                    "pno": 10103010,
+                    "pname": "国产三开门"
+                }, {
+                    "pno": 10103020,
+                    "pname": "进口三开门"
+                }, {
+                    "pno": 10103030,
+                    "pname": "平行进口三开门"
+                }]
+            }]
+        }, {
+            "pno": 1020,
+            "pname": "洗衣机",
+            "children": [{
+                "pno": 102010,
+                "pname": "滚筒洗衣机"
+            }, {
+                "pno": 102020,
+                "pname": "直筒洗衣机"
+            }]
+        }, {
+            "pno": 1030,
+            "pname": "电视机"
+        }]
+    }, {
+        "pno": 20,
+        "pname": "小家电",
+        "children": [{
+            "pno": 2010,
+            "pname": "刮胡刀"
+        }, {
+            "pno": 2020,
+            "pname": "电饭锅"
+        }, {
+            "pno": 2030,
+            "pname": "手电筒"
+        }]
+    }, {
+        "pno": 30,
+        "pname": "书籍"
+    }, {
+        "pno": 30,
+        "pname": "食品"
+    }];
+    console.log(plist);
+    console.log(plist.length);
+    var div = document.querySelector('#productList');
+
+    function createSelect(plist) {
+        //创建select,并根据数据添加option
+        var select = document.createElement('select');
+        var option = new Option('—请选择—', -1);
+        select.add(option);
+        for (var i = 0; i < plist.length; i++) {
+            var p = plist[i]; //产品类别对象
+            var option = new Option(p.pname, p.pno);
+            select.add(option);
+        }
+        //把新建的select添加为div的子元素
+        div.appendChild(select);
+
+        //为select绑定选项改变事件的处理方法
+        select.onchange = function() {
+            //只要用户选择了某项，其后的select都应该删除
+            while (this.nextSibling) {
+                div.removeChild(this.nextSibling);
+            }
+            if (this.selectedIndex > 0) {
+                var children = plist[this.selectedIndex - 1].children;
+                console.log(children);
+                if (children) { //当前选定的类别下有子类别
+                    createSelect(children); //创建一个新的select
+                }
+            }
+        };
+    }
+    createSelect(plist);
+    </script>
+</body>
+
+</html>

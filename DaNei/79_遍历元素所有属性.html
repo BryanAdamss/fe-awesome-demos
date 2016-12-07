@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="1.html" class="myLink" target="_blank" title="图片" id="mya1" abc="xyz">链接</a>
+    <script type="text/javascript">
+    var link = document.querySelector("#mya1");
+    console.log(link);
+    console.log(typeof(link));
+    // 使用核心DOM访问元素的属性
+    console.log(link.getAttribute("href")); //1.html
+    console.log(link.getAttribute("title")); //图片
+    console.log(link.getAttribute("target")); //_blank
+    console.log(link.getAttribute("abc")); //xyz
+    // 使用HTMLDOM访问元素的属性
+    console.log(link.href); //file:///E:/SourceSave/DaNei/1.html
+    console.log(link.title); //图片
+    console.log(link.target); //_blank
+    console.log(link.abc); //undefined
+    console.log(link.class); //undefined,必须用className
+    console.log(link.className); //myLink
+    </script>
+</body>
+
+</html>

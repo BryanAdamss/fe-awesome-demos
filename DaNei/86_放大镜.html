@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .imgThumbWp {
+        width: 350px;
+        height: 350px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+    
+    .imgThumbWp>img {
+        width: 100%;
+        display: block;
+    }
+    
+    .imgThumbWp .zoom {
+        background-color: yellow;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: move;
+        width: 175px;
+        height: 175px;
+        display: none;
+        opacity: .7;
+    }
+    
+    .imgThumbWp .zoomTop {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: move;
+    }
+    
+    .largeImgWp {
+        position: absolute;
+        border: 1px solid #ccc;
+        top: -1px;
+        left: 360px;
+        z-index: 9;
+        overflow: hidden;
+        display: none;
+    }
+    
+    .largeImgWp>img {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="imgThumbWp">
+        <img src="img/product-s4-m.jpg" alt="">
+        <div class="zoom"></div>
+        <div class="zoomTop"></div>
+        <div class="largeImgWp">
+        </div>
+    </div>
+    <script type="text/javascript">
+    var zoomTop = document.querySelector(".zoomTop");
+    var zoom = document.querySelector(".zoom");
+    var largeWp = document.querySelector(".largeImgWp");
+    var timer = null;
+    zoomTop.onmousemove = function(e) {
+        var e = e || window.event;
+        // zoom的宽高
+        var w = zoom.offsetWidth;
+        var h = zoom.offsetHeight;
+        // maskTop宽高
+        var pW = this.offsetWidth;
+        var pH = this.offsetHeight;
+        // 判断xy是否<0
+        var x = e.offsetX < w / 2 ? 0 : (e.offsetX - w / 2);
+        var y = e.offsetY < h / 2 ? 0 : (e.offsetY - w / 2);
+        // 判断xy在右侧是否过界
+        x = x > (pW - w) ? pW - w : x;
+        y = y > (pH - w) ? pH - h : y;
+        zoom.style.left = x + "px";
+        zoom.style.top = y + "px";
+        // 大图移动
+        var largeImg = document.querySelector("#largeImg");
+        if (largeImg) {
+            largeImg.style.left = -(x * largeImg.width / pW) + "px";
+            largeImg.style.top = -(y * largeImg.height / pH) + "px";
+        }
+    };
+    zoomTop.onmouseover = function() {
+
+        zoom.style.display = "block";
+        // 显示loading
+        var loading = new Image();
+        loading.src = "img/loading.gif";
+        loading.onload = function() {
+            largeWp.style.width = loading.width + "px";
+            largeWp.style.height = loading.height + "px";
+            largeWp.appendChild(loading);
+        };
+        largeWp.style.display = "block";
+        // 加载新图,利用定时模拟网络加载
+        timer = setTimeout(function() {
+            var newImg = new Image();
+            newImg.src = "img/product-s4-l.jpg";
+            newImg.id = "largeImg";
+            newImg.onload = function() {
+                largeWp.style.width = newImg.width / 2 + "px";
+                largeWp.style.height = newImg.height / 2 + "px";
+                largeWp.replaceChild(newImg, largeWp.lastChild);
+            };
+        }, 500);
+    };
+    zoomTop.onmouseout = function() {
+        clearTimeout(timer);
+        // 隐藏放大镜
+        zoom.style.display = "none";
+        // 移除显示的大图
+        largeWp.removeChild(largeWp.lastChild);
+        // 隐藏大图容器
+        largeWp.style.display = "none";
+    };
+    </script>
+</body>
+
+</html>
