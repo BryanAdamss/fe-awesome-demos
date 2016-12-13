@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+	HTML5Core
+		表单相关
+			***当不支持新表单元素时，会将其当成text来使用***
+			input
+				type="email"->带自动验证邮箱
+				type="search"->搜索框,带清除和模糊匹配元素
+				type="url"->带地址验证
+				type="tel"->针对移动设备调用电话输入法
+				type="number"->只能输入数字
+				type="range"->范围
+				type="date"->选择日期
+				type="week"->选择一周
+				type="month"->选择一个月
+				type="datetime"->日期+时区时间
+				type="datetime-local"->日期+时区时间
+				type="color"->选取颜色
+			新元素
+				datalist->定义一个数据列表，可以绑定到其它表单元素上(指定list属性)
+				progress->进度条
+				meter->和progress类似,meter可用于显示刻度,low、high、optimum:将范围划分为不同的部分和设置的最佳位置
+				output->显示表单元素处理的结果值
+
+			新表单验证属性
+				placeholder->占位符
+				required->此表单必填
+				multiple->多选
+				autofocus->自动聚焦
+				pattern->验证用的正则
+				form->指明表单元素属于哪个form,用来实现提交form之外的input元素
+		
+			新表单验证方法
+				setCustomValidity()->自定义验证消息,传入空字符串则清除错误信息
+				checkValidity()->强制要求在脚本中对元素进行验证，它可以在不提交表单的前提下激活验证过程,如果元素有效返回true
+
+			新事件
+				invalid->当表单(非表单元素)验证失败的时候触发,并捕获第一个发生错误的元素event.target;必须在捕获阶段触发
+
+				validity属性->返回一个保存了当前表单元素验证状态的对象
+					对象有下面属性
+					valid->验证是否通过
+					valueMissing->输入是否为空
+					typeMismatch->类型不匹配
+					patternMismatch->模式不匹配
+					tooLong->太长
+					tooShort->太短
+					rangeUnderflow->内容小于min声明的值
+					stepMismatch->step属性声明的值与min,max,step不一致,此值为true
+					customError->自定义错误
+
+		多媒体处理(视频、音频)
+			video/Audio
+				html5中播放视频至少有.ogg和.mp4(h.264编码)
+
+				video中可包含source元素->指定播放的源,可以设置多个源，当第一个能播放时，就忽略后面的
+
+				标签属性(特性)
+					autoplay->自动播放
+					controls->播放控制栏
+					loop->循环播放
+					poster->视频等待播放时显示的图片
+					preload->预加载
+						none:不缓存
+						metadata:推荐浏览器抓去一些资源的信息
+						auto:默认值,要求浏览器尽可能快地下载视频
+				
+				事件
+					progress->用于更新媒体的下载进度，会周期性触发
+					canplaythrough->当整个媒体可以顺利播放时，就会触发这个事件
+					canplay->不考虑整体状态，只要下载了一定可放帧就会触发 
+
+					ended->媒体到达末尾时触发
+					pause->媒体暂停时触发
+					play->媒体开始播放时触发
+					error->媒体播放出现错误时触发
+
+				方法
+					play()->播放
+					pause()->暂停
+					load()->加载媒体文件，动态应用程序可使用该方法提前加载
+					canPlayType(type)->查看浏览器是否支持这种文件格式的媒体文件,返回值有:
+						probably->浏览器最可能支持该视频格式;
+						maybe->浏览器可能支持该视频;
+						- ->浏览器不支持该视频
+
+				属性
+					paused->媒体处于暂停或未播放状态为true
+					ended->播放结束为true
+					duration->返回媒体时长,秒为单位
+					curretTime->当前播放位置
+
+		Canvas绘图
+			canvas标签默认尺寸300x150,绘制后就像一张真正的图片，会被拉伸变形
+
+			ele.getContext("2d")->获取2d绘图环境
+
+		API(拖拽、Web存储)
+	JQuery
+		模拟jQuery
+		jQuery学习
+		插件学习
+	Ajax
+		ajax
+		xml
+		表单异步提交异步验证
+</pre>
+    <form>
+        <input type="email" name="" required id="haha">
+        <input type="search" name="">
+        <input type="url" name="">
+        <input type="tel" name="">
+        <input type="number" name="" min="0" max="100" step="1">
+        <input type="range" name="" min="0" max="100" step="2">
+        <input type="date" name="">
+        <input type="week" name="">
+        <input type="month" name="">
+        <input type="datetime" name="">
+        <input type="datetime-local" name="">
+        <input type="color" name="">
+        <button type="submit">提交</button>
+        <input type="text" name="" list="lia">
+        <datalist id="lia">
+            <option label="宝马">BMW</option>
+            <option label="福特">Ford</option>
+            <option label="沃尔沃">Volvo</option>
+        </datalist>
+        <progress value="50" max="100"></progress>
+        <meter min="0" max="100" low="20" high="80" optimum="90" value="55"></meter>
+    </form>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+        <input type="range" id="a" value="50">100 +
+        <input type="number" id="b" value="50"> =
+        <output name="x" for="a b"></output>
+    </form>
+    <script type="text/javascript">
+    var a = document.querySelector("#haha");
+    a.setCustomValidity("必须得填!!!!!!!!!!!!!!!!!!");
+    </script>
+</body>
+
+</html>

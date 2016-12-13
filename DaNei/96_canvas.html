@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+    window.onload = function() {
+        document.body.style.margin = 0;
+        var can = document.createElement("canvas");
+        // 设置canvas全屏
+        can.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
+        can.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+        this.onresize = function() {
+            can.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
+            can.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+        };
+        // 必须将canvas设置为block,默认inline,会出现滚动条
+        can.style.display = "block";
+        var ctx = can.getContext("2d");
+        ctx.rect(20, 20, 150, 100);
+        ctx.stroke();
+        document.body.appendChild(can);
+    }
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

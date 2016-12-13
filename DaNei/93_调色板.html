@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    div {
+        background-color: #000;
+        width: 100px;
+        height: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    红
+    <input type="range" min="0" max="255" name="" value="0">
+    <br> 绿
+    <input type="range" min="0" max="255" name="" value="0">
+    <br> 蓝
+    <input type="range" min="0" max="255" name="" value="0">
+    <br> 透明度
+    <input type="range" min="0" max="100" name="" value="100">
+    <br>
+    <script type="text/javascript">
+    window.addEventListener("load", inital, false);
+
+    function inital() {
+        r = document.querySelectorAll("input")[0];
+        g = document.querySelectorAll("input")[1];
+        b = document.querySelectorAll("input")[2];
+        o = document.querySelectorAll("input")[3];
+        div = document.querySelector("div");
+        r.addEventListener("change", textChange, false);
+        g.addEventListener("change", textChange, false);
+        b.addEventListener("change", textChange, false);
+        o.addEventListener("change", textChange, false);
+    }
+
+    function textChange() {
+        div.style.backgroundColor = "rgba(" + r.value + "," + g.value + "," + b.value + "," + o.value / 100 + ")";
+    }
+    </script>
+</body>
+
+</html>

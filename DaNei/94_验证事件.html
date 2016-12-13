@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" required name="">
+        <input type="password" required name="">
+        <button type="submit">提交</button>
+    </form>
+    <script type="text/javascript">
+    var fm = document.forms[0];
+    fm.addEventListener("invalid", invalidHandler, true); //必须在捕获阶段触发
+    function invalidHandler(e) {
+        var e = e || window.event;
+        e.target.style.backgroundColor = "red";
+        console.log(e.target.validity);
+    }
+    </script>
+</body>
+
+</html>

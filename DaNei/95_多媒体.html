@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <video width="320" height="240" controls poster="img/product-s4-m.jpg">
+        你的浏览器不支持video标签
+        <source src="media/video.mp4" type="">
+        <source src="media/video.ogg" type="">
+    </video>
+    <script type="text/javascript">
+    window.addEventListener("load", initial, false);
+
+    function initial() {
+        video = document.querySelector("video");
+        video.addEventListener("canplaythrough", videoCanPlayThrough, false);
+        video.addEventListener("ended", function() {
+            console.log("视频到达结尾");
+        }, false);
+        video.addEventListener("pause", function() {
+            console.log("视频暂停");
+        }, false);
+        video.addEventListener("play", function() {
+            console.log("视频播放");
+        }, false);
+    }
+
+    function videoCanPlayThrough() {
+        console.log("视频已经全部下载");
+    }
+    </script>
+</body>
+
+</html>
