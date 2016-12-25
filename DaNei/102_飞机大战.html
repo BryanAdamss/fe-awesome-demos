@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="飞机大战">
+    <meta name="description" content="飞机大战">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>飞机大战</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 游戏状态(state)
+    // 	START: 进入到游戏, 即进入到游戏主界面, 并未开始游戏
+    // 			页面初始化状态为 START
+    // 			详解:背景在动、显示飞机大战的图像
+    // 	STARTING: 过渡, 开始状态, 与游戏进行状态的过渡;
+    // 			用户点击鼠标左键时, 由START-- > STARTING
+    // 	RUNNING: 游戏正式开始, 实现飞机大战的过程
+    // 			当准备图像中的最后一幅显示完毕时, STARTING-- > RUNNING
+    // 			当鼠标从canvas所在区域外移入时, 并且状态为PAUSE是, PAUSE-- > RUNNING
+    // 	PAUSE: 暂停
+    // 			鼠标移出canvas所在的区域 RUNNING-- > PAUSE
+    // 	GAME_OVER: 结束
+    // 			LIFE为0时(销毁过程已经结束)
+
+    // 计时器
+    // 	数量:1
+    // 	问题:如何控制图像组建的速度
+    // 	解决
+    // 		计时器固定刷新频率1000/100
+    // 		每一个图像组件都有自己的速度
+    // 		用计时器测量图像组件是否到达运动时间，如果到达则运动，否则不动
+
+    // 数据对象:只负责封装基本数据
+    // 业务对象:负责业务逻辑的计算
+
+    // 创建英雄
+    // 1.创建英雄图像数组2(正常)+4(击中)
+    // 2.创建英雄数据对象
+    // 		frames:对应的图像数组
+    // 		width:图像宽度
+    // 		height:图像高度
+    // 		baseFrameCount:基本帧的数量,正常状态下,飞机图像数量为2，击中为4
+    // 		speed:图像切换速度
+    // 3.创建业务对象
+    // 	正常状态
+    // 		var frameInde=0;
+    // 		frameIndex%baseFrameCount;
+    // 		frameInde++
+
+    // 		属性
+    // 			speed:1000/config.speed
+    // 		方法
+    // 			1.this.step=function(){}
+    // 				两种状态的图像切换
+    // 					1.正常状态，前两副图切换
+    // 					2.击中状态，后四副图切换
+    // 			2.this.paint=function(){}
+    // 				将切换好的图像显示在canvas
+
+    //子弹
+    // 	子弹图像
+    // 		var b=new Image();
+    // 		b.src="";
+    // 	子弹数据对象(BULLET)
+    // 		speed:速度
+    // 		image:图像
+    // 		width
+    // 		height
+    // 	子弹业务对象
+    // 		功能:负责子弹步长距离计算、绘制子弹
+    // 		属性
+    // 			frame:子弹图像
+    // 			x/y:横纵坐标
+    // 		方法
+    // 			this.move()纵坐标递减
+    // 			this.paint()按照xy坐标绘制子弹
+    // 	多个子弹(全局子弹数组,创建一个子弹就将其扔进数组)
+    // 		var bullets=[]
+    // 	创建子弹
+    // 		子弹由飞机创建,所以写在飞机业务对象中
+    // 		飞机业务增加属性
+    // 			shootInterval:绘制子弹的间隔,通过子弹speed进行计算
+    // 			shootLastTime:最后一次绘制子弹的时间(毫秒)
+    // 		function shoot(){
+    //  		if(时间间隔到达){
+    //  			//创建子弹对象
+    //  			var bullet=new Bullet();
+    //  			bullet.x="飞机中间";
+    //  			buttet.y="飞机上部";
+    //  			// 将子弹加入子弹数组中
+    //  			bullets.push(bullet)
+    //  			//更新最后创建时间
+    //  			shootLastTime++;
+    //  		}
+    // 		}
+    // 	让子弹移动
+    // 		当curState为running时候,调用move(),并不停的重新绘制子弹
+    // 		function paintComponent(){
+    // 			// 判断事件间隔,调用move(),再重新绘制子弹
+    // 			// 重新绘制敌方飞机
+    // 		}
+    // 三种飞机
+    // 	E1:小飞机
+    // 	E2:中型飞机
+    // 	E3:大飞机
+
+    // 飞机图像数组
+    // 	var e1/e2/e3=[];//开始到销毁所有图片
+
+    // 数据对象
+    // 	type:1-3 表示不同类型的飞机
+    // 	score:分数 干掉一个多少分
+    // 	frames:对应的图像数组
+    // 	baseFrameCount:基本图像帧数
+    // 	life:生命,几枪被击落
+    // 	minSpeed:最小速度,小中飞机速度随机
+    // 	maxSpeed:最大速度
+    // 	speed:大型飞机固定速度
+    // 	width:宽度
+    // 	height:高度
+
+    // 业务对象
+    // 	属性->传入数据对象的方法
+    // 		speed得根据飞机类型不同，值也不同
+    // 		if(config.minSpeed&&config.maxSpeed){
+    // 			this.speed=Math.floot(Math.random()*(config.maxSpeed-config.minSpeed)+config.minSpeed);
+    // 		}else{
+    // 			this.speed=config.speed;
+    // 		}
+
+    // 		x->随机但不能在屏幕中出现一半
+    // 		y->从顶部出来,-cofnig.height
+    // 	方法
+    // 		step
+    // 			1.基本帧的切换(大飞机)->借助config.baseFrameCount的值来切换
+    // 			2.控制飞机的移动:y++
+    // 		move(可选)
+    // 			y++
+    // 		paint
+
+    // 创建飞机(不受任何对象控制)
+    // 	var enemies=[];保存所有飞机的数组,数字第一位置永远是大飞机
+    // 	var lastTime=0;
+    // 	var interval=800;
+    // 	// 创建飞机的全局函数，由RUNNIG时调用
+    // 	function componentEnter(){
+    // 		// 敌人飞机进入
+    // 		if(时间判断){
+    // 			// 控制飞机出现的数量(用随机数)
+    // 			0-6则创建小飞机
+    // 				enemies.push(new Enemy(E1));
+    // 			78则中飞机			
+    // 				enemies.push(new Enemy(E2));
+    // 			9可能出现大飞机	
+    // 				if(enemies[0].type!==3){
+    // 					// 创建大飞机, 
+    // 					enemies.splice(0,0,new Enemy(E3));
+    // 				}
+    // 			lastTime=new Date().getTime();
+    // 		}
+    // 	}
+
+    // 修改stepComponent
+    // 	增加敌人飞机的移动
+    // 修改paintComponent
+    // 	增加绘制敌人飞机的操作
+
+    // 在敌人飞机业务对象中添加移除超出边界的方法
+    // 	function Enemy(){
+    // 		this.outOfBounds=function(){
+    // 			if(this.y>=canvas.height){
+    // 				return true;
+    // 			}
+    // 			return false
+    // 		};
+    // 	}
+    // 	for(var i=0;i<enemies.length;i++){
+    // 		if(enemies[i].outOfBounds()){
+    // 			enemies.splice(i,1);
+    // 		}
+    // 	}
+
+    // 碰撞检测
+    // 	检测撞击物h的中心点是否出现在被撞物e周围的某个区域
+    // 	撞击物h中心点坐标(h.x+h.width/2,h.y+h.height/2)
+    // 	被撞物e的碰撞检测区域
+    // 		横轴	[e.x-h.width/2,e.x+e.width+h.width/2]
+    // 		纵轴	[e.y-h.height/2,e.y+e.height+h.height/2]
+    // 	当撞击物的中心点出现在被撞物的碰撞检测区域则视为发生碰撞
+
+
+    // 敌人(被撞物)业务对象添加检测与其他元素是否发生碰撞的方法
+    // 	h(撞击物)其它元素->Hero,Bullet
+    // 	中心点: (h.x+h.width/2,h.y+h.height/2)
+    // 	 横向:this.x-h.width/2~this.x+this.width+h.width/2;
+    // 	 纵向:this.y-h.height/2~this.y+this.height+h.height/2;
+    // 	function hit=function(h){
+
+    // 		// 相撞返回true
+    // 		// 否则返回false
+    // 	}
+
+    // 创建全局判断每个敌人是否与其他元素碰撞的方法
+    // function checkHit(){
+    // 	// 遍历所有敌人飞机
+    // 	for(var i=0;i<enemies.length;i++){
+    // 		// 判断enemy是否与子弹相撞
+    // 		// 判断enemy是否与英雄相撞
+    // 		if(enemy.hit(hero)){}
+    // 	}
+    // }
+
+    // 为英雄和敌人飞机添加属性
+    // 	this.down->是否被击落,默认false
+    // 	this.canDelete->是否删除,默认false
+    // 撞击后
+    // 	敌人:this.down->true,并播放被击落动画,所有击落动画完成->将this.canDelete设为true,并在deleteComponent中添加判断canDelete属性来删除敌人
+    // 	英雄:this.down->true,并播放被击落动画,所有击落动画完成->判断还有几条命,>0则,创建英雄对象接着玩,=0则状态改为GAME_OVER
+    // 	子弹:一旦撞击后，直接this.canDelete->true,并在deleteComponent中添加判断canDelete属性来删除子弹
+
+    // 定义canvas宽高 
+    var WIDTH = 480;
+    var HEIGHT = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    // 定义游戏状态
+    var START = 0;
+    var STARTING = 1;
+    var RUNNING = 2;
+    var PAUSE = 3;
+    var GAME_OVER = 4;
+
+    // 定义分数、生命
+    var score = 0;
+    var life = 3;
+
+    // 定义保存游戏当前状态的变量
+    var curState = START;
+
+    // 创建canvas元素
+    var canvas = document.createElement("canvas");
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+    canvas.innerHTML = "您的浏览器不支持canvas";
+    canvas.style.cssText = "margin:0 auto;display:block;";
+    document.body.style.margin = 0;
+    document.body.insertBefore(canvas, document.scripts[0]);
+
+    // 定义ctx对象
+    var ctx = canvas.getContext("2d");
+
+    // 创建图像数组用来保存天空、英雄、敌人所有图像
+    var bg = new Image();
+    bg.src = "img/background.png";
+
+    var copyright = new Image();
+    copyright.src = "img/shoot_copyright.png";
+
+    var loadingArr = [];
+    loadingArr[0] = new Image();
+    loadingArr[0].src = "img/game_loading1.png";
+    loadingArr[1] = new Image();
+    loadingArr[1].src = "img/game_loading2.png";
+    loadingArr[2] = new Image();
+    loadingArr[2].src = "img/game_loading3.png";
+    loadingArr[3] = new Image();
+    loadingArr[3].src = "img/game_loading4.png";
+
+    var heroArr = [];
+    heroArr[0] = new Image();
+    heroArr[0].src = "img/hero1.png";
+    heroArr[1] = new Image();
+    heroArr[1].src = "img/hero2.png";
+    heroArr[2] = new Image();
+    heroArr[2].src = "img/hero_blowup_n1.png";
+    heroArr[3] = new Image();
+    heroArr[3].src = "img/hero_blowup_n2.png";
+    heroArr[4] = new Image();
+    heroArr[4].src = "img/hero_blowup_n3.png";
+    heroArr[5] = new Image();
+    heroArr[5].src = "img/hero_blowup_n4.png";
+
+    var bulletImg = new Image();
+    bulletImg.src = "img/bullet1.png";
+
+    var pauseImg = new Image();
+    pauseImg.src = "img/game_pause_nor.png";
+
+    var e1 = [];
+    e1[0] = new Image();
+    e1[0].src = "img/enemy1.png";
+    e1[1] = new Image();
+    e1[1].src = "img/enemy1_down1.png";
+    e1[2] = new Image();
+    e1[2].src = "img/enemy1_down2.png";
+    e1[3] = new Image();
+    e1[3].src = "img/enemy1_down3.png";
+    e1[4] = new Image();
+    e1[4].src = "img/enemy1_down4.png";
+
+    var e2 = [];
+    e2[0] = new Image();
+    e2[0].src = "img/enemy2.png";
+    e2[1] = new Image();
+    e2[1].src = "img/enemy2_down1.png";
+    e2[2] = new Image();
+    e2[2].src = "img/enemy2_down2.png";
+    e2[3] = new Image();
+    e2[3].src = "img/enemy2_down3.png";
+    e2[4] = new Image();
+    e2[4].src = "img/enemy2_down4.png";
+
+    var e3 = [];
+    e3[0] = new Image();
+    e3[0].src = "img/enemy3_n1.png";
+    e3[1] = new Image();
+    e3[1].src = "img/enemy3_n2.png";
+    e3[2] = new Image();
+    e3[2].src = "img/enemy3_down1.png";
+    e3[3] = new Image();
+    e3[3].src = "img/enemy3_down2.png";
+    e3[4] = new Image();
+    e3[4].src = "img/enemy3_down3.png";
+    e3[5] = new Image();
+    e3[5].src = "img/enemy3_down4.png";
+    e3[6] = new Image();
+    e3[6].src = "img/enemy3_down5.png";
+    e3[7] = new Image();
+    e3[7].src = "img/enemy3_down6.png";
+
+
+    // 定义数据对象
+    var SKY = {
+        image: bg,
+        width: WIDTH,
+        height: HEIGHT,
+        speed: 20
+    };
+    var LOADING = {
+        frames: loadingArr,
+        width: 186,
+        height: 38,
+        x: 0,
+        y: HEIGHT - 38,
+        speed: 6
+    };
+    var HERO = {
+        frames: heroArr,
+        width: 99,
+        height: 124,
+        baseFrameCount: 2,
+        speed: 4
+    };
+    var BULLET = {
+        image: bulletImg,
+        width: 9,
+        height: 21,
+        // 子弹飞行速度
+        speed: 10
+    };
+    var E1 = {
+        type: 1,
+        score: 1,
+        frames: e1,
+        baseFrameCount: 1,
+        life: 1,
+        minSpeed: 10,
+        maxSpeed: 500,
+        width: 57,
+        height: 51
+    };
+    var E2 = {
+        type: 2,
+        score: 5,
+        frames: e2,
+        baseFrameCount: 1,
+        life: 5,
+        minSpeed: 100,
+        maxSpeed: 300,
+        width: 69,
+        height: 95
+    };
+    var E3 = {
+        type: 3,
+        score: 20,
+        frames: e3,
+        baseFrameCount: 2,
+        life: 20,
+        speed: 40,
+        width: 169,
+        height: 258
+    };
+
+
+    // 保存由hero发射的所有子弹
+    var bullets = [];
+    // 保存所有敌人飞机
+    var enemies = [];
+
+    // 定义业务对象
+    function Sky(config) {
+        this.bg = config.image;
+        this.width = config.width;
+        this.height = config.height;
+        this.speed = config.speed;
+        // 上一次执行动作时间的毫秒数
+        this.lastTime = 0;
+        // 两幅背景图的起始坐标
+        this.x1 = 0;
+        this.y1 = 0;
+        this.x2 = 0;
+        this.y2 = -this.height;
+        // 实现天空移动,移动背景纵坐标
+        this.step = function() {
+            // 获取当前时间的毫秒数
+            var currentTime = new Date().getTime();
+            // 判断是否到达指定运动时间点
+            if (currentTime - this.lastTime >= this.speed) {
+                this.y1++;
+                this.y2++;
+                // 记录最后执行动作的时间
+                this.lastTime = new Date().getTime();
+            }
+            // 判断y1,y2是否超出范围,超出范围则放到画布之外
+            if (this.y1 > this.height) {
+                this.y1 = -this.height;
+            }
+            if (this.y2 > this.height) {
+                this.y2 = -this.height;
+            }
+        };
+        // 绘制天空图像
+        this.paint = function(ctx) {
+            ctx.drawImage(this.bg, this.x1, this.y1);
+            ctx.drawImage(this.bg, this.x2, this.y2);
+        };
+    };
+
+    function Loading(config) {
+        this.speed = 1000 / config.speed;
+        // 更换loading图像
+        this.lastTime = 0;
+        this.frame = null;
+        this.frameIndex = 0;
+        this.step = function() {
+            var currentTime = new Date().getTime();
+
+            if (currentTime - this.lastTime >= this.speed) {
+                // 获取不同的图像config.frames中的元素给frame	
+                this.frame = config.frames[this.frameIndex];
+                this.frameIndex++;
+                if (this.frameIndex >= 4) {
+                    // 更新状态
+                    curState = RUNNING;
+                }
+                this.lastTime = new Date().getTime();
+            }
+        };
+        // 绘制不同loading图到canvas
+        this.paint = function(ctx) {
+            ctx.drawImage(this.frame, config.x, config.y);
+        };
+    }
+
+    function Hero(config) {
+        this.speed = 1000 / config.speed;
+        this.width = config.width;
+        this.height = config.width;
+        this.baseFrameCount = config.baseFrameCount;
+        this.lastTime = 0;
+        this.frames = config.frames;
+        this.frame = null;
+        this.frameIndex = 0;
+        // this.x = (canvas.width - this.width) / 2;
+        // this.y = canvas.height - this.height - 80;  
+        this.x = config.x;
+        this.y = config.y;
+
+        this.down = false;
+        this.canDelete = false;
+
+        this.step = function() {
+            var currentTime = new Date().getTime();
+            if (currentTime - this.lastTime >= this.speed) {
+                if (this.down) {
+                    // 击落状态
+                    if (this.frameIndex === this.frames.length) {
+                        this.canDelete = true;
+                    } else {
+                        this.frame = this.frames[this.frameIndex];
+                        this.frameIndex++;
+                    }
+                } else {
+                    // 正常状态
+                    this.frame = config.frames[this.frameIndex % this.baseFrameCount];
+                    this.frameIndex++;
+                    this.lastTime = new Date().getTime();
+                }
+            }
+        };
+        this.paint = function(ctx) {
+            //  飞机初始位置,x轴中心,y轴底部偏上
+            ctx.drawImage(this.frame, this.x, this.y);
+        };
+
+        // 处理子弹发射
+        this.shootLastTime = 0;
+        this.shootInterval = 150;
+        this.shoot = function() {
+            var currentTime = new Date().getTime();
+            if (currentTime - this.shootLastTime >= this.shootInterval) {
+                // 到达时间间隔可以发射子弹
+                // 3和21是子弹坐标修正值,让其在飞机的正中间和顶部出现
+                var bullet = new Bullet(BULLET, (this.x + this.width / 2) - 3, this.y - 21);
+                this.shootLastTime = new Date().getTime();
+                bullets.push(bullet);
+            }
+        };
+        // 处理碰撞的操作
+        this.duang = function() {
+            this.down = true;
+            this.frameIndex = this.baseFrameCount;
+        };
+    }
+
+    function Bullet(config, x, y) {
+        this.frame = config.image;
+        this.width = config.width;
+        this.height = config.height;
+        this.canDelete = false;
+        // 子弹发射坐标
+        this.x = x;
+        this.y = y;
+        this.speed = config.speed;
+        this.move = function() {
+            this.y -= this.speed;
+        };
+        this.paint = function(ctx) {
+            ctx.drawImage(this.frame, this.x, this.y);
+        };
+        // 检查越界
+        this.outOfBounds = function() {
+            return this.y < -this.height;
+        };
+        // 子弹击中敌机时子弹的操作
+        this.duang = function() {
+            // 子弹可被删除
+            this.canDelete = true;
+        };
+    }
+
+    function Enemy(config) {
+        this.type = config.type;
+        this.score = config.score;
+        this.life = config.life;
+        this.width = config.width;
+        this.height = config.height;
+        // 图像列表
+        this.frames = config.frames;
+        this.frame = null;
+        this.frameIndex = 0;
+        this.baseFrameCount = config.baseFrameCount;
+        // 是否被击落,进而播放击落动画
+        this.down = false;
+        // 是否可被删除(当被击落后即可删除)
+        this.canDelete = false;
+        // 坐标
+        this.x = Math.ceil(Math.random() * (canvas.width - config.width));
+        this.y = -config.height;
+        this.speed = 0;
+        if (config.minSpeed && config.maxSpeed) {
+            // 中小飞机速度
+            this.speed = Math.ceil(1000 / (Math.random() * (config.maxSpeed - config.minSpeed) + config.minSpeed));
+            // console.log("中小" + this.speed);
+        } else {
+            // 大飞机速度
+            this.speed = Math.ceil(1000 / config.speed);
+            // console.log("大" + this.speed);
+        }
+
+        this.lastTime = 0;
+        this.step = function() {
+            if (this.timeInterval()) {
+                if (this.down) {
+                    // 播放被击落图像 
+                    if (this.frameIndex === this.frames.length) {
+                        //播放到被击落图像的最后一张,则可被删除
+                        this.canDelete = true;
+                    } else {
+                        this.frame = this.frames[this.frameIndex]
+                        this.frameIndex++;
+                    }
+                } else {
+                    // 播放基本图像切换
+                    this.frame = this.frames[this.frameIndex % this.baseFrameCount];
+                    this.frameIndex++;
+                    this.move();
+                }
+            }
+        };
+        this.move = function() {
+            // 飞机移动
+            this.y++;
+        };
+        this.paint = function(ctx) {
+            // 绘制飞机
+            ctx.drawImage(this.frame, this.x, this.y);
+        };
+        this.timeInterval = function() {
+            // 检查时间时否到期
+            var currentTime = new Date().getTime();
+            if (currentTime - this.lastTime >= this.speed) {
+                this.lastTime = new Date().getTime();
+                return true;
+            } else {
+                return false;
+            }
+        };
+        // 检查越界
+        this.outOfBounds = function() {
+            if (this.y > canvas.height) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        // 检测碰撞
+        // h->撞击物Hero或Bullet
+        this.hit = function(h) {
+                // h的中心点
+                var centerX = h.x + h.width / 2;
+                var centerY = h.y + h.height / 2;
+                // enemy的检测碰撞区域
+                // 横向:this.x-h.width/2~this.x+this.width+h.width/2;
+                // 	 纵向:this.y-h.height/2~this.y+this.height+h.height/2;
+                var enemyL = this.x - h.width / 2;
+                var enemyR = this.x + this.width + h.width / 2;
+                var enemyT = this.y - h.height / 2;
+                var enemyB = this.y + this.height + h.height / 2;
+                // 横轴中心点进入碰撞区域
+                var result = centerX > enemyL && centerX < enemyR && centerY > enemyT && centerY < enemyB;
+                // console.log(result);
+                return result;
+            }
+            // 当敌人飞机与其他元素碰撞时的操作方法
+        this.duang = function() {
+            // 敌人life减少
+            this.life--;
+            if (this.life === 0) {
+                // 切换到被击落状态
+                this.down = true;
+                // 分数增加
+                score += this.score;
+                this.frameIndex = this.baseFrameCount;
+            }
+        };
+    }
+
+    // 创建业务对象
+    var sky = new Sky(SKY);
+    var loading = new Loading(LOADING);
+    var hero = new Hero(HERO);
+
+    // 为canvas添加事件
+    canvas.onclick = function(e) {
+        var e = e || window.event;
+        HERO.x = e.offsetX - HERO.width / 2;
+        HERO.y = e.offsetY - HERO.height / 2;
+        // 点击时从START->STARTING
+        if (curState === START) {
+            curState = STARTING;
+        }
+        // 游戏结束重新开始
+        if (curState === GAME_OVER) {
+            life = 3;
+            score = 0;
+            hero = new Hero(HERO);
+            timer = setInterval(timerFn, 1000 / 100);
+            loading.frameIndex = 0;
+            hero.frameIndex = 0;
+            curState = STARTING;
+        }
+    };
+
+    // 飞机随鼠标变化事件
+    canvas.onmousemove = function(e) {
+        var e = e || window.event;
+        var x = e.offsetX;
+        var y = e.offsetY;
+        HERO.x = e.offsetX - HERO.width / 2;
+        HERO.y = e.offsetY - HERO.height / 2;
+        hero.x = x - (hero.width / 2);
+        hero.y = y - (hero.height / 2);
+
+    };
+    canvas.onmouseout = function() {
+        if (curState === RUNNING) {
+            curState = PAUSE;
+            console.log("当前游戏状态为:" + curState);
+        }
+    };
+    canvas.onmouseover = function() {
+        if (curState === PAUSE) {
+            curState = RUNNING;
+            console.log("当前游戏状态为:" + curState);
+        }
+    };
+
+    // 绘制组件->主要用来绘制子弹和敌人的移动
+    function paintComponent() {
+        // 绘制子弹
+        for (var i = 0; i < bullets.length; i++) {
+            var b = bullets[i];
+            b.paint(ctx);
+        }
+        // 绘制分数、生命
+        ctx.font = "20px 微软雅黑	";
+        ctx.fillText("SCORE:" + score, 10, 40);
+        ctx.fillText("LIFE:" + life, canvas.width - 70, 40);
+        // 将英雄的绘制移到此
+        hero.paint(ctx);
+        // 绘制所有飞机
+        for (var i = 0; i < enemies.length; i++) {
+            enemies[i].paint(ctx);
+        }
+    }
+
+    // 让所有组件动起来(更新坐标)
+    function stepComponent() {
+        // 子弹移动
+        for (var i = 0; i < bullets.length; i++) {
+            var b = bullets[i];
+            b.move();
+        }
+        // 让敌人动起来
+        for (var i = 0; i < enemies.length; i++) {
+            enemies[i].step();
+        }
+    }
+
+    // 创建飞机
+    // 上次创建飞机的时间
+    var lastTime = new Date().getTime();
+    // 创建飞机的间隔
+    var interval = 800;
+    // 根据指定时间差创建不同类型的敌人飞机，并将其保存进enemies数组中
+    function componentEnter() {
+        var currentTime = new Date().getTime();
+        if (currentTime - lastTime >= interval) {
+            var n = Math.floor(Math.random() * 10);
+            if (n >= 0 && n <= 6) {
+                // 小飞机
+                enemies.push(new Enemy(E1));
+            } else if (n >= 7 && n <= 8) {
+                // 中型飞机
+                enemies.push(new Enemy(E2));
+            } else {
+                // 如果数组第一个不是大飞机，则创建一个,并放在第一个位置，其他飞机后移
+                if (!enemies[0] || enemies[0].type !== 3) {
+                    enemies.splice(0, 0, new Enemy(E3));
+                }
+            }
+            lastTime = new Date().getTime();
+        }
+    }
+
+    // 删除多余组件
+    function deleteComponent() {
+        // 删除超出边界或被击落的敌人
+        for (var i = 0; i < enemies.length; i++) {
+            if (enemies[i].outOfBounds() || enemies[i].canDelete) {
+                enemies.splice(i, 1);
+            }
+        }
+        // 删除超出边界或击落敌人的子弹
+        for (var i = 0; i < bullets.length; i++) {
+            if (bullets[i].outOfBounds() || bullets[i].canDelete) {
+                bullets.splice(i, 1);
+            }
+        }
+        // 判断英雄是否需要被删除
+        if (hero.canDelete) {
+            // 生命值减少
+            life--;
+            if (life === 0) {
+                // GAME_OVER
+                curState = GAME_OVER;
+            } else {
+                hero = new Hero(HERO);
+            }
+        }
+    }
+
+    // 检查敌人与子弹或英雄是否碰撞
+    function checkHit() {
+        for (var i = 0; i < enemies.length; i++) {
+            var enemy = enemies[i];
+            if (enemy.down || enemy.canDelete) {
+                // 如果敌人正在执行被击落动画或删除操作时,则不检测是否碰撞
+                continue;
+            }
+            // 判断与子弹是否相撞
+            for (var j = 0; j < bullets.length; j++) {
+                var bullet = bullets[j];
+                // 碰撞
+                if (enemy.hit(bullet)) {
+                    // 调用被击落后的敌人和子弹的操作函数
+                    enemy.duang();
+                    bullet.duang();
+                }
+            }
+            // 判断是否与英雄相撞
+            if (enemy.down || enemy.canDelete) {
+                // 敌人击落状态或删除操作时无法与英雄碰撞
+                continue;
+            }
+            if (enemy.hit(hero)) {
+                enemy.duang();
+                hero.duang();
+            }
+        }
+    }
+
+    // 定义计时器，固定刷新频率为1000/100
+    function timerFn() {
+        switch (curState) {
+            case START:
+                // 准备状态
+                sky.step();
+                sky.paint(ctx);
+                // 绘制copyright
+                var x = (WIDTH - copyright.width) / 2;
+                var y = (HEIGHT - copyright.height) / 2;
+                ctx.drawImage(copyright, x, y);
+                break;
+            case STARTING:
+                // 过渡状态
+                sky.step();
+                sky.paint(ctx);
+
+                loading.step();
+                loading.paint(ctx);
+                break;
+            case RUNNING:
+                // 游戏进行中
+                sky.step();
+                sky.paint(ctx);
+
+                hero.step();
+                hero.shoot();
+                checkHit();
+                //增加敌人飞机
+                componentEnter();
+                stepComponent();
+                paintComponent();
+                // 删除越界的敌人和子弹
+                deleteComponent();
+                break;
+            case PAUSE:
+                // 暂停
+                sky.step();
+                sky.paint(ctx);
+                ctx.drawImage(pauseImg, (canvas.width - pauseImg.width) / 2, (canvas.height - pauseImg.height) / 2);
+                paintComponent();
+                break;
+            case GAME_OVER:
+                // 结束
+                sky.paint(ctx);
+                ctx.font = "bold 24px 微软雅黑";
+                var w = ctx.measureText("GAME_OVER").width;
+                ctx.fillText("GAME_OVER", (canvas.width - w) / 2, canvas.height / 2);
+                ctx.fillText("您的分数为:" + score, (canvas.width - w) / 2, canvas.height / 2 + 80);
+                clearInterval(timer);
+                break;
+        }
+    }
+    var timer = setInterval(timerFn, 1000 / 100);
+    </script>
+</body>
+
+</html>

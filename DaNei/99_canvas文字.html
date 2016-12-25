@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    window.onload = function() {
+        var can = document.createElement("canvas");
+        can.style.display = "block";
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+        document.body.style.margin = 0;
+        document.body.appendChild(can);
+        var ctx = can.getContext("2d");
+
+        ctx.shadowColor = "rgba(0,0,0,.4)";
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 4;
+        ctx.shadowBlur = 5;
+
+
+        ctx.beginPath();
+        ctx.font = "bold 24px 微软雅黑";
+        ctx.textBaseLine = "middle";
+        ctx.strokeText("是荐乐盯产我", 20, 20);
+        ctx.fillText("是荐乐盯产我", 50, 50);
+        ctx.closePath();
+        console.log(ctx.measureText("是荐乐盯产我").width);
+    };
+    </script>
+</body>
+
+</html>

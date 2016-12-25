@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    window.onload = function() {
+        var can = document.createElement("canvas");
+        can.style.display = "block";
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+        document.body.style.margin = 0;
+        document.body.appendChild(can);
+        var ctx = can.getContext("2d");
+        ctx.strokeStyle = "#ccc";
+
+
+        ctx.beginPath();
+        ctx.arc(100, 100, 100, (Math.PI / 180) * 90, (Math.PI / 180) * 270, false);
+        ctx.closePath();
+        ctx.fillStyle = "#000";
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(100, 100, 100, (Math.PI / 180) * 270, (Math.PI / 180) * 90, false);
+        ctx.closePath();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(100, 50, 50, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false);
+        ctx.closePath();
+        ctx.fillStyle = "#000";
+        ctx.fill();
+
+
+        ctx.beginPath();
+        ctx.arc(100, 50, 10, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false);
+        ctx.closePath();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(100, 150, 50, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false);
+        ctx.closePath();
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(100, 150, 10, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false);
+        ctx.closePath();
+        ctx.fillStyle = "#000";
+        ctx.fill();
+
+    };
+    </script>
+</body>
+
+</html>

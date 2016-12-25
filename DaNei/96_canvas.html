@@ -5,27 +5,90 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script type="text/javascript">
-    window.onload = function() {
+    var can = document.createElement("canvas");
+    window.onload = initial;
+
+    function initial() {
         document.body.style.margin = 0;
-        var can = document.createElement("canvas");
         // 设置canvas全屏
-        can.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
-        can.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
-        this.onresize = function() {
-            can.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
-            can.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
-        };
+        changeWh();
         // 必须将canvas设置为block,默认inline,会出现滚动条
         can.style.display = "block";
-        var ctx = can.getContext("2d");
-        ctx.rect(20, 20, 150, 100);
-        ctx.stroke();
         document.body.appendChild(can);
+        ctx = can.getContext("2d");
+        // 画图
+        draw();
     }
+
+    function changeWh() {
+        can.width = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
+        can.height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+    };
+    window.onresize = changeWh;
+
+    function draw(e) {
+        var e = e || window.event;
+        ctx.lineWidth = 1;
+        // var gObj = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+        // var gObj = ctx.createRadialGradient(150, 150, 25, 150, 150, 50);
+        // gObj.addColorStop(0, "red");
+        // gObj.addColorStop(0.4, "yellow");
+        // gObj.addColorStop(0.6, "pink");
+        // gObj.addColorStop(0.8, "green");
+        // gObj.addColorStop(1, "blue");
+        // ctx.fillStyle = gObj;
+        // 画布中随机生成10个100*100的矩形
+        for (var i = 0; i < 10; i++) {
+            var x = parseInt(Math.random() * window.innerWidth);
+            var y = parseInt(Math.random() * window.innerHeight);
+            var rgb = randomColor();
+            x = x > (window.innerWidth - 30) ? x - 30 : x;
+            y = y > (window.innerHeight - 30) ? y - 30 : y;
+            // x = e.clientX - 15;
+            // y = e.clientY - 15;
+            // ctx.strokeStyle = "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + rgb.a + ")";
+            // ctx.strokeStyle = gObj;
+            ctx.strokeRect(x, y, 30, 30)
+                // ctx.fillRect(x, y, 30, 30)
+        }
+
+
+
+    }
+
+    function randomColor() {
+        var r = parseInt(Math.random() * 255).toString();
+        var g = parseInt(Math.random() * 255).toString();
+        var b = parseInt(Math.random() * 255).toString();
+        var a = Math.random().toFixed(2);
+        return {
+            r: r,
+            g: g,
+            b: g,
+            a: a
+        }
+
+    }
+    window.onmousemove = draw;
     </script>
 </head>
 
 <body>
+    <button type="button">保存状态</button>
+    <button type="button">恢复状态</button>
+    <button type="button">扩大</button>
+    <script type="text/javascript">
+    document.querySelectorAll("button")[0].onclick = function() {
+        ctx.save();
+    };
+
+    document.querySelectorAll("button")[1].onclick = function() {
+        ctx.restore();
+    };
+    document.querySelectorAll("button")[2].onclick = function() {
+        ctx.scale(2, 2);
+    };
+    </script>
 </body>
 
 </html>

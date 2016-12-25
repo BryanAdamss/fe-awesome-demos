@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    window.onload = function() {
+        var can = document.createElement("canvas");
+        can.style.display = "block";
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+        document.body.style.margin = 0;
+        document.body.appendChild(can);
+        var ctx = can.getContext("2d");
+
+        var img = new Image();
+        img.src = "img/product-s4-m.jpg";
+        // 图片是异步加载的，所以必须等图片加载完成，再画到画布上
+        img.onload = function() {
+            // ctx.drawImage(img, 100, 100);
+            var pat = ctx.createPattern(img, "repeat");
+            ctx.fillStyle = pat;
+            ctx.rect(0, 0, 1400, 800);
+            ctx.fill();
+        };
+
+        ctx.beginPath();
+        ctx.arc(50, 50, 50, 0, Math.PI * 2, true);
+        ctx.rect(50, 20, 200, 120);
+        ctx.closePath();
+        ctx.clip();
+
+
+    };
+    </script>
+</body>
+
+</html>

@@ -101,17 +101,101 @@
 		Canvas绘图
 			canvas标签默认尺寸300x150,绘制后就像一张真正的图片，会被拉伸变形
 
+			***后绘制的会覆盖先绘制的图形***
+
 			ele.getContext("2d")->获取2d绘图环境
 
-		API(拖拽、Web存储)
-	JQuery
-		模拟jQuery
-		jQuery学习
-		插件学习
-	Ajax
-		ajax
-		xml
-		表单异步提交异步验证
+			矩形
+				ctx.fillRect(x,y,width,height)->实心
+				ctx.strokeRect(x,y,width,height)->轮廓
+				ctx.clearRect(x,y,width,height)->擦出
+
+			ctx.scale(xScale,yScale)->缩放
+				只会影响设置之后绘制的图形
+				xScale,yScale
+						小于1->缩小;0.8缩放到80%
+						1->原始大小
+						大于1->放大几倍
+
+			ctx.translate(x,y)->变换画布的原点;默认原点0,0
+
+			ctx.save()->保存当前***画布状态(放大缩小，原点)***
+
+			ctx.restore()->获取上一个保存的***画布状态***(例如放大缩小了几倍,不能将画布还原到上一个画面)
+
+			ctx.strokeStyle->声明形状的线条颜色
+			ctx.fillStyle->声明形状的填充颜色
+			ctx.globalAlpha->透明度
+
+			ctx.createLinearGradient(x1,y1,x2,y2)->创建一个线性渐变对象
+			ctx.createRadialGradient(x1,y1,r1,x2,y2,r2)->创建一个放射性渐变对象
+			
+			gradientObj.addColorStrop(position,color)->指定渐变下标
+				position->0~1
+
+			beginPath()->开始路径
+			closePath()->闭合路径,用直线将最后一个点同原点连接，如果需要保留开放路径，则不需调用此方法
+			stroke()->将路径绘制为轮廓形状
+			fill()->将路径绘制为实心形态。使用此方法可以不用closePath来关闭路径,该方法会通过直线连接最后一个点与第一个点实现封闭
+			clip->在上下文中设置裁剪区域
+
+			moveTo(x,y)->将笔触移动到xy坐标位置(笔触默认在0,0)
+			lineTo(x,y)->绘制直线,连接当前笔触位置到xy坐标位置
+			arc(x,y,raidus,startAngle,endAngle,direction)->弧线或圆,direction指定顺时针(false)还是逆时针(true)
+
+			ctx.lineWidth->设置线宽
+			ctx.lineCap->设置线两端样式butt(默认)、round、square
+			ctx.lineJoin->设置两线结合处样式round、bevel   
+			
+			ctx.font->设置用到的文字字体
+			ctx.textAlign->水平对齐方式
+			ctx.textBaseLine->垂直对齐方式
+			ctx.strokeText(text,x,y)->x,y处用线框形式显示字
+			ctx.fillText(text,x,y)->x,y处用填充形式显示字
+			ctx.measureText(text)->返回指定文字的大小信息
+			ctx.measureText(text).width->返回文本所占宽度
+
+			ctx.shadowColor->使用css语法声明阴影颜色
+			ctx.shadowOffsetX->x偏移值
+			ctx.shadowOffsetY->y偏移值
+			ctx.shadowBlur->阴影模糊效果
+
+			ctx.drawImage(image,x,y[,w,h])->绘制图片到canvas
+				image可以是image、video、js中Image对象
+			ctx.createPattern(image,type)->在指定的方向内重复指定的元素。返回一个对象，必须将对象传给fillStyle再fill()才能出现
+				type
+					no-repeat
+					repeat-x/y
+					repeat
+			ctx.clip()->切割形状(蒙板由路径提供)
+
+		拖拽
+			拖拽源元素->被拖对象
+			目标元素->接收拖拽源元素的对象
+				源元素事件
+					dragstart->拖动开始触发
+					drag->拖动时触发类似mousemove
+					dragend->拖动结束触发
+				目标元素事件
+					dragenter->当拖动时,指针第一次进入目标元素区域时，触发
+					dragover->当源元素拖动到目标对象时触发
+					drop->到拖动操作在目标元素内执行投放时，目标元素会触发
+					dragleave->当拖动对象离开目标对象时触发
+					执行以上方法需要阻止默认事件
+
+			dataTransfer对象
+				dataTransfer对象提供了对于预定义的剪贴板格式的访问，以便在拖放中使用。它使得自定义处理拖放操作成为可能
+				可以通过dataTransfer对象保存拖放过程中各组建所涉及到的数据
+				用在事件中e.dataTransfer
+
+				setData(type,data)->用于声明所发送的数据与类型
+				getData(type)->返回指定type的数据
+				clearData(type)->删除指定类型数据
+					type
+						text						url(兼容差)
+						html(兼容差)
+
+				setDragImage()->设置拖拽过程中鼠标指针图像
 </pre>
     <form>
         <input type="email" name="" required id="haha">

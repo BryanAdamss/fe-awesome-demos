@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		Web存储
+			浏览器保存数据
+				cookie->服务器浏览器都能用
+					缺点:大小个数有限制(取决于浏览器)、每个cookie存储的数据长度固定
+				session->服务器用;临时性保存数据到服务器
+					临时性:浏览器关闭后，数据就会消失
+					服务器:将数据保存在服务器上
+
+			localStorage->在浏览器本地存储
+				特点:可长时间保存用户时间,只有手动才能删除
+				***多个标签页之间可共享数据*** 
+			sessionStorage->在浏览器本地存储
+				特点:针对浏览器窗口(标签页)有效,窗口(标签页)关闭则数据全部被清空;session是将数据保存在服务器上;不同标签页的数据不共享(哪怕访问的是同个链接)
+				二者共同点:都能将数据保存在本地浏览器中
+
+				二者方法
+					setItem(key,value)
+					getItem(key)
+					removeItem(key)
+					clear()->删除所有数据
+					key(index)->根据index获得指定位置的key值
+				二者属性
+					length	保存的数据个数
+			
+			storage事件
+				***localStorage专有事件***
+				当localStorage内数据发生变化时浏览器会自动通知其它页面触发storage事件;eg:多个标签页共享一个localStorage,当在一个页面中修改了数据，其他页面会触发storage事件
+
+				
+	</pre> key
+    <input type="text" name=""> value
+    <input type="text" name="">
+    <button id="bc">保存</button>
+    <button id="xs">显示</button>
+    <script type="text/javascript">
+    var key = document.querySelectorAll("input")[0];
+    var val = document.querySelectorAll("input")[1];
+    var bc = document.querySelector("#bc");
+    var xs = document.querySelector("#xs");
+    bc.onclick = function() {
+        sessionStorage.setItem(key.value, val.value);
+
+    };
+    xs.onclick = function() {
+        console.log(sessionStorage.getItem(key.value));
+    };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    window.onload = function() {
+        // 准备
+        var can = document.createElement("canvas");
+        can.style.display = "block";
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+        document.body.style.margin = 0;
+        document.body.appendChild(can);
+        var ctx = can.getContext("2d");
+        // 小球半径
+        var RADIOUS = 40;
+        // 小球初始坐标,速度
+        var x = RADIOUS,
+            y = RADIOUS,
+            speedX = 1,
+            speedY = 1;
+
+        // 移动
+        var timer = setInterval(function() {
+            // 越界方向致反
+            if (x < RADIOUS || x > can.width - RADIOUS) {
+                speedX *= -1;
+            }
+            if (y < RADIOUS || y > can.height - RADIOUS) {
+                speedY *= -1;
+            }
+            x += speedX;
+            y += speedY;
+            console.log(x + ":" + y);
+            // 清除上一次绘制的小球
+            ctx.clearRect(0, 0, can.width, can.height);
+            // 绘制小球
+            ctx.beginPath();
+            ctx.fillStyle = "#333";
+            ctx.arc(x, y, RADIOUS, 0, Math.PI * 2, false);
+            ctx.closePath();
+            ctx.fill();
+
+        }, 60);
+    };
+    </script>
+</body>
+
+</html>
