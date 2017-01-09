@@ -31,7 +31,7 @@
 
             var num=str.charCodeAt(index);获取指定位置字符的unicode编号
 
-            var char=String.formCharCode(code);//将编码转为字符
+            var char=String.fromCharCode(code);//将编码转为字符
 
         字符串三大操作
             1.查找关键字
@@ -54,7 +54,7 @@
 
                 var subStr=str.subString(start,end+1);和slice几乎一样,唯一不同就是它不支持负数(从后开始截取)
 
-                var subStr=str.subStr(start,count);从start开始取count个
+                var subStr=str.substr(start,count);从start开始取count个
 
                 以上三个省略第二个参数，默认都是取到最后
 

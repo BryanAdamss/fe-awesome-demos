@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .xxx {
+        border: 1px solid red;
+    }
+    </style>
+</head>
+
+<body>
+    <pre>
+    cQuery
+        选择器封装
+        常用操作方法封装
+        简单动画封装
+        事件绑定封装
+</pre>
+    <div id="aa"></div>
+    <div id="aa"></div>
+    <div id="aa"></div>
+    <div class="cc">as</div>
+    <div class="cc">ds</div>
+    <input type="text" name="" value="" onclick="console.log($('input').attr('class','xxx'))">
+    <span onclick='$("span").removeClass("xxx");' class="xxx xa xxx ax fff xxx  xxxxa">sadasdsa</span>
+    <span onclick='$("span").removeClass();' class="xxx xa xxx x ax fff xxx  xxxxa x">sadasdsa</span>
+    <script type="text/javascript">
+    // 保存数据
+    var CQObject = function() {
+        this.data = [];
+    };
+    // 自定义方法
+    CQObject.prototype = {
+        html: function(content) {
+            if (content) {
+                // 设置所有元素内部html
+                for (var i = 0; i < this.data.length; i++) {
+                    this.data[i].innerHTML = content;
+                }
+                // 链式调用,当对返回值没有硬性要求的，可以返回自己来实现链式调用，方便其他操作
+                return this;
+            } else {
+                // 获取第一个元素内部html,这个返回值必须是字符串，所以不能做链式调用
+                if (this.data.length !== 0) {
+                    return this.data[0].innerHTML;
+                }
+            }
+        },
+        addClass: function(className) {
+            // 追加className
+            for (var i = 0; i < this.data.length; i++) {
+                var elem = this.data[i];
+                var oldClassName = elem.getAttribute("class");
+                if (oldClassName && oldClassName.indexOf(className) === -1) {
+                    // 有class特性，并要追加的className不存在，则在oldClassName后追加
+                    elem.setAttribute("class", oldClassName + " " + className)
+                } else {
+                    // 无class特性，创建class特性，并赋值
+                    elem.setAttribute("class", className);
+                }
+            }
+            return this;
+        },
+        removeClass: function(className) {
+            // 移除指定className或移除所有className
+            if (className) {
+                var oldClassName = "";
+                var reg = "";
+                // 移除指定className
+                for (var i = 0; i < this.data.length; i++) {
+                    oldClassName = this.data[i].getAttribute("class");
+                    reg = new RegExp("(^|\\s)" + className + "(\\s|$)", "g");
+                    if (reg.test(oldClassName)) {
+                        this.data[i].setAttribute("class", oldClassName.replace(reg, ""));
+                    }
+                }
+            } else {
+                // 移除整个className(移除class特性)
+                for (var i = 0; i < this.data.length; i++) {
+                    this.data[i].removeAttribute("class");
+                }
+            }
+            return this;
+        },
+        val: function(value) {
+            // 主要针对有value属性的标签进行获取或设置value
+            if (value) {
+                // 设置
+                for (var i = 0; i < this.data.length; i++) {
+                    this.data[i].value = value;
+                }
+                return this;
+            } else {
+                // 获取值
+                if (this.data.length !== 0) {
+                    return this.data[0].value;
+                }
+            }
+        },
+        attr: function(name, value) {
+            // 获取或设置指定特性
+            if (name && value) {
+                // 设置
+                for (var i = 0; i < this.data.length; i++) {
+                    this.data[i].setAttribute(name, value);
+                }
+                return this;
+            } else if (name) {
+                // 获取
+                if (this.data.length !== 0) {
+                    return this.data[0].getAttribute(name);
+                }
+            }
+        },
+        // 注:append、appendTo、insertBefore、remove有待完善
+        append: function(cqObj) {
+            // 将cqObj里第一个元素追加到this中第一个元素里
+            // $("body").append($("<div>Hello World!</div>"))
+            var srcElem = this.data[0];
+            var tarElem = cqObj.data[0];
+            srcElem.appendChild(tarElem);
+            return this;
+        },
+        appendTo: function(cqObj) {
+            // 将this中的第一个元素追加到cqObj的第一个元素去
+            var srcElem = cqObj.data[0];
+            var tarElem = this.data[0];
+            srcElem.appendChild(tarElem);
+            return this;
+        },
+        insertBefore: function(cqObj) {
+            // 将this中的第一个元素追加到cqObj的第一个元素前
+            var newElem = this.data[0];
+            var oldElem = cqObj.data[0];
+            var parentElem = oldElem.parentNode;
+            parentElem.insertBefore(newElem, oldElem);
+            return this;
+        },
+        remove: function() {
+            var removeElem = this.data[0];
+            var parentElem = removeElem.parentNode;
+            parentElem.removeChild(removeElem);
+        }
+    };
+    // 选择器
+    var $ = function(selector) {
+        this.cqObj = new CQObject();
+        // 创建元素
+        if (selector.indexOf("<") === 0 && selector.lastIndexOf(">") === selector.length - 1) {
+            // 提取标签名、创建元素、获取内容
+            var reg = /[^<>\s]+/;
+            var elemName = selector.match(reg)
+            var newElem = document.createElement(elemName);
+            var content = selector.substring(selector.indexOf(">") + 1, selector.lastIndexOf("<"))
+            newElem.innerHTML = content;
+            this.cqObj.data.push(newElem);
+        } else {
+            // 选择元素
+            this.cqObj.data = document.querySelectorAll(selector);
+        }
+        return this.cqObj;
+    };
+    $('.cc').append($("<div>Hello World!</div>"));
+    $("<div>Hello World!</div>").appendTo($('.cc'));
+    $(".cc").insertBefore($("pre"))
+    $(".cc").remove()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<HTML>
+
+<HEAD>
+    <TITLE>WMI Scripting HTML</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=gb2312">
+    <SCRIPT language=JScript event="OnCompleted(hResult,pErrorObject, pAsyncContext)" for=foo>
+    document.forms[0].txtMACAddr.value = (MACAddr);
+    document.forms[0].txtIPAddr.value = (IPAddr);
+    document.forms[0].txtDNSName.value = (sDNSName);
+    //document.formbar.submit();
+    for (var i = 0; i < mac_arr.length; i++) {
+        mac_str += mac_arr[i] + " ";
+        //alert(mac_arr[i]);
+    }
+    for (var j = 0; j < ip_arr.length; j++) {
+        ip_str += ip_arr[j] + " ";
+        //alert(ip_arr[j]);
+    }
+    alert(ip_str);
+    alert(mac_str);
+    //document.location.href = "post_data.php?ip_str="+ip_str+"mac_str="+msc_str;
+    </SCRIPT>
+    <SCRIPT language=JScript event=OnObjectReady(objObject,objAsyncContext) for=foo>
+    //异步调用
+    function add_mac(mac) {
+        mac_arr[mac_arr.length] = mac;
+    }
+
+    function add_ip(ip) {
+        ip_arr[ip_arr.length] = ip;
+    }
+
+    if (objObject.IPEnabled != null && objObject.IPEnabled != "undefined" && objObject.IPEnabled == true) {
+        if (objObject.MACAddress != null && objObject.MACAddress != "undefined") {
+            MACAddr = objObject.MACAddress;
+        }
+        if (objObject.IPEnabled && objObject.IPAddress(0) != null && objObject.IPAddress(0) != "undefined") {
+            IPAddr = objObject.IPAddress(0);
+        }
+        if (objObject.DNSHostName != null && objObject.DNSHostName != "undefined") {
+            sDNSName = objObject.DNSHostName;
+        }
+        add_mac(MACAddr);
+        add_ip(IPAddr);
+    }
+    </SCRIPT>
+    <META content="MSHTML 6.00.2800.1106" name=GENERATOR>
+</HEAD>
+
+<BODY>
+    <OBJECT id=locator classid=CLSID:76A64158-CB41-11D1-8B02-00600806D9B6 VIEWASTEXT></OBJECT>
+    <OBJECT id=foo classid=CLSID:75718C9A-F029-11d1-A1AC-00C04FB6C223></OBJECT>
+    <SCRIPT language=JScript>
+    var service = locator.ConnectServer();
+    var MACAddr;
+    var IPAddr;
+    var DomainAddr;
+    var sDNSName;
+    var mac_arr = new Array();
+    var ip_arr = new Array();
+    var mac_str = '';
+    var ip_str = '';
+    service.Security_.ImpersonationLevel = 3;
+    //此处异步调用
+    service.InstancesOfAsync(foo, 'Win32_NetworkAdapterConfiguration');
+    </SCRIPT>
+    <FORM id=formfoo name=formbar action=NICPost.php method=post>
+        <INPUT name=txtMACAddr>
+        <INPUT name=txtIPAddr>
+        <INPUT name=txtDNSName>
+    </FORM>
+</BODY>
+
+</HTML>
