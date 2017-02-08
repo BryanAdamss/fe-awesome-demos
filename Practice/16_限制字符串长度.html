@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    通过“maxlength ”限制：
+    <input type="text" name="lname" maxlength="5" />
+    <br /> 通过“JavaScript事件 ”限制：
+    <input type="text" data-length='5' id='limitLength' name="lname" />
+    <br />
+    <script type="text/javascript">
+    var oLimit = document.getElementById("limitLength");
+    var iLen = parseInt(oLimit.getAttribute("data-length"));
+
+    function limitLength(obj) {
+        var _oV = obj.value;
+        var _objLen = _oV.length;
+        if (_objLen > iLen) {
+            obj.value = _oV.substr(0, iLen);
+        }
+    }
+    oLimit.onkeyup = oLimit.onfocus = oLimit.onblur = function() {
+        limitLength(this);
+    };
+    </script>
+</body>
+
+</html>

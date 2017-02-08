@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <iframe src="http://192.168.23.24:8080"></iframe> -->
+    <script type="text/javascript">
+    window.onload = function() {
+        setInterval(function() {
+            // var frame = document.getElementsByTagName("iframe")[0].contentWindow;
+            // console.log(frame);
+            window.postMessage("haha", "http://192.168.23.24:8080");
+            console.log("1");
+        }, 1000);
+
+    };
+    </script>
+</body>
+
+</html>

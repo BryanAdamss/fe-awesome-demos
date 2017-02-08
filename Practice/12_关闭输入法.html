@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>关闭输入法让其只能输入除中文以外的字符</h2>
+    <input type='text' id='banInputMethodgoogle' value='不支持谷歌浏览器'>
+    <br>
+    <input type='text' data-banInputMethod='1' id='banInputMethod' value='支持主流浏览器'>
+    <br>
+    <script type="text/javascript">
+    var arr = [
+        document.getElementById("banInputMethodgoogle"),
+        document.getElementById("banInputMethod")
+    ];
+
+    function clearChinese(_this) {
+        var sV = _this.value;
+        //正则替换中文字符
+        _this.value = sV.replace(/[\u4e00-\u9fa5]/g, "");
+    }
+    for (var i = arr.length - 1; i >= 0; i--) { //遍历待处理的节点对象
+        var arrI = arr[i];
+        arrI.onfocus = function() {
+            //获取焦点事件
+            this.style.imeMode = 'disabled';
+            //样式方案,只兼容除了谷歌浏览器之外的浏览器
+        }
+        var banInputMethod = arrI.getAttribute("data-banInputMethod"); //获取banInputMethod属性
+        if (banInputMethod) {
+            //判断是否存在banInputMethod
+            arrI.onkeyup = function() {
+                //keyup事件
+                clearChinese(this);
+            };
+            arrI.onblur = function() {
+                //blur事件,防止右键粘贴进来的
+                clearChinese(this);
+            };
+        }
+    }
+    </script>
+</body>
+
+</html>

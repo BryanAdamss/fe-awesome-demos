@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>可通过添加disabled属性或js来实现</h2>
+    <input type="text" name="" disabled value="我是用disabled禁用的">
+    <input type="text" name="" id="inp" value="我是用js禁用的">
+    <script type="text/javascript">
+    var oInp = document.getElementById("inp");
+    // 聚焦时，自动让其失去焦点，达到无法输入的功能
+    oInp.onfocus = function() {
+        this.blur();
+    };
+    </script>
+</body>
+
+</html>

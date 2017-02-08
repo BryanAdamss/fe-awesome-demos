@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" data-length='17' id='remainingCharacters' data-model='Ch' data-showRemain="true" name="remainingCharacters" />
+    <!-- <p>测试1：还可以输入<strong id="charActers1">5</strong>字符</p> -->
+    <script type="text/javascript">
+    // 限制长度
+    function limit(obj) {
+        var sValue = obj.value,
+            // 实际长度
+            iLen = parseInt(sValue.length),
+            // 模式
+            sModel = obj.getAttribute("data-model"),
+            // 获取限制长度
+            iLimitLen = parseInt(obj.getAttribute("data-length")),
+            // 是否实时显示
+            isShow = obj.getAttribute("data-showRemain");
+        if (sModel === "Ch") {
+            iLen = getStrLen(sValue, sModel);
+            var oChs = sValue.match(/[\u4e00-\u9fa5]/g);
+            var iChsLen = !oChs ? 0 : oChs.length;
+            // 长度超过，截取
+            if (iLen > iLimitLen) {
+                obj.value = sValue.substr(0, iLimitLen - iChsLen);
+            }
+            if (isShow) {
+                if (!document.getElementById("charActers1")) {
+                    var oP = document.createElement("p");
+                    oP.innerHTML = '测试1：还可以输入<strong id="charActers1">' + iLimitLen + '</strong>字符';
+                    obj.parentNode.insertBefore(oP, obj.nextElementSibling);
+                } else {
+                    oShowBox = document.getElementById("charActers1");
+                    oShowBox.innerHTML = iLen > iLimitLen ? 0 : iLimitLen - iLen;
+                }
+            }
+        }
+    }
+
+
+    // 获取字符串长度,若Ch则中文按2个长度计算，否则按1个长度计算
+    function getStrLen(str, model) {
+        var iStrLen = str.length;
+        // 默认按中文计算
+        if (iStrLen === 0) {
+            return 0;
+        } else {
+            var oChs = str.match(/[\u4e00-\u9fa5]/g);
+            var iChsLen = !oChs ? 0 : oChs.length;
+            var sModel = model || "Ch";
+            return iStrLen + (sModel === "Ch" ? iChsLen : 0);
+        }
+    }
+
+    var oIn = document.getElementById("remainingCharacters");
+    oIn.onkeyup = oIn.onfocus = oIn.onblur = function() {
+        limit(this);
+    };
+    </script>
+</body>
+
+</html>

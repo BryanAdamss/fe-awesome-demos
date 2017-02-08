@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #box {
+        overflow: hidden;
+        height: 21px;
+        position: relative;
+    }
+    
+    #inBox {
+        position: absolute;
+        transition: transform .3s ease-in-out;
+    }
+    
+    p {
+        margin: 0;
+        font-family: "微软雅黑";
+        font-size: 16px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="inBox">
+            <p>aaaaa</p>
+            <p>最初真实告知失败无线脸</p>
+            <p>xxxxxxx</p>
+            <p>f50404650450</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // requestAnimation
+    (function() {
+        var lastTime = 0;
+        var vendors = ['webkit', 'moz'];
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            // 统一前缀
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || // Webkit中此取消方法的名字变了
+                window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+            // 不支持则采用setTimeout
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+                var id = window.setTimeout(function() {
+                    callback(currTime + timeToCall);
+                }, timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+        }
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+        }
+    }());
+
+    var oBox = document.querySelector("#inBox");
+    oBox.innerHTML += oBox.innerHTML;
+
+    // 判断是否支持transform
+    var isSupportTransform = "transform" in document.documentElement.style;
+
+    // 运动的起始值
+    var y = 0;
+
+    // 每次运动的百分比
+    var per = 0;
+
+    window.requestAnimationFrame(move);
+
+    // 最近更新的时间
+    var lastTime = new Date();
+
+    function move() {
+        if (isSupportTransform) {
+            // 支持则采用transform
+            // 计算出每次运动的百分比
+            per = -(100 / getChildNode(oBox).length);
+            move = function() {
+                var now = new Date();
+                if (now - lastTime > 2000) {
+                    lastTime = now;
+                    if (Math.abs(y) < 100 - Math.abs(per)) {
+                        y += per;
+                    } else {
+                        y = 0;
+                    }
+                    oBox.style.transform = "translate3d(0," + y + "%,0)";
+                }
+                window.requestAnimationFrame(move);
+            };
+        } else {
+            // 否则使用绝对定位方式
+            // 每次运动的百分比固定为100%
+            per = -100;
+            var total = getChildNode(oBox).length * 100;
+            console.log(total);
+            move = function() {
+                var now = new Date();
+                if (now - lastTime > 2000) {
+                    lastTime = now;
+                    if (Math.abs(y) < total - Math.abs(per)) {
+                        y += per;
+                    } else {
+                        y = 0;
+                    }
+                    oBox.style.top = y + "%";
+
+                }
+                window.requestAnimationFrame(move);
+            };
+        }
+        move();
+    }
+
+    // 获取元素子节点
+    function getChildNode(obj) {
+        var childs = obj.childNodes;
+        var child = null;
+        var childsArr = [];
+        for (var i = 0, len = childs.length; i < len; i++) {
+            child = childs[i];
+            if (child.nodeType === 1) {
+                childsArr.push(child);
+            }
+        }
+        return childsArr;
+    }
+    </script>
+</body>
+
+</html>

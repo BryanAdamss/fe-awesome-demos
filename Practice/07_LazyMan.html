@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+	实现一个LazyMan，可以按照以下方式调用:
+LazyMan("Hank")输出:
+Hi! This is Hank!
+ 
+LazyMan("Hank").sleep(10).eat("dinner")输出
+Hi! This is Hank!
+//等待10秒..
+Wake up after 10
+Eat dinner~
+ 
+LazyMan("Hank").eat("dinner").eat("supper")输出
+Hi This is Hank!
+Eat dinner~
+Eat supper~
+ 
+LazyMan("Hank").sleepFirst(5).eat("supper")输出
+//等待5秒
+Wake up after 5
+Hi This is Hank!
+Eat supper
+ 
+以此类推。
+</pre>
+    <script type="text/javascript">
+    // 采用模块模式编写代码
+    (function(window, undefined) {
+        // 任务队列
+        var taskList = [];
+        // 订阅
+        function subscribe() {
+            var param = {},
+                args = Array.prototype.slice.call(arguments);
+            if (args.length < 1) {
+                throw new Error("参数不能为空");
+            }
+            param.msg = args[0]; //消息名
+            param.args = args.slice(1); // 参数列表
+            if (param.msg === "sleepFirst") {
+                // 将sleepFirst添加到队列开头
+                taskList.unshift(param);
+            } else {
+                // 普通任务添加到最后
+                taskList.push(param);
+            }
+        }
+        // 发布
+        function publish() {
+            if (taskList.length > 0) {
+                run(taskList.shift());
+            }
+        }
+
+        function LazyMan() {}
+        LazyMan.prototype.eat = function(str) {
+            subscribe("eat", str);
+            return this;
+        };
+        LazyMan.prototype.sleep = function(num) {
+            subscribe("sleep", num);
+            return this;
+        }
+        LazyMan.prototype.sleepFirst = function(num) {
+            subscribe("sleepFirst", num);
+            return this;
+        };
+        // 输出文字
+        function lazyManLog(str) {
+            console.log(str);
+        }
+        // 具体方法
+        function lazyMan(str) {
+            lazyManLog("Hi!This is " + str + "!");
+            publish();
+        }
+
+        function eat(str) {
+            lazyManLog("Eat " + str + "~");
+            publish();
+        }
+
+        function sleep(num) {
+            setTimeout(function() {
+                lazyManLog("Wake up after " + num);
+                publish();
+            }, num);
+
+        }
+
+        function sleepFirst(num) {
+            setTimeout(function() {
+                lazyManLog("Wake up after " + num);
+                publish();
+            }, num);
+        }
+        // 鸭子叫
+        function run(option) {
+            var msg = option.msg,
+                args = option.args;
+
+            switch (msg) {
+                case "lazyMan":
+                    lazyMan.apply(null, args);
+                    break;
+                case "eat":
+                    eat.apply(null, args);
+                    break;
+                case "sleep":
+                    sleep.apply(null, args);
+                    break;
+                case "sleepFirst":
+                    sleepFirst.apply(null, args);
+                    break;
+                default:
+                    break;
+            }
+        }
+        // 暴露接口
+        window.LazyMan = function(str) {
+            subscribe("lazyMan", str);
+
+            setTimeout(function() {
+                publish();
+            }, 0);
+
+            return new LazyMan();
+        };
+    })(window);
+    </script>
+</body>
+
+</html>

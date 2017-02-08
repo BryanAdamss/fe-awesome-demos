@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="strs" value="          需要过滤空格 ">
+    <input type="button" id="isContent" value="验证是否为空">
+    <br>
+    <script type="text/javascript">
+    var CGH = {
+        Dom: {
+            oInput: document.getElementById("strs"),
+            oBtn: document.getElementById("isContent"),
+            // 过滤前后空格
+            clearSpace: function(str) {
+                return str.replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g, "");
+            }
+        }
+    };
+    CGH.Dom.oBtn.onclick = function() {
+        // 过滤后再判断是否为空,不能只判断输入的字符个数是不是0(假如输入全是空格也能通过)
+        console.log(CGH.Dom.clearSpace(CGH.Dom.oInput.value));
+        if (!CGH.Dom.clearSpace(CGH.Dom.oInput.value)) {
+            alert("您输入的为空");
+        } else {
+            alert("您输入的不为空");
+        }
+    };
+    </script>
+</body>
+
+</html>

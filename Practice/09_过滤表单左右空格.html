@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="strs" value="          需要过滤空格 ">
+    <input type="button" id="rstrsBtn" value="过滤">
+    <script type="text/javascript">
+    var CGH = {};
+    CGH.Dom = {};
+    CGH.Dom.oInput = document.getElementById("strs");
+    CGH.Dom.oBtn = document.getElementById("rstrsBtn");
+
+
+
+    CGH.Dom.clearSpace = function(str) {
+        if (String.prototype.trim) {
+            return str.trim();
+        } else {
+            return str.replace(/^[\s\uFEFF\u00A0]+|[\s\uFEFF\u00A0]+$/g, '');
+        }
+    };
+    CGH.Dom.oBtn.onclick = function() {
+        CGH.Dom.oInput.value = CGH.Dom.clearSpace(CGH.Dom.oInput.value);
+    };
+    </script>
+</body>
+
+</html>

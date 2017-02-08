@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="number" value='只能输入中文' id='chineseStr' />
+    <script type="text/javascript">
+    var oI = document.getElementById("chineseStr");
+
+    function clearNonChs(obj) {
+        var _oV = obj.value;
+        // 替换所有非中文
+        obj.value = _oV.replace(/[^\u4e00-\u9fa5]/g, "");
+    }
+    oI.onkeyup = oI.onblur = oI.onfocus = function() {
+        clearNonChs(this);
+    };
+    </script>
+</body>
+
+</html>

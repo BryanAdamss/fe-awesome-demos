@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .info {
+        position: absolute;
+        z-index: 2;
+        border: 1px solid red;
+        color: #666;
+        font-size: 80%;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+
+<body>
+    <div style="position:relative;border:1px solid blue;height: 100px;">
+        <input type="text" name="" placeholder="用户名sadas" style="position: absolute;top:50%;padding:5px;">
+    </div>
+    <input type="password" name="" placeholder="密码">
+    <br>
+    <textarea placeholder="文本域" rows="10"></textarea>
+    <script type="text/javascript">
+    var isSupport = "placeholder" in document.createElement("input");
+    if (!isSupport) {
+        var oInput = document.querySelectorAll('input[type="text"],input[type="password"],textarea');
+        // 遍历
+        for (var i = 0, len = oInput.length; i < len; i++) {
+            var obj = oInput[i];
+            obj.index = i;
+            // 创建提示信息并定位
+            var oSpan = document.createElement("span");
+            oSpan.className = "info";
+            oSpan.style.left = obj.offsetLeft + "px";
+            oSpan.style.top = obj.offsetTop + "px";
+            oSpan.style.width = obj.offsetWidth + "px";
+            oSpan.style.height = obj.offsetHeight + "px";
+            // 非textarea的提示信息设置行高
+            if (!("cols" in obj)) {
+                oSpan.style.lineHeight = obj.offsetHeight + "px";
+            }
+            oSpan.innerHTML = obj.getAttribute("placeholder");
+
+            obj.onfocus = function() {
+                document.querySelectorAll(".info")[this.index].style.display = "none";
+            };
+            obj.onblur = function() {
+                if (!this.value) {
+                    document.querySelectorAll(".info")[this.index].style.display = "block";
+                }
+            };
+            oSpan.onclick = function() {
+                this.style.display = "none";
+            };
+
+            obj.parentNode.insertBefore(oSpan, obj.nextSibling);
+        }
+    }
+    </script>
+</body>
+
+</html>
