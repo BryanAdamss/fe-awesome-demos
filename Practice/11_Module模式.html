@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    Module模式
+    基础知识
+        1.通过立即执行匿名函数表达式来创建私有环境,保护私有变量
+        2.通过return 一个obj或者函数,对外提供数据(相当于一个接口)
+    立即执行匿名函数表达式写法
+        (function(参数){
+            xxxx
+        })(参数);
+
+        (function(参数){
+            xxx
+        }(参数));
+
+        !function(参数){
+            xxxx
+        }(参数);
+
+        ;function(参数){
+            xxxx
+        }(参数);
+
+        无论是有圆括号还是分号、感叹号最终目的都是让前面的函数声明转换为函数表达式，这样就能立即调用,前两个常用
+
+    Module模式写法
+
+        不带var写法
+
+            (function(module) { 
+                function privateAdder(n1, n2) { 
+                    return n1 + n2; 
+                } 
+                module.add = function(n1, n2) { 
+                    return privateAdder(n1, n2);
+                }; 
+            })(window.module = window.module || {});
+
+        带var写法
+
+            对外提供方法属性的不同写法
+
+                直接返回一个对象
+                    var module=(function(){
+                       // 私有变量
+                       var a=3;
+                       // 对外提供方法或属性(使用对象字面量方式)
+                       return {
+                           getFn:function(){
+                               return a;
+                           },
+                           name:"ccc"
+                       }
+                    })();
+
+                    var module=(function(){
+                        // 私有变量
+                        var a=3;
+                        // 对外提供的对象
+                        var publicData={};
+                        publicData.getFn=function(){
+                            xxx
+                        };
+                        return publicData;
+                    })();
+
+                还可返回一个函数(当需要类的实例化的时候，可以返回函数)
+                    var module=(function(){
+                       // 私有变量
+                       var a=3;
+                       // 对外提供的对象
+                       return function(name){
+                           this.name = name; 
+                           this.bark = function(){ /*...*/ } 
+                       };
+                    })();
+
+                    var newModuel= new module("小花");
+                    newModuel.bark();
+
+            接收参数
+                var module=(function(q,w){
+                       // 私有变量
+                       var a=3;
+                       // 对外提供方法或属性(使用对象字面量方式)
+                       return {
+                           getFn:function(){
+                               return a;
+                           },
+                           name:"ccc"
+                       }
+                })(jQuery,window);
+
+            扩展
+                var module=(function(publicData){
+                       // 私有变量
+                       var a=3;
+                       
+                       publicData={
+                            getFn:function(){
+                                   return a;
+                               },
+                            name:"ccc"
+                       };
+                       return publicData;
+                })(module);
+
+            松散耦合扩展
+                var module=(function(publicData){
+                       // 私有变量
+                       var a=3;
+                       // 公有变量
+                       publicData={
+                            getFn:function(){
+                                   return a;
+                               },
+                            name:"ccc"
+                       };
+                       return publicData;
+                })(module || {});
+
+            紧耦合扩展
+                var module=(function(publicData){
+                    // 保存原有publicData
+                    var oldData=publicData;
+                    // 私有变量
+                    var a=3;
+                    // 公有变量
+                    publicData={
+                        getFn:function(){
+                               return a;
+                           },
+                        name:"ccc"
+                    };
+                   return publicData;
+                })(module);
+                
+            子模块
+                已经定义了module情况下
+                module.subModule=(function(){
+                    var publicData={};
+                    xxx
+                    return publicData;
+                })();
+
+        总结:一般会用到松散耦合、子模块、私有状态,所以推荐使用松散耦合形式来书写
+          var module=(function(publicData){
+              // 私有变量或方法
+              var a=3;
+              var fn=function(){
+                  xxx
+              };
+              // 公有方法和属性
+              publicData={
+                  init:function(){
+                      xxx
+                  }
+              };
+          })(module||{});
+                    
+        备注:与其他模块加载库的适配
+        
+          var MODULE = (function () {
+            var my = {};
+            // 代码 ...
+            
+            // 对外暴露接口前先检查是否支持AMD、CMD
+            if (typeof define == 'function') {
+              // AMD
+              define( function(){ return my; } );
+            }else if (typeof module != 'undefined' && module.exports) {
+              // CMD
+              module.exports = my;
+            }
+            return my;
+          }());
+
+
+</pre>
+    <script type="text/javascript">
+    // 使用立即调用的匿名函数来创建一个私有环境并立即返回一个对象给module
+    var module = (function() {
+        // 要暴露(公开)的公有对象,通过return返回,也可以不声明直接返回一个对象字面量 
+        var publicObj = {};
+        // 其他声明的全是私有变量
+        var privateName = "bry";
+
+        function privateFn(str) {
+            console.log("输入的是:" + str);
+        }
+
+        publicObj.name = privateName;
+        publicObj.getFn = function(str) {
+            privateFn(str)
+        };
+
+        return publicObj;
+    }());
+    console.log(module.privateName); //undefined
+    console.log(module.name); //"bry"
+    module.getFn("aaa"); //"aaa"
+    // console.log(module.privateFn()); //err
+
+    // module的一个实例,采用直接返回对象字面量的方式
+    var counter = (function() {
+        // 私有变量
+        var counter = 0;
+        // 暴露(返回)一个对象字面量,只有这2个函数能访问到counter
+        return {
+            incrementCounter: function() {
+                return ++counter;
+            },
+            resetCounter: function() {
+                console.log("counter:" + counter + "已重置");
+                counter = 0;
+            }
+        };
+    }());
+    //增加计数器
+    counter.incrementCounter();
+    //检查并重置计数器
+    counter.resetCounter();
+    </script>
+</body>
+
+</html>

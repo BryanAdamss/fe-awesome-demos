@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .ok {
+        color: green;
+    }
+    
+    .err {
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <p>
+        <input type="text" value='姓名验证' data-reg='Chinese' data-smsg='通过√' data-emsg='请输入中文' id='regUser' data-tname='msgU' /><span id='msgU'></span>
+    </p>
+    <p>
+        <input type="text" value='邮箱验证' data-reg='email' data-smsg='通过√' data-emsg='请输入邮箱' id='regEmail' data-tname='msgE' /><span id='msgE'></span>
+    </p>
+    <p>
+        <input type="text" value='电话验证' data-reg='phone' data-smsg='通过√' data-emsg='请输入电话' id='regPhone' data-tname='msgP' /><span id='msgP'></span>
+    </p>
+    <p>
+        <input type="text" value='带小数位的数字验证' data-reg='decimalNumber' data-smsg='通过√' data-emsg='请输入小数数字' id='regNumber' data-tname='msgN' /><span id='msgN'></span>
+    </p>
+    <button id="btn">验证</button>
+    <script type="text/javascript">
+    /**
+     * 获取对应正则
+     * @author cgh
+     * @time   2017-02-09
+     * @param  {string}   str 正则对应字符串
+     * @return {regexp}       正则表达式
+     */
+    function getRegular(str) {
+        var regData = {}; //正则数据存储域
+        regData.rtrim = /^(\s|\u00A0)+|(\s|\u00A0)+$/g; // 去除空格的正则
+        regData.Chinese = /[\u4e00-\u9fa5]/g; //中文
+        regData.nonumber = /\D/g; //非数字
+        regData.nochinese = /[^\u4e00-\u9fa5]/g; //非中文
+        regData.email = /^\s*[a-zA-Z0-9]+(([\._\-]?)[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([_\-][a-zA-Z0-9]+)*(\.[a-zA-Z0-9]+([_\-][a-zA-Z0-9]+)*)+\s*$/; //邮件
+        regData.phone = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,})){0,}$/; //电话
+        regData.decimalNumber = /^\d+(\.\d+)+$/; //带小数位的数字
+        regData.htmlTags = /<[\/\!]*[^<>]*>/ig; //html
+
+        return regData[str];
+    }
+    var oBtn = document.getElementById("btn");
+    var aInp = document.querySelectorAll("input");
+    var oInp = null;
+    oBtn.onclick = function() {
+        var okMsg = "";
+        var errMsg = "";
+        var tipName = "";
+        var reg = "";
+        var val = "";
+        var validated = false;
+        var tipBox = null;
+        for (var i = 0, len = aInp.length; i < len; i++) {
+            oInp = aInp[i];
+            okMsg = oInp.getAttribute("data-smsg");
+            errMsg = oInp.getAttribute("data-emsg");
+            tipName = oInp.getAttribute("data-tname");
+            reg = oInp.getAttribute("data-reg");
+            val = oInp.value;
+            tipBox = document.getElementById(tipName);
+            validated = getRegular(reg).test(val);
+            if (validated) {
+                tipBox.innerHTML = okMsg;
+                tipBox.className = "ok";
+            } else {
+                tipBox.innerHTML = errMsg;
+                tipBox.className = "err";
+            }
+        }
+    };
+    </script>
+</body>
+
+</html>

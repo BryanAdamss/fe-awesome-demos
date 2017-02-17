@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    
+    a,
+    img {
+        border: 0;
+    }
+    
+    body {
+        font: 12px/180% Arial, Helvetica, sans-serif, "新宋体";
+    }
+    
+    #focus_Box {
+        position: relative;
+        width: 710px;
+        height: 308px;
+        margin: 20px auto;
+    }
+    
+    #focus_Box ul {
+        position: relative;
+        width: 710px;
+        height: 308px
+    }
+    
+    #focus_Box li {
+        z-index: 0;
+        position: absolute;
+        width: 0px;
+        background: #787878;
+        height: 0px;
+        top: 146px;
+        cursor: pointer;
+        left: 377px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 12px rgba(0, 0, 0, .5)
+    }
+    
+    #focus_Box li img {
+        width: 100%;
+        background: url(img/loading.gif) no-repeat center 50%;
+        height: 100%;
+        vertical-align: top;
+        border-radius: 4px;
+    }
+    
+    #focus_Box li p {
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        background: url(img/float-bg.png) repeat;
+        text-indent: 8px;
+        color: #fff;
+    }
+    
+    #focus_Box li p span {
+        display: inline-block;
+        width: 70%;
+        height: 40px;
+        overflow: hidden;
+    }
+    
+    #focus_Box .prev,
+    #focus_Box .next {
+        display: block;
+        z-index: 100;
+        overflow: hidden;
+        cursor: pointer;
+        position: absolute;
+        width: 52px;
+        height: 52px;
+        top: 131px;
+    }
+    
+    #focus_Box .prev {
+        background: url(img/btn.png) left bottom no-repeat;
+        left: 0px
+    }
+    
+    #focus_Box .next {
+        background: url(img/btn.png) right bottom no-repeat;
+        right: 0px
+    }
+    
+    #focus_Box .prev:hover {
+        background-position: left top;
+    }
+    
+    #focus_Box .next:hover {
+        background-position: right top;
+    }
+    
+    #focus_Box a.imgs-scroll-btn {
+        display: block;
+        position: absolute;
+        z-index: 110;
+        top: 7px;
+        right: 15px;
+        width: 51px;
+        height: 23px;
+        overflow: hidden;
+        background: url(img/share-btn.png) no-repeat;
+        text-indent: -999px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="focus_Box">
+        <span class="prev">&nbsp;</span>
+        <span class="next">&nbsp;</span>
+        <ul>
+            <li>
+                <a href="javascript:;">
+                    <img width="445" height="308" alt="这个时代 你所追求的是什么？" src="img/1.jpg" />
+                </a>
+                <p>
+                    <span>这个时代 你所追求的是什么？</span>
+                    <a href="#" class="imgs-scroll-btn">分享</a>
+                </p>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img width="445" height="308" alt="我们所追求的不是拥有一切，而是拥有值得的一切" src="img/2.jpg" />
+                </a>
+                <p>
+                    <span>我们所追求的不是拥有一切，而是拥有值得的一切</span>
+                    <a href="#" class="imgs-scroll-btn">分享</a>
+                </p>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img width="445" height="308" alt="一段旅程，两个城市，潮流正在被重塑" src="img/3.jpg" />
+                </a>
+                <p>
+                    <span>一段旅程，两个城市，潮流正在被重塑</span>
+                    <a href="#" class="imgs-scroll-btn">分享</a>
+                </p>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img width="445" height="308" alt="你的眼光、激情、创意和内涵，也在重塑着城市的潮流" src="img/4.jpg" />
+                </a>
+                <p>
+                    <span>你的眼光、激情、创意和内涵，也在重塑着城市的潮流</span>
+                    <a href="#" class="imgs-scroll-btn">分享</a>
+                </p>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img width="445" height="308" alt="在这里，抛开重重限制，释放真实自我" src="img/5.jpg" />
+                </a>
+                <p>
+                    <span>在这里，抛开重重限制，释放真实自我</span>
+                    <a href="#" class="imgs-scroll-btn">分享</a>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    function ZoomPic() {
+        this.initialize.apply(this, arguments)
+    }
+    ZoomPic.prototype = {
+        // 初始化
+        initialize: function(id) {
+            var _this = this;
+            this.wrap = typeof id === "string" ? document.getElementById(id) : id;
+            this.oUl = this.wrap.getElementsByTagName("ul")[0];
+            this.aLi = this.wrap.getElementsByTagName("li");
+            // 前进后退按钮
+            this.prev = this.wrap.getElementsByTagName("span")[0];
+            this.next = this.wrap.getElementsByTagName("span")[1];
+            this.timer = 1000;
+            // 队列
+            this.aSort = [];
+            // 当前显示的图片序号
+            this.iCenter = 2;
+            this._doPrev = function() {
+                return _this.doPrev.apply(_this)
+            };
+            this._doNext = function() {
+                return _this.doNext.apply(_this)
+            };
+            // 大小位置信息
+            this.options = [
+                /*{width:476, height:210, top:40, left:0, zIndex:1},
+                {width:426, height:250, top:20, left:50, zIndex:2},
+                {width:654, height:290, top:0, left:150, zIndex:3},
+                {width:426, height:250, top:20, left:480, zIndex:2},
+                {width:476, height:210, top:40, left:476, zIndex:1},*/
+                {
+                    width: 365,
+                    height: 252,
+                    top: 40,
+                    left: 0,
+                    zIndex: 1
+                }, {
+                    width: 405,
+                    height: 280,
+                    top: 20,
+                    left: 60,
+                    zIndex: 2
+                }, {
+                    width: 445,
+                    height: 308,
+                    top: 0,
+                    left: 130,
+                    zIndex: 3
+                }, {
+                    width: 405,
+                    height: 280,
+                    top: 20,
+                    left: 240,
+                    zIndex: 2
+                }, {
+                    width: 366,
+                    height: 252,
+                    top: 40,
+                    left: 345,
+                    zIndex: 1
+                },
+            ];
+            // 将li添加到队列中
+            for (var i = 0; i < this.aLi.length; i++) this.aSort[i] = this.aLi[i];
+            // 将最后一个li添加到对首
+            this.aSort.unshift(this.aSort.pop());
+            this.setUp();
+            // 按钮绑定点击事件
+            this.addEvent(this.prev, "click", this._doPrev);
+            this.addEvent(this.next, "click", this._doNext);
+            // 所有图片添加绑定事件
+            this.doImgClick();
+            // 3s轮播
+            this.timer = setInterval(function() {
+                _this.doNext()
+            }, 3000);
+            // 鼠标移入停止
+            this.wrap.onmouseover = function() {
+                clearInterval(_this.timer)
+            };
+            // 鼠标移除继续
+            this.wrap.onmouseout = function() {
+                _this.timer = setInterval(function() {
+                    _this.doNext()
+                }, 3000);
+            }
+        },
+        // 图片右移
+        doPrev: function() {
+            this.aSort.unshift(this.aSort.pop());
+            this.setUp()
+        },
+        // 图片左移
+        doNext: function() {
+            this.aSort.push(this.aSort.shift());
+            this.setUp()
+        },
+        // 图片点击事件
+        doImgClick: function() {
+            var _this = this;
+            for (var i = 0; i < this.aSort.length; i++) {
+                this.aSort[i].onclick = function() {
+                    if (this.index > _this.iCenter) {
+                        // 点击当前图片右侧的图片，所有图片左移
+                        for (var i = 0; i < this.index - _this.iCenter; i++) _this.aSort.push(_this.aSort.shift());
+                        _this.setUp()
+                    } else if (this.index < _this.iCenter) {
+                        // 点击当前图片左侧的图片，所有图片右移
+                        for (var i = 0; i < _this.iCenter - this.index; i++) _this.aSort.unshift(_this.aSort.pop());
+                        _this.setUp()
+                    }
+                }
+            }
+        },
+        setUp: function() {
+            var _this = this;
+            var i = 0;
+            for (i = 0; i < this.aSort.length; i++) this.oUl.appendChild(this.aSort[i]);
+            for (i = 0; i < this.aSort.length; i++) {
+                this.aSort[i].index = i;
+                if (i < 5) {
+                    this.css(this.aSort[i], "display", "block");
+                    this.doMove(this.aSort[i], this.options[i], function() {
+                        _this.doMove(_this.aSort[_this.iCenter].getElementsByTagName("img")[0], {
+                            opacity: 100
+                        }, function() {
+                            _this.doMove(_this.aSort[_this.iCenter].getElementsByTagName("img")[0], {
+                                opacity: 100
+                            }, function() {
+                                _this.aSort[_this.iCenter].onmouseover = function() {
+                                    _this.doMove(this.getElementsByTagName("div")[0], {
+                                        bottom: 0
+                                    })
+                                };
+                                _this.aSort[_this.iCenter].onmouseout = function() {
+                                    _this.doMove(this.getElementsByTagName("div")[0], {
+                                        bottom: -100
+                                    })
+                                }
+                            })
+                        })
+                    });
+                } else {
+                    this.css(this.aSort[i], "display", "none");
+                    this.css(this.aSort[i], "width", 0);
+                    this.css(this.aSort[i], "height", 0);
+                    this.css(this.aSort[i], "top", 37);
+                    this.css(this.aSort[i], "left", this.oUl.offsetWidth / 2)
+                }
+                if (i < this.iCenter || i > this.iCenter) {
+                    this.css(this.aSort[i].getElementsByTagName("img")[0], "opacity", 100);
+                    this.aSort[i].onmouseover = function() {
+                        _this.doMove(this.getElementsByTagName("img")[0], {
+                            opacity: 100
+                        })
+                    };
+                    this.aSort[i].onmouseout = function() {
+                        _this.doMove(this.getElementsByTagName("img")[0], {
+                            opacity: 100
+                        })
+                    };
+                    this.aSort[i].onmouseout();
+                } else {
+                    this.aSort[i].onmouseover = this.aSort[i].onmouseout = null
+                }
+            }
+        },
+        // 添加事件函数
+        addEvent: function(oElement, sEventType, fnHandler) {
+            return oElement.addEventListener ? oElement.addEventListener(sEventType, fnHandler, false) : oElement.attachEvent("on" + sEventType, fnHandler)
+        },
+        // 设置样式函数
+        css: function(oElement, attr, value) {
+            if (arguments.length == 2) {
+                return oElement.currentStyle ? oElement.currentStyle[attr] : getComputedStyle(oElement, null)[attr]
+            } else if (arguments.length == 3) {
+                switch (attr) {
+                    case "width":
+                    case "height":
+                    case "top":
+                    case "left":
+                    case "bottom":
+                        oElement.style[attr] = value + "px";
+                        break;
+                    case "opacity":
+                        oElement.style.filter = "alpha(opacity=" + value + ")";
+                        oElement.style.opacity = value / 100;
+                        break;
+                    default:
+                        oElement.style[attr] = value;
+                        break
+                }
+            }
+        },
+        doMove: function(oElement, oAttr, fnCallBack) {
+            var _this = this;
+            clearInterval(oElement.timer);
+            oElement.timer = setInterval(function() {
+                var bStop = true;
+                for (var property in oAttr) {
+                    var iCur = parseFloat(_this.css(oElement, property));
+                    property == "opacity" && (iCur = parseInt(iCur.toFixed(2) * 100));
+                    var iSpeed = (oAttr[property] - iCur) / 5;
+                    iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+                    if (iCur != oAttr[property]) {
+                        bStop = false;
+                        _this.css(oElement, property, iCur + iSpeed)
+                    }
+                }
+                if (bStop) {
+                    clearInterval(oElement.timer);
+                    fnCallBack && fnCallBack.apply(_this, arguments)
+                }
+            }, 30);
+        }
+    };
+    window.onload = function() {
+        new ZoomPic("focus_Box");
+    };
+    </script>
+</body>
+
+</html>

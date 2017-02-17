@@ -24,6 +24,7 @@
     <br>
     <textarea placeholder="文本域" rows="10"></textarea>
     <script type="text/javascript">
+    // 优先使用原生的placeholder,不支持的采用覆盖元素来实现
     var isSupport = "placeholder" in document.createElement("input");
     if (!isSupport) {
         var oInput = document.querySelectorAll('input[type="text"],input[type="password"],textarea');
@@ -42,6 +43,7 @@
             if (!("cols" in obj)) {
                 oSpan.style.lineHeight = obj.offsetHeight + "px";
             }
+
             oSpan.innerHTML = obj.getAttribute("placeholder");
 
             obj.onfocus = function() {

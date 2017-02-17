@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>刷新</button>
+    <script type="text/javascript">
+    var oBtn = document.querySelector("button");
+    oBtn.onclick = function() {
+        // 调用刷新函数,在用在iframe上会存在跨域问题
+        // window.location.reload();
+        // 让页面跳转至原先页面，也会刷新
+        window.location.href = window.location.href;
+        // 会替换记录
+        // window.location.replace(window.location.href);
+    };
+    </script>
+</body>
+
+</html>

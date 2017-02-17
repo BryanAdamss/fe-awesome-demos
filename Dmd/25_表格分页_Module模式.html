@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table cellspacing="5" border="1" id="table">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage'>1</span> 当前页
+        <span id='currentPage'>1</span>
+        <button id="prev">上一页</button>
+        <button id="next">下一页</button>
+    </div>
+    <!-- 测试用 -->
+    <table cellspacing="5" border="1" id="table2">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage2'>1</span> 当前页
+        <span id='currentPage2'>1</span>
+        <button id="prev2">上一页</button>
+        <button id="next2">下一页</button>
+    </div>
+    <script type="text/javascript">
+    // 采用松散耦合扩展的module
+    var page = (function(publicData) {
+        // 私有变量
+        var _curPageNum = 1;
+        var _totalPageNum = 5;
+        var _table = null;
+        var _curPageUI = null;
+        var _totalPageUI = null;
+        var _prevBtn = null;
+        var _nextBtn = null;
+        // 私有函数
+        function _doPrev() {
+            if (_curPageNum > 1) {
+                _curPageNum--;
+            }
+            _updateUI();
+        }
+
+        function _doNext() {
+            if (_curPageNum < 5) {
+                _curPageNum++;
+            }
+            _updateUI();
+        }
+
+        function _updateUI() {
+            _curPageUI.innerHTML = _curPageNum;
+            var data = _getData().data;
+            _table.innerHTML = '<tbody><tr><td>' + data[0][0] + '</td><td>' + data[0][1] + '</td></tr><tr><td>' + data[1][0] + '</td><td>' + data[1][1] + '</td></tr></tbody>';
+        }
+
+        function _getData() {
+            return {
+                data: [
+                    [
+                        "第" + _curPageNum + ".1页内容",
+                        "第" + _curPageNum + ".2页内容"
+                    ],
+                    [
+                        "第" + _curPageNum + ".3页内容",
+                        "第" + _curPageNum + ".4页内容"
+                    ]
+                ]
+            };
+        }
+
+        // 公有数据
+        publicData.init = function(config) {
+            _table = document.querySelector(config.table);
+            _curPageUI = document.querySelector(config.curPageUI);
+            _curPageUI.innerHTML = _curPageNum;
+            _totalPageUI = document.querySelector(config.totalPageUI);
+            _totalPageUI.innerHTML = _totalPageNum;
+            _prevBtn = document.querySelector(config.prevBtn);
+            _nextBtn = document.querySelector(config.nextBtn);
+            _prevBtn.onclick = _doPrev;
+            _nextBtn.onclick = _doNext;
+        };
+        return publicData;
+    })(page || {});
+
+    // 对外只有一个init可见，但无法实例化多个
+    page.init({
+        table: "#table",
+        curPageUI: "#currentPage",
+        totalPageUI: "#allPage",
+        prevBtn: "#prev",
+        nextBtn: "#next"
+    });
+    </script>
+</body>
+
+</html>

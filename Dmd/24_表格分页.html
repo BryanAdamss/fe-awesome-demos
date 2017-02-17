@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table cellspacing="5" border="1" id="table">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="page">
+        总页数<span id='allPage'>1</span> 当前页
+        <span id='currentPage'>1</span>
+        <button id="prev">上一页</button>
+        <button id="next">下一页</button>
+    </div>
+    <script type="text/javascript">
+    function Pagination() {
+        this.init.apply(this, arguments);
+    }
+    Pagination.prototype = {
+        constructor: Pagination,
+        curPageNum: 1,
+        totalPageNum: 5,
+        init: function(option) {
+            var _this = this;
+            this.table = option.table;
+
+            this.curPageUI = option.curPageUI;
+            this.curPageUI.innerHTML = this.curPageNum;
+
+            this.allPageUI = option.allPageUI;
+            this.allPageUI.innerHTML = this.totalPageNum;
+
+            this.nextBtn = option.nextBtn;
+            this.prevBtn = option.prevBtn;
+            this._doNext = function() {
+                _this.doNext.apply(_this);
+            };
+            this._doPrev = function() {
+                _this.doPrev.apply(_this);
+            };
+            this.bindEvent(this.nextBtn, this._doNext);
+            this.bindEvent(this.prevBtn, this._doPrev);
+        },
+        getData: function() {
+            return {
+                data: [
+                    [
+                        "第" + this.curPageNum + ".1页内容",
+                        "第" + this.curPageNum + ".2页内容"
+                    ],
+                    [
+                        "第" + this.curPageNum + ".3页内容",
+                        "第" + this.curPageNum + ".4页内容"
+                    ]
+                ],
+                curPage: this.curPageNum
+            };
+        },
+        updateUI: function() {
+            this.curPageUI.innerHTML = this.curPageNum;
+            var data = this.getData().data;
+            this.table.innerHTML = '<tbody><tr><td>' + data[0][0] + '</td><td>' + data[0][1] + '</td></tr><tr><td>' + data[1][0] + '</td><td>' + data[1][1] + '</td></tr></tbody>';
+        },
+        doNext: function() {
+            if (this.curPageNum < 5) {
+                this.curPageNum++;
+            }
+            this.updateUI();
+        },
+        doPrev: function() {
+            if (this.curPageNum > 1) {
+                this.curPageNum--;
+            }
+            this.updateUI();
+        },
+        bindEvent: function(ele, fn) {
+            ele.onclick = fn;
+        }
+    };
+    new Pagination({
+        table: document.getElementById("table"),
+        curPageUI: document.getElementById("currentPage"),
+        allPageUI: document.getElementById("allPage"),
+        nextBtn: document.getElementById("next"),
+        prevBtn: document.getElementById("prev")
+    });
+    </script>
+</body>
+
+</html>

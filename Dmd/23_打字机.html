@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    /*========公共==========*/
+    
+    h2,
+    h5,
+    #tooltipMsg,
+    p {
+        white-space: nowrap;
+    }
+    
+    td {
+        border: 1px solid #ccc;
+        height: 50px;
+        text-align: center;
+        font-size: 10pt;
+        padding: 2px;
+    }
+    </style>
+</head>
+
+<body>
+    <p id='typewriterEffect' data-str="有个而且尽量编号就要透明立即正好走，把。"></p>
+    <p id='typewriterEffect2' data-str="填写装饰搜狐黑色笔记本诺基，东西作品机会你是立场请您爆，页。"></p>
+    <script type="text/javascript">
+    function TypeWriter() {
+        // 实例化时就调用初始化函数,并将实参传入
+        this.init.apply(this, arguments);
+    }
+    TypeWriter.prototype = {
+        // 初始化
+        init: function(option) {
+            // 待处理元素
+            this.ele = option.ele;
+            // 字符串
+            this.str = this.getStr(this.ele);
+            // 限制长度
+            this.maxLen = this.str.length;
+            // 当前截取点
+            this.cur = 0;
+            // 打字速度
+            this.speed = option.speed || 100;
+
+            var _this = this;
+
+            this._typing = function() {
+                _this.typing.apply(_this);
+            };
+
+            this.isStop = false;
+            // 上一次刷新帧的时间
+            this.lastTime = new Date();
+            window.requestAnimationFrame(this._typing);
+
+            this.timerId = null;
+        },
+        // 返回待打的字符串
+        getStr: function(ele) {
+            return ele.getAttribute("data-str");
+        },
+        typing: function() {
+            // 到达时间间隔
+            if (new Date() - this.lastTime > this.speed) {
+                this.lastTime = new Date();
+                // 截取
+                if (++this.cur <= this.maxLen) {
+                    this.ele.innerHTML = this.str.substr(0, this.cur) + "_";
+                } else {
+                    // this.cur = 0;
+                    // 停止
+                    this.isStop = true;
+                }
+            }
+            this.timerId = window.requestAnimationFrame(this._typing);
+            // 停止请求帧
+            if (this.isStop) {
+                window.cancelAnimationFrame(this.timerId);
+            }
+        }
+    };
+
+
+    new TypeWriter({
+        ele: document.getElementById("typewriterEffect"),
+        speed: 300
+    });
+    new TypeWriter({
+        ele: document.getElementById("typewriterEffect2"),
+        speed: 100
+    });
+    </script>
+</body>
+
+</html>

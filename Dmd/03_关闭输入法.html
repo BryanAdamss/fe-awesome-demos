@@ -13,6 +13,8 @@
     <input type='text' data-banInputMethod='1' id='banInputMethod' value='支持主流浏览器'>
     <br>
     <script type="text/javascript">
+    // 非Chrome下,直接设置imeMode为禁用即可
+    // Chrome下,清除掉输入的中文字符
     var arr = [
         document.getElementById("banInputMethodgoogle"),
         document.getElementById("banInputMethod")

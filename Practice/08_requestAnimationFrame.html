@@ -58,6 +58,7 @@
             box.style.left = box.offsetLeft + 100 + "px";
             // 内部再次调用一次
             id = window.requestAnimationFrame(draw);
+
         } else {
             // 到达目标，取消调用
             window.cancelAnimationFrame(id);

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="passwordStrength" placeholder='请输入密码' type="password"> <span id="showStrength"></span>
+    <script type="text/javascript">
+    // 计算每个字符的权重，根据权重范围判断强度
+    var CGH = {
+        MSG: {
+            short: {
+                info: "密码太短",
+                color: "red"
+            },
+            weak: {
+                info: "弱",
+                color: "yellow"
+            },
+            normal: {
+                info: "中",
+                color: "orange"
+            },
+            strong: {
+                info: "强",
+                color: "green"
+            }
+        },
+        // 字符串总权重
+        /**
+         * 获取字符串权重
+         * @author cgh
+         * @time   2017-02-09
+         * @param  {string}   str 待检测字符串
+         * @return {number}       权重值
+         */
+        getStringWeight: function(str) {
+            var _char = "";
+            var _strWeight = 0;
+            for (var i = 0, len = str.length; i < len; i++) {
+                _char = str[i];
+                _strWeight += this.getCharWeight(_char);
+            }
+            return _strWeight;
+        },
+        /**
+         * 获取单个字符的权重,数字1，字母2，其他3
+         * @author cgh
+         * @time   2017-02-09
+         * @param  {char}   char 待检测的字符
+         * @return {number}      对应权重
+         */
+        getCharWeight: function(char) {
+            var _code = char.toLowerCase().charCodeAt(0);
+            if (_code >= 48 && _code <= 57) {
+                return 1;
+            } else if (_code >= 97 && _code <= 122) {
+                return 2;
+            } else {
+                return 3;
+            }
+        }
+    };
+    var oInp = document.getElementById("passwordStrength");
+    var oMsg = document.getElementById("showStrength");
+    oInp.onkeyup = function() {
+        var _value = this.value;
+        var weight = CGH.getStringWeight(_value);
+        var msg = CGH.MSG;
+        if (_value.length < 6) {
+            oMsg.innerHTML = msg.short.info;
+            oMsg.style.color = msg.short.color;
+        } else if (weight <= 10) {
+            oMsg.innerHTML = msg.weak.info;
+            oMsg.style.color = msg.weak.color;
+        } else if (weight <= 14) {
+            oMsg.innerHTML = msg.normal.info;
+            oMsg.style.color = msg.normal.color;
+        } else {
+            oMsg.innerHTML = msg.strong.info;
+            oMsg.style.color = msg.strong.color;
+        }
+    };
+    </script>
+</body>
+
+</html>

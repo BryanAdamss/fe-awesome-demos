@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea id='contentCheckbox' data-target='autoKeywordSelect'></textarea>
+    <br />
+    <input type="checkbox" name='autoKeywordSelect' data-k='JavaScript'>JavaScript
+    <br />
+    <input type="checkbox" name='autoKeywordSelect' data-k='席新亮'>席新亮
+    <br />
+    <input type="checkbox" name='autoKeywordSelect' data-k='游戏'>游戏
+    <br />
+    <script type="text/javascript">
+    var oT = document.getElementById("contentCheckbox");
+    var oTars = document.getElementsByName("autoKeywordSelect");
+    var oTar = null;
+    var val = "";
+    var att = "";
+    oT.onkeyup = function() {
+        val = this.value;
+        for (var i = 0, len = oTars.length; i < len; i++) {
+            oTar = oTars[i];
+            att = oTar.getAttribute("data-k");
+            if (val.search(att) !== -1) {
+                oTar.checked = true;
+            } else {
+                oTar.checked = false;
+            }
+        }
+    };
+    </script>
+</body>
+
+</html>

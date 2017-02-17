@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .box {
+        height: 100px;
+    }
+    
+    #previewImgSrc {
+        display: none;
+        height: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div class="box">
+            <img id='previewImgSrc' src='' />
+        </div>
+        <input type="file" id='upPreviewImg' name='fileimg'>
+    </form>
+    <script type="text/javascript">
+    // 主流浏览器支持HTML5的FileReader的则用FileReader,不支持的先用file的getAsDataURL来显示图片
+    // IE6直接修改图片src,IE7/8采用滤镜的方式加载本地图片
+    (function previewImg(obj) {
+        var isIE = function() {
+            return !!window.ActiveXObject;
+        };
+        var isIE6 = function() {
+            return isIE() && !window.XMLHttpRequest;
+        };
+        var isIE7 = function() {
+            return isIE() && !isIE6() && !isIE8();
+        };
+        var isIE8 = function() {
+            return isIE() && !!document.documentMode;
+        };
+        var oInput = obj.source;
+        var oTarget = obj.target;
+        oInput.onchange = function() {
+            var _v = this.value;
+            var _picReg = /(.JPEG|.jpeg|.JPG|.jpg|.GIF|.gif|.BMP|.bmp|.PNG|.png){1}/;
+            // 格式选择不对
+            if (!_picReg.test(_v)) {
+                alert("请选择正确的图片格式");
+                return false;
+            }
+            // 不支持FileReader
+            if (typeof FileReader === "undefined") {
+                // 老火狐
+                if (this.file) {
+                    oTarget.setAttribute("src", this.file.files[0].getAsDataURL());
+                    oTarget.style.display = "block";
+                } else if (isIE6()) {
+                    // IE6采用直接赋值src
+                    oTarget.setAttribute("src", _v);
+                    oTarget.style.display = "block";
+                } else {
+                    // IE7/8采用滤镜来显示,由于src属性缺失,会默认显示无图的小icon,用一张透明图代替
+                    /*
+                     * 为了防止路径中有“)”，“%”这类字符，直接拼接到滤镜字符串中会出现一些sql注入的问题，所以进行escape编码
+                     */
+                    _v = _v.replace(/[)'"%]/g, function(str) {
+                        return escape(escape(str));
+                    });
+                    // 滤镜显示
+                    oTarget.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src=\"" + _v + "\")";
+                    oTarget.style.display = "block";
+                    // 添加透明图遮挡小图标
+                    oTarget.setAttribute("src", (isIE6() || isIE7() ? "!blankImage" :
+                        "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="));
+
+                }
+            } else {
+                // 支持FileReader
+
+                /*
+                 * 调用FileReader 文件API的readAsDataURL，启动异步加载文件的数据，通过监听reade的onload事件，
+                 * 等待数据加载完毕后，在回调函数onload事件中，通过reader的result属性即可获得图片文件的相关内容
+                 * */
+                var reader = new FileReader(),
+                    //读取被加载的文件对象
+                    _file = this.files[0];
+                //读取文件base64编码并保存在result属性中
+                reader.readAsDataURL(_file);
+                //监听load事件
+                reader.onload = (function(file) {
+                    return function() {
+                        // this.result保存的就是base64编码
+                        oTarget.setAttribute("src", this.result);
+                        oTarget.style.display = "block";
+                    };
+                })(_file);
+                //监听文件读取的错误处理
+                reader.onerror = function() {
+                    alert("文件读取数据出错");
+                }
+            }
+        };
+    })({
+        "source": document.getElementById("upPreviewImg"),
+        "target": document.getElementById("previewImgSrc")
+    });
+    </script>
+</body>
+
+</html>

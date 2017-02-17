@@ -30,6 +30,14 @@
     }
 
     // 获取字符串长度,若Ch则中文按2个长度计算，否则按1个长度计算
+    /**
+     * [getStrLen description]
+     * @author cgh
+     * @time   2017-02-09
+     * @param  {string}   str   待检测字符串
+     * @param  {string}   model 模式
+     * @return {number}         字符串字节长度
+     */
     function getStrLen(str, model) {
         var iStrLen = str.length;
         // 默认按中文计算
@@ -47,14 +55,6 @@
     oIn.onkeyup = oIn.onfocus = oIn.onblur = function() {
         limit(this);
     };
-
-    function trim(str) {
-        if (String.prototype.trim) {
-            return str.trim();
-        } else {
-            return str.replace(/^[\s\uFEFF\u00A0]+|[\s\uFEFF\u00A0]+$/g, '');
-        }
-    }
     </script>
 </body>
 

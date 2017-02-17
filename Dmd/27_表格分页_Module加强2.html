@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table cellspacing="5" border="1" id="table">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage'>1</span> 当前页
+        <span id='currentPage'>1</span>
+        <button id="prev">上一页</button>
+        <button id="next">下一页</button>
+    </div>
+    <!-- 测试用 -->
+    <table cellspacing="5" border="1" id="table2">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage2'>1</span> 当前页
+        <span id='currentPage2'>1</span>
+        <button id="prev2">上一页</button>
+        <button id="next2">下一页</button>
+    </div>
+    <script type="text/javascript">
+    // 采用松散耦合扩展的module
+    var Page = (function() {
+        function _doNext() {
+            if (this.curPageNum < this.totalPageNum) {
+                this.curPageNum++;
+            }
+            this.updateUI();
+        }
+
+        function _doPrev() {
+            if (this.curPageNum > 1) {
+                this.curPageNum--;
+            }
+            this.updateUI();
+        }
+
+        function _updateUI() {
+            this.curPageUI.innerHTML = this.curPageNum;
+            var data = this.getData();
+            this.table.innerHTML = '<tbody><tr><td>' + data[0][0] + '</td><td>' + data[0][1] + '</td></tr><tr><td>' + data[1][0] + '</td><td>' + data[1][1] + '</td></tr></tbody>';
+        }
+
+        function _getData() {
+            return [
+                [
+                    "第" + this.curPageNum + ".1页内容",
+                    "第" + this.curPageNum + ".2页内容"
+                ],
+                [
+                    "第" + this.curPageNum + ".3页内容",
+                    "第" + this.curPageNum + ".4页内容"
+                ]
+            ]
+
+        }
+
+        function Page(config) {
+
+            this.curPageNum = 1;
+            this.totalPageNum = config.totalPageNum;
+
+            this.table = document.querySelector(config.table);
+
+            this.curPageUI = document.querySelector(config.curPageUI);
+            this.curPageUI.innerHTML = this.curPageNum;
+
+            this.totalPageUI = document.querySelector(config.totalPageUI);
+            this.totalPageUI.innerHTML = this.totalPageNum;
+
+            this.prevBtn = document.querySelector(config.prevBtn);
+            this.nextBtn = document.querySelector(config.nextBtn);
+
+            var that = this;
+
+            this.prevBtn.onclick = function() {
+                // 在真正点击的时候this就变成prevBtn,prevBtn是没有doPrev方法的,所以必须在实例(此处用that保存下来的)上调用
+                that.doPrev.apply(that);
+            };
+            this.nextBtn.onclick = function() {
+                that.doNext.apply(that);
+            };
+
+        }
+
+        Page.prototype = {
+            constructor: Page,
+            doNext: function() {
+                // 通过这种调用外部无法访问到_doNext
+                _doNext.apply(this);
+            },
+            doPrev: function() {
+                _doPrev.apply(this);
+            },
+            getData: function() {
+                // 调用_getData返回的是数据数组，若在getData中不return数据数组,则外面调用者拿不到返回的数据
+                return _getData.apply(this);
+            },
+            updateUI: function() {
+                _updateUI.apply(this);
+            }
+        };
+        return Page;
+    })();
+
+    // 可实例化多个
+    var a = new Page({
+        table: "#table",
+        curPageUI: "#currentPage",
+        totalPageUI: "#allPage",
+        prevBtn: "#prev",
+        nextBtn: "#next",
+
+        totalPageNum: 5
+    });
+    console.log(a);
+
+
+    var b = new Page({
+        table: "#table2",
+        curPageUI: "#currentPage2",
+        totalPageUI: "#allPage2",
+        prevBtn: "#prev2",
+        nextBtn: "#next2",
+
+        totalPageNum: 10
+    });
+    console.log(b);
+
+    // 支持实例化多个对象，console.log(a.__proto__.doNext);但无法访问到真正的_doNext
+    </script>
+</body>
+
+</html>

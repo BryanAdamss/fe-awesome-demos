@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table cellspacing="5" border="1" id="table">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage'>1</span> 当前页
+        <span id='currentPage'>1</span>
+        <button id="prev">上一页</button>
+        <button id="next">下一页</button>
+    </div>
+    <!-- 测试用 -->
+    <table cellspacing="5" border="1" id="table2">
+        <tbody>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+            <tr>
+                <td>第1页内容</td>
+                <td>第1页内容</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        总页数<span id='allPage2'>1</span> 当前页
+        <span id='currentPage2'>1</span>
+        <button id="prev2">上一页</button>
+        <button id="next2">下一页</button>
+    </div>
+    <script type="text/javascript">
+    // 采用松散耦合扩展的module
+    var page = (function() {
+
+        var a = 3;
+
+        function Page(config) {
+
+            this.curPageNum = 1;
+            this.totalPageNum = config.totalPageNum;
+
+            this.table = document.querySelector(config.table);
+
+            this.curPageUI = document.querySelector(config.curPageUI);
+            this.curPageUI.innerHTML = this.curPageNum;
+
+            this.totalPageUI = document.querySelector(config.totalPageUI);
+            this.totalPageUI.innerHTML = this.totalPageNum;
+
+            this.prevBtn = document.querySelector(config.prevBtn);
+            this.nextBtn = document.querySelector(config.nextBtn);
+
+            var that = this;
+
+            this.prevBtn.onclick = function() {
+                that.doPrev.apply(that);
+            };
+            this.nextBtn.onclick = function() {
+                that.doNext.apply(that);
+            };
+
+
+        }
+        Page.prototype = {
+            constructor: Page,
+            // doNext等可通过原型直接访问到
+            doNext: function() {
+                if (this.curPageNum < this.totalPageNum) {
+                    this.curPageNum++;
+                }
+                this.updateUI();
+            },
+            doPrev: function() {
+                if (this.curPageNum > 1) {
+                    this.curPageNum--;
+                }
+                this.updateUI();
+            },
+            updateUI: function() {
+                this.curPageUI.innerHTML = this.curPageNum;
+                var data = this.getData().data;
+                this.table.innerHTML = '<tbody><tr><td>' + data[0][0] + '</td><td>' + data[0][1] + '</td></tr><tr><td>' + data[1][0] + '</td><td>' + data[1][1] + '</td></tr></tbody>';
+            },
+            getData: function() {
+                return {
+                    data: [
+                        [
+                            "第" + this.curPageNum + ".1页内容",
+                            "第" + this.curPageNum + ".2页内容"
+                        ],
+                        [
+                            "第" + this.curPageNum + ".3页内容",
+                            "第" + this.curPageNum + ".4页内容"
+                        ]
+                    ]
+                };
+            }
+        };
+        return function(config) {
+            return new Page(config);
+        }
+    })();
+
+    // 对外只有一个init可见
+    var a = page({
+        table: "#table",
+        curPageUI: "#currentPage",
+        totalPageUI: "#allPage",
+        prevBtn: "#prev",
+        nextBtn: "#next",
+
+        totalPageNum: 5
+    });
+    console.log(a);
+
+    var a = page({
+        table: "#table2",
+        curPageUI: "#currentPage2",
+        totalPageUI: "#allPage2",
+        prevBtn: "#prev2",
+        nextBtn: "#next2",
+
+        totalPageNum: 10
+    });
+    // 虽然能实例化多个,但能通过原型访问私有方法    console.log(a.__proto__.doNext);
+    </script>
+</body>
+
+</html>

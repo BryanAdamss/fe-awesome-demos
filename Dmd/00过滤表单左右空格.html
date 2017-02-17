@@ -10,11 +10,11 @@
     <input type="text" id="strs" value="          需要过滤空格 ">
     <input type="button" id="rstrsBtn" value="过滤">
     <script type="text/javascript">
+    // 思路:支持原生则采用原生否则使用正则去除前后导空格
     var CGH = {};
     CGH.Dom = {};
     CGH.Dom.oInput = document.getElementById("strs");
     CGH.Dom.oBtn = document.getElementById("rstrsBtn");
-
 
 
     CGH.Dom.clearSpace = function(str) {

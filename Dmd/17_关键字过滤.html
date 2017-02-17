@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea id='keyWordsFiltering' rows="10" cols="50">
+        关键词过滤：你好，我是席新亮，非常喜欢JavaScript，希望和大家切磋交流。业余爱好：玩游戏，但是不使用外挂，游戏里面有很多美女，咱也不贪色，嘿嘿~~~
+    </textarea>
+    <script type="text/javascript">
+    var keyWords = ["JavaScript", "美女", /[外]{1}.{0,3}[挂]{1}/];
+    var oT = document.getElementById("keyWordsFiltering");
+    oT.onfocus = function() {
+        var key;
+        for (var i = 0, len = keyWords.length; i < len; i++) {
+            key = keyWords[i];
+            this.value = this.value.replace(key, "***");
+        }
+    };
+    </script>
+</body>
+
+</html>

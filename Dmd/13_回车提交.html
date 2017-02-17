@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="enterSubmit" value="回车提交">
+    <script type="text/javascript">
+    var oInp = document.getElementById("enterSubmit");
+    oInp.onkeyup = function(e) {
+        e = e || window.event;
+        var keyCode = e.keyCode || e.which || e.charCode;
+        if (keyCode === 13) {
+            alert("提交成功");
+        }
+
+    };
+    </script>
+</body>
+
+</html>

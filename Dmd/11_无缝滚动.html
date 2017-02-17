@@ -120,10 +120,18 @@
                 window.requestAnimationFrame(move);
             };
         }
+        // 惰性载入的函数必须先执行一遍
         move();
     }
 
     // 获取元素子节点
+    /**
+     * [getChildNode description]
+     * @author cgh
+     * @time   2017-02-09
+     * @param  {node}   obj 父元素
+     * @return {nodeList}       子元素节点
+     */
     function getChildNode(obj) {
         var childs = obj.childNodes;
         var child = null;

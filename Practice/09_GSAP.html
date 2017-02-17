@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    #rect {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: blue;
+        top: 40%;
+        left: 50%;
+    }
+    
+    #rect2 {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: blue;
+        top: 55%;
+        left: 55%;
+    }
+    
+    #rect3 {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: blue;
+        top: 70%;
+        left: 50%;
+    }
+    
+    #rect4 {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: blue;
+        top: 55%;
+        left: 45%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="rect"></div>
+    <div id="rect2"></div>
+    <div id="rect3"></div>
+    <div id="rect4"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TimelineLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/plugins/CSSPlugin.min.js"></script>
+    <script type="text/javascript">
+    // TweenLite.from("#rect", 2, {
+    //     x: "+=200px",
+    //     backgroundColor: "red"
+    // });
+    var tl = new TimelineLite();
+    // tl.from("#rect", 1, {
+    //     y: "-=60px",
+    //     autoAlpha: 0
+    // }).from("#rect2", 1, {
+    //     x: "+=60px",
+    //     autoAlpha: 0
+    // }, "-=0.7").from("#rect3", 1, {
+    //     y: "+=60px",
+    //     autoAlpha: 0
+    // }, "-=0.7").from("#rect4", 1, {
+    //     x: "-=60px",
+    //     autoAlpha: 0
+    // }, "-=0.7");
+    // tl.pause(1);
+    // tl.progress(0.5);
+    tl.staggerFrom(["#rect", "#rect2", "#rect3", "#rect4", ], 1, {
+        scale: "-=0.5",
+        autoAlpha: 0,
+        clearProps: "all"
+    }, 0.5);
+    </script>
+</body>
+
+</html>

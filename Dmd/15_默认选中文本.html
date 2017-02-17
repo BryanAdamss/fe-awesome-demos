@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea id='autoSelected' rows="10" cols="50">
+        默认被选择的文本
+    </textarea>
+    <script type="text/javascript">
+    window.onload = function() {
+        // 只能用在textarea上
+        document.getElementById("autoSelected").select(); //调用浏览器内置的文本选定方法
+    };
+    </script>
+</body>
+
+</html>
