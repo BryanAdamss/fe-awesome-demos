@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    window.onload = function() {
+        // 当顶层窗口的URL和当前的窗口不同，则可肯定页面被别的网站嵌套了，设置top.location
+        if (top.location != self.location) {
+            top.location = self.location;
+        }
+    };
+    </script>
+</body>
+
+</html>

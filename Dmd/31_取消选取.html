@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>取消选取</h2>
+    <input id='deselect' type="button" value="取消" />
+    <script type="text/javascript">
+    window.onload = function() {
+        document.getElementById("deselect").onclick = function() { //取消选区
+            /*
+             1,document.selection不是W3C的标准，只是一些主流浏览器的API，只有ie支持，代表选中区块，之后可以调用这个API的一些操作方法；
+             2,window.getSelection 返回一个由用户选定的表示文本的范围的对象，并可以调用此对象的一些方法进行操作
+             * */
+            (window.getSelection && window.getSelection().removeAllRanges()) || (document.selection && document.selection.empty && document.selection.empty());
+        }
+
+    };
+    </script>
+</body>
+
+</html>

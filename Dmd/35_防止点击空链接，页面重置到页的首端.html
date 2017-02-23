@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="">我是空链接</a>
+    <br />
+    <a href="#">我是“#”链接</a>
+    <script type="text/javascript">
+    window.onload = function() {
+        // 将空链接和#置换为javascrip:;
+        var links = document.getElementsByTagName("a");
+        var href = "";
+        var link = null;
+        for (var i = 0, len = links.length; i < len; i++) {
+            link = links[i];
+            href = link.getAttribute("href");
+            if (href = "#" || !href) {
+                link.href = "javascript:;";
+            }
+        }
+    };
+    </script>
+</body>
+
+</html>

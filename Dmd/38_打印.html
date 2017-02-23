@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>我要被打印出来</p>
+    <p class="noPrint">我不会被打印出来!!!!!!!</p>
+    <p>我要被打印出来2</p>
+    <p class="noPrint">我不会被打印出来!!!!!!!</p>
+    <p class="noPrint">我不会被打印出来!!!!!!!</p>
+    <div class="noPrint">
+        <OBJECT classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" height="0" id="wb" name="wb" width="0"></OBJECT>
+        <button id="print" class="noPrint" onclick="printAndPreview()">打印</button>
+    </div>
+    <script>
+    function isIE() {
+        return !!window.ActiveXObject;
+    }
+
+    function printAndPreview() {
+        // display为none的不会被打印出来
+        var noPrint = document.querySelectorAll(".noPrint");
+        for (var i = 0, len = noPrint.length; i < len; i++) {
+            noPrint[i].style.display = "none";
+        }
+
+        if (isIE()) {
+            // IE使用activeXObject实现
+            wb.execwb(6, 6);
+        } else {
+            // 非IE直接调用print()
+            window.print();
+        }
+
+        // 显示
+        for (var i = 0, len = noPrint.length; i < len; i++) {
+            noPrint[i].style.display = "block";
+        }
+    }
+    </script>
+</body>
+
+</html>

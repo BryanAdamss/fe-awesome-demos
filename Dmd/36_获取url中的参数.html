@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function getURLArgs(url) {
+        // var url = window.location.href;
+        // 判断url是否带参数(参数都是在?后定义的)
+        var pos = url.indexOf("?");
+        var args = "";
+        var _args = [];
+        var obj = null;
+        // url带有参数
+        if (pos !== -1) {
+            // 截取?后的字符串并按&分割
+            args = url.substr(pos + 1).split("&");
+        }
+        // 对截取后的数组进行遍历，并按=分割
+        for (var i = 0, len = args.length; i < len; i++) {
+            if (args[i]) {
+                obj = args[i].split("=");
+                // obj[0]为key obj[1]为value,经过以下操作重复的参数会以后面的为准
+                _args[obj[0]] = obj[1];
+            }
+        }
+        console.log(_args);
+        return _args;
+    }
+    getURLArgs("http://www.ah122.cn?a=3&b=4&a=6");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function closePage(time) {
+        time = time || -1;
+        var counter = Number(time / 1000).toFixed(0);
+        if (time !== -1) {
+            var timer = setInterval(function() {
+                document.title = "还有" + (--counter) + "关闭页面";
+                if (counter === 0) {
+                    clearInterval(timer);
+                    window.open('', '_self', '');
+                    window.close();
+                }
+            }, 1000);
+        }
+    }
+    closePage(3000);
+    </script>
+</body>
+
+</html>
