@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body ng-app>
+    <!-- ng-app指令指明angular要管理哪一块区域，这里的区域是body以内的所有地方 -->
+    <div>
+        <!-- {{}}是一个取值表达式，可以进行一些简单的运算，不能进行任何控制语句如条件、循环等 -->
+        {{1000}}
+        <br> {{100+100}}
+        <br>{{"name"}}
+    </div>
+    <div>
+        <!-- 数据是双向绑定的 -->
+        <input type="text" ng-model="name" value> {{name}}
+        <input type="text" ng-model="name" value>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+</body>
+
+</html>

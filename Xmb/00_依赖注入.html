@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function A() {
+        this.getName = function() {
+            return "张三";
+        };
+    }
+
+    function B(objA) {
+        console.log(objA.getName);
+    }
+    // B依赖于A，就可以说A是B的一个依赖,JS中处理依赖的方式有2种
+    // 1.将A传入到B中
+    // 2.将A设置为全局变量
+    // angularJs的依赖注入是无需调用者手动去调用，angular会在我们需要的时候自动注入依赖
+    var a = new A();
+    var b = new B(a);
+    </script>
+</body>
+
+</html>

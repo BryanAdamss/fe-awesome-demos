@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container" ng-controller="cartController">
+        <table class="table" ng-show="cart.length">
+            <thead>
+                <tr>
+                    <th>产品编号</th>
+                    <th>产品名字</th>
+                    <th>购买数量</th>
+                    <th>产品单价</th>
+                    <th>产品总价</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in cart">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>
+                        <button type="button" ng-click="reduce(item.id)" class="btn tn-primary">-</button>
+                        <input type="text" value="{{item.quantity}}" ng-model="item.quantity">
+                        <button type="button" ng-click="add(item.id)" class="btn tn-primary">+</button>
+                    </td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.price*item.quantity}}</td>
+                    <td>
+                        <button type="button" ng-click="remove(item.id)" class="btn btn-danger">移除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        总购买价
+                    </td>
+                    <td>
+                        {{totalPrice()}}
+                    </td>
+                    <td>
+                        总购买数量
+                    </td>
+                    <td>
+                        {{totalQuantity()}}
+                    </td>
+                    <td colspan="2">
+                        <button type="button" ng-click="cart = {}" class="btn btn-danger">清空购物车</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p ng-show="!cart.length">您的购物车为空</p>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var cartController = function($scope) {
+        $scope.cart = [{
+            id: 1000,
+            name: "iphone5s",
+            quantity: 3,
+            price: 5600
+        }, {
+            id: 2000,
+            name: "iphone5",
+            quantity: 10,
+            price: 5000
+        }, {
+            id: 3000,
+            name: "iphone4s",
+            quantity: 20,
+            price: 4600
+        }, {
+            id: 4000,
+            name: "iphone4",
+            quantity: 30,
+            price: 4000
+        }];
+        $scope.totalPrice = function() {
+            var total = 0;
+            angular.forEach($scope.cart, function(item) {
+                total += item.quantity * item.price;
+            });
+            return total;
+        };
+        $scope.totalQuantity = function() {
+            var total = 0;
+            angular.forEach($scope.cart, function(item) {
+                total += item.quantity;
+            });
+            return total;
+        };
+        $scope.remove = function(id) {
+            var index = -1;
+            angular.forEach($scope.cart, function(item, key) {
+                if (item.id === id) {
+                    index = key;
+                }
+            });
+            if (index !== -1) {
+                $scope.cart.splice(index, 1);
+            }
+        };
+        $scope.reduce = function(id) {
+            var index = -1;
+            angular.forEach($scope.cart, function(item, key) {
+                if (item.id === id) {
+                    index = key;
+                }
+            });
+            if (index !== -1) {
+                var item = $scope.cart[index];
+                if (item.quantity > 1) {
+                    --item.quantity;
+                } else {
+                    var returnKey = confirm("确定从购物车移除此商品吗？");
+                    if (returnKey) {
+                        $scope.remove(id);
+                    }
+                }
+            }
+        };
+        $scope.add = function(id) {
+            var index = -1;
+            angular.forEach($scope.cart, function(item, key) {
+                if (item.id === id) {
+                    index = key;
+                }
+            });
+            if (index !== -1) {
+                $scope.cart[index].quantity++;
+            }
+        };
+        $scope.$watch('cart', function(newValue, oldValue) {
+            angular.forEach(newValue, function(item, key) {
+                if (item.quantity < 1) {
+                    var returnKey = confirm("确定从购物车移除此商品吗？");
+                    if (returnKey) {
+                        $scope.remove(item.id);
+                    } else {
+                        item.quantity = oldValue[key].quantity;
+                    }
+                    return;
+                }
+            });
+        }, true);
+    };
+    </script>
+</body>
+
+</html>
