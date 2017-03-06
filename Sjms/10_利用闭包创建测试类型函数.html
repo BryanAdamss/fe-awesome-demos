@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var Type = {};
+    for (var i = 0, type; type = ['String', 'Array', 'Number'][i++];) { // 当语句2条件为false时，就会退出for循环，当i为3时，type[3]为undefined，为false跳出循环
+        // 利用闭包创建判断类型的函数
+        (function(type) {
+            Type['is' + type] = function(obj) {
+                return Object.prototype.toString.call(obj) === '[object ' + type + ']';
+            }
+        })(type)
+    };
+    Type.isArray([]); // 输出：true
+    Type.isString("str"); // 输出：true
+    </script>
+</body>
+
+</html>

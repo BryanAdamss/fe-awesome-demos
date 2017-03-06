@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <script>
+    // 函数中声明另外一个函数就会出现闭包
+    // 经典案例，每个都弹出5
+    var nodes = document.getElementsByTagName('div');
+    // for (var i = 0, len = nodes.length; i < len; i++) {
+    //     nodes[i].onclick = function() {
+    //         alert(i);
+    //     };
+    // };
+    // 这是因为onclick事件是异步触发的，当触发时for循环早结束了，i已经变成5了，所以事件处理函数中引用的i都为5
+    // 修正
+    for (var i = 0, len = nodes.length; i < len; i++) {
+        (function(i) {
+            nodes[i].onclick = function() {
+                alert(i);
+            }
+        })(i)
+    };
+    </script>
+</body>
+
+</html>

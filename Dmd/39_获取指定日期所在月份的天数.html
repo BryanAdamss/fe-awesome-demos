@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 获取指定月份天数
+     * @author cgh
+     * @time   2017-02-28
+     * @param  {String}   Y 年
+     * @param  {String}   M 月份
+     * @return {Number}     天数
+     */
+    function getMonthDays(Y, M) {
+        return new Date(Y, M, 0).getDate();
+    }
+    var num = getMonthDays("2017", "2");
+    console.log(num);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 乘积
+    // 1.普通方法
+    var mult = function() {
+        var a = 1;
+        for (var i = 0, len = arguments.length; i < len; i++) {
+            a *= arguments[i];
+        }
+        return a;
+    };
+    console.log(mult(8, 9)); // 72
+    // 2.进阶添加缓存机制
+    var cache = {};
+    var mult2 = function() {
+        var args = Array.prototype.join.call(arguments, ","); // 将实参数组转换为字符串
+        if (cache[args]) {
+            // cache中存在原先的计算结果，则直接返回结果
+            console.log("我是从缓存2取的");
+            return cache[args];
+        }
+        var a = 1;
+        for (var i = 0, len = arguments.length; i < len; i++) {
+            a *= arguments[i];
+        }
+        // 将结果存入缓存中
+        cache[args] = a;
+        return a;
+
+    };
+    console.log(mult2(8, 9));
+    // console.log(cache);
+    console.log(mult2(8, 9));
+    // 3.超进阶使用闭包封装cache，因为这个cache是单独属于mult3的，所以可以封装到mult3中
+    var mult3 = (function() {
+        var cache3 = {};
+        return function() {
+            var args = Array.prototype.join.call(arguments, ","); // 将实参数组转换为字符串
+            if (args in cache3) {
+                // cache中存在原先的计算结果，则直接返回结果
+                console.log("我是从缓存3取的");
+                return cache3[args];
+            }
+            var a = 1;
+            for (var i = 0, len = arguments.length; i < len; i++) {
+                a *= arguments[i];
+            }
+            // 将结果存入缓存中
+            cache3[args] = a;
+            return a;
+        };
+    })();
+    console.log(mult3(8, 10));
+    console.log(mult3(8, 10));
+    // console.log(cache3); // error
+    // 4.Max版本提炼函数
+    var mult4 = (function() {
+        var cache4 = {};
+        // 将重复使用到的计算提炼出来
+        var calcuate = function() {
+            var a = 1;
+            for (var i = 0, len = arguments.length; i < len; i++) {
+                a *= arguments[i];
+            }
+            return a;
+        };
+        return function() {
+            var args = Array.prototype.join.call(arguments, ","); // 将实参数组转换为字符串
+            if (args in cache4) {
+                // cache中存在原先的计算结果，则直接返回结果
+                console.log("我是从缓存4取的");
+                return cache4[args];
+            }
+            // 全局环境下调用calcuate
+            cache4[args] = calcuate.apply(null, arguments);
+            return cache4[args];
+        };
+    })();
+    console.log(mult4(9, 9));
+    console.log(mult4(9, 9));
+    // console.log(calcuate);// error
+    </script>
+</body>
+
+</html>

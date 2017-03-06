@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 原型模式是用来创建对象的一种模式，如果想创建一个对象有2种方法
+    // 1.先指定类型，然后通过类型创建对象
+    // 2.找到一个对象做为原型，通过克隆创建一个一模一样的对象
+    // 原型模式是选用的第二种
+    // 使用场景:创建一个跟某个对象一模一样的对象时
+    // 实现关键:语言本身是否提供了克隆的方法,js中可用Object.create()
+    var Plane = function() {
+        this.blood = 100;
+        this.attackLevel = 1;
+        this.defenseLevel = 1;
+    };
+    var plane = new Plane();
+    plane.blood = 500;
+    plane.attackLevel = 3;
+    plane.defenseLevel = 4;
+    // Object.create的兼容
+    Object.create = Object.create || function(obj) {
+        var F = function() {};
+        F.prototype = obj;
+        return new F();
+    };
+    // 克隆
+    var clonePlane = Object.create(plane);
+    console.log(clonePlane);
+    console.log(clonePlane.blood);
+    console.log(clonePlane.attackLevel);
+    console.log(clonePlane.defenseLevel);
+    </script>
+</body>
+
+</html>

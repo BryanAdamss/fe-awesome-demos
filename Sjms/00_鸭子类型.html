@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 鸭子类型
+    // 如果它走起来像鸭子，叫起来也像鸭子，那它就是鸭子
+    // 鸭子类型指导我们只关注对象的行为，而不关注对象本身
+    var duck = {
+        duckSinging: function() {
+            console.log("嘎嘎");
+        }
+    };
+    var chicken = {
+        duckSinging: function() {
+            console.log("嘎嘎");
+        }
+    };
+    // 合唱团
+    var choir = [];
+    var joinChoir = function(animal) {
+        if (animal && typeof animal.duckSinging === "function") {
+            choir.push(animal);
+            console.log("恭喜加入合唱团");
+            console.log("合唱团当前人数:" + choir.length);
+        }
+    };
+    joinChoir(duck);
+    joinChoir(chicken);
+    </script>
+</body>
+
+</html>

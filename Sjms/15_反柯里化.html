@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 将特有函数普通化
+    Function.prototype.uncurrying = function() {
+        var _self = this; // 保存原函数
+        return function() {
+            var obj = Array.prototype.shift.call(arguments); // 保存调用环境
+            return _self.apply(obj, arguments); // 调用原函数
+        };
+    };
+    // 反柯里化的另一种写法
+    // Function.prototype.uncurrying = function() {
+    //     var _self = this;
+    //     return function() {
+    //         return Function.prototype.call.apply(_self, arguments);
+    //     };
+    // };
+
+    var push = Array.prototype.push.uncurrying();
+
+    (function() {
+        push(arguments, 4);
+        console.log(arguments); // 输出：[1, 2, 3, 4]
+    })(1, 2, 3);
+    </script>
+</body>
+
+</html>

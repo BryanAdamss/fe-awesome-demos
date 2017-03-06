@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // js中this是在函数被调用时才确定的，它是指向被调用时的执行环境
+    // 1.全局环境下this->window
+    console.log(this); // window
+    // 2.当函数做为对象方法调用时,this指向此对象
+    var a = {
+        name: "aaaa",
+        getName: function() {
+            console.log(this.name);
+        }
+    };
+    a.getName(); // aaaa
+    (a.getName)(); // aaaa
+
+    (a.getName = a.getName)(); // 空
+    (a.getName || a.getName)(); // 空
+    (a.getName, a.getName)(); // 空
+
+    // 注意this是指向最靠近方法的对象
+    var b = {
+        name: "bbbb"
+    };
+    b.bar = a;
+    b.bar.getName(); // aaaa
+    // 3.匿名函数的执行环境具有全局性，所以this通常指向window
+    (function() {
+        console.log(this); // window
+    })();
+    // 4.做为构造器调用时,this指向被新创建的对象
+    var Person = function(name) {
+        this.name = name;
+    };
+    var person = new Person("haha");
+    console.log(person.name);
+    // 5.Function.prototype.call 或Function.prototype.apply 可以动态地改变传入函数的this
+    a.getName.call(b); // bbbb 相当于b.getName()
+    a.getName.apply(b); // bbbb 相当于b.getName()
+    </script>
+</body>
+
+</html>

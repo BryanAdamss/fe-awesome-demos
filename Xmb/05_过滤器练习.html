@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="product">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <style type="text/css">
+    .orderColor {
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div ng-app="product">
+        <div class="container" ng-controller="productController">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" ng-model="search.id" class="form-control" placeholder="Search">
+                        </div>
+                    </form>
+                </div>
+            </nav>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th ng-class="{dropup:order===''}" ng-click="changeOrder('id')">
+                            产品编号
+                            <span ng-class="{orderColor:orderType === 'id'}" class="caret"></span>
+                        </th>
+                        <th ng-class="{dropup:order===''}" ng-click="changeOrder('name')">
+                            产品名称
+                            <span ng-class="{orderColor:orderType === 'name'}" class="caret"></span>
+                        </th>
+                        <th ng-class="{dropup:order===''}" ng-click="changeOrder('price')">
+                            产品价格
+                            <span ng-class="{orderColor:orderType === 'price'}" class="caret"></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in productData | filter:search | orderBy:order+orderType">
+                        <td>
+                            {{product.id}}
+                        </td>
+                        <td>
+                            {{product.name}}
+                        </td>
+                        <td>
+                            {{product.price | currency : '(RMB)'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var product = angular.module("product", []);
+    product.controller('productController', function($scope, productData) {
+        $scope.productData = productData;
+        // 按什么排序
+        $scope.orderType = "id";
+        // 升降序,默认降序
+        $scope.order = "-";
+        // 改变排序
+        $scope.changeOrder = function(type) {
+            $scope.orderType = type;
+            if ($scope.order === "") {
+                $scope.order = "-";
+            } else {
+                $scope.order = "";
+            }
+        };
+    });
+    product.service('productData', function() {
+        return [{
+            id: 3333,
+            name: "iphone3",
+            price: 3000
+        }, {
+            id: 4444,
+            name: "iphone4",
+            price: 4000
+        }, {
+            id: 5555,
+            name: "ipad5",
+            price: 5000
+        }, {
+            id: 6666,
+            name: "iphone6",
+            price: 6000
+        }, {
+            id: 7777,
+            name: "iphone7",
+            price: 7000
+        }];
+    });
+    </script>
+</body>
+
+</html>

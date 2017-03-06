@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 柯里化一般用于创建已经设置好了一个或多个参数的函数(创建带有默认参数值函数的过程)
+    var curry = function(fn) {
+        var _args = Array.prototype.slice.call(arguments, 1); //保存默认参数, 一般curry接收的第一个参数为需要柯里化的函数，后面的实参都是要设置为默认值的参数
+        console.log(_args);
+        return function() {
+            var innerArgs = Array.prototype.slice.call(arguments); // 新参数
+            var finalArgs = _args.concat(innerArgs); // 最终参数
+            return fn.apply(null, finalArgs); // 在全局调用柯里化好的函数
+        };
+    };
+
+    function add(num1, num2) {
+        return num1 + num2;
+    }
+
+    var curriedAdd = curry(add, 5); // curriedAdd此时已经有一个默认参数5了， 使用时就只用再传入一个参数
+    console.log(curriedAdd(3)); //8
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function getHowManyWeeks(Y, M, D) {
+        // 要计算的天数是当年的第几天
+        var iTotalDays = 0;
+        // 计算出当一月份到当前月份一共多少天
+        for (var i = 0; i < M; i++) {
+            iTotalDays += new Date(Y, M, 0).getDate();
+        }
+        // 加上当前天数
+        iTotalDays += D;
+        // 上取整，获取周数
+        return Math.ceil(iTotalDays / 7);
+    }
+    </script>
+</body>
+
+</html>

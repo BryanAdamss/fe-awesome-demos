@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 实例化时不是通过特殊的方法来实现，实例化和平常一样使用new
+    var CreateDiv = (function() {
+        var instance;
+        var CreateDiv = function(html) {
+            if (instance) {
+                return instance;
+            }
+            this.html = html;
+            this.init();
+            return instance = this;
+        };
+        CreateDiv.prototype.init = function() {
+            var div = document.createElement("div");
+            div.innerHTML = this.html;
+            document.body.appendChild(div);
+        };
+        return CreateDiv;
+    })();
+    var a = new CreateDiv("div1");
+    var b = new CreateDiv("div2");
+    console.log(a === b); // true
+    // 不足:此处的构造函数做了2件事，1.创建对象并初始化2.保证只有一个对象。如果某天需要在页面中创建多个div，则需要手动修改此构造函数，所以推荐用代理实现单例模式
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 单例模式的核心是只有一个实例，并提供全局访问，所以在JS中无需脱裤子放屁，先创建个类，再从类创建实例，可以直接用全局变量(对象)来创建单例
+    // 全局对象满足单例的两个核心点，一个实例并提供全局访问，虽然全局对象不是单例模式，但在JS中会把全局对象当做单例模式来用
+    // 但全局变量(对象)会造成全局变量污染，所以需要避免，可通过下面方式
+
+    // 使用命名空间
+    var namespace1 = {
+        a: function() {
+            alert(1);
+        },
+        b: function() {
+            alert(2);
+        }
+    };
+    // 使用闭包封装私有变量
+    var user = (function() {
+        var _name = "aaa";
+        var _age = 18;
+        return {
+            getUserInfo: functioin() {
+                return _name + ":" + _age;
+            }
+        }
+    })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // call、apply都可以改变函数中this的指向
+
+    // 第一个参数都指定了函数体内this的指向，如果传入null,则代表在全局环境下调用。apply的第二个参数为带下标的集合(类数组),call参数个数不限制，会按顺序依依对应到形参上
+    var func = function(a, b, c) {
+        console.log([a, b, c]);
+    };
+    func.apply(null, [1, 2, 3]); // 输出 [ 1, 2, 3 ]
+    func.call(null, 1, 2, 3); // 输出 [ 1, 2, 3 ]
+
+    // call、apply通常用来实现函数借用，用来在类数组(arguments)上调用数组的方法
+    // 函数的参数列表arguments 是一个类数组对象，虽然它也有“下标”，但它并非真正的数组，所以也不能像数组一样，进行排序操作或者往集合里添加一个新的元素
+    // arguments转成真正的数组的时候，可以借用Array.prototype.slice方法
+    // 想截取arguments列表中的头一个元素时，可以借用Array.prototype.shift方法。
+    (function() {
+        Array.prototype.push.call(arguments, 6);
+        console.log(arguments); // 输出[4,5,6]
+    })(4, 5);
+
+    // 通过call、apply实现绑定this
+    Function.prototype.bind = function() {
+        var self = this, // 保存原函数
+            context = [].shift.call(arguments), // 需要绑定的this上下文,arguments上为shift方法，通过call来实现调用数组的shift方法
+            args = [].slice.call(arguments); // 剩余的参数转成数组
+        return function() { // 返回一个新的函数
+            return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+            // 执行新的函数的时候，会把之前传入的context 当作新函数体内的this
+            // 并且组合两次分别传入的参数，作为新函数的参数
+        }
+    };
+    var obj = {
+        name: 'sven'
+    };
+    var func = function(a, b, c, d) {
+        alert(this.name); // 输出：sven
+        alert([a, b, c, d])
+    }.bind(obj, 1, 2); // 将func中的this绑定到obj上，并传入了默认参数
+    func(3, 4); // 输出：[ 1, 2, 3, 4 ]
+    </script>
+</body>
+
+</html>

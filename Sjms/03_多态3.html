@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var googleMap = {
+        show: function() {
+            console.log('开始渲染谷歌地图');
+        }
+    };
+    var baiduMap = {
+        show: function() {
+            console.log('开始渲染百度地图');
+        }
+    };
+    var renderMap = function(type) {
+        if (type === 'google') {
+            googleMap.show();
+        } else if (type === 'baidu') {
+            baiduMap.show();
+        }
+    };
+    renderMap('google'); // 输出：开始渲染谷歌地图
+    renderMap('baidu'); // 输出：开始渲染百度地图
+
+    // 如果添加其他地图，则需要在renderMap中继续判断，这里显示地图是不变的，显示哪个，怎么显示是可变的，所以可将show隔离(提取)出来
+
+    var renderMap2 = function(map) {
+        if (map.show instanceof Function) {
+            map.show();
+        }
+    };
+    // 添加其他地图
+    var sosoMap = {
+        show: function() {
+            console.log("开始渲染Soso地图");
+        }
+    };
+    renderMap2(googleMap); // 输出：开始渲染谷歌地图
+    renderMap2(baiduMap); // 输出：开始渲染百度地图
+    renderMap2(sosoMap); // 输出:开始渲染Soso地图
+    </script>
+</body>
+
+</html>

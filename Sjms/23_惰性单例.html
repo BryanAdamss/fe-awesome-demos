@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="loginBtn">登录</button>
+    <script type="text/javascript">
+    // 惰性单例指的是在需要的时候才创建对象实例，实际在19中Singleton.getInstance就是在需要的时候创建实例，并非一开始就创建
+    // 利用全局变量(对象)和惰性单例来实现登录弹窗对象的创建
+    // var loginLayer = (function() {
+    //     var div = document.createElement("div");
+    //     div.innerHTML = "我是登录窗口";
+    //     div.style.display = 'none';
+    //     document.body.appendChild(div);
+    //     return div;
+    // })();
+    // document.getElementById('loginBtn').onclick = function() {
+    //     loginLayer.style.display = 'block';
+    // };
+    // 上面这种在页面加载的时候就会创建一个登录窗口，如果用户根本不点登录的时候也会创建，所以会浪费
+    // 改进
+    // var createLoginLayer = function() {
+    //     var div = document.createElement("div");
+    //     div.innerHTML = "我是登录窗口";
+    //     div.style.display = 'none';
+    //     document.body.appendChild(div);
+    //     return div;
+    // };
+
+    // document.getElementById('loginBtn').onclick = function() {
+    //     var loginLayer = createLoginLayer();
+    //     loginLayer.style.display = 'block';
+    // };
+    // 这样虽然不会一载入就创建，但是没有保证单例，多次点击会创建多个
+    // 改进
+    var createLoginLayer = (function() {
+        var div;
+        return function() {
+            if (!div) {
+                div = document.createElement("div");
+                div.innerHTML = "我是登录窗口";
+                div.style.display = "none";
+                document.body.appendChild(div);
+            }
+            return div;
+        };
+    })();
+    document.getElementById('loginBtn').onclick = function() {
+        var loginLayer = createLoginLayer();
+        loginLayer.style.display = 'block';
+    };
+    // 上面的方式已经能实现基本功能，但是仔细观察会发现，他将创建对象和管理单例的逻辑放在了一起，加入下次想创建一个iframe，就必须将上面代码再抄一遍
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 多态:同一操作应用在不同的对象上面，可以产生不同的解释和不同的执行结果
+    // 即给不同的对象发送同一个消息的时候，这些对象会根据这个消息分别给出不同的反馈
+    var makeSound = function(animal) {
+        if (animal instanceof Duck) {
+            console.log("嘎嘎");
+        } else if (animal instanceof Chicken) {
+            console.log("咯咯");
+        }
+    };
+    var Duck = function() {};
+    var Chicken = function() {};
+    makeSound(new Duck());
+    makeSound(new Chicken());
+    // 这里是不优雅的，因为如果再来一个狗，需要修改makeSound
+    </script>
+</body>
+
+</html>

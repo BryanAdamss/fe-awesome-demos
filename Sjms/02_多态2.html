@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 多态背后是将"做什么"和"谁去做，怎么做"分离开来，即将不变的和可变的分离开来
+    // 把不变的隔离出来，把可变的部分封装起来,叫是不变的，动物怎么叫是可变的
+
+    // 隔离出不变的
+    var makeSound = function(animal) {
+        animal.sound();
+    };
+
+    // 封装可变的
+    var Duck = function() {};
+
+    Duck.prototype.sound = function() {
+        console.log("嘎嘎");
+    };
+
+    var Chicken = function() {};
+
+    Chicken.prototype.sound = function() {
+        console.log("咯咯");
+    };
+
+    makeSound(new Duck());
+    makeSound(new Chicken());
+    // 添加新动物
+    var Dog = function() {};
+    Dog.prototype.sound = function() {
+        console.log("汪汪");
+    };
+    makeSound(new Dog());
+    </script>
+</body>
+
+</html>

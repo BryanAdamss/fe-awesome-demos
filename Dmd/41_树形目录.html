@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test">
+    </div>
+    <script type="text/javascript">
+    var Tree = ((function() {
+        function _buildTree(trees, parent) {
+            var oUl = document.createElement("ul");
+            var oDiv = null;
+            var oLi = null;
+            var tree = null;
+            for (var i = 0, len = trees.length; i < len; i++) {
+                tree = trees[i];
+                oLi = document.createElement("li");
+                oDiv = document.createElement("div");
+                oDiv.innerHTML = tree.id + " Name: " + tree.name;
+                oLi.appendChild(oDiv);
+                if (tree.childs) {
+                    //  有子节点的li下面的div绑定事件
+                    oDiv.setAttribute("data-isShow", "show");
+                    _bind(oDiv, "click", function() {
+                        var isShow = this.getAttribute("data-isShow");
+                        if (isShow === "show") {
+                            this.nextElementSibling.style.display = "none";
+                            this.setAttribute("data-isShow", "");
+                        } else {
+                            this.nextElementSibling.style.display = "block";
+                            this.setAttribute("data-isShow", "show");
+                        }
+                    });
+                    // 递归遍历
+                    _buildTree(tree.childs, oLi);
+                }
+                oUl.appendChild(oLi);
+            }
+            if (parent) {
+                parent.appendChild(oUl);
+            }
+            // 返回拼装好的ul
+            return oUl;
+        }
+
+        function _init(target) {
+            // 插入DOM
+            var result = this.buildTree(this.treesArr);
+            result.id = "Tree";
+            target.appendChild(result);
+        }
+
+        function _bind(ele, type, handler) {
+            if (ele.addEventListener) {
+                ele.addEventListener(type, handler, false);
+            } else if (ele.attahcEvent) {
+                ele.attahcEvent("on" + type, handler);
+            } else {
+                ele["on" + type] = handler;
+            }
+        }
+
+        function Tree(config) {
+            var that = this;
+            this.target = document.querySelector(config.id);
+            this.treesArr = config.treesArr;
+            this.init(this.target);
+        }
+
+        Tree.prototype = {
+            constructor: Tree,
+            buildTree: function() {
+                return _buildTree.apply(this, arguments);
+            },
+            init: function() {
+                _init.apply(this, arguments);
+            },
+            bind: function() {
+                _bind.apply(this, arguments);
+            }
+        };
+
+        return Tree;
+
+    })());
+
+    var tree = new Tree({
+        id: "#test",
+        treesArr: [{
+            id: 1,
+            name: "test 1",
+            childs: [{
+                id: 1.1,
+                name: "test 1.1"
+            }, {
+                id: 1.2,
+                name: "test 1.2",
+                childs: [{
+                    id: 1.21,
+                    name: "test 1.2.1",
+                    childs: [{
+                        id: 1.211,
+                        name: "test 1.2.1.1"
+                    }]
+                }, {
+                    id: 1.22,
+                    name: "test 1.2.2",
+                    childs: [{
+                        id: 1.221,
+                        name: "test 1.2.2.1"
+                    }]
+                }]
+            }]
+        }, {
+            id: 2,
+            name: "test 2",
+            childs: [{
+                id: 2.1,
+                name: "test 2.1"
+            }, {
+                id: 2.2,
+                name: "test 2.2"
+            }, {
+                id: 2.3,
+                name: "test 2.3"
+            }]
+        }]
+    });
+    </script>
+</body>
+
+</html>

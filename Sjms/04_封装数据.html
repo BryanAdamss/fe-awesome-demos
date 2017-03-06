@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // js一般通过函数来创建作用域来封装数据
+    var myObj = (function() {
+        // 私有变量
+        var _name = "haha";
+        return {
+            // 公开方法
+            getName: function() {
+                return _name;
+            }
+        }
+    })();
+    console.log(myObj.getName()); // "haha"
+    console.log(myObj._name); // undefined
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="loginBtn">登录</button>
+    <button id="loginBtn2">登录2</button>
+    <script type="text/javascript">
+    // 将23中的管理单例的逻辑给隔离(抽象)出来，实现创建和管理的分离
+    // 管理单例
+    var getSingle = function(fn) {
+        var result;
+        return function() {
+            return result || (result = fn.apply(this, arguments));
+        };
+    };
+    // 创建login对象
+    var createLoginLayer = function() {
+        var div = document.createElement('div');
+        div.innerHTML = '我是登录浮窗';
+        div.style.display = 'none';
+        document.body.appendChild(div);
+        return div;
+    };
+
+    var createSingleLoginLayer = getSingle(createLoginLayer);
+    document.getElementById('loginBtn').onclick = function() {
+        var loginLayer = createSingleLoginLayer();
+        loginLayer.style.display = 'block';
+    };
+    // 创建iframe对象
+    var createIframe = function() {
+        var iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+        return iframe;
+    }
+    var createSingleIframe = getSingle(createIframe);
+
+    document.getElementById('loginBtn2').onclick = function() {
+        var loginLayer = createSingleIframe();
+        loginLayer.src = 'http://baidu.com';
+    };
+    </script>
+</body>
+
+</html>

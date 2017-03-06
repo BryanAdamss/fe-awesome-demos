@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var appendDiv = function(callback) {
+        for (var i = 0; i < 100; i++) {
+            var div = document.createElement("div");
+            div.innerHTML = i;
+            document.body.appendChild(div);
+            if (typeof callback === "function") {
+                callback(div);
+            }
+        }
+    };
+    appendDiv();
+    // 通过回调函数来确定是否隐藏
+    appendDiv(function(node) {
+        node.style.display = "none";
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 当一次性往DOM中添加大量节点，浏览器会卡死，所以需要分时间添加节点
+    // var ary = [];
+    // for (var i = 1; i <= 99999; i++) {
+    //     ary.push(i); // 假设ary 装载了1000 个好友的数据
+    // };
+    // var renderFriendList = function(data) {
+    //     for (var i = 0, l = data.length; i < l; i++) {
+    //         var div = document.createElement('div');
+    //         div.innerHTML = i;
+    //         document.body.appendChild(div);
+    //     }
+    // };
+    // renderFriendList(ary);
+
+
+    /**
+     * 实现分时的函数，在intervalTime时间间隔内执行count次fn函数
+     * @author cgh
+     * @time   2017-03-06
+     * @param  {Array}   	ary    			每次fn执行需要的参数数组
+     * @param  {Function} 	fn    			处理函数
+     * @param  {Number}   	count 			每个时间间隔内执行的次数
+     * @param  {Number}   	intervalTime 	时间间隔
+     * @return {Function}       			函数
+     */
+    var timeChunk = function(ary, fn, count, interval) {
+        var obj, t,
+            len = ary.length,
+            intervalTime = interval || 200; // 默认时间间隔200ms
+        var start = function() {
+            for (var i = 0; i < Math.min(count || 1, len); i++) {
+                obj = ary.shift();
+                fn(obj);
+            }
+        };
+        return function() {
+            t = setInterval(function() {
+                if (ary.length === 0) {
+                    return clearInterval(t);
+                }
+                start();
+            }, intervalTime);
+        };
+    };
+
+    var ary = [];
+    for (var i = 1; i <= 800; i++) {
+        ary.push(i);
+    };
+    // 每隔500ms创建8个节点插入到DOM中
+    var renderFriendList = timeChunk(ary, function(n) {
+        var div = document.createElement('div');
+        div.innerHTML = n;
+        document.body.appendChild(div);
+    }, 8, 500);
+    renderFriendList();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 有些时候函数会被系统频繁的触发,如window.onresize事件、mousemove、上传进度时会频繁触发相应的处理函数
+    // 实现函数节流可通过setTimeout延迟执行来解决
+    var throttle = function(fn, interval) {
+        var _self = fn, //保存需要被延迟的函数
+            firstTime = true, // 是否首次调用
+            intervalTime = interval || 500, // 间隔调用时间，默认500毫秒
+            timer; // 定时器
+        return function() {
+            var args = arguments,
+                _me = this;
+            if (firstTime) { // 如果第一次，则无需延迟，直接调用
+                _self.apply(_me, args);
+                return firstTime = false;
+            }
+            if (timer) { // 如果定时器存在，说明前一次执行还没有完成
+                return false;
+            }
+            timer = setTimeout(function() { // 延迟intervalTime后执行
+                clearTimeout(timer);
+                timer = null;
+                _self.apply(_me, args);
+            }, intervalTime);
+        };
+    };
+    window.onresize = throttle(function() {
+        console.log(1); // 只触发了几次
+    }, 1000);
+    // window.onresize = function() {
+    //     console.log(1); // 几十次
+    // };
+    </script>
+</body>
+
+</html>

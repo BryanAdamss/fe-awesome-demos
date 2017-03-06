@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // AOP 面向切片编程，将跟核心业务无关的功能抽离出来，再通过动态织入
+    Function.prototype.before = function(beforefn) {
+        var __self = this; // 保存原函数的引用
+
+        return function() { // 返回包含了原函数和新函数的"代理"函数
+            beforefn.apply(this, arguments); // 执行新函数，修正this
+            return __self.apply(this, arguments); // 执行原函数
+        }
+    };
+    Function.prototype.after = function(afterfn) {
+        var __self = this;
+        return function() {
+            var ret = __self.apply(this, arguments);
+            afterfn.apply(this, arguments);
+            return ret;
+        }
+    };
+    var func = function() {
+        console.log(2);
+    };
+    func = func.before(function() {
+        console.log(1);
+    }).after(function() {
+        console.log(3);
+    });
+
+    func(); // 1,2,3
+    </script>
+</body>
+
+</html>
