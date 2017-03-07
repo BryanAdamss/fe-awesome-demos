@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 传统的策略模式对象，必须要从类中创建，但是JS中可以直接创建，环境类对象也不用从类中创建，可以直接创建
+    // 一组策略
+    var strategies = {
+        "S": function(salary) {
+            return salary * 4;
+        },
+        "A": function(salary) {
+            return salary * 3;
+        },
+        "B": function(salary) {
+            return salary * 2;
+        }
+    };
+    // 负责把请求委托给具体的某个策略类
+    var calculateBonus = function(level, salary) {
+        return strategies[level](salary);
+    };
+    console.log(calculateBonus("S", 3000)); //12000
+    console.log(calculateBonus("A", 1000)); //2000
+    </script>
+</body>
+
+</html>

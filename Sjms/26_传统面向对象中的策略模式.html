@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 使用传统面向对象方式实现策略模式，将不同策略封装到不同的类中
+    // 一组策略类
+    var performanceS = function() {};
+    performanceS.prototype.calculate = function(salary) {
+        return salary * 4;
+    }
+    var performanceA = function() {};
+    performanceA.prototype.calculate = function(salary) {
+        return salary * 3;
+    }
+    var performanceB = function() {};
+    performanceB.prototype.calculate = function(salary) {
+        return salary * 2;
+    }
+    var Bonus = function() {
+        this.salary = null; // 工资
+        this.strategy = null; // 绩效等级对应的策略对象
+    };
+    Bonus.prototype.setSalary = function(salary) {
+        this.salary = salary;
+    };
+    Bonus.prototype.setStrategy = function(strategy) {
+        this.strategy = strategy;
+    };
+    // 环境类，把请求委托给具体的策略对象
+    Bonus.prototype.getBonus = function() {
+        return this.strategy.calculate(this.salary); // 把计算具体奖金的工作委托给某个策略对象
+    };
+
+    var bonus = new Bonus(); // 实例化一个年终奖对象
+    bonus.setSalary(1000); // 添加工资
+    bonus.setStrategy(new performanceS()); // 传入绩效等级
+    console.log(bonus.getBonus()); // 获得年终奖
+    </script>
+</body>
+
+</html>

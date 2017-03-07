@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="registerForm" method="post">
+        请输入用户名：
+        <input type="text" name="userName" /> 请输入密码：
+        <input type="text" name="password" /> 请输入手机号码：
+        <input type="text" name="phoneNumber" />
+        <button>提交</button>
+    </form>
+    <script type="text/javascript">
+    // 策略模式的主要目的是将算法的实现和使用分离
+    // 但在广义的情况下，也可以用策略模式将一些业务规则封装起来，只要这些业务规则指向的目标一致，并可被替换使用即可。如表单验证
+    // var registerForm = document.getElementById('registerForm');
+    // registerForm.onsubmit = function() {
+    //     if (registerForm.userName.value === '') {
+    //         alert('用户名不能为空');
+    //         return false;
+    //     }
+    //     if (registerForm.password.value.length < 6) {
+    //         alert('密码长度不能少于6 位');
+    //         return false;
+    //     }
+    //     if (!/(^1[3|5|8][0-9]{9}$)/.test(registerForm.phoneNumber.value)) {
+    //         alert('手机号码格式不正确');
+    //         return false;
+    //     }
+    // };
+    // 不足很明显，函数比较庞大、缺乏弹性、复用性差
+    // 策略模式改进
+
+    // 封装校验逻辑
+    /***********************策略对象**************************/
+    var strategies = {
+        isNonEmpty: function(value, errorMsg) {
+            if (value === '') {
+                return errorMsg;
+            }
+        },
+        minLength: function(value, length, errorMsg) {
+            if (value.length < length) {
+                return errorMsg;
+            }
+        },
+        isMobile: function(value, errorMsg) {
+            if (!/(^1[3|5|8][0-9]{9}$)/.test(value)) {
+                return errorMsg;
+            }
+        }
+    };
+    /***********************Validator 类**************************/
+    var Validator = function() {
+        this.cache = [];
+    };
+    Validator.prototype.add = function(dom, rules) {
+        var self = this;
+        for (var i = 0, rule; rule = rules[i++];) {
+            (function(rule) {
+                var strategyAry = rule.strategy.split(':');
+                var errorMsg = rule.errorMsg;
+                self.cache.push(function() {
+                    var strategy = strategyAry.shift();
+                    strategyAry.unshift(dom.value);
+                    strategyAry.push(errorMsg);
+                    return strategies[strategy].apply(dom, strategyAry);
+                });
+            })(rule)
+        }
+    };
+    Validator.prototype.start = function() {
+        for (var i = 0, validatorFunc; validatorFunc = this.cache[i++];) {
+            var errorMsg = validatorFunc();
+            if (errorMsg) {
+                return errorMsg;
+            }
+        }
+    };
+    /***********************客户调用代码**************************/
+    var registerForm = document.getElementById('registerForm');
+    var validataFunc = function() {
+        var validator = new Validator();
+        validator.add(registerForm.userName, [{
+            strategy: 'isNonEmpty',
+            errorMsg: '用户名不能为空'
+        }, {
+            strategy: 'minLength:6',
+            errorMsg: '用户名长度不能小于10 位'
+        }]);
+        validator.add(registerForm.password, [{
+            strategy: 'minLength:6',
+            errorMsg: '密码长度不能小于6 位'
+        }]);
+        validator.add(registerForm.phoneNumber, [{
+            strategy: 'isMobile',
+            errorMsg: '手机号码格式不正确'
+        }]);
+        var errorMsg = validator.start();
+        return errorMsg;
+    }
+    registerForm.onsubmit = function() {
+        var errorMsg = validataFunc();
+        if (errorMsg) {
+            alert(errorMsg);
+            return false;
+        }
+    };
+    // 策略模式优点
+    // 策略模式利用组合、委托和多态等技术和思想，可以有效地避免多重条件选择语句。
+    // 策略模式提供了对开放— 封闭原则的完美支持，将算法封装在独立的strategy中，使得它们易于切换，易于理解，易于扩展。
+    // 策略模式中的算法也可以复用在系统的其他地方，从而避免许多重复的复制粘贴工作。
+    // 在策略模式中利用组合和委托来让Context 拥有执行算法的能力，这也是继承的一种更轻便的替代方案。
+
+    // 缺点
+    // 使用策略模式会在程序中增加许多策略类或者策略对象，但实际上这比把它们负责的逻辑堆砌在Context 中要好。
+    // 要使用策略模式，必须了解所有的strategy，必须了解各个strategy 之间的不同点，这样才能选择一个合适的strategy,此时strategy 要向客户暴露它的所有实现，这是违反最少知识原则的
+    </script>
+</body>
+
+</html>
