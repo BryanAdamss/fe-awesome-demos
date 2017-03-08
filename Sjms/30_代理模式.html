@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 代理模式:为一个对象提供一个代用品或占位符，以便控制对它的访问
+    // 应用场景:当不方便直接访问某个对象时
+    // 分类:
+    // JS中常用:
+    // 虚拟代理模式:会把一些开销很大的对象，延迟到真正需要它的时候再创建(常用)
+    // 缓存代理模式:可以为一些开销很大的运算结果提供暂时的缓存，在下次运算时，如果传递进来的参数跟之前一致，则可直接返回缓存的结果(常用)
+    // 
+    // 不常用:
+    // 保护代理模式:代理B可以帮A过滤掉一些请求
+    // 防火墙代理模式:控制网络资源的访问，保护主题不让"坏人"接近
+    // 远程代理模式:为一个对象在不同的地址空间提供局部代表，在Java 中，远程代理可以是另一个虚拟机中的对象。
+    // 保护代理模式：用于对象应该有不同访问权限的情况。
+    // 智能引用代理模式：取代了简单的指针，它在访问对象时执行一些附加操作，比如计算一个对象被引用的次数。
+    // 写时复制代理：通常用于复制一个庞大对象的情况。写时复制代理延迟了复制的过程，当对象被真正修改时，才对它进行复制操作。写时复制代理是虚拟代理的一种变体，DLL（操作系统中的动态链接库）是其典型运用场景。
+
+    // 使用举例:小明托人送花、虚拟代理实现图片预加载、缓存代理异步ajax请求
+
+    // 小明委托B给A送花
+    // var Flower = function() {};
+    // // 发起者
+    // var xiaoMing = {
+    //     sendFolower: function(target) {
+    //         var flower = new Flower();
+    //         target.receiveFlower(flower);
+    //     }
+    // };
+    // // 接收者
+    // var A = {
+    //     receiveFlower: function(flower) {
+    //         console.log("收到花" + flower);
+    //     }
+    // };
+    // // 被委托的对象
+    // var B = {
+    //     receiveFlower: function(flower) {
+    //         A.receiveFlower(flower);
+    //     }
+    // };
+    // xiaoMing.sendFolower(B);
+
+    // 不足，上面这个例子看不出小明自己送和托B送有什么区别，因为B只是简单的把花递给了A
+    // 考虑下面情况
+    // 在A心情好的时候小明送花，成功率很高。如果心情不好的时候送花，则成功率为0。小明才认识A，并不知道她心情的变化，而A的好朋友B却很了解，所以小明只管把花交给B，B无间负责监听A，在A心情好的时候将花传递给A
+
+    var Flower = function() {};
+
+    var xiaoMing = {
+        sendFolower: function(target) {
+            var flower = new Flower();
+            target.receiveFlower(flower);
+        }
+    };
+
+    var A = {
+        receiveFlower: function(flower) {
+            console.log("收到花" + flower);
+        },
+        listenGoodMood: function(fn) {
+            setTimeout(function() { // 假设1s后心情变好
+                fn();
+            }, 3000);
+        }
+
+    };
+
+    var B = {
+        receiveFlower: function(flower) {
+            A.listenGoodMood(function() { // 监听A的心情
+                A.receiveFlower(flower);
+            });
+        }
+    };
+    xiaoMing.sendFolower(B);
+    </script>
+</body>
+
+</html>

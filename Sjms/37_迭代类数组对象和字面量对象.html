@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 本质上，只要对象拥有length属性的都可以迭代，arguments和对象字面量也可以迭代，仿照jquery的$.each写一个通用的迭代器
+    each = function(obj, callback) {
+        var value, i = 0,
+            length = obj.length,
+            isArray = isArraylike(obj);
+        if (isArray) {
+            // 类数组对象
+            for (; i < length; i++) {
+                value = callback.call(obj[i], i, obj[i]);
+                // 约定回调函数返回false时，终止迭代
+                if (value === false) {
+                    break;
+                }
+            }
+        } else {
+            // 普通对象
+            for (i in obj) {
+                value = callback.call(obj[i], i, obj[i]);
+                if (value === false) {
+                    break;
+                }
+            }
+        }
+        return obj;
+    };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 倒序迭代器
+    var reverseEach = function(ary, callback) {
+        for (var l = ary.length - 1; l >= 0; l--) {
+            callback(l, ary[l]);
+        }
+    };
+    reverseEach([0, 1, 2], function(i, n) {
+        console.log(n); // 分别输出：2, 1 ,0
+    });
+    </script>
+</body>
+
+</html>

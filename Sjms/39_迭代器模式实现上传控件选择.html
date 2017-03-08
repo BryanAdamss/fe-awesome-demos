@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // var getUploadObj = function() {
+    //     try {
+    //         return new ActiveXObject("TXFTNActiveX.FTNUpload"); // IE 上传控件
+    //     } catch (e) {
+    //         if (supportFlash()) { // supportFlash 函数未提供
+    //             var str = '<object type="application/x-shockwave-flash"></object>';
+    //             return $(str).appendTo($('body'));
+    //         } else {
+    //             var str = '<input name="file" type="file"/>'; // 表单上传
+    //             return $(str).appendTo($('body'));
+    //         }
+    //     }
+    // };
+    // 上面的难以阅读、扩展、维护
+    // 将获取上传对象封装起来
+    var getActiveUploadObj = function() {
+        try {
+            return new ActiveXObject("TXFTNActiveX.FTNUpload"); // IE 上传控件
+        } catch (e) {
+            return false;
+        }
+    };
+    var getFlashUploadObj = function() {
+        if (isSupportFlash()) { // isSupportFlash 函数未提供
+            var str = '<object type="application/x-shockwave-flash"></object>';
+            return document.body.innerHTML += str;
+        }
+        return false;
+    };
+    var getFormUpladObj = function() {
+        var str = '<input name="file" type="file" class="ui-file"/>'; // 表单上传
+        return document.body.innerHTML += str;
+    };
+    // 迭代器
+    var iteratorUploadObj = function() {
+        for (var i = 0, fn; fn = arguments[i++];) {
+            var uploadObj = fn();
+            if (uploadObj !== false) {
+                return uploadObj;
+            }
+        }
+    };
+    var uploadObj = iteratorUploadObj(getActiveUploadObj, getFlashUploadObj, getFormUpladObj);
+    console.log(uploadObj);
+    </script>
+</body>
+
+</html>

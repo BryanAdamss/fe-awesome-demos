@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 迭代器模式:提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。它将迭代过程从业务逻辑中抽象出来。
+    // 分类:
+    // 内部迭代器:内部已经定义好了迭代规则，它完全接手整个迭代过程，外部只需要一次初始调用。优点:不用关心迭代器内部实现。缺点:有点也是缺点，因为迭代器中的迭代规则以被提前规定好
+    // 外部迭代器:外部迭代器必须显式地请求迭代下一个元素
+    // 使用场景是:对于集合内部结果常常变化各异，我们不想暴露其内部结构的话，但又响让客户代码透明底访问其中的元素，这种情况下我们可以使用迭代器模式。
+    // 使用举例:很多语言都内置了迭代器如Array.prototype.forEach、jQuery中的$.each
+
+    // 实现自己的each(一个内部迭代器)
+    var each = function(ary, callback) {
+        for (var i = 0, len = ary.length; i < len; i++) {
+            callback.call(ary[i], i, ary[i]); // 在ary[i]下调用callback,传入索引i和元素ary[i]
+        }
+    };
+    // each([1, 2, 3, 4], function(i, n) {
+    //     console.log(([i, n]));
+    // });
+
+    // 用each完成判断两个数组是否相等
+    // var compare = function(ary1, ary2) {
+    //     // 长度不同肯定不相等
+    //     if (ary1.length !== ary2.length) {
+    //         throw new Error("不相等");
+    //     }
+    //     // 比较内部元素值
+    //     each(ary1, function(i, n) {
+    //         if (n !== ary2[i]) {
+    //             throw new Error("不相等");
+    //         }
+    //     });
+    //     console.log("相等");
+    // };
+    // compare([1, 2, 3], [1, 2, 4]);
+    // 使用外部迭代器改写判断数组相等
+    var Iterator = function(obj) {
+        var current = 0;
+        var next = function() {
+            current += 1;
+        };
+        var isDone = function() {
+            return current >= obj.length;
+        };
+        var getCurrItem = function() {
+            return obj[current];
+        };
+        return {
+            next: next,
+            isDone: isDone,
+            getCurrItem: getCurrItem
+        }
+    };
+    var compare = function(iterator1, iterator2) {
+        while (!iterator1.isDone() && !iterator2.isDone()) {
+            if (iterator1.getCurrItem() !== iterator2.getCurrItem()) {
+                throw new Error("不相等");
+            }
+            iterator1.next();
+            iterator2.next();
+        }
+        console.log("相等");
+    };
+    var iterator1 = Iterator([1, 2, 3]);
+    var iterator2 = Iterator([1, 2, 3]);
+    compare(iterator1, iterator2); // 输出：iterator1 和iterator2 相等
+    </script>
+</body>
+
+</html>

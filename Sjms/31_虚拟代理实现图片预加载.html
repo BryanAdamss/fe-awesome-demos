@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 在Web 开发中，图片预加载是一种常用的技术，如果直接给某个img标签节点设置src属性，由于图片过大或者网络不佳，图片的位置往往有段时间会是一片空白。常见的做法是先用一张loading 片占位，然后用异步的方式加载图片，等图片加载好了再把它填充到img节点里，这种场景就很适合使用虚拟代理
+    // 非代理模式实现
+    // var MyImage = (function() {
+    //     var imgNode = document.createElement('img');
+    //     document.body.appendChild(imgNode);
+    //     var img = new Image;
+    //     img.onload = function() {
+    //         imgNode.src = img.src;
+    //     };
+    //     return {
+    //         setSrc: function(src) {
+    //             imgNode.src = 'http://img.zcool.cn/community/013cb15648986a32f87512f6d87dc8.gif';
+    //             img.src = src;
+    //         }
+    //     }
+    // })();
+    // MyImage.setSrc('http://img1.3lian.com/2015/a1/24/d/17.jpg');
+    // 上面违反了单一职责原则，MyImage既负责给img设置src外，还负责预加载图片
+
+    // 虚拟代理模式
+    // 普通本体对象，对外提供一个setSrc接口
+    var myImage = (function() {
+        var imgNode = document.createElement('img');
+        document.body.appendChild(imgNode);
+        return {
+            setSrc: function(src) {
+                imgNode.src = src;
+            }
+        }
+    })();
+    // 代理对象
+    var proxyImage = (function() {
+        var img = new Image();
+        img.onload = function() {
+            // 真图请求完成，将真图放到页面上
+            myImage.setSrc(this.src);
+        }
+        return {
+            setSrc: function(src) {
+                // 设置loading图
+                myImage.setSrc('http://img.zcool.cn/community/013cb15648986a32f87512f6d87dc8.gif');
+                // 设置真图地址
+                img.src = src;
+            }
+        }
+    })();
+    proxyImage.setSrc('http://img1.3lian.com/2015/a1/24/d/17.jpg');
+    </script>
+</body>
+
+</html>

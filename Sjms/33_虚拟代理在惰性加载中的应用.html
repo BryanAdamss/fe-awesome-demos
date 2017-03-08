@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 在按特定按键时才加载另外一个js文件
+    // var cache = [];
+    // var miniConsole = {
+    //     log: function() {
+    //         var args = arguments;
+    //         cache.push(function() {
+    //             return miniConsole.log.apply(miniConsole, args);
+    //         });
+    //     }
+    // };
+    // var handler = function(ev) {
+    //     if (ev.keyCode === 32) {
+    //         // 按空格才会创建脚本
+    //         var script = document.createElement("script");
+    //         script.src = "js/33.js";
+    //         script.onload = function() {
+    //             for (var i = 0, fn; fn = cache[i++];) {
+    //                 fn();
+    //             }
+    //         };
+    //         document.body.appendChild(script);
+    //     }
+    // };
+    // document.body.addEventListener("keydown", handler, false);
+    // miniConsole.log(3);
+    // 这样的问题是在每次按空格都会重复创建script
+    // 改进
+    var miniConsole = (function() {
+        var cache = [];
+        var handler = function(ev) {
+            if (ev.keyCode === 32) {
+                console.log(ev);
+                var script = document.createElement('script');
+                script.onload = function() {
+                    for (var i = 0, fn; fn = cache[i++];) {
+                        fn();
+                    }
+                };
+                script.src = 'js/33.js';
+                document.body.appendChild(script);
+                document.body.removeEventListener('keydown', handler); // 只加载一次33.js
+            }
+        };
+        document.body.addEventListener('keydown', handler, false);
+        return {
+            log: function() {
+                var args = arguments;
+                cache.push(function() {
+                    return miniConsole.log.apply(miniConsole, args);
+                });
+            }
+        }
+    })();
+    miniConsole.log(11); // 开始打印log
+    </script>
+</body>
+
+</html>
