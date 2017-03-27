@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 观察者模式又叫发布-订阅模式。它定义对象间的一种在对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。JS中一般用事件模型来替代传统的观察者模式
+    // 使用场景:应用于异步编程中，这是一种替代传递回调函数的方案。可以取代对象之间硬编码的通知机制，一个对象不用再显式地调用另外一个对象的某个接口
+    // 使用举例:买房，到达预售时间，售楼部(发布者)会打电话(通过花名册，一个缓存列表，拨打电话过程就是在执行回调函数的过程)通知买房者(订阅者)可以购买了。
+
+    // var salesOffices = {}; // 定义售楼处，发布者
+    // salesOffices.clientList = []; // 缓存列表，花名册，存放订阅者的回调函数
+    // salesOffices.listen = function(fn) { // 增加订阅者
+    //     this.clientList.push(fn); // 订阅者的回调函数添加到缓存列表中
+    // };
+    // salesOffices.trigger = function() { // 发布消息
+    //     for (var i = 0, fn; fn = this.clientList[i++];) {
+    //         fn.apply(this, arguments); // arguments是发布消息时带上的参数
+    //     }
+    // };
+    // salesOffices.listen(function(price, squareMeter) { // 小明订阅消息
+    //     console.log("我是小明订阅的");
+    //     console.log('价格= ' + price);
+    //     console.log('squareMeter= ' + squareMeter);
+    // });
+    // salesOffices.listen(function(price, squareMeter) { // 小红订阅消息
+    //     console.log("我是小红订阅的");
+    //     console.log('价格= ' + price);
+    //     console.log('squareMeter= ' + squareMeter);
+    // });
+    // // 发布消息，此时会通知所有订阅者
+    // salesOffices.trigger(2000000, 88); // 输出：200 万，88 平方米
+    // salesOffices.trigger(3000000, 110); // 输出：300 万，110 平方米
+
+    // 上面出现的问题时，假如小明只想买88平的，售楼部却把110平的也推送给他了
+    var salesOffices = {};
+    salesOffices.clientList = {};
+    salesOffices.listen = function(key, fn) { // key为订阅者想订阅的某个消息类型，例如小明想订阅的88平
+        if (!this.clientList[key]) { // 如果还没订阅过此类消息，则给该类消息创建一个缓存列表
+            this.clientList[key] = [];
+        }
+        this.clientList[key].push(fn); // 将订阅的消息添加到缓存列表中
+    };
+    salesOffices.trigger = function() {
+        var key = Array.prototype.shift.call(arguments); // 取出消息类型
+        var fns = this.clientList[key]; // 此消息类型对应的回调函数列表
+        if (!fns || fns.length === 0) { // 没有订阅该消息，则返回
+            return false;
+        }
+        for (var i = 0, fn; fn = fns[i++];) {
+            fn.apply(this, arguments); // 发布消息
+        }
+    };
+
+    salesOffices.listen('squareMeter88', function(price) { // 小明订阅88 平方米房子的消息
+        console.log('价格= ' + price); // 输出： 2000000
+    });
+
+    salesOffices.listen('squareMeter88', function(price) { // 小周订阅88 平方米房子的消息
+        console.log('价格= ' + price); // 输出： 2000000
+    });
+
+    salesOffices.listen('squareMeter110', function(price) { // 小红订阅110 平方米房子的消息
+        console.log('价格= ' + price); // 输出： 3000000
+    });
+
+    salesOffices.trigger('squareMeter88', 2000000); // 发布88 平方米房子的价格，此时只有小明和小周会收到订阅消息
+
+    salesOffices.trigger('squareMeter110', 3000000); // 发布110 平方米房子的价格，只有小红能收到消息
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var event = {
+        clientList: {},
+        listen: function(key, fn) {
+            if (!this.clientList[key]) {
+                this.clientList[key] = [];
+            }
+            this.clientList[key].push(fn);
+        },
+        trigger: function() {
+            var key = Array.prototype.shift.call(arguments);
+            var fns = this.clientList[key];
+            if (!fns || fns.length === 0) {
+                return false;
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+        },
+        remove: function(key, fn) {
+            var fns = this.clientList[key];
+            if (!fns) {
+                return false;
+            }
+            if (!fn) {
+                fns && (fns.length = 0);
+            } else {
+                for (var l = fns.length - 1; l >= 0; l--) { // 反向遍历订阅的回调函数列表
+                    var _fn = fns[l];
+                    if (_fn === fn) {
+                        fns.splice(l, 1); // 删除订阅者的回调函数
+                    }
+                }
+            }
+        }
+    };
+
+
+    var cloneObj = function(sourceObject) {
+        var str, newObj = sourceObject.constructor === Array ? [] : {};
+        if (typeof sourceObject !== 'object') {
+            return;
+        } else {
+            for (var i in sourceObject) {
+                newObj[i] = typeof sourceObject[i] === 'object' ?
+                    cloneObj(sourceObject[i]) : sourceObject[i];
+            }
+        }
+        return newObj;
+    };
+
+
+
+    var salesOffices = cloneObj(event);
+
+    salesOffices.listen('squareMeter88', fn1 = function(price) { // 小明订阅售楼1 88平消息
+        console.log('售楼1通知小明价格= ' + price);
+    });
+    salesOffices.listen('squareMeter88', fn2 = function(price) { // 小周订阅售楼1 88平消息
+        console.log('售楼1通知小周价格= ' + price);
+    });
+    salesOffices.listen('squareMeter100', fn3 = function(price) { // 小红订阅售楼1 100平消息
+        console.log('售楼1通知小红价格= ' + price);
+    });
+
+    // 售楼1发布88平米的消息
+    salesOffices.trigger('squareMeter88', 20000); // 输出：20000
+    // 售楼1发布100平米的消息
+    salesOffices.trigger('squareMeter100', 30000); // 输出：20000
+    console.log("=======================");;
+
+    console.log("删除小明订阅售楼1");
+    salesOffices.remove('squareMeter88', fn1); // 删除小明的订阅
+
+    salesOffices.trigger('squareMeter88', 20000); // 输出：20000
+    salesOffices.trigger('squareMeter100', 30000); // 输出：20000
+
+
+    console.log("=======================");
+
+    var salesOffices2 = cloneObj(event);
+    salesOffices2.listen('squareMeter88', fn21 = function(price) { // 小明订阅售楼2 88平消息
+        console.log('售楼2通知小明价格= ' + price);
+    });
+    salesOffices2.listen('squareMeter88', fn22 = function(price) { // 小红订阅售楼2 100平消息
+        console.log('售楼2通知小红价格= ' + price);
+    });
+    // 发布88平米消息
+    salesOffices2.trigger('squareMeter88', 25000); // 输出：25000
+    console.log("=======================");;
+
+    console.log("删除小明订阅售楼2");
+    salesOffices2.remove('squareMeter88', fn21); // 删除小明的订阅
+
+    salesOffices2.trigger('squareMeter88', 35000); // 输出：35000
+    </script>
+</body>
+
+</html>

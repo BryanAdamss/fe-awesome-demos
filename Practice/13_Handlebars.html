@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+            </tr>
+        </thead>
+        <tbody id="tableList">
+        </tbody>
+    </table>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-4.0.5.js"></script>
+    <!--id可以用来唯一确定一个模版,type是模版固定的写法-->
+    <script id="table-template" type="text/x-handlebars-template">
+        {{#list nav}}
+        <a href="{{url}}">{{title}}</a>
+        {{/list}}
+    </script>
+    <script type="text/javascript">
+    var data = {
+        nav: [{
+            url: "https://yalishihzude.github.io",
+            title: "blog"
+        }, {
+            url: "https://www.github.com/yalishizhude",
+            title: "github"
+        }, ]
+    };
+
+    Handlebars.registerHelper('list', function(context, options) {
+        console.log(this);
+        var ret = "<ul>";
+        for (var i = 0, j = context.length; i < j; i++) {
+            ret = ret + "<li>" + options.fn(context[i]) + "</li>";
+            console.log(options.fn(context[i]));
+        }
+        return ret + "</ul>";
+    });
+
+
+    var dataTemple = Handlebars.compile($("#table-template").html());
+    var html = dataTemple(data);
+    $("#tableList").append(html);
+    </script>
+</body>
+
+</html>

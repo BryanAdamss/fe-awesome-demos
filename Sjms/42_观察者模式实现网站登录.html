@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>假如我们正在开发一个商城网站，网站里有header 头部、nav 导航、消息列表、购物车等模块。这几个模块的渲染有一个共同的前提条件，就是必须先用ajax异步请求获取用户的登录信息。 这是很正常的，比如用户的名字和头像要显示在header 模块里，而这两个字段都来自用户登录后返回的信息。至于ajax 请求什么时候能成功返回用户信息，这点我们没有办法确定</p>
+    <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="js/mock-min.js"></script>
+    <script type="text/javascript">
+    var event = {
+        clientList: {},
+        listen: function(key, fn) {
+            if (!this.clientList[key]) {
+                this.clientList[key] = [];
+            }
+            this.clientList[key].push(fn);
+        },
+        trigger: function() {
+            var key = Array.prototype.shift.call(arguments);
+            var fns = this.clientList[key];
+            if (!fns || fns.length === 0) {
+                return false;
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+        },
+        remove: function(key, fn) {
+            var fns = this.clientList[key];
+            if (!fns) {
+                return false;
+            }
+            if (!fn) {
+                fns && (fns.length = 0);
+            } else {
+                for (var l = fns.length - 1; l >= 0; l--) { // 反向遍历订阅的回调函数列表
+                    var _fn = fns[l];
+                    if (_fn === fn) {
+                        fns.splice(l, 1); // 删除订阅者的回调函数
+                    }
+                }
+            }
+        }
+    };
+    var cloneObj = function(sourceObject) {
+        var str, newObj = sourceObject.constructor === Array ? [] : {};
+        if (typeof sourceObject !== 'object') {
+            return;
+        } else {
+            for (var i in sourceObject) {
+                newObj[i] = typeof sourceObject[i] === 'object' ?
+                    cloneObj(sourceObject[i]) : sourceObject[i];
+            }
+        }
+        return newObj;
+    };
+    // 使用 Mock模拟数据
+    Mock.setup({
+        timeout: '500-1000'
+    });
+    Mock.mock('http://test.cn', {
+        "userName": "@cname",
+        "sex|1": ["男", "女"],
+        "avator": Mock.Random.image('100x100', '#894FC4', '#FFF', 'png', '头像'),
+        "test|1-3": 3
+    });
+    // 模拟请求
+    $.ajax({
+        url: 'http://test.cn',
+        dataType: 'json'
+    }).done(function(data, status, xhr) {
+        // 请求成功，触发登录成功
+        login.trigger("loginSucc", data);
+    });
+
+    var login = cloneObj(event);
+
+    var header = (function() {
+        // 订阅登录的登录成功消息
+        login.listen("loginSucc", function(data) {
+            header.setAvator(data.avator);
+        });
+        return {
+            setAvator: function(data) {
+                console.log("设置Header模块头像");
+            }
+        }
+    })();
+    var nav = (function() {
+        login.listen("loginSucc", function(data) {
+            nav.setAvator(data.avator);
+        });
+        return {
+            setAvator: function(data) {
+                console.log("设置Nav模块头像");
+            }
+        }
+    })();
+    </script>
+</body>
+
+</html>

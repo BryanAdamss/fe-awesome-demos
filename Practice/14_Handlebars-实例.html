@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    table {
+        border-collapse: collapse;
+        margin: 20px 0;
+        width: 100%;
+    }
+    
+    th,
+    td {
+        border: 1px solid #ccc;
+        text-align: center;
+        padding: 4px;
+    }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>出生年月</th>
+                <th>年龄</th>
+                <th>专业</th>
+                <th colspan="2">兴趣</th>
+                <th>testPath</th>
+                <th>testLookup</th>
+                <th colspan="4">老师</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+    <button>获取数据</button>
+    <pre>
+        Handlebars
+            表达式
+                {{}}
+                {{{}}}因为{{}}默认会进行HTML转义,将<转换为&lt;,通过三括号可以避免
+            Helper
+                默认Helper
+                    {{#if a}}如果a为真执行这个{{/if}}
+                    {{#else}}否则执行这个{{/else}}
+
+                    {{#unless a}}当a为假的时候执行这个{{/unless}}
+
+                    {{#each obj}}遍历obj的每个属性{{/each}}
+                        #each内可以用{{@index}}获取当前遍历的索引值，用{{@key}}获取当前属性的属性名，用{{this}}可以获当前属性的值
+                        如何获取父对象
+                            可以通过{{../父对象某属性}}来获取父对象的某个属性，{{@../index}}获取父对象当前的所引值
+
+                    {{#with obj}}xxx{{/with}}类似js中with，可改变作作用域，在each中也可通过#with来访问父对象
+
+                    {{lookup xxx}}一般用来按照索引来找兄弟变量对应的值{{lookup ../父对象某属性 @index}}，查找父对象在当前索引下值
+
+                自定义Helper
+                    行级Helper
+                        语法{{helperName [普通值参数] [hash值参数]}}
+                            {{customHelper "My Text" class="my-class" visible=true counter=4}}
+
+                                Handlebars.registerHelper('customHelper', function() {
+                                    console.log(arguments[0]);//==>"My Text"
+                                    console.log(arguments[1].hash);//==>{class:"my-class",visible:true,conter:4}
+                                });
+
+                    块级Helper
+                        语法{{#helperName context [普通值参数] [hash值参数]}}xxxxxxxxx{{/helperName}}
+                            options是默认传进去的，他有fn和inverse两个函数主要配合{{else}}使用
+                            {{#customHelper nav "normalValue" class="my-class" visible=true counter=4}}
+                                {{if name}}aaaaaa{{else}}bbbbbbb{{/if}}
+                            {{/customHelper}}
+
+                                Handlebars.registerHelper('customHelper', function(context,options) {
+                                    console.log(arguments[0]);//==>context
+                                    console.log(arguments[1]);//==>normalValue
+                                    console.log(arguments[2]);//==>options
+                                    //说明在registerHelper内部,第二个参数匿名函数,只会存在3个实参，第一个为当前使用的上下文，第二个如果有则为一个普通值参数，另外一个就是封装了函数相关信息的options对象，它有hash(封装好一个或多个键值对参数)、fn(传入一个上下文，并在此上下文中执行customHelper模板中的{{#if}}到{{else}}中的模板)、inverse(同fn相反执行{{else}}到{{/if}}之间的)、name、data等属性的
+                                });
+
+            partial(局部模板，可用来制作公用的header和footer)
+                注册
+                    Handlebars.registerPartial(partial名 [,参数])
+                调用
+                    {{> partial名}}
+                动态调用partial
+                    {{> (fn)}} 只要这个fn函数返回一个partial名即可
+                partial执行时
+                    可传入参数(key=value形式传入)
+                        {{> partial名 parameter=value }}
+                    可改变执行环境
+                        {{> partial名 执行环境}}
+                partialBlock
+                    {{#> myPartial }}
+                         myPartial不存在时，我才会被看见
+                    {{/myPartial}}
+    </pre>
+    <script type="text/x-handlebars-template" id="tpl">
+        {{#if hasStudent}} {{#each student}}
+        <tr>
+            <td>{{addOne @index}}</td>
+            <td>{{name}}</td>
+            <td>{{sex}}</td>
+            <td>{{birth}}</td>
+            <td>{{age}}</td>
+            <td>{{major}}</td>
+            {{#each fav}}
+            <td>{{this}}</td>
+            {{/each}}
+            <td>{{../pathTest}}</td>
+            <td>{{lookup ../testArr @index}}</td>
+            {{#with ../teacher}} {{#each this}}
+            <td>{{name}}</td>
+            <td>
+                {{{blog}}}
+            </td>
+            {{/each}} {{/with}}
+        </tr>
+        {{/each}} {{/if}}
+    </script>
+    <script type="text/javascript " src="js/jquery.min.js "></script>
+    <script type="text/javascript " src="js/handlebars-4.0.5.js "></script>
+    <script type="text/javascript">
+    var data = {
+        "hasStudent": true,
+        "pathTest": false,
+        "testArr": ["a", "b", "c"],
+        "student": [{
+            "name": "a",
+            "sex": "男",
+            "birth": "1912-3-5",
+            "age": 18,
+            "major": "土木",
+            "fav": ["羽毛球ss", "乒乓球sss"]
+
+        }, {
+            "name": "b",
+            "sex": "女",
+            "birth": "1911-4-3",
+            "age": 13,
+            "major": "计算机",
+            "fav": ["羽毛球", "乒乓球"]
+        }],
+        "teacher": [{
+            "name": "老师aaaa",
+            "sex": "男x",
+            "birth": "1912-3-5",
+            "age": 150,
+            "major": "土木",
+            "fav": ["羽毛球vbbbvs", "乒乓球cxvxcv"],
+            "blog": "<a href='http://www.baidu.com'>blog</a>"
+        }, {
+            "name": "老师baabbbbb",
+            "sex": "女",
+            "birth": "1911-4-3",
+            "age": 180,
+            "major": "计算机",
+            "fav": ["羽毛球0202", "乒乓球asdasd"],
+            "blog": "<a href='http://www.ah122.cn'>blog</a>"
+        }]
+    };
+
+    Handlebars.registerHelper("addOne", function(index) {
+        return parseInt(index) + 1;
+    });
+    var Tpl = Handlebars.compile($("#tpl").html());
+    $("button").on("click", function() {
+        var html = Tpl(data);
+        $("#tbody").append(html);
+    });
+    </script>
+</body>
+
+</html>

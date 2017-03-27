@@ -1,0 +1,107 @@
+// 无向图
+
+/*graph graphname {
+    rankdir=LR;  //设置图像从左往右
+    a -- b--e; 
+    b -- c;
+    b -- d;
+    d -- a;
+}
+*/
+
+// 有向图
+
+/*digraph graphname{
+	a->b
+	b->c
+	a->c
+}
+*/
+
+// 带标签的简单有向图
+
+/*digraph graphname{
+    T [label="Teacher"]      // node T
+    P [label="Pupil"]  // node P
+
+    T->P [label="Instructions", fontcolor=darkgreen] // edge T->P
+}
+*/
+
+// 同样的图，不同的形状和颜色
+
+/*digraph graphname {
+    T [label="Teacher" color=Blue, fontcolor=Red, fontsize=24, shape=box]      // node T
+    P [label="Pupil" color=Blue, fontcolor=Red, fontsize=24, shape=box]  // node P
+
+    T->P [label="Instructions", fontcolor=darkgreen] // edge T->P
+}*/
+
+// 词法分析图
+
+/*digraph G {
+    edge[fontname="Microsoft YaHei"];
+    node[shape=box,
+    fontname="Microsoft YaHei" size="20,20"];
+    {
+        Lexical_Analyzer[label="词法分析器"];
+        Syntax_Analyzer[label="语法分析器"];
+        Semantic_Analyzer[label="语义分析"];
+        Intermediate_Code_Generator[label="中间代码生成器"];
+        Machine_Independent_Code_Optimizer[label="机器无关代码优化器"];
+        Code_Generator[label="代码生成器"];
+        Machine_Dependent_Code_Optimizer[label="机器相关代码优化器"];
+    }
+    node[shape=plaintext,
+    fontname="Microsoft YaHei"] {
+        character_stream[label="字符流"];
+        target_machine_code[label="目标机器语言"];
+    }
+    character_stream -> Lexical_Analyzer;
+    Lexical_Analyzer -> Syntax_Analyzer[label="符号流"];
+    Syntax_Analyzer -> Semantic_Analyzer[label="语法树"];
+    Semantic_Analyzer -> Intermediate_Code_Generator[label="语法树"];
+    Intermediate_Code_Generator -> Machine_Independent_Code_Optimizer[label="中间表示形式"];
+    Machine_Independent_Code_Optimizer -> Code_Generator[label="中间表示形式"];
+    Code_Generator -> Machine_Dependent_Code_Optimizer[label="目标机器语言"];
+    Machine_Dependent_Code_Optimizer -> target_machine_code;
+}
+*/
+
+graph G {
+    // 设置当前图和子图的属性
+    fontname="Microsoft JhengHei";
+    fontsize=20;
+    label="图";
+    fontcolor=blue;
+    //设置当前大括号范围内所有节点和边的属性，包含子图里面节点和边，类css中标签选择器
+    node[fontname="Microsoft JhengHei",fontsize=16];
+    edge[fontname="Microsoft JhengHei",fontsize=16];
+    // 可针对某一类节点设置属性，类css中class选择器
+    "黑海"[fontcolor="pink",style ="filled",fillcolor = "black"];
+
+    "黑海" -- "亚速海";
+    "黑海" -- "博斯普鲁斯海峡";
+    "达达尼尔海峡" -- "爱琴海";
+
+    // 子图，用subgraph声明，并图名字前缀必须是cluster_否则识别失败；子图和父图的类型必须一致，父图是无向则子图也必须是无向，不能是有向
+    subgraph cluster_T {
+    	// 设置子图的label属性，它的颜色继承父图的fontcolor=blue
+        label="黑海海峡";
+        "达达尼尔海峡" -- "马尔马拉海" -- "博斯普鲁斯海峡";
+    }
+
+    subgraph cluster_M {
+        label="黑海海峡";
+        // 一对多，空格分隔
+        "中部地中海" -- {
+            "爱琴海" "爱奥尼亚海" "西西里海峡"
+        };
+        // 一对多，并设置每对都有一个label标签说明，并把字体颜色设置为red，线条颜色设置为yellow
+        "西部地中海" -- {
+            "西西里海峡" "第勒尼安海" "利古里亚海" "伊比利海" "阿尔沃兰海"
+        }[label="标签说明",fontcolor="red",color="yellow"];
+        "爱奥尼亚海" -- "亚得里亚海";
+        "阿尔沃兰海" -- "直布罗陀海峡";
+    }
+}
