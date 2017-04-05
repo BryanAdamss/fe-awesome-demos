@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 在面向对象的程序设计中，开放-封闭原则（OCP）是最重要的一条原则
+    // 软件实体（类、模块、函数）等应该是可以扩展的，但是不可修改。(进行扩展，但不能修改源代码->保留源码基础上增加代码)
+    // 开放-封闭原则的思想：当需要改变一个程序的功能或者给这个程序增加新功能的时候，可以使用增加代码的方式，但是不允许改动程序的源代码。
+    // 挑选出最容易发生变化的地方，然后构造抽象来封闭这些变化。在不可避免发生修改的时候，尽量修改那些相对容易修改的地方。
+    // 发布-订阅、模板方法、策略、代理、职责链等模式都有体现
+
+    // 过多的条件分支语句是造成程序违反开放-封闭原则的一个常见原因。每当需要增加一个新的if时，就必须修改源代码。
+    // 当看到很多if时，应考虑能否使用对象的多态性来重构(找出变化部分，将其封装起来，这样就可以将变化的和稳定的隔离开来)
+
+    // 反例，很多if，违反开放-封闭原则
+    // var makeSound = function(animal) {
+    //     if (animal instanceof Duck) {
+    //         console.log('嘎嘎嘎');
+    //     } else if (animal instanceof Chicken) {
+    //         console.log('咯咯咯');
+    //     }
+    // };
+    // var Duck = function() {};
+    // var Chicken = function() {};
+    // makeSound(new Duck()); // 输出：嘎嘎嘎
+    // makeSound(new Chicken()); // 输出：咯咯咯
+
+    // 利用多态的思想，我们把程序中不变的部分隔离出来（动物都会叫），然后把可变的部分封装起来（不同类型的动物发出不同的叫声），这样一来程序就具有了可扩展性。当我们想让一只狗发出叫声时，只需增加一段代码即可，而不用去改动原有的makeSound 函数
+    var makeSound = function(animal) {
+        animal.sound();
+    };
+    var Duck = function() {};
+    Duck.prototype.sound = function() {
+        console.log('嘎嘎嘎');
+    };
+    var Chicken = function() {};
+    Chicken.prototype.sound = function() {
+        console.log('咯咯咯');
+    };
+    makeSound(new Duck()); // 嘎嘎嘎
+    makeSound(new Chicken()); // 咯咯咯
+    /********* 增加动物狗，不用改动原有的makeSound 函数 ****************/
+    var Dog = function() {};
+    Dog.prototype.sound = function() {
+        console.log('汪汪汪');
+    };
+    makeSound(new Dog()); // 汪汪汪
+
+    // 实现开放-封闭原则的其他方法:放置钩子见52、使用回调(特殊钩子)
+    </script>
+</body>
+
+</html>

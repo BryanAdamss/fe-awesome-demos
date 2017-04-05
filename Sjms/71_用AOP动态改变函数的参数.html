@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 1,2公用了arguments，所以可以在1中将arguments改变
+    Function.prototype.before = function(beforefn) {
+        var __self = this;
+        return function() {
+            beforefn.apply(this, arguments); // (1)
+            return __self.apply(this, arguments); // (2)
+        }
+    };
+    var func = function(param) {
+        console.log(param); // 输出： {a: "a", b: "b"}
+    }
+    func = func.before(function(param) {
+        param.b = 'b';
+    });
+    func({
+        a: 'a'
+    });
+    </script>
+</body>
+
+</html>

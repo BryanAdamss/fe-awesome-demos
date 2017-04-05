@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 装饰函数->为函数添加功能
+
+    // 最low的添加功能，直接改写原函数
+    // var a = function() {
+    //     alert(1);
+    // };
+
+    // var a = function() {
+    //     alert(1);
+    //     alert(2);
+    // };
+
+    // 保存原函数的引用，这种方法必须得维护_a这个中间量，如果装饰链过长或要装饰的函数过多，中间量就会变的很多;还会出现this劫持问题
+    // var a = function() {
+    //     alert(1);
+    // };
+    // var _a = a;
+    // a = function() {
+    //     _a();
+    //     alert(2);
+    // };
+    // a();
+
+    // 上面方法会出现下面的this劫持问题
+    // var _getElementById = document.getElementById;
+    // document.getElementById = function(id) {
+    //     alert(1);
+    //     return _getElementById(id); // (1)
+    // }
+    // var button = document.getElementById('button'); // error
+    // 报错原因是getElementById内部是要用到this,调用_getElementById时this是指向window而不是document，所以会报错
+
+    // 为解决上面问题，可以将document动态传入
+    var _getElementById = document.getElementById;
+    document.getElementById = function() {
+        alert(1);
+        return _getElementById.apply(document, arguments);
+    }
+    var button = document.getElementById('button');
+    </script>
+</body>
+
+</html>

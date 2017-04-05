@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 组合模式:组合模式就是用小的子对象来构建更大的对象，而这些小的子对象本身也许是由更小的“孙对象”构成的。
+    // 组合模式将对象组合成树形结构，以表示“部分-整体”的层次结构。组合模式可以非常方便地描述对象部分-整体层次结构。 除了用来表示树形结构之外，组合模式的另一个好处是通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有一致性。利用对象多态性统一对待组合对象和单个对象。利用对象的多态性表现，可以使客户端忽略组合对象和单个对象的不同。在组合模式中，客户将统一地使用组合结构中的所有对象，而不需要关心它究竟是组合对象还是单个对象。
+    // 使用场景:表示对象的部分-整体层次结构。组合模式可以方便地构造一棵树来表示对象的部分-整体结构。特别是我们在开发期间不确定这棵树到底存在多少层次的时候。在树的构造最终完成之后，只需要通过请求树的最顶层对象，便能对整棵树做统一的操作。在组合模式中增加和删除树的节点非常方便，并且符合开放-封闭原则;客户希望统一对待树中的所有对象。组合模式使客户可以忽略组合对象和叶对象的区别，客户在面对这棵树的时候，不用关心当前正在处理的对象是组合对象还是叶对象，也就不用写一堆if、else语句来分别处理它们。组合对象和叶对象会各自做自己正确的事情，这是组合模式最重要的能力。
+    // 使用举例:扫描文件夹,文件夹和文件之间的关系，非常适合用组合模式来描述。文件夹里既可以包含文件，又可以包含其他文件夹
+
+    /***************文件夹*******************/
+    var Folder = function(name) {
+        this.name = name;
+        this.files = [];
+    };
+    Folder.prototype.add = function(file) {
+        this.files.push(file);
+    };
+    Folder.prototype.scan = function() {
+        console.log("开始扫描文件夹:" + this.name);
+        for (var i = 0, file, files = this.files; file = files[i++];) {
+            file.scan();
+        }
+    };
+    /*****************文件*******************/
+    var File = function(name) {
+        this.name = name;
+    };
+    File.prototype.add = function() {
+        throw new Error("文件下面不能再添加文件");
+    };
+    File.prototype.scan = function() {
+        console.log("开始扫描文件:" + this.name);
+    };
+    /****创建文件夹及文件****/
+    var folder = new Folder('学习资料');
+    var folder1 = new Folder('JavaScript');
+    var folder2 = new Folder('jQuery');
+    var file1 = new File('JavaScript 设计模式与开发实践');
+    var file2 = new File('精通jQuery');
+    var file3 = new File('重构与模式')
+    folder1.add(file1);
+    folder2.add(file2);
+    folder.add(folder1);
+    folder.add(folder2);
+    var folder3 = new Folder('Nodejs');
+    var file4 = new File('深入浅出Node.js');
+    folder3.add(file4);
+    var file5 = new File('JavaScript 语言精髓与编程实践');
+    folder.add(folder3);
+    folder.add(file5);
+    /****扫描文件夹****/
+    folder.scan();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // before,after返回的实际上是一个新函数，所以原先保存在函数上的属性会丢失;这种装饰方式也叠加了函数的作用域，如果装饰的链条过长，性能上也会受到一些影响。
+    Function.prototype.after = function(afterfn) {
+        var __self = this;
+        return function() {
+            var ret = __self.apply(this, arguments);
+            afterfn.apply(this, arguments);
+            return ret;
+        }
+    };
+    var func = function() {
+        alert(1);
+    }
+    func.a = 'a';
+    func = func.after(function() {
+        alert(2);
+    });
+    alert(func.a); // 输出：undefined
+
+    // 代理模式和装饰者模式的不同
+    // 代理模式和装饰者模式最重要的区别在于它们的意图和设计目的。代理模式的目的是，当直接访问本体不方便或者不符合需要时，为这个本体提供一个替代者。本体定义了关键功能，而代理提供或拒绝对它的访问，或者在访问本体之前做一些额外的事情。装饰者模式的作用就是为对象动态加入行为。换句话说，代理模式强调一种关系（Proxy 与它的实体之间的关系），这种关系可以静态的表达，也就是说，这种关系在一开始就可以被确定。而装饰者模式用于一开始不能确定对象的全部功能时。代理模式通常只有一层代理本体的引用，而装饰者模式经常会形成一条长长的装饰链。
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 状态模式是状态机的实现之一，但在JavaScript 这种“无类”语言中，没有规定让状态对象一定要从类中创建而来。另外一点，JavaScript 可以非常方便地使用委托技术，并不需要事先让一个对象持有另一个对象。下面的状态机选择了通过Function.prototype.call 方法直接把请求委托给某个字面量对象来执行。
+
+    // 改写灯泡
+    var Light = function() {
+        this.currState = FSM.off; // 设置当前状态
+        this.button = null;
+    };
+    Light.prototype.init = function() {
+        var button = document.createElement("button"),
+            self = this;
+        button.innerHTML = "已关灯";
+        this.button = document.body.appendChild(button);
+        this.button.onclick = function() {
+            self.currState.buttonWasPressed.call(self); // 把请求委托给FSM状态机
+        };
+    };
+    var FSM = {
+        off: {
+            buttonWasPressed: function() {
+                console.log('关灯');
+                this.button.innerHTML = '下一次按我是开灯';
+                this.currState = FSM.on;
+            }
+        },
+        on: {
+            buttonWasPressed: function() {
+                console.log('开灯');
+                this.button.innerHTML = '下一次按我是关灯';
+                this.currState = FSM.off;
+            }
+        }
+    };
+    var light = new Light();
+    light.init();
+    </script>
+</body>
+
+</html>

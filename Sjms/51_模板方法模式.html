@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 模板方法模式:一种基于继承的设计模式
+    // 构成:第一部分是抽象父类，第二部分是具体的实现子类;通常在抽象父类中封装了子类的算法框架，包括实现一些公共方法以及封装子类中所有方法的执行顺序。子类通过继承这个抽象类，也继承了整个算法结构，并且可以选择重写父类的方法;父类封装了子类的算法框架和方法的执行顺序，子类继承父类之后，父类通知子类执行这些方法，好莱坞原则很好地诠释了这种设计技巧，即高层组件调用底层组件。
+    // 使用场景:从大的方面来讲，模板方法模式常被架构师用于搭建项目的框架，架构师定好了框架的骨架，程序员继承框架的结构之后，负责往里面填空。
+    // 在Web 开发中也能找到很多模板方法模式的适用场景
+    // 比如我们在构建一系列的UI 组件这些组件的构建过程一般如下所示：
+    // (1) 初始化一个div 容器；
+    // (2) 通过ajax 请求拉取相应的数据；
+    // (3) 把数据渲染到div 容器里面，完成组件的构造；
+    // (4) 通知用户组件渲染完毕。
+    // 我们看到， 任何组件的构建都遵循上面的4步，其中第(1)步和第(4)步是相同的。第(2)步不同的地方只是请求ajax的远程地址，第(3)步不同的地方是渲染数据的方式。于是我们可以把这4个步骤都抽象到父类的模板方法里面，父类中还可以顺便提供第(1)步和第(4)步的具体实现。当子类继承这个父类之后，会重写模板方法里面的第(2)步和第(3)步。
+    // 使用举例:泡咖啡和泡茶
+    // 泡咖啡
+    // (1) 把水煮沸
+    // (2) 用沸水冲泡咖啡
+    // (3) 把咖啡倒进杯子
+    // (4) 加糖和牛奶
+    // 泡茶
+    // (1) 把水煮沸
+    // (2) 用沸水浸泡茶叶
+    // (3) 把茶水倒进杯子
+    // (4) 加柠檬
+    // 二者基本步骤是相同，不同的地方有
+    // 原料不同。一个是咖啡，一个是茶，但我们可以把它们都抽象为“饮料”。
+    // 泡的方式不同。咖啡是冲泡，而茶叶是浸泡，我们可以把它们都抽象为“泡”。
+    // 加入的调料不同。一个是糖和牛奶，一个是柠檬，但我们可以把它们都抽象为“调料”。
+    // 抽象之后
+    // (1) 把水煮沸
+    // (2) 用沸水冲泡饮料
+    // (3) 把饮料倒进杯子
+    // (4) 加调料
+
+    // 抽象父类-饮料类
+    var Beverage = function() {};
+    // 烧水
+    Beverage.prototype.boilWater = function() {
+        console.log("把水煮沸");
+    };
+    // 泡
+    Beverage.prototype.brew = function() {
+        throw new Error('子类必须重写brew方法');
+    }; // 空方法，应该由子类重写，若子类忘记重写，可在父类上添加一个错误提醒信息
+    // 倒入杯子
+    Beverage.prototype.pourInCup = function() {
+        throw new Error('子类必须重写pourInCup方法');
+    }; // 空方法，应该由子类重写
+    // 加调料
+    Beverage.prototype.addCondiments = function() {
+        throw new Error('子类必须重写addCondiments方法');
+    }; // 空方法，应该由子类重写
+    Beverage.prototype.init = function() {
+        this.boilWater();
+        this.brew();
+        this.pourInCup();
+        this.addCondiments();
+    };
+    // 抽象子类-coffee
+    var Coffee = function() {};
+    // 继承饮料类
+    Coffee.prototype = new Beverage();
+    // 重写泡、倒入杯子、加调料方法
+    Coffee.prototype.brew = function() {
+        console.log('用沸水冲泡咖啡');
+    };
+    Coffee.prototype.pourInCup = function() {
+        console.log('把咖啡倒进杯子');
+    };
+    Coffee.prototype.addCondiments = function() {
+        console.log('加糖和牛奶');
+    };
+    // coffee实例
+    var Coffee = new Coffee();
+    Coffee.init();
+    // 抽象子类-tea
+    var Tea = function() {};
+    Tea.prototype = new Beverage();
+    Tea.prototype.brew = function() {
+        console.log('用沸水浸泡茶叶');
+    };
+    Tea.prototype.pourInCup = function() {
+        console.log('把茶倒进杯子');
+    };
+    Tea.prototype.addCondiments = function() {
+        console.log('加柠檬');
+    };
+    var tea = new Tea();
+    tea.init();
+    // 上面Beverage.prototype.init 被称为模板方法。该方法中封装了子类的算法框架，它作为一个算法的模板，指导子类以何种顺序去执行哪些方法
+    </script>
+</body>
+
+</html>

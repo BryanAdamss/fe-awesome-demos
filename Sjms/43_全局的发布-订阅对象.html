@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    <button id="count">点我</button>
+    <div id="show"></div>
     <script type="text/javascript">
     var Event = (function() {
         var clientList = {},
@@ -53,6 +55,22 @@
         console.log('价格= ' + price); // 输出：'价格=2000000'
     });
     Event.trigger('squareMeter88', 2000000); // 售楼处发布消息
+
+    // 利用全局的发布-订阅对象，可以实现模块间的通信
+    // 点击按钮，div中显示总的点击次数
+    var a = (function() {
+        var count = 0;
+        var button = document.getElementById("count");
+        button.onclick = function() {
+            Event.trigger("add", count++);
+        };
+    })();
+    var b = (function() {
+        var div = document.getElementById("show");
+        Event.listen("add", function(count) {
+            div.innerHTML = count;
+        });
+    })();
     </script>
 </body>
 

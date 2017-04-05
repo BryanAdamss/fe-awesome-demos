@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 适配器模式:适配器模式的作用是解决两个软件实体间的接口不兼容的问题,它不考虑这些接口是怎样实现的，也不考虑它们将来可能会如何演化。适配器模式不需要改变已有的接口，就能够使它们协同作用。使用适配器模式之后，原本由于接口不兼容而不能工作的两个软件实体可以一起工作。
+    // 使用场景:当两个接口不一样时，可以采用亡羊补牢的方式实现一个适配器，来提供一个统一的接口
+    // 使用举例:百度谷歌地图提供的展示地图的API不同，一个show,一个display
+    var googleMap = {
+        show: function() {
+            console.log('开始渲染谷歌地图');
+        }
+    };
+    var baiduMap = {
+        display: function() {
+            console.log('开始渲染百度地图');
+        }
+    };
+    var baiduMapAdapter = {
+        show: function() {
+            return baiduMap.display();
+        }
+    };
+    renderMap(googleMap); // 输出：开始渲染谷歌地图
+    renderMap(baiduMapAdapter); // 输出：开始渲染百度地图
+    </script>
+</body>
+
+</html>

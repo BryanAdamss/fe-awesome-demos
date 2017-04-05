@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>选择颜色:
+    <select id="colorSelect">
+        <option value="">请选择</option>
+        <option value="red">红色</option>
+        <option value="blue">蓝色</option>
+    </select>
+    选择内存:
+    <select id="memorySelect">
+        <option value="">请选择</option>
+        <option value="32G">32G</option>
+        <option value="16G">16G</option>
+    </select>
+    输入购买数量:
+    <input type="text" id="numberInput" />
+    <br/> 您选择了颜色:
+    <div id="colorInfo"></div>
+    <br/> 您选择了内存:
+    <div id="memoryInfo"></div>
+    <br/> 您输入了数量:
+    <div id="numberInfo"></div>
+    <br/>
+    <button id="nextBtn" disabled="true">请选择手机颜色和购买数量</button>
+    <script>
+    // 假设我们正在编写一个手机购买的页面，在购买流程中，可以选择手机的颜色以及输入购买数量，同时页面中有两个展示区域，分别向用户展示刚刚选择好的颜色和数量。还有一个按钮动态显示下一步的操作，我们需要查询该颜色手机对应的库存，如果库存数量少于这次的购买数量，按钮将被禁用并且显示库存不足，反之按钮可以点击并且显示放入购物车。
+    var colorSelect = document.getElementById('colorSelect'),
+        numberInput = document.getElementById('numberInput'),
+        colorInfo = document.getElementById('colorInfo'),
+        numberInfo = document.getElementById('numberInfo'),
+        nextBtn = document.getElementById('nextBtn');
+    var goods = { // 手机库存
+        "red|32G": 3, // 红色32G，库存数量为3
+        "red|16G": 0,
+        "blue|32G": 1,
+        "blue|16G": 6
+    };
+    colorSelect.onchange = function() {
+        var color = this.value,
+            memory = memorySelect.value,
+            stock = goods[color + '|' + memory];
+        number = numberInput.value, // 数量
+            colorInfo.innerHTML = color;
+        if (!color) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择手机颜色';
+            return;
+        }
+        if (!memory) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择内存大小';
+            return;
+        }
+        if (!(/^[0-9]*[1-9][0-9]*$/).test(number)) { // 输入购买数量是否为正整数
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请输入正确的购买数量';
+            return;
+        }
+        if (number > stock) { // 当前选择数量没有超过库存量
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '库存不足';
+            return;
+        }
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = '放入购物车';
+    };
+    numberInput.oninput = function() {
+        var color = colorSelect.value, // 颜色
+            number = this.value, // 数量
+            memory = memorySelect.value,
+            stock = goods[color + '|' + memory];
+        number = numberInput.value, // 数量
+            numberInfo.innerHTML = number;
+        if (!color) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择手机颜色';
+            return;
+        }
+        if (!memory) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择内存大小';
+            return;
+        }
+        if (!(/^[0-9]*[1-9][0-9]*$/).test(number)) { // 输入购买数量是否为正整数
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请输入正确的购买数量';
+            return;
+        }
+        if (number > stock) { // 当前选择数量没有超过库存量
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '库存不足';
+            return;
+        }
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = '放入购物车';
+    };
+    memorySelect.onchange = function() {
+        var color = colorSelect.value, // 颜色
+            number = numberInput.value, // 数量
+            memory = this.value,
+            stock = goods[color + '|' + memory]; // 该颜色手机对应的当前库存
+        memoryInfo.innerHTML = memory;
+        if (!color) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择手机颜色';
+            return;
+        }
+        if (!memory) {
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请选择内存大小';
+            return;
+        }
+        if (!(/^[0-9]*[1-9][0-9]*$/).test(number)) { // 输入购买数量是否为正整数
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '请输入正确的购买数量';
+            return;
+        }
+        if (number > stock) { // 当前选择数量没有超过库存量
+            nextBtn.disabled = true;
+            nextBtn.innerHTML = '库存不足';
+            return;
+        }
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = '放入购物车';
+    };
+    // 上面的方式，每个对象都耦合在一起，当修改一个地方，需要在每个事件里同步修改，非常不利于维护。
+    </script>
+</body>
+
+</html>

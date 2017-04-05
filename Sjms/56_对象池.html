@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 对象池跟享元模式的思想有点相似,虽然innerHTML 的值A、B、C、D 等也可以看成节点的外部状态，但在这里我们并没有主动分离内部状态和外部状态的过程。
+    var toolTipFactory = (function() {
+        var toolTipPool = [];
+        return {
+            create: function() {
+                if (toolTipPool.length === 0) {
+                    // 对象池为空则创建一个div
+                    var div = document.createElement("div");
+                    document.body.appendChild(div);
+                    return div;
+                } else {
+                    // 不为空则取出一个
+                    return toolTipPool.shift();
+                }
+            },
+            recover: function(tooltipDom) {
+                // 对象池回收dom
+                return toolTipPool.push(tooltipDom);
+            }
+        };
+    })();
+    // 创建2个小气泡
+    var ary = [];
+    for (var i = 0, str; str = ["A", "B"][i++];) {
+        var toolTip = toolTipFactory.create();
+        toolTip.innerHTML = str;
+        ary.push(toolTip);
+    }
+    console.log(ary);
+    // 地图需要重绘，所以先回收之前创建的2个气泡
+    for (var i = 0, toolTip; toolTip = ary[i++];) {
+        toolTipFactory.recover(toolTip);
+    };
+    // 创建6个气泡
+    for (var i = 0, str; str = ['A', 'B', 'C', 'D', 'E', 'F'][i++];) {
+        var toolTip = toolTipFactory.create();
+        toolTip.innerHTML = str;
+    };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button1">点击按钮1</button>
+    <button id="button2">点击按钮2</button>
+    <button id="button3">点击按钮3</button>
+    <script>
+    // 命令模式:命令模式是最简单和优雅的模式之一，命令模式中的命令（command）指的是一个执行某些特定事情的指令。
+    // 使用场景:有时候需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是什么。此时希望用一种松耦合的方式来设计程序，使得请求发送者和请求接收者能够消除彼此之间的耦合关系。
+    // 使用举例:拿订餐来说，客人需要向厨师发送请求，但是完全不知道这些厨师的名字和联系方式，也不知道厨师炒菜的方式和步骤。 命令模式把客人订餐的请求封装成command 对象，也就是订餐中的订单对象。这个对象可以在程序中被四处传递，就像订单可以从服务员手中传到厨师的手中。这样一来，客人不需要知道厨师的名字，从而解开了请求调用者和请求接收者之间的耦合关系。
+
+    // 菜单程序
+    // 绘制按钮和点击按钮的具体行为分离
+    // 点击了按钮之后，必须向某些负责具体行为的对象发送请求，这些对象就是请求的接收者。但是目前并不知道接收者是什么对象，也不知道接收者究竟会做什么。此时我们需要借助命令对象的帮助，以便解开按钮和负责具体行为对象之间的耦合。
+
+    // // 传统面向对象语言中的命令模式
+    // var button1 = document.getElementById('button1'),
+    //     button2 = document.getElementById('button2'),
+    //     button3 = document.getElementById('button3');
+    // // 负责往按钮上安装命令
+    // var setCommand = function(button, command) {
+    //     button.onclick = function() {
+    //         command.execute();
+    //     };
+    // };
+    // var MenuBar = {
+    //     refresh: function() {
+    //         console.log('刷新菜单目录');
+    //     }
+    // };
+    // var SubMenu = {
+    //     add: function() {
+    //         console.log('增加子菜单');
+    //     },
+    //     del: function() {
+    //         console.log('删除子菜单');
+    //     }
+    // };
+    // // 构建命令
+    // var RefreshMenuBarCommand = function(receiver) {
+    //     this.receiver = receiver;
+    // };
+    // RefreshMenuBarCommand.prototype.execute = function() {
+    //     this.receiver.refresh();
+    // };
+    // var AddSubMenuCommand = function(receiver) {
+    //     this.receiver = receiver;
+    // };
+    // AddSubMenuCommand.prototype.execute = function() {
+    //     this.receiver.add();
+    // };
+    // var DelSubMenuCommand = function(receiver) {
+    //     this.receiver = receiver;
+    // };
+    // DelSubMenuCommand.prototype.execute = function() {
+    //     console.log('删除子菜单');
+    // };
+    // // 实例化命令
+    // var refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar);
+    // var addSubMenuCommand = new AddSubMenuCommand(SubMenu);
+    // var delSubMenuCommand = new DelSubMenuCommand(SubMenu);
+    // // 安装命令
+    // setCommand(button1, refreshMenuBarCommand);
+    // setCommand(button2, addSubMenuCommand);
+    // setCommand(button3, delSubMenuCommand);
+
+    // // 在js中使用闭包实现命令模式
+    // var button1 = document.getElementById('button1');
+    // var setCommand = function(button, func) {
+    //     button.onclick = function() {
+    //         func();
+    //     };
+    // }
+    // var MenuBar = {
+    //     refresh: function() {
+    //         console.log("刷新菜单界面");
+    //     }
+    // };
+    // var RefreshMenuBarCommand = function(receiver) {
+    //     return function() {
+    //         receiver.refresh();
+    //     };
+    // };
+    // var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar);
+    // setCommand(button1, refreshMenuBarCommand);
+
+    // 为了更明确的表达当前正在用命令模式，或者将来有可能提供撤销操作时，可以将执行函数改为调用execute方法
+    var RefreshMenuBarCommand = function(receiver) {
+        return {
+            execute: function() {
+                receiver.refresh();
+            }
+        }
+    };
+    var button1 = document.getElementById('button1');
+    var setCommand = function(button, command) {
+        button.onclick = function() {
+            command.execute();
+        };
+    };
+    var MenuBar = {
+        refresh: function() {
+            console.log("刷新菜单界面");
+        }
+    };
+    var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar);
+    setCommand(button1, refreshMenuBarCommand);
+    </script>
+</body>
+
+</html>

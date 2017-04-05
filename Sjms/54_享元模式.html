@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 享元模式:享元(flyweight)模式是一种用于性能优化的模式，“ fly” 在这里是苍蝇的意思， 意为蝇量级。 享元模式的核心是运用共享技术来有效支持大量细粒度的对象。
+
+    // 享元模式的目标是尽量减少共享对象的数量，享元模式要求将对象的属性划分为内部状态与外部状态（状态在这里通常指属性） ,关于如何划分内部状态和外部状态，下面的几条经验提供了一些指引。
+    // 内部状态存储于对象内部。
+    // 内部状态可以被一些对象共享。
+    // 内部状态独立于具体的场景，通常不会改变。
+    // 外部状态取决于具体的场景，并根据场景而变化，外部状态不能被共享。
+    // 我们便可以把所有内部状态相同的对象都指定为同一个共享的对象。而外部状态可以从对象身上剥离出来，并储存在外部。
+    // 剥离了外部状态的对象成为共享对象，外部状态在必要时被传入共享对象来组装成一个完整的对象。虽然组装外部状态成为一个完整对象的过程需要花费一定的时间，但却可以大大减少系统中的对象数量，相比之下，这点时间或许是微不足道的。因此，享元模式是一种用时间换空间的优化模式。
+
+    // 使用场景:
+    // 一个程序中使用了大量的相似对象。
+    // 由于使用了大量对象，造成很大的内存开销。
+    // 对象的大多数状态都可以变为外部状态。
+    // 剥离出对象的外部状态之后，可以用相对较少的共享对象取代大量对象。
+    // 使用举例:假设有个内衣工厂，目前的产品有50 种男式内衣和50 种女士内衣，为了推销产品，工厂决定生产一些塑料模特来穿上他们的内衣拍成广告照片。 
+
+
+    // 正常情况下需要50 个男模特和50个女模特，然后让他们每人分别穿上一件内衣来拍照
+    // var Model = function(sex, underwear) {
+    //     this.sex = sex;
+    //     this.underwear = underwear;
+    // };
+    // Model.prototype.takePhoto = function() {
+    //     console.log("sex=" + this.sex + ";underwear=" + this.underwear);
+    // };
+    // for (var i = 1; i <= 50; i++) {
+    //     var maleModel = new Model("male", "underwear" + i);
+    //     maleModel.takePhoto();
+    // }
+    // for (var j = 1; j <= 50; j++) {
+    //     var femaleModel = new Model("female", "underwear" + j);
+    //     femaleModel.takePhoto();
+    // }
+    // 这样会产生100个对象，如果有10000种内衣，则此程序会爆炸
+
+    // 优化，其实只要一个男模特、一个女模特，让他们分别试穿50件内衣然后拍照即可
+    var Model = function(sex) {
+        this.sex = sex;
+    };
+    Model.prototype.takePhoto = function() {
+        console.log("sex=" + this.sex + ";underwear=" + this.underwear);
+    };
+    var maleModel = new Model('male'),
+        femaleModel = new Model('female');
+    for (var i = 1; i <= 50; i++) {
+        maleModel.underwear = 'underwear' + i;
+        maleModel.takePhoto();
+    };
+    for (var j = 1; j <= 50; j++) {
+        femaleModel.underwear = 'underwear' + j;
+        femaleModel.takePhoto();
+    };
+    // 上例中性别是内部状态，内衣是外部状态
+    // 可以被对象共享的属性通常被划分为内部状态，如同不管什么样式的衣服，都可以按照性别不同，穿在同一个男模特或者女模特身上，模特的性别就可以作为内部状态储存在共享对象的内部。而外部状态取决于具体的场景，并根据场景而变化，就像例子中每件衣服都是不同的，它们不能被一些对象共享，因此只能被划分为外部状态。
+    </script>
+</body>
+
+</html>

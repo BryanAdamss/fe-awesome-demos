@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 通用的创建对象池的工厂
+    var objectPoolFactory = function(creactObjFn) {
+        var objectPool = [];
+        return {
+            create: function() {
+                var obj = objectPool.length === 0 ? creactObjFn.apply(this, arguments) : objectPool.shift();
+                return obj;
+            },
+            recover: function(obj) {
+                objectPool.push(obj);
+            }
+        };
+    };
+    var iframeFactory = objectPoolFactory(function() {
+        var iframe = document.createElement("iframe");
+        document.body.appendChild(iframe);
+        iframe.onload = function() {
+            // 防止iframe重复加载的bug
+            iframe.onload = null;
+            // 加载完成后回收节点，供下次使用
+            iframeFactory.recover(iframe);
+        };
+        return iframe;
+    });
+    var iframe1 = iframeFactory.create();
+    iframe1.src = 'http://www.baidu.com';
+    var iframe2 = iframeFactory.create();
+    iframe2.src = 'http://www.qq.com';
+    setTimeout(function() {
+        var iframe3 = iframeFactory.create();
+        iframe3.src = 'http://www.163.com';
+    }, 3000);
+    </script>
+</body>
+
+</html>

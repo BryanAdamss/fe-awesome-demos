@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 状态模式:允许一个对象在其内部状态改变时改变它的行为，对象看起来似乎修改了它的类。状态模式的关键是区分事物内部的状态，事物内部状态的改变往往会带来事物的行为改变。往往将状态封装成一个类，跟此状态有关的所有行为都被封装在这个类的内部
+    // 使用场景:程序有多种状态，并状态改变会影响其他行为时
+    // 使用举例:一个开关的两个状态(开、关)，将影响灯泡的状态
+    var Light = function() {
+        this.state = 'off'; // 给电灯设置初始状态off
+        this.button = null; // 电灯开关按钮
+    };
+    Light.prototype.init = function() {
+        var button = document.createElement('button'),
+            self = this;
+        button.innerHTML = '开关';
+        this.button = document.body.appendChild(button);
+        this.button.onclick = function() {
+            self.buttonWasPressed();
+        }
+    };
+    Light.prototype.buttonWasPressed = function() {
+        if (this.state === 'off') {
+            console.log('开灯');
+            this.state = 'on';
+        } else if (this.state === 'on') {
+            console.log('关灯');
+            this.state = 'off';
+        }
+    };
+    var light = new Light();
+    light.init();
+
+    //这个世界上的电灯并非只有一种。许多酒店里有另外一种电灯，这种电灯也只有一个开关，但它的表现是：第一次按下打开弱光，第二次按下打开强光，第三次才是关闭电灯
+    Light.prototype.buttonWasPressed = function() {
+        if (this.state === 'off') {
+            console.log('弱光');
+            this.state = 'weakLight';
+        } else if (this.state === 'weakLight') {
+            console.log('强光');
+            this.state = 'strongLight';
+        } else if (this.state === 'strongLight') {
+            console.log('关灯');
+            this.state = 'off';
+        }
+    };
+    // 上面的缺点
+    // buttonWasPressed方法违反了开放-封闭原则，每次新增或修改light的状态都需要改动buttonWasPressed方法
+    // 所有跟状态有关的行为都封装在了buttonWasPressed方法里，以后若需要修改可能会造成此方法的无限膨胀
+    // 状态的切换非常不明显，仅仅表现在对state变量的赋值，实际过程中可能会遗忘，也无法一目了然的知道总共有多少状态
+    // 状态之间的切换关系依靠if...else来切换，维护麻烦
+    </script>
+</body>
+
+</html>

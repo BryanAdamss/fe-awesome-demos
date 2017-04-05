@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button tag="login" id="button">点击打开登录浮层</button>
+    <script>
+    // 一般在业务完成后要要求添加上数据统计的功能
+
+    // 普通上报
+    // var showLogin = function() {
+    //     console.log('打开登录浮层');
+    //     log(this.getAttribute('tag'));
+    // }
+    // var log = function(tag) {
+    //     console.log('上报标签为: ' + tag);
+    //     // (new Image).src = 'http:// xxx.com/report?tag=' + tag; // 真正的上报代码略
+    // }
+    // document.getElementById('button').onclick = showLogin;
+    // showLogin既打开浮层又上报
+
+    // 使用AOP分离
+    Function.prototype.after = function(afterfn) {
+        var __self = this;
+        return function() {
+            var ret = __self.apply(this, arguments);
+            afterfn.apply(this, arguments);
+            return ret;
+        }
+    };
+    var showLogin = function() {
+        console.log('打开登录浮层');
+    };
+    var log = function() {
+        console.log('上报标签为: ' + this.getAttribute('tag'));
+    };
+    showLogin = showLogin.after(log); // 打开登录浮层之后上报数据
+    document.getElementById('button').onclick = showLogin;
+    </script>
+</body>
+
+</html>

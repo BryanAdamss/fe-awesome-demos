@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 需要在每次发送ajax前添加一个验证用的token
+
+    // 通常做法
+    // var getToken = function() {
+    //     return 'Token';
+    // }
+    // var ajax = function(type, url, param) {
+    //     param = param || {};
+    //     Param.Token = getToken(); // 发送ajax 请求的代码略...
+    // };
+
+    // 如果要将这个ajax发布到网上，可能有些人就不需要token
+    // 改进
+    Function.prototype.before = function(beforefn) {
+        var __self = this; // 保存原函数的引用
+        return function() { // 返回包含了原函数和新函数的"代理"函数
+            beforefn.apply(this, arguments); // 执行新函数，且保证this 不被劫持，新函数接受的参数
+            // 也会被原封不动地传入原函数，新函数在原函数之前执行
+            return __self.apply(this, arguments); // 执行原函数并返回原函数的执行结果，
+            // 并且保证this 不被劫持
+        }
+    };
+    var ajax = function(type, url, param) {
+        console.log(param);
+    };
+    var getToken = function() {
+        return "Token";
+    };
+    // 在ajax发送之前添加token
+    ajax = ajax.before(function(type, url, param) {
+        param.Token = getToken();
+    });
+    ajax("get", 'http:// xxx.com/userinfo', {
+        name: 'sven'
+    });
+    </script>
+</body>
+
+</html>

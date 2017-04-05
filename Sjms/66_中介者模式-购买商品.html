@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>选择颜色:
+    <select id="colorSelect">
+        <option value="">请选择</option>
+        <option value="red">红色</option>
+        <option value="blue">蓝色</option>
+    </select>
+    选择内存:
+    <select id="memorySelect">
+        <option value="">请选择</option>
+        <option value="16G">16G</option>
+        <option value="32G">32G</option>
+    </select>
+    选择CPU:
+    <select id="cpuSelect">
+        <option value="">请选择</option>
+        <option value="800">800</option>
+        <option value="801">801</option>
+    </select>
+    输入购买数量:
+    <input type="text" id="numberInput" />
+    <br/> 您选择了颜色:
+    <div id="colorInfo"></div>
+    <br/> 您选择了内存:
+    <div id="memoryInfo"></div>
+    <br/>您选择了cpu:
+    <div id="cpuInfo"></div>
+    <br/> 您输入了数量:
+    <div id="numberInfo"></div>
+    <br/>
+    <button id="nextBtn" disabled="true">请选择手机颜色和购买数量</button>
+    <script>
+    // 引入中介者模式,所有的节点对象只跟中介者通信
+    var goods = { // 手机库存
+        "red|32G|800": 3, // 颜色red，内存32G，cpu800，对应库存数量为3
+        "red|16G|801": 0,
+        "blue|32G|800": 1,
+        "blue|16G|801": 6
+    };
+    var mediator = (function() {
+        var colorSelect = document.getElementById('colorSelect'),
+            memorySelect = document.getElementByIy
+        d('memorySelect'),
+            numberInput = document.getElementById('numberInput'),
+            colorInfo = document.getElementById('colorInfo'),
+            cpuInfo = document.getElementById('cpuInfo'),
+            memoryInfo = document.getElementById('memoryInfo'),
+            numberInfo = document.getElementById('numberInfo'),
+            nextBtn = document.getElementById('nextBtn'),
+            cpuSelect = document.getElementById('cpuSelect');
+        return {
+            changed: function(obj) {
+                var color = colorSelect.value,
+                    memory = memorySelect.value,
+                    number = numberInput.value,
+                    cpu = cpuSelect.value,
+                    stock = goods[color + '|' + memory + '|' + cpu];
+                if (obj === colorSelect) {
+                    colorInfo.innerHTML = color;
+                } else if (obj === memorySelect) {
+                    memoryInfo.innerHTML = memory;
+                } else if (obj === cpuSelect) {
+                    cpuInfo.innerHTML = cpu;
+                } else if (obj === numberInput) {
+                    numberInfo.innerHTML = number;
+                }
+                if (!color) {
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = "请选择手机颜色";
+                    return;
+                }
+                if (!memory) {
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = "请选择手机内存大小";
+                    return;
+                }
+                if (!cpu) {
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = "请选择CPU";
+                    return;
+                }
+                if (!(/^[0-9]*[1-9][0-9]*$/).test(number)) { // 输入购买数量是否为正整数
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = '请输入正确的购买数量';
+                    return;
+                }
+                if (!stock || number > stock) { // 当前选择数量没有超过库存量
+                    nextBtn.disabled = true;
+                    nextBtn.innerHTML = '库存不足';
+                    return;
+                }
+                nextBtn.disabled = false;
+                nextBtn.innerHTML = "放入购物车";
+            }
+        };
+    })();
+    colorSelect.onchange = function() {
+        mediator.changed(this);
+    };
+    memorySelect.onchange = function() {
+        mediator.changed(this);
+    };
+    cpuSelect.onchange = function() {
+        mediator.changed(this);
+    };
+    numberInput.oninput = function() {
+        mediator.changed(this);
+    };
+    // 当再添加一个cpu型号时，可直接在mediator中添加即可
+    </script>
+</body>
+
+</html>

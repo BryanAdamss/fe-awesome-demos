@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // 装饰者模式:装饰者模式可以动态地给某个对象添加一些额外的职责，而不会影响从这个类中派生的其他对象。装饰者模式能够在不改变对象自身的基础上，在程序运行期间给对象    动态地添加职责。
+    // 使用场景:当需要给对象动态的添加行为时
+    // 使用举例:统计代码、插件式验证等
+
+    // 传统装饰者模式
+    // var Plane = function() {}
+    // Plane.prototype.fire = function() {
+    //     console.log('发射普通子弹');
+    // };
+    // var MissileDecorator = function(plane) {
+    //     this.plane = plane;
+    // }
+    // MissileDecorator.prototype.fire = function() {
+    //     this.plane.fire();
+    //     console.log('发射导弹');
+    // };
+    // var AtomDecorator = function(plane) {
+    //     this.plane = plane;
+    // };
+    // AtomDecorator.prototype.fire = function() {
+    //     this.plane.fire();
+    //     console.log('发射原子弹');
+    // };
+    // var plane = new Plane();
+    // plane = new MissileDecorator(plane);
+    // plane = new AtomDecorator(plane);
+    // plane.fire();
+    // // 分别输出： 发射普通子弹、发射导弹、发射原子弹
+
+    // js中的装饰者模式
+    var plane = {
+        fire: function() {
+            console.log("发射普通");
+        }
+    };
+    var missileDecorator = function() {
+        console.log('发射导弹');
+    }
+    var atomDecorator = function() {
+        console.log('发射原子弹');
+    }
+    var fire1 = plane.fire;
+    plane.fire = function() {
+        fire1();
+        missileDecorator();
+    }
+    var fire2 = plane.fire;
+    plane.fire = function() {
+        fire2();
+        atomDecorator();
+    }
+    plane.fire();
+    // 分别输出： 发射普通子弹、发射导弹、发射原子弹
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 在59中我们让每个节点函数同步返回一个特定的值"nextSuccessor"，来表示是否把请求传递给下一个节点。而在现实开发中，我们经常会遇到一些异步的问题，比如我们要在节点函数中发起一个ajax异步请求，异步请求返回的结果才能决定是否继续在职责链中passRequest。
+    var Chain = function(fn) {
+        this.fn = fn;
+        this.successor = null; //表示在链中的下一个节点
+    };
+    Chain.prototype.setNextSuccessor = function(successor) {
+        return this.successor = successor;
+    };
+    Chain.prototype.passRequest = function() {
+        var ret = this.fn.apply(this, arguments);
+        if (ret === "nextSuccessor") {
+            return this.successor && this.successor.passRequest.apply(this.successor, arguments);
+        }
+        return ret;
+    };
+    // 添加next，表示手动传递请求给下一节点
+    Chain.prototype.next = function() {
+        return this.successor && this.successor.passRequest.apply(this.successor, arguments);
+    };
+    var fn1 = new Chain(function() {
+        console.log(1);
+        return 'nextSuccessor';
+    });
+    var fn2 = new Chain(function() {
+        console.log(2);
+        var self = this;
+        setTimeout(function() {
+            self.next();
+        }, 1000);
+    });
+    var fn3 = new Chain(function() {
+        console.log(3);
+    });
+    fn1.setNextSuccessor(fn2).setNextSuccessor(fn3);
+    fn1.passRequest();
+    </script>
+</body>
+
+</html>
