@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		前台动态创建script标签，并设置src属性为请求地址，src后附带回调函数名，以及其他参数
+		后台用回调函数名包裹返回的数据，实现远程js代码调用本地js函数的效果。
+	</pre>
+    <script>
+    function handleResponse(data) {
+        console.log(data);
+    }
+    var script = document.createElement("script");
+    script.src = "http://192.168.23.24:8081/app3_0-webservice/app/getCarType?callback=handleResponse";
+    document.body.insertBefore(script, document.body.firstChild);
+    </script>
+</body>
+
+</html>

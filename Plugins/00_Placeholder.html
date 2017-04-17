@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 通过requireJs调用 -->
+    <!-- <script src="js/require-2.3.3.min.js" data-main="js/00_main.js"></script> -->
+    <!-- 直接调用 -->
+    <script src="js/vendor/00_placeholder.js"></script>
+    <style type="text/css">
+    .box1 {
+        height: 100px;
+        border: 1px solid red;
+    }
+    
+    .box2 {
+        position: relative;
+        border: 1px solid blue;
+        height: 100px;
+    }
+    
+    .input1 {
+        position: absolute;
+        top: 50%;
+        padding: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box1">我是用于测试getPagePos的</div>
+    <br>
+    <div class="box2">
+        测试绝对定位时，getPagePos是否能正常工作
+        <input type="text" class="input1" placeholder="请输入用户名" style="">
+    </div>
+    <br>
+    <input type="password" placeholder="请输入密码">
+    <br>
+    <textarea placeholder="文本域" rows="10"></textarea>
+    <script>
+    // 直接调用
+    console.log(MyPlaceholder);
+    (new MyPlaceholder).init();
+    </script>
+</body>
+
+</html>

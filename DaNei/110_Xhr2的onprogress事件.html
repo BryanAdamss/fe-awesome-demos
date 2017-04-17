@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(event) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+            // console.log(xhr.responseText);
+        } else {
+            console.log("失败");
+        }
+    };
+    xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+            console.log(event);
+            console.log("position:" + event.loaded);
+            console.log("totalSize:" + event.total);
+            console.log("百分比:" + ((event.loaded / event.total) * 100).toFixed(2) + "%");
+        }
+    };
+    xhr.open("get", "http://192.168.23.24/app3_0-webservice/app/getCarType", true);
+    xhr.send(null);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    function stream(url, progressFn, finishFn) {
+        var xhr = new XMLHttpRequest();
+        var received = 0;
+        xhr.onreadystatechange = function() {
+            var result;
+            if (xhr.readyState === 3) {
+                // 截取新数据
+                result = xhr.responseText.substring(received);
+                received += result.length;
+                progressFn(result);
+            } else if (xhr.readyState === 4) {
+                finishFn(xhr.responseText);
+            }
+        };
+        xhr.open("get", url, true);
+        xhr.send(null);
+        return xhr;
+    }
+    var client = stream("http://192.168.23.50/app3_0-webService/app/getCarType", function(data) {
+        "接受到的:" + data;
+    }, function(data) {
+        console.log("全部数据:" + data);
+    })
+    </script>
+</body>
+
+</html>

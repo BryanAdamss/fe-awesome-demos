@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .box1 {
+        height: 100px;
+        border: 1px solid red;
+    }
+    
+    .box2 {
+        position: relative;
+        border: 1px solid blue;
+        height: 100px;
+    }
+    
+    .input1 {
+        position: absolute;
+        top: 50%;
+        padding: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box1">我是用于测试getPagePos的</div>
+    <br>
+    <div class="box2">
+        测试绝对定位时，getPagePos是否能正常工作
+        <input type="text" class="input1" placeholder="请输入用户名" style="">
+    </div>
+    <br>
+    <input type="password" placeholder="请输入密码">
+    <br>
+    <textarea placeholder="文本域" rows="10"></textarea>
+    <script>
+    ;
+    (function(window) {
+        var MyPlaceholder = {
+            config: {
+                CSS_SPAN: 'position:absolute;z-index:2;color:#666;font-size:80%;box-sizing:border-box;' // span的基本样式
+            },
+            getPagePos: function(domObj) { // 获取元素相对文档的位置
+                var rect = domObj.getBoundingClientRect();
+                return {
+                    top: rect.top + (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0),
+                    left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft) - (document.documentElement.clientLeft || 0),
+                    width: rect.right - rect.left,
+                    height: rect.bottom - rect.top
+                };
+            },
+            isSupport: function(attr, domObjStr) { // 判断是否支持某特性
+                return attr in document.createElement(domObjStr);
+            },
+            getComputedCss: function(domObj, attr) { // 获取计算后的样式
+                if (typeof window.getComputedStyle !== "undefined") {
+                    return window.getComputedStyle(domObj, null)[attr];
+                } else if (typeof domObj.currentStyle !== "undefined") {
+                    return domObj.currentStyle[attr];
+                }
+            },
+            show: function(domObj) { // 显示
+                domObj.style.display = domObj.displayState;
+            },
+            hide: function(domObj) { // 隐藏前先保存原先display值
+                domObj.displayState = this.getComputedCss(domObj, "display");
+                domObj.style.display = "none";
+            },
+            createSpan: function(pos) { // 创建span，并设置基本样式
+                var span = document.createElement("span");
+                span = document.createElement("span");
+                span.style.cssText += ";" + this.config.CSS_SPAN;
+                span.style.cssText += ";" + "top:" + pos.top + "px;" + "left:" + pos.left + "px;" + "width:" + pos.width + "px;" + "height:" + pos.height + "px;";
+                return span;
+            }
+        };
+        window.onload = function() {
+            if (!MyPlaceholder.isSupport("placeholder", "input")) { // 不支持时创建span模拟placeholder
+                var aField = document.querySelectorAll('input[type="text"],input[type="password"],textarea'),
+                    oSpan = null,
+                    oPos = null,
+                    oField = null;
+                for (var i = 0, len = aField.length; i < len; i++) {
+                    oField = aField[i];
+                    aField[i].value = ""; // 清除IE刷新时保留的值
+                    oPos = MyPlaceholder.getPagePos(oField); // 获取input的位置信息
+                    oSpan = MyPlaceholder.createSpan(oPos); // 创建并设置span的位置信息和基本样式
+                    if (!("cols" in oField)) { // 排除textarea，并设置input行高
+                        oSpan.style.lineHeight = oPos.height + "px";
+                    }
+                    oSpan.innerHTML = oField.getAttribute("placeholder"); // 设置span内部值
+
+                    oSpan.onclick = (function(oInput) { // span点击时，input聚焦
+                        return function() {
+                            oInput.focus();
+                        };
+                    }(oField));
+                    oField.onblur = (function(oCover) { // 失焦时显示span
+                        return function() {
+                            if (this.value === "") {
+                                MyPlaceholder.show(oCover);
+                            }
+                        };
+                    }(oSpan));
+                    oField.onfocus = (function(oCover) { // 聚焦时隐藏span
+                        return function() {
+                            if (this.value === "") {
+                                MyPlaceholder.hide(oCover);
+                            }
+                        };
+                    }(oSpan));
+                    document.body.appendChild(oSpan); // 追加到body上
+                }
+            }
+        };
+    }(window));
+    </script>
+</body>
+
+</html>

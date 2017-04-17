@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 实际使用时，这段代码要放在一个单独的js文件中
+    ;
+    (function(factory) {
+        if (typeof define === 'function' && define.amd) {
+            // 注册一个以来jquery的模块
+            define(['jquery'], factory);
+        } else if (typeof module === 'object' && module.exports) {
+            // Node/CommonJS中的模块
+            module.exports = function(root, jQuery) {
+                if (jQuery === undefined) {
+                    // require('jQuery') returns a factory that requires window to
+                    // build a jQuery instance, we normalize how we use modules
+                    // that require this pattern but the window provided is a noop
+                    // if it's defined (how jquery works)
+                    if (typeof window !== 'undefined') {
+                        jQuery = require('jquery');
+                    } else {
+                        jQuery = require('jquery')(root);
+                    }
+                }
+                factory(jQuery);
+                return jQuery;
+            };
+        } else {
+            // 浏览器环境
+            factory(jQuery);
+        }
+    }(function($) {
+        // 插件
+        $.fn.jqueryPlugin = function() {};
+    }));
+    </script>
+</body>
+
+</html>

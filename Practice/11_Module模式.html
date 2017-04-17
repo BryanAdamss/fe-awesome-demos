@@ -167,22 +167,18 @@
           })(module||{});
                     
         备注:与其他模块加载库的适配
-        
-          var MODULE = (function () {
-            var my = {};
+        var MODULE = (function () {
+            var publicData = {};
             // 代码 ...
             
             // 对外暴露接口前先检查是否支持AMD、CMD
-            if (typeof define == 'function') {
-              // AMD
-              define( function(){ return my; } );
-            }else if (typeof module != 'undefined' && module.exports) {
-              // CMD
-              module.exports = my;
+            if (typeof define == 'function' && (define.amd || define.cmd)) {
+              // AMD、CMD
+              define( function(){ return publicData; } );
+            }else{ 
+              return publicData;
             }
-            return my;
           }());
-
 
 </pre>
     <script type="text/javascript">

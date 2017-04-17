@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 1.提炼函数
+    var getUserInfo = function() {
+        ajax('http:// xxx.com/userInfo', function(data) {
+            // 有打印数据的操作，可提炼出来
+            console.log('userId: ' + data.userId);
+            console.log('userName: ' + data.userName);
+            console.log('nickName: ' + data.nickName);
+        });
+    };
+    // 改进
+    var getUserInfo = function() {
+        ajax('http:// xxx.com/userInfo', function(data) {
+            printDetails(data);
+        });
+    };
+    var printDetails = function(data) {
+        console.log('userId: ' + data.userId);
+        console.log('userName: ' + data.userName);
+        console.log('nickName: ' + data.nickName);
+    };
+
+    // 2.合并重复的条件片段
+    var paging = function(currPage) {
+        // 每个分支里面都有jump
+        if (currPage <= 0) {
+            currPage = 0;
+            jump(currPage); // 跳转
+        } else if (currPage >= totalPage) {
+            currPage = totalPage;
+            jump(currPage); // 跳转
+        } else {
+            jump(currPage); // 跳转
+        }
+    };
+    // 改进
+    var paging = function(currPage) {
+        if (currPage <= 0) {
+            currPage = 0;
+        } else if (currPage >= totalPage) {
+            currPage = totalPage;
+        }
+        jump(currPage); // 把jump 函数独立出来
+    };
+
+    function jump(page) {
+        xxxxx
+    }
+
+    // 3.把条件分支语句提炼成函数
+    var getPrice = function(price) {
+        var date = new Date();
+        if (date.getMonth() >= 6 && date.getMonth() <= 9) { // 可将判断夏天提取出来，单独使用
+            return price * 0.8;
+        }
+        return price;
+    };
+    // 改进
+    var isSummer = function() {
+        var date = new Date();
+        return date.getMonth() >= 6 && date.getMonth() <= 9;
+    };
+    var getPrice = function(price) {
+        if (isSummer()) { // 夏天
+            return price * 0.8;
+        }
+        return price;
+    };
+
+    // 4.合理使用循环
+    var createXHR = function() {
+        var xhr;
+        try {
+            xhr = new ActiveXObject('MSXML2.XMLHttp.6.0');
+        } catch (e) {
+            try {
+                xhr = new ActiveXObject('MSXML2.XMLHttp.3.0');
+            } catch (e) {
+                xhr = new ActiveXObject('MSXML2.XMLHttp');
+            }
+        }
+        return xhr;
+    };
+    var xhr = createXHR();
+    // 可用循环一次生成
+    var createXHR = function() {
+        var versions = ['MSXML2.XMLHttp.6.0ddd', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMLHttp'];
+        for (var i = 0, version; version = versions[i++];) {
+            try {
+                return new ActiveXObject(version);
+            } catch (e) {}
+        }
+    };
+    var xhr = createXHR();
+
+    // 5.提前让函数退出代替嵌套条件分支
+    var del = function(obj) {
+        var ret;
+        if (!obj.isReadOnly) { // 不为只读的才能被删除
+            if (obj.isFolder) { // 如果是文件夹
+                ret = deleteFolder(obj);
+            } else if (obj.isFile) { // 如果是文件
+                ret = deleteFile(obj);
+            }
+        }
+        return ret;
+    };
+    // 改进
+    var del = function(obj) {
+        if (obj.isReadOnly) { // 反转if 表达式
+            return;
+        }
+        if (obj.isFolder) {
+            return deleteFolder(obj);
+        }
+        if (obj.isFile) {
+            return deleteFile(obj);
+        }
+    };
+
+    // 6.传递对象参数代替过长的参数列表
+    var setUserInfo = function(id, name, address, sex, mobile, qq) {
+        console.log('id= ' + id);
+        console.log('name= ' + name);
+        console.log('address= ' + address);
+        console.log('sex= ' + sex);
+        console.log('mobile= ' + mobile);
+        console.log('qq= ' + qq);
+    };
+    setUserInfo(1314, 'sven', 'shenzhen', 'male', '137********', 377876679);
+    // 改进
+    var setUserInfo = function(obj) {
+        console.log('id= ' + obj.id);
+        console.log('name= ' + obj.name);
+        console.log('address= ' + obj.address);
+        console.log('sex= ' + obj.sex);
+        console.log('mobile= ' + obj.mobile);
+        console.log('qq= ' + obj.qq);
+    };
+    setUserInfo({
+        id: 1314,
+        name: 'sven',
+        address: 'shenzhen',
+        sex: 'male',
+        mobile: '137********',
+        qq: 377876679
+    });
+
+    // 7.尽量减少参数数量
+    var draw = function(width, height, square) {};
+    // 改进
+    var draw = function(width, height) {
+        var square = width * height;
+    };
+
+    // 8.少用三目运算符，仅在简单判断时使用，复杂情况下用if
+    if (!aup || !bup) {
+        return a === doc ? -1 :
+            b === doc ? 1 :
+            aup ? -1 :
+            bup ? 1 :
+            sortInput ?
+            (indexOf.call(sortInput, a) - indexOf.call(sortInput, b)) :
+            0;
+    }
+
+    // 9.分解大型类
+    // 10.用return退出多重循环
+    var func = function() {
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 10; j++) {
+                if (i * j > 30) {
+                    return;
+                }
+            }
+        }
+        console.log(i); // 这句代码没有机会被执行
+    };
+    // 改进
+    var print = function(i) {
+        console.log(i);
+    };
+    var func = function() {
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 10; j++) {
+                if (i * j > 30) {
+                    return print(i);
+                }
+            }
+        }
+    };
+    func();
+    </script>
+</body>
+
+</html>

@@ -143,6 +143,12 @@
             var removeElem = this.data[0];
             var parentElem = removeElem.parentNode;
             parentElem.removeChild(removeElem);
+        },
+        bind: function(eventName, fn) {
+            for (var i = 0; i < this.data.length; i++) {
+                var elem = this.data[i];
+                elem.addEventListener(eventName, fn, false);
+            }
         }
     };
     // 选择器
@@ -167,6 +173,9 @@
     $("<div>Hello World!</div>").appendTo($('.cc'));
     $(".cc").insertBefore($("pre"))
     $(".cc").remove()
+    $("html").bind("click", function() {
+        alert("a");
+    });
     </script>
 </body>
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		Ajax
+			核心:xhr对象(XMLHttpRequest)+回调函数
+		通常步骤:
+			1.创建xhr对象
+				IE56用的ActiveX，IE7及非IE用XMLHttpRequest创建
+			2.添加onreadystatechange事件，并添加回调
+				xhr.readystate===4代表请求过程结束，过程结束并不代表数据请求成功，要再次判断http状态码xhr.status，当为200代表成功，304代表数据未改变，可用缓存的数据;
+				可在readystate===4时，获取响应头的信息;xhr.getAllResponseHeaders
+			3.初始化请求
+				xhr.open(type,url,async);
+			4.设置请求头信息
+				xhr.setRequestHeader
+				此步非必须；请求头的设置必须在初始化open和发送send之间
+			5.发送请求xhr.send(data);
+				data一般用在POST请求时，GET请求一般都凭借在url后面，所以GET时send必须传null
+		GET
+			数据通过拼接到url后面发送到数据库
+			url中?以后表示要发送的数据
+			数据已key=value的形式表达
+			key和value必须通过encodeURIComponent编码，才能发送
+			多个数据之间用&分隔
+			get请求时，xhr.send()的参数必须是null
+		POST
+			post请求要发送的数据，需要通过xhr.send()方法来发送
+			若需要使用post提交表单数据，则必须在xhr.open()和xhr.send()之间使用xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");来设置请求头
+	</pre>
+    <script>
+    // 创建xhr
+    var xhr = new XMLHttpRequest();
+    // 添加回调
+    xhr.onreadystatechange = function() {
+        // 请求过程结束
+        if (xhr.readyState === 4) {
+            // 判断数据是否请求成功
+            if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                // console.log(xhr.responseText);
+                console.log("done");
+            }
+        }
+    };
+    // 初始化请求
+    xhr.open('get', 'http://192.168.23.50/app3_0-webService/app/getCarType', true);
+    // 发送请求
+    xhr.send(null);
+    </script>
+</body>
+
+</html>

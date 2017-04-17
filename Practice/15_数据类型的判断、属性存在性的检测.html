@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    	数据类型:原始值类型、引用值类型
+    		原始值类型
+    			String、Number、Boolean、Null、Undefined
+    		引用值类型
+    			内置对象Date、Array、RegExp...
+    			自定义对象var person={};
+
+    	判断数据类型
+    		原始值类型
+    			String、Number、Boolean、Undefined都可直接用typeof来判断
+    			Null一般不用来判断数据类型，除非在null为一种可预见的输出结果时，才会用obj===null或obj!==null来判断
+    		引用值类型
+    			内置对象、自定义对象都可以用 obj instanceof constructor来判断
+
+	    		instanceof判断引用值类型时的缺点
+	    			在frameA里定义的引用值传到frameB时，用instanceof判断时，会返回false->自定义对象以及Function、Array都会出现这问题
+					如在frame中有个数组arr1，传到frameB时用instanceof判断时，arr1 instanceof Array会返回false
+
+				函数(方法)的判断
+					函数以及对象方法的判断可以使用typeof判断，返回"function"
+					DOM方法在IE8及以下使用typeof判断会返回"object"，所以退而求其次使用in来判断
+
+				数组的判断
+					使用的ES5的isArray来判断
+					使用Object.prototype.toString.call(value)==="[object Array]"判断，此方法可以使用在任何内置对象上
+
+		判断对象的属性(方法)是否存在(可调用)
+			使用"property/methodName" in obj
+
+		判断对象实例是否有自己的方法
+			普通对象使用hasOwnProperty
+			DOM对象在IE8及以下没hasOwnProerty方法，所以需要先用in判断hasOwnProperty是否存在
+
+		总结
+			判断数据类型
+				原始值
+					String、Number、Boolean、Undefined->typeof value来判断
+					Null->一般不用来判断，当结果会出现null时，使用value === null 或value!==null来判断
+				引用值
+					自定义、非函数、非数组对象->obj instance Constructor判断
+					函数(方法)
+						非DOM对象的方法、函数->typeof fn判断
+						DOM对象的方法->因为无法使用typeof判断，所以退而求其次使用in判断(只要方法名存在，就默认是方法)
+					数组
+						使用ES5自带的isArray()来判断
+						使用Object.prototype.toString.call(obj)==="[object Array]"
+
+			检测属性/方法的存在性
+				一般属性/方法->"property/methodName" in obj
+				自有属性/方法->"property/methodName" in obj && obj.hasOwnProperty("property/methodName")
+    </pre>
+    <script>
+    var nulll = null,
+        obj = {
+            say: function() {
+                console.log("hi");
+            }
+        },
+        arr = [1, 2, 3],
+        date = new Date();
+
+    console.log(typeof typeof "typeof的返回值");
+    console.log(typeof "字符串");
+    console.log(typeof 3);
+    console.log(typeof true);
+    console.log(typeof undefined);
+    console.log(typeof a);
+    console.log(nulll === null);
+
+    console.log(obj instanceof Object);
+    console.log(date instanceof Date);
+
+    console.log(typeof obj.say);
+    console.log(typeof document.getElementById); // IE8并非返回"function"，而是返回"object"，所以DOM方法使用in判断
+    console.log("getElementById" in document);
+
+    console.log(Array.isArray([1, 2, 3]));
+    console.log(Object.prototype.toString.call([1, 2, 3]) === "[object Array]");
+
+    console.log("say" in obj);
+    console.log("hasOwnProperty" in document.body && document.body.hasOwnProperty("getElementById"));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    var ws = new WebSocket("ws://192.168.23.24/app3_0-webservice/websocketTest");
+    ws.onopen = function() {
+        console.log(ws.readyState);
+        console.log("Opening a connection...");
+        console.log("===========");
+
+    };
+
+    ws.onmessage = function(evt) {
+        console.log(ws.readyState);
+        console.log("收到数据" + evt.data);
+        console.log("===========");
+
+    };
+    ws.onclose = function(evt) {
+        console.log(ws.readyState);
+        console.log("I'm sorry. Bye!");
+        console.log("===========");
+
+    };
+    ws.onerror = function() {
+        console.log(ws.readyState);
+        console.log("ERR");
+        console.log("===========");
+
+    };
+    ws.send("sb");
+    </script>
+</body>
+
+</html>

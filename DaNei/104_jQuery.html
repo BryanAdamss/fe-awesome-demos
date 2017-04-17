@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		jQuery对象
+			定义:为了解决浏览器兼容性而提供的一种统一封装后的对象
+			注意:jQuery提供的方法只能用在jQuery对象上，不能用在dom对象上
+			转换:
+				Dom对象->jQuery对象
+					var obj=document.getElementById("a");
+					var $obj=$(obj);
+				jQuery对象->Dom对象
+					var $obj=$("#a");
+					var obj=$obj.get();// 此时obj是一个dom数组，因为get()不传参数时，会将匹配的元素转换成一个dom数组，如果传入索引值，会获取对应索引对应的dom元素;
+		
+		选择器
+			基本选择器
+			 	$("#id")
+			 	$(".test")
+			 	$("element")
+			 	$("selector1,selector1")
+			 	$("*")
+			层次选择器
+				$("s1 s2")
+				$("s1>s2")
+				$("s1+s2")->s1后面紧挨的s2
+				$("s1~s2")->s1后面所有的s2
+			过滤选择器
+				基本过滤选择器
+					$("s1:first")
+					$("s1:last")
+					$("s1:even")
+					$("s1:odd")
+					$("s1:eq(index)")->第几个，从0
+					$("s1:gt(index)")->大于index
+					$("s1:lt(index)")->小于index
+					$("s1:not(selector)")->非selector
+				内容过滤选择器
+					$("s1:contains(text)")->含有text的s1
+					$("s1:empty")->空的s1
+					$("s1:has(selector)")->含有selector的s1
+					$("s1:parent")->是父元素的s1
+				可见性过滤选择器
+					$("s1:hidden")
+					$("s1:visible")
+				属性过滤选择器
+					$("s1:[attribute]")->有attribute的s1
+					$("s1:[attribute=name]")->attribute等于name的s1
+					$("s1:[attribute=!name]")->attribute不等于name的s1
+					$("s1:[attribute=^name]")->attribute以name开头的s1
+					$("s1:[attribute=$name]")->attribute以name结束的s1
+				子元素过滤选择器
+					$("s1:eq(index)")->获取指定索引元素
+					$("s1:nth-child(position)")->获取指定位置处元素，从1开始
+
+		DOM操作
+			创建
+				$(html)
+			插入
+				$a.append($b)->a的最后一个子元素后追加b
+				$a.appendTo($b)->将a追加到b的最后一个子元素之后
+				$a.prepend($b)->a的首个子元素前追加b
+				$a.prependTo($b)->将a追加到b的首个子元素之前
+				$a.after($b)->a后面直接追加个b
+				$a.before($b)->a之前直接追加个b
+				$a.insertAfter($b)->将a插入到b之后
+				$a.insertBefore($b)->将a插入到b之前
+				$a.clone()->克隆a，不克隆事件
+				$a.clone(true)->克隆a，克隆事件
+			样式
+				$a.css("")
+				$a.css("","")
+				$a.css({})
+				$a.addClass()
+				$a.removeClass()
+				$a.toggleClass()
+			文本
+				$a.html()
+				$a.text()
+				$a.val()->一般用来获取表单元素的value值
+				$a.attr()->一般用来获取特性值
+			遍历
+				$a.children()->所有直接子元素
+				$a.parent()->直接父亲元素
+				$a.parents()->所有祖先元素
+				$a.next()->下一个兄弟元素
+				$a.prev()->上一个兄弟元素
+				$a.siblings()->所有兄弟元素
+
+		jQuery.noConflict();->交出$的使用权
+			恢复使用别名->通过立即执行的匿名函数来实现
+			(function($){
+				$("a").xxxxx
+			})(jQuery);
+
+		事件
+			ready事件
+				$(document).ready(function(){
+					// 初始化操作(绑定事件)
+				});
+				简写:
+				$(function(){
+					// xxx
+				});
+				注意:ready事件可以写多个，window.onload只会触发一个
+				ready在DOM构建完成时(图片、音频、视频可能还没加载)触发，window.onload在页面完全加载完毕时触发
+			绑定
+				$obj.on("事件名",fn);
+			解绑
+				$obj.off("事件名")
+			事件处理函数中获取事件源
+				event.target
+				this
+			手动触发事件
+				$obj.trigger("事件名")
+			阻止冒泡
+				event.stopPropagation();
+			阻止默认行为
+				event.preventDefault();
+			阻止冒泡+默认行为
+				事件处理函数中return false;
+
+		动画
+			基本
+				show、hide、fadeIn、fadeOut...
+			自定义
+				$obj.animate({动画终点属性},speed);
+			停止动画
+				$obj.stop()
+
+		类数组常用操作
+			$ary.length->长度
+			$ary.each(fn)->遍历
+			$ary.eq(index)->获取对应索引下的jQuery对象
+			$ary.get()->返回由DOM元素对象组成的数组
+			$ary.index(obj)->返回obj在$ary中的索引
+
+		插件开发
+			全局函数(方法)
+				全局函数属于jQuery，通过$/jQuery直接调用->$.each(array,fn);
+
+			对象函数(方法)
+				对象函数属于jQuery对象，通过对象调用->$a.val();
+
+			添加新的全局函数
+				添加一个myFunction函数，通过$.myFunction();调用
+
+				添加方式
+					$.myFunction=function(){};->不推荐
+					jQuery.myFunction=function(){};->不推荐
+					
+					$.extend({
+						myFunction:function{},
+						myFunction2:function{},
+					});->推荐($有时会被其他库占用，所以更推荐下面的方式)
+
+					jQuery.extend({
+						myFunction:function{},
+						myFunction2:function{},
+					});->强烈推荐
+
+				命名冲突
+					直接在jQuery上添加方法可能会出现命名冲突的问题。
+
+	</pre>
+</body>
+
+</html>

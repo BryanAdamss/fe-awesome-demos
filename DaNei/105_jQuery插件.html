@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    插件开发
+        全局函数(方法)
+            全局函数属于jQuery，通过$/jQuery直接调用->$.each(array,fn);
+
+        对象函数(方法)
+            对象函数属于jQuery对象，通过对象调用->$a.val();
+
+        添加新的全局函数
+            添加一个myFunction函数，通过$.myFn();调用
+
+            添加方式
+                $.myFn=function(){};->不推荐
+                jQuery.myFn=function(){};->不推荐
+                
+                $.extend({
+                    myFn:function{},
+                    myFn2:function{},
+                });->推荐($有时会被其他库占用，所以更推荐下面的方式)
+                
+                $.extend用法
+                    $.extend(obj1,obj2);->将obj2的属性覆盖到obj1上，返回obj1
+
+                    $.extend(obj1,obj2,obj3);->将obj2、obj3的属性按顺序覆盖到obj1上，返回obj1
+
+                    $.extend(obj1);->将obj1的属性覆盖到jQuery上
+
+                jQuery.extend({
+                    myFn:function{},
+                    myFn2:function{},
+                });->强烈推荐
+
+            命名冲突
+                直接在jQuery上添加方法可能会出现命名冲突的问题。
+                将方法封装到一个对象上，再添加到jQuery上
+                    jQuery.myPlugin = {
+                        myFn: function(){}
+                    };
+                    $.myPlugin.myFn();
+                    或
+                     jQuery.extend({
+                        myPlugin: {
+                            myFn: function() {}
+                        }
+                    });
+                    $.myPlugin.myFn();
+
+        添加新的对象方法(一般制作插件都用这)
+            添加一个myFn函数，通过$a.myFn();调用
+
+            添加方式
+                jQuery.fn.myFn=function(){
+                    // myFn中的this是指向调用者(被jQuery选中的元素)
+                };->常用
+                // 或
+                jQuery.fn.extend({
+                    myFn:function(){
+                        // myFn中的this是指向调用者(被jQuery选中的元素)
+                    }
+                });->不常用
+                $("a").myFn();
+
+            对象方法中的this
+                对象方法中this指的是调用的jQuery对象
+                    $(".test").myPlugin();
+                    此时
+                    jQuery.fn.myPlugin=function(){
+                        // myPlugin中的this指向的是$(".test")这个jQuery对象
+                        var that=this;
+                    };
+                注意，如果需要针对jQuery对象中的每个DOM元素进行操作，可使用$obj.each
+                    jQUery.fn.myPlugin=function(){
+                    var that=this;
+                        that.each(function(i,value){
+                            // each中的this指向的是外层jQuery对象(that)中的每个DOM对象，注意是DOM对象，必须$(this)来调用jQuery方法
+                            $(this).toggleClass();
+                        });
+                    };
+
+            支持链式调用
+                jQuery.fn.extend({
+                    myFn:function(){
+                        // 返回一个jquery对象
+                        return $obj; 
+                    }
+                });
+
+            接收参数
+                jQuery.fn.myFn=function(options){
+                    var defaults={};// 默认参数
+                    var settings=jQuery.extend(defaults,options);// 合并参数，defaults会被改变，这样并不好
+                };
+
+            保护好默认参数
+                jQuery.fn.myFn=function(options){
+                    var defaults={};// 默认参数
+                    var settings=jQuery.extend({},defaults,options);// 合并参数，defaults不会被改变，可用在其他地方
+                };
+
+            面向对象的插件开发
+                将方法和属性封装到一个对象上，方便管理。
+                var Test=function(){};
+                    Test.prototype={
+                        constructor:Test,
+                        fn:function(){xxx}
+                    };
+                jQuery.fn.myPlugin=function(options){
+                    test=new Test(this,options);
+                    return test.fn();
+                };
+
+            用闭包保护插件，并传入需要的变量
+                (function(){
+                    var Test=function(){};
+                        Test.prototype={
+                            constructor:Test,
+                            fn:function(){xxx}
+                        };
+                    jQuery.fn.myPlugin=function(options){
+                        test=new Test(this,options);
+                        return test.fn();
+                    };
+                })();
+
+            用分号保证插件在任何情况下都能用
+            ;(function(){
+                xxxxx
+            })();
+
+    </pre>
+    <div>一项主</div>
+    <div>请点击营养我会正常地</div>
+    <ul>
+        <li>
+            <a href="http://www.baidu.com">我的微博</a>
+        </li>
+        <li>
+            <a href="http://www.baidu.com">我的博客</a>
+        </li>
+        <li>
+            <a href="http://www.baidu.com">我的小站</a>
+        </li>
+    </ul>
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+    // 添加全局方法
+    // 第一种，直接在jQuery上添加
+    // $.myFn = function() {
+    //     console.log("我是Fn");
+    // };
+    // $.myFn();
+    // // 或
+    // jQuery.myFn2 = function() {
+    //     console.log("我是Fn2");
+    // };
+    // $.myFn2();
+
+    // 第二种，用extend
+    // jQuery.extend({
+    //     myFn: function() {
+    //         console.log("haha");
+    //     }
+    // });
+    // $.myFn();
+    // // 或
+    // jQuery.extend({
+    //     myFn: function() {
+    //         console.log("haha");
+    //     }
+    // });
+    // $.myFn();
+
+    // 命名空间
+    // jQuery.myPlugin = {
+    //     myFn: function() {
+    //         console.log("我是myPlugin下的myFn");
+    //     },
+    //     myFn2: function() {
+    //         console.log("我是myPlugin下的myFn2");
+    //     }
+    // };
+    // $.myPlugin.myFn();
+    // $.myPlugin.myFn2();
+    // 或
+    // jQuery.extend({
+    //     myPlugin: {
+    //         myFn: function() {
+    //             console.log("haha");
+    //         }
+    //     }
+    // });
+    // $.myPlugin.myFn();
+
+    // 添加对象方法
+
+    // jQuery.fn.myPlugin = function() {
+    //     //在这里面,this指的是用jQuery选中的元素，是个jQuery对象
+    //     this.css('color', 'red');
+    //     this.each(function() {
+    //         //each内部的this是DOM对象
+    //         //对每个元素进行操作
+    //         $(this).append(' ' + $(this).attr('href'));
+    //     });
+    // };
+    // $("a").myPlugin();
+
+    // 支持链式调用
+    // jQuery.fn.myPlugin = function() {
+    //     //在这里面,this指的是用jQuery选中的元素，是个jQuery对象
+    //     this.css('color', 'red');
+    //     return this.each(function() {
+    //         //each内部的this是DOM对象
+    //         //对每个元素进行操作
+    //         $(this).append(' ' + $(this).attr('href'));
+    //     });
+    // };
+    // console.log($("a").myPlugin());
+
+    // 接收参数
+    // $.fn.myPlugin = function(options) {
+    //     var defaults = {
+    //         'color': 'red',
+    //         'fontSize': '12px'
+    //     };
+    //     var settings = $.extend(defaults, options);
+    //     return this.css({
+    //         'color': settings.color,
+    //         'fontSize': settings.fontSize
+    //     });
+    // };
+    // $("a").myPlugin({
+    //     'color': 'pink',
+    //     'fontSize': '20px'
+    // });  
+
+    // 保护好默认参数
+    // $.fn.myPlugin = function(options) {
+    //     var defaults = {
+    //         'color': 'red',
+    //         'fontSize': '12px'
+    //     };
+    //     var settings = $.extend({}, defaults, options);
+    //     console.log(defaults);
+    //     return this.css({
+    //         'color': settings.color,
+    //         'fontSize': settings.fontSize
+    //     });
+    // };
+    // $("a").myPlugin({
+    //     'color': 'pink',
+    //     'fontSize': '20px'
+    // });
+
+    // 面向对象的插件开发
+    //定义Beautifier的构造函数
+    // var Beautifier = function(ele, opt) {
+    //         this.$element = ele,
+    //             this.defaults = {
+    //                 'color': 'red',
+    //                 'fontSize': '12px',
+    //                 'textDecoration': 'none'
+    //             },
+    //             this.options = $.extend({}, this.defaults, opt)
+    //     }
+    //     //定义Beautifier的方法
+    // Beautifier.prototype = {
+    //         beautify: function() {
+    //             return this.$element.css({
+    //                 'color': this.options.color,
+    //                 'fontSize': this.options.fontSize,
+    //                 'textDecoration': this.options.textDecoration
+    //             });
+    //         }
+    //     }
+    //     //在插件中使用Beautifier对象
+    // $.fn.myPlugin = function(options) {
+    //     //创建Beautifier的实体
+    //     //传入的this是jQuery选中的所有元素
+    //     var beautifier = new Beautifier(this, options);
+    //     //调用其方法
+    //     return beautifier.beautify();
+    // };
+
+    // $('a').myPlugin({
+    //     'color': '#2C9929',
+    //     'fontSize': '20px'
+    // });
+
+    // 用闭包保护插件，并传入需要的变量
+    (function($, window, document, undefined) {
+        //定义Beautifier的构造函数
+        var Beautifier = function(ele, opt) {
+                this.$element = ele,
+                    this.defaults = {
+                        'color': 'red',
+                        'fontSize': '12px',
+                        'textDecoration': 'none'
+                    },
+                    this.options = $.extend({}, this.defaults, opt)
+            }
+            //定义Beautifier的方法
+        Beautifier.prototype = {
+                beautify: function() {
+                    return this.$element.css({
+                        'color': this.options.color,
+                        'fontSize': this.options.fontSize,
+                        'textDecoration': this.options.textDecoration
+                    });
+                }
+            }
+            //在插件中使用Beautifier对象
+        $.fn.myPlugin = function(options) {
+            //创建Beautifier的实体
+            var beautifier = new Beautifier(this, options);
+            //调用其方法
+            return beautifier.beautify();
+        }
+    })(jQuery, window, document);
+    $("a").myPlugin({
+        'color': 'red'
+    });
+    </script>
+</body>
+
+</html>
