@@ -1,0 +1,19 @@
+<html ng-app="MyModule">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script src="js/angular-1.3.0.js"></script>
+    <script src="js/14_$http.js"></script>
+</head>
+
+<body>
+    <div ng-controller="LoadDataCtrl">
+        <ul>
+            <li ng-repeat="user in users">
+                {{user.name}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

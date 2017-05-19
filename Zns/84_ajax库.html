@@ -1,95 +1,91 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <p>ajax
-        <br>
-        1.创建ajax对象
-        <br>
-        2.连接到服务器
-        <br>
-        3.发送请求
-        <br>
-        4.接收返回值
+        <br> 1.创建ajax对象
+        <br> 2.连接到服务器
+        <br> 3.发送请求
+        <br> 4.接收返回值
     </p>
     <button id="btn1">读取</button>
     <script>
-        var oBtn = document.getElementById("btn1");
-        oBtn.onclicsk = function () {
-            // 1.创建ajax对象
-            // 此处XMLHttpRequest前要加window,因为直接使用一个未经定义的变量时会直接报错,程序无法进行,而使用一个未定义的属性时会显示undefined却不会报错,程序能正常走下去
-            if (window.XMLHttpRequest) {
-                // 非IE6下
-                var oAjax = new XMLHttpRequest();
-            } else {
-                // IE6下
-                var oAjax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            // 2.连接服务器
-            // open(方法,请求的文件名,是否异步)
-            oAjax.open("GET", "data.json?t=" + new Date().getTime(), true);
-            // 3.发送请求
-            oAjax.send();
-            // 4.接收返回值
-            oAjax.onreadystatechange = function () {
-                // oAjax.readyState代表浏览器和服务器进行到哪一步,0代表还没调用open()方法,1代表已调用open()方法,正在发送请求,2代表send()方法完成,已从服务器上接收到全部响应内容,3代表正在解析响应内容(因为返回的内容可能加密或压缩了所以需要解析),4代表响应内容已经解析(读取)完成(注意,解析完成,并不代表成功,因为可能解析出的东西不存在或者解析出错,4仅代表解析这个过程完成了,里面的内容可能是正确的,也可能是错误的),所以还需要http状态码(status)来确定解析出来的东西是否是正确的,200代表成功,404代表未找到资源
-                if (oAjax.readyState === 4) {
-                    if (oAjax.status === 200) {
-                        // oAjax.responseText为返回的文本
-                        alert(oAjax.responseText);
-                    } else {
-                        alert(oAjax.status);
-                    }
+    var oBtn = document.getElementById("btn1");
+    oBtn.onclicsk = function() {
+        // 1.创建ajax对象
+        // 此处XMLHttpRequest前要加window,因为直接使用一个未经定义的变量时会直接报错,程序无法进行,而使用一个未定义的属性时会显示undefined却不会报错,程序能正常走下去
+        if (window.XMLHttpRequest) {
+            // 非IE6下
+            var oAjax = new XMLHttpRequest();
+        } else {
+            // IE6下
+            var oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        // 2.连接服务器
+        // open(方法,请求的文件名,是否异步)
+        oAjax.open("GET", "data.json?t=" + new Date().getTime(), true);
+        // 3.发送请求
+        oAjax.send();
+        // 4.接收返回值
+        oAjax.onreadystatechange = function() {
+            // oAjax.readyState代表浏览器和服务器进行到哪一步,0代表还没调用open()方法,1代表已调用open()方法,正在发送请求,2代表send()方法完成,已从服务器上接收到全部响应内容,3代表正在解析响应内容(因为返回的内容可能加密或压缩了所以需要解析),4代表响应内容已经解析(读取)完成(注意,解析完成,并不代表成功,因为可能解析出的东西不存在或者解析出错,4仅代表解析这个过程完成了,里面的内容可能是正确的,也可能是错误的),所以还需要http状态码(status)来确定解析出来的东西是否是正确的,200代表成功,404代表未找到资源
+            if (oAjax.readyState === 4) {
+                if (oAjax.status === 200) {
+                    // oAjax.responseText为返回的文本
+                    alert(oAjax.responseText);
+                } else {
+                    alert(oAjax.status);
                 }
-            };
+            }
         };
+    };
     </script>
     <script>
-        //封装的ajax库
-        function ajax(url, fnSucc, fnFaild) {
-            //1.创建Ajax对象
-            if (window.XMLHttpRequest) {
-                var oAjax = new XMLHttpRequest();
-            }
-            else {
-                var oAjax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            //2.连接服务器（打开和服务器的连接）
-            oAjax.open('GET', url + "?t=" + new Date().getTime(), true);
-
-
-            //3.发送
-            oAjax.send();
-
-            //4.接收
-            oAjax.onreadystatechange = function () {
-                if (oAjax.readyState == 4) {
-                    if (oAjax.status == 200) {
-                        fnSucc(oAjax.responseText);
-                    }
-                    else {
-                        if (fnFaild) {
-                            fnFaild(oAjax.status);
-                        }
-                    }
-                }
-            };
+    //封装的ajax库
+    function ajax(url, fnSucc, fnFaild) {
+        //1.创建Ajax对象
+        if (window.XMLHttpRequest) {
+            var oAjax = new XMLHttpRequest();
+        } else {
+            var oAjax = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        oBtn.onclick = function () {
-            ajax("data.json", function (str) {
-                console.log(str);
-            }, function (status) {
-                console.log(status);
-            })
+        //2.连接服务器（打开和服务器的连接）
+        oAjax.open('GET', url + "?t=" + new Date().getTime(), true);
+
+
+        //3.发送
+        oAjax.send();
+
+        //4.接收
+        oAjax.onreadystatechange = function() {
+            if (oAjax.readyState == 4) {
+                if (oAjax.status == 200) {
+                    fnSucc(oAjax.responseText);
+                } else {
+                    if (fnFaild) {
+                        fnFaild(oAjax.status);
+                    }
+                }
+            }
         };
+    }
+
+    oBtn.onclick = function() {
+        ajax("data.json", function(str) {
+            console.log(str);
+        }, function(status) {
+            console.log(status);
+        })
+    };
     </script>
 </body>
+
 </html>

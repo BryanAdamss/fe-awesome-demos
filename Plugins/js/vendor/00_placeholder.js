@@ -53,24 +53,29 @@
 
     Placeholder.prototype = {
         constructor: Placeholder,
-        createSpan: function(pos) { // 创建span，并设置基本样式
+        createSpan: function() { // 创建span，并设置基本样式
             var span = document.createElement("span");
             span = document.createElement("span");
             span.style.cssText += ";" + this.setting.CSS_SPAN;
-            span.style.cssText += ";" + "top:" + pos.top + "px;" + "left:" + pos.left + "px;" + "width:" + pos.width + "px;" + "height:" + pos.height + "px;";
             return span;
+        },
+        setPosition: function(domObj, pos) {
+            domObj.style.cssText += ";" + "top:" + pos.top + "px;" + "left:" + pos.left + "px;" + "width:" + pos.width + "px;" + "height:" + pos.height + "px;";
+            return domObj
         },
         init: function() {
             if (!tool.isSupport("placeholder", "input")) { // 不支持时创建span模拟placeholder
                 var aField = document.querySelectorAll('input[type="text"],input[type="password"],textarea'),
                     oSpan = null,
                     oPos = null,
-                    oField = null;
+                    oField = null,
+                    aSpanArr = [];
                 for (var i = 0, len = aField.length; i < len; i++) {
                     oField = aField[i];
                     aField[i].value = ""; // 清除IE刷新时保留的值
                     oPos = tool.getPagePos(oField); // 获取input的位置信息
-                    oSpan = this.createSpan(oPos); // 创建并设置span的位置信息和基本样式
+                    oSpan = this.setPosition(this.createSpan(), oPos); // 创建span并设置基本样式和位置信息
+                    aSpanArr.push(oSpan); // 将span保存到数组中，方便在resize时遍历调整位置
                     if (!("cols" in oField)) { // 排除textarea，并设置input行高
                         oSpan.style.lineHeight = oPos.height + "px";
                     }
@@ -89,12 +94,19 @@
                     }(oSpan));
                     oField.onfocus = (function(oCover) { // 聚焦时隐藏span
                         return function() {
-
                             if (this.value === "") {
                                 tool.hide(oCover);
                             }
                         };
                     }(oSpan));
+                    window.onresize = (function(arr) {
+                        return function() {
+                            console.log("hh");
+                            for (var i = 0; arrItem = arr[i++];) {
+                                Placeholder.prototype.setPosition.call(this, arrItem, Tool.prototype.getPagePos.call(this, arrItem));
+                            }
+                        }
+                    })(aSpanArr);
                     document.body.appendChild(oSpan); // 追加到body上
                 }
             }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body>
+    <div ng-app="invoice2" ng-controller="InvoiceController as invoice">
+        <b>Invoice:</b>
+        <div>
+            Quantity:
+            <input type="number" min="0" ng-model="invoice.qty" required>
+        </div>
+        <div>
+            Costs:
+            <input type="number" min="0" ng-model="invoice.cost" required>
+            <select ng-model="invoice.inCurr">
+                <option ng-repeat="c in invoice.currencies">{{c}}</option>
+            </select>
+        </div>
+        <div>
+            <b>Total:</b>
+            <span ng-repeat="c in invoice.currencies">
+      {{invoice.total(c) | currency:c}}
+    </span>
+            <br>
+            <button class="btn" ng-click="invoice.pay()">Pay</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+    angular.module('invoice2', ['finance2']) //invoice2模块，依赖finance2服务
+        .controller('InvoiceController', ['currencyConverter', function InvoiceController(currencyConverter) { //声明一个InvoiceController，它依赖finance2中的currencyConverter
+            this.qty = 1;
+            this.cost = 2;
+            this.inCurr = 'EUR';
+            this.currencies = currencyConverter.currencies;
+
+            this.total = function total(outCurr) {
+                return currencyConverter.convert(this.qty * this.cost, this.inCurr, outCurr);
+            };
+            this.pay = function pay() {
+                window.alert('Thanks!');
+            };
+        }]);
+    angular.module('finance2', []) // 虽然invoice2依赖finance2模块，但是finance2模块可以写在任何地方，因为invoice2会一直等待finance2加载完成
+        .factory('currencyConverter', function() { // 这里将与UI无关的逻辑通过factory函数抽象成一个services，以达到复用效果
+            var currencies = ['USD', 'EUR', 'CNY'];
+            var usdToForeignRates = {
+                USD: 1,
+                EUR: 0.74,
+                CNY: 6.09
+            };
+            var convert = function(amount, inCurr, outCurr) {
+                return amount * usdToForeignRates[outCurr] / usdToForeignRates[inCurr];
+            };
+
+            return {
+                currencies: currencies,
+                convert: convert
+            };
+        });
+    </script>
+</body>
+
+</html>

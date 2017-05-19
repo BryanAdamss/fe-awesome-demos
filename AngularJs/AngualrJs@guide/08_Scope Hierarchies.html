@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+    <style>
+    .show-scope-demo.ng-scope,
+    .show-scope-demo .ng-scope {
+        border: 1px solid red;
+        margin: 3px;
+    }
+    </style>
+</head>
+
+<body ng-app="scopeExample">
+    <div class="show-scope-demo">
+        <div class="test" ng-controller="GreetController">
+            Hello {{name}}!
+        </div>
+        <div ng-controller="ListController">
+            <ol>
+                <li ng-repeat="name in names">{{name}} from {{department}}</li>
+            </ol>
+        </div>
+    </div>
+    <script type="text/javascript">
+    angular.module('scopeExample', [])
+        .controller('GreetController', ['$scope', '$rootScope', function($scope, $rootScope) {
+            $scope.name = 'World';
+            $rootScope.department = 'AngularJS'; // 根scope上添加一个属性，所以在ListController中能访问到
+        }])
+        .controller('ListController', ['$scope', function($scope) {
+            $scope.names = ['Igor', 'Misko', 'Vojta'];
+        }]);
+    </script>
+</body>
+
+</html>

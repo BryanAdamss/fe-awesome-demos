@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="spicyApp1">
+    <div ng-controller="SpicyController">
+        <button ng-click="chiliSpicy()">Chili</button>
+        <button ng-click="jalapenoSpicy()">Jalapeño</button>
+        <p>食物很 {{spice}} 吃!</p>
+    </div>
+    <script type="text/javascript">
+    var myApp = angular.module('spicyApp1', []);
+
+    myApp.controller('SpicyController', ['$scope', function($scope) {
+        $scope.spice = '好'; // 添加默认状态
+
+        $scope.chiliSpicy = function() { // 添加行为
+            $scope.spice = '难';
+        };
+
+        $scope.jalapenoSpicy = function() { // 添加行为
+            $scope.spice = '差不要';
+        };
+    }]);
+    </script>
+</body>
+
+</html>

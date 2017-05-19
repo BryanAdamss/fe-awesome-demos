@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 在head中引入angular，如果在body中引入会出现闪烁 -->
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body>
+    <!-- ng-app指定angular管辖范围,后面可跟模块名，无模块时可不写;ng-init指定初始化参数 -->
+    <div ng-app ng-init="qty=1;cost=2">
+        <b>Invoice:</b>
+        <div>
+            Quantity:
+            <!-- ng-model将view层上的input和model层的qty变量进行双向绑定 -->
+            <input type="number" min="0" ng-model="qty">
+        </div>
+        <div>
+            Costs:
+            <input type="number" min="0" ng-model="cost">
+        </div>
+        <div>
+            <!-- {{}}变量表达式，|后为过滤器 -->
+            <b>Total:</b> {{qty * cost | currency}}
+        </div>
+    </div>
+</body>
+
+</html>

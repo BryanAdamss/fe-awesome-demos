@@ -46,5 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# 忽略所有node_modules文件夹,若需要忽略当前目录下的node_modules,则/node_modules/
+# 忽略所有node_modules文件夹,若需要忽略当前目录下的node_modules,则/node_modules/;
+# 忽略所有angular-1.6.4文件夹
 node_modules/
+angular-1.6.4/

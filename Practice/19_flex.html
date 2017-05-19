@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .ul1 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        /* 声明父元素为flex容器 */
+        display: flex;
+        /*flex-direction设置flexItem的排列方向，默认row*/
+        flex-direction: row;
+        /*设置flexItem超宽时，如何换行，默认nowrap*/
+        flex-wrap: nowrap;
+        /*flex-flow是flex-direction和flex-wrap两个属性的速记属性。*/
+        /*flex-flow: row wrap;*/
+    }
+    
+    .ul1 li {
+        width: 100px;
+        height: 100px;
+        background-color: #8cacea;
+        margin: 8px;
+    }
+    
+    .ul2 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        height: 400px;
+        background-color: #666;
+        display: flex;
+        /*flex-wrap: wrap;*/
+        /*通过justify-content属性，可以让Flex项目在整个Main-Axis(水平坐标)上按照我自己的欲望设置其对齐方式。*/
+        /*左对齐(默认值)*/
+        /*justify-content: flex-start;*/
+        /*右对齐*/
+        /*justify-content: flex-end;*/
+        /*居中*/
+        /*justify-content: center;*/
+        /*两端对齐，第一无左边距,最后一个无右边距*/
+        /*justify-content: space-between;*/
+        /*两端对齐，每个flexItem都有左右边距*/
+        justify-content: space-around;
+        /*align-items属性可以控制flexContainer为单行形式下flexItem在Cross-Axis(垂直坐标)上的对齐方式，当flexItem未设置高度时，默认stretch(拉伸)，高度拉伸到父元素的高度*/
+        /*拉伸(前提flexItem未设置固定高度，这是默认值)*/
+        /*align-items: stretch;*/
+        /*顶端对齐*/
+        /*align-items: flex-start;*/
+        /*底端对齐*/
+        /*align-items: flex-end;*/
+        /*按文字基线对齐*/
+        /*align-items: baseline;*/
+        /*垂直居中对齐(无论flexItem是否定高)，perfect!!!*/
+        align-items: center;
+        /*align-content属性可以控制flexContainer为多行形式下flexItem在Cross-Axis(垂直坐标)上的对齐方式，当flexItem未设置高度时，默认stretch(拉伸)*/
+        /*align-content对单行无效，只能作用在多行，注意默认flexContainer是不换行的即flex-wrap为nowrap，所以要使align-content生效，必须flex-wrap为wrap*/
+        align-content: center;
+    }
+    
+    .ul2 li {
+        background-color: red;
+        width: 100px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
+    }
+    
+    .ul3 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+    }
+    
+    .ul3 li {
+        background-color: pink;
+        width: 100px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
+    }
+    
+    .ul3 li:nth-child(1) {
+        /*order可以在不改变html结构的情况下，改变flexItem的排列顺序，默认每个flexItem的order都为0(当order相同时，则按照html中的出现顺序进行排列)*/
+        order: 1;
+    }
+    
+    .ul4 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: #333;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .ul4 li {
+        background-color: red;
+        width: 100px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
+    }
+    
+    .ul4 li:nth-child(1) {
+        /*flex-grow用于控制flexContainer有剩余空间情况下flexItem如何消化(分配)剩余空间，默认flex-grow为0*/
+        /*第一个li占用剩余空间的3/(4+3)*/
+        flex-grow: 1;
+        /*当只对一个flexItem设置flex-grow属性时(无论值为多少)，其余flexItem的flex-grow全为默认0时，则代表其将全占剩余空间*/
+    }
+    
+    .ul4 li:nth-child(2) {
+        /*第二个li占用剩余空间的4/(4+3)*/
+        flex-grow: 4;
+    }
+    
+    .ul5 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: #999;
+        display: flex;
+        width: 300px;
+    }
+    
+    .ul5 li {
+        background-color: pink;
+        width: 100px;
+        /*flex-basis本质是和width属性是一样的，默认auto;如果同时设定了值，则flex-basis优先级高;如果设置auto则表示使用内容宽度;注意当flex-basis和width中只有一个设置auto，另一个设置了具体值，则最后使用具体值*/
+        /*如果flex-basis属性的值是0时，也需要使用单位。即flex-basis: 0px不能写成flex-basis:0。*/
+        flex-basis: 150px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
+    }
+    
+    .ul5 li:nth-child(1) {
+        /*flex-shrink用于控制flexContainer空间不够情况下flexItem如何缩放以适合flexContainer的大小，默认flex-shrink为1*/
+        flex-shrink: 2;
+    }
+    
+    .ul5 li:nth-child(2) {
+        flex-shrink: 3;
+        /*flex是flex-grow、flex-shrink、flex-basis的速记属性*/
+        /*下面设置代表，有剩余空间时，不会放大flexItem,空间不够时，会缩放flexItem*/
+        /*flex: 0 1 auto;*/
+        /*下面的就相当于flex:none;flexItem既不会伸展也不会收缩，这基本上就是一个固定宽度的元素*/
+        /*flex:0 0 auto;*/
+        /*下面的就相当于flex:auto;flexItem既会伸展也会收缩*/
+        /*flex: 1 1 auto*/
+        /*下面的就相当于flex: 任意正数;代表flex-grow:任意正数;flex-shrink:1;flex-basis:0;基础宽度为0，则实际宽度由flex-grow来确定*/
+        /*flex: 任意正数 1 0;*/
+        /*下面的相当于flex:1 1 0px;flex-basis为0px,这就会产生绝对flex，绝对的意思就是flexItem会等分flexContainer空间，本质是flex-basis为0px所以flex-item宽度由flex-grow控制(为什么不是由flex-shrink控制？因为flexContainer的剩余空间计算是根据flex-basis来计算的，flex-basis为0，所以肯定占不满空间，此时只有flex-grow生效),每个flexItem的flex-grow都被设置为了1，所以经计算，最后肯定是等分*/
+        /*flex: 1 1;*/
+    }
+    
+    .ul6 {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: #999;
+        height: 400px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .ul6 li {
+        background-color: red;
+        width: 100px;
+        height: 100px;
+        margin: 8px;
+        padding: 4px;
+    }
+    
+    .ul6 li:nth-child(2) {
+        /*align-self用于单独设置某个flexItem的垂直对齐方式*/
+        align-self: flex-end;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="ul1">
+        <!--parent element-->
+        <li>1</li>
+        <!--first child element-->
+        <li>2</li>
+        <!--second child element-->
+        <li>3</li>
+        <!--third child element-->
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+    <ul class="ul2">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+    </ul>
+    <ul class="ul3">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+    <ul class="ul4">
+        <li>1</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+        <li>2</li>
+    </ul>
+    <ul class="ul5">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <ul class="ul6">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+</body>
+
+</html>

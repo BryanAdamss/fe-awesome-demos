@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/require-2.3.3.min.js" data-main="js/01_main.js"></script>
+    <style>
+    html {
+        height: 100%;
+        font: 16px/1.625 arial, "Microsoft YaHei", \5b8b\4f53, "Hiragino Sans GB", , sans-serif;
+        ;
+    }
+    
+    body {
+        margin: 0;
+        height: 100%;
+    }
+    
+    .Dialog {
+        display: table;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999;
+    }
+    
+    .Dialog-mask {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        /*IE8及以下*/
+        background-color: #666;
+        /*Chrome*/
+        background-color: rgba(0, 0, 0, 0.5);
+        /*IE9*/
+        filter: progid: DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#7f000000', endColorstr='#7f000000');
+    }
+    
+    .Dialog-main {
+        min-width: 300px;
+        max-width: 60%;
+        display: inline-block;
+        text-align: left;
+        color: #333;
+        border-radius: 3px;
+        box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
+    }
+    
+    .Dialog-hd {
+        padding: 0 20px;
+        background-color: #efefef;
+        border-radius: 3px 3px 0 0;
+        border-bottom: 1px solid #ddd;
+        cursor: move;
+        *zoom: 1;
+    }
+    
+    .Dialog-hd:before,
+    .Dialog-hd:after {
+        content: "";
+        display: table;
+    }
+    
+    .Dialog-hd:after {
+        clear: both;
+        overflow: hidden;
+    }
+    
+    .Dialog-title {
+        line-height: 40px;
+        font-size: 14px;
+        float: left;
+    }
+    
+    .Dialog-close {
+        font-size: 20px;
+        cursor: pointer;
+        float: right;
+        line-height: 40px;
+    }
+    
+    .Dialog-close:hover {
+        color: #000;
+    }
+    
+    .Dialog-bd {
+        background-color: #fff;
+        padding: 20px;
+        max-height: 500px;
+        overflow: auto;
+        word-wrap: break-word;
+        word-break: break-all;
+        font-size: 14px;
+        line-height: 24px;
+    }
+    
+    .Dialog-ft {
+        background-color: #fff;
+        padding: 0 20px;
+    }
+    
+    .imgWp {
+        display: block;
+    }
+    
+    .imgWp > img {
+        display: block;
+        width: 100%;
+        /*  margin-left: auto;
+        margin-right: auto;*/
+        border: none;
+    }
+    
+    .Dialog-btnG {
+        text-align: right;
+        padding: 10px 0;
+    }
+    
+    .Dialog-btn {
+        text-decoration: none;
+        font-size: 14px;
+        color: #333;
+        display: inline-block;
+        padding: 4px 10px;
+        border-color: #4898d5;
+        background-color: #2e8ded;
+        color: #fff;
+    }
+    
+    .Dialog-btn.is-cancle {
+        background-color: #ccc;
+        color: #333;
+    }
+    
+    .Dialog-btn+.Dialog-btn {
+        margin-left: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <button id="btn">点我</button>
+    <button id="btn2">点我2</button>
+</body>
+
+</html>

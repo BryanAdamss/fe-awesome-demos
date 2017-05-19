@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+    <style type="text/css">
+    html,
+    body {
+        height: 100%;
+        /*显式设置这，是很重要的*/
+    }
+    
+    body {
+        margin: 0;
+    }
+    
+    body {
+        display: flex;
+        /*flex 超能力被激活了！ */
+        flex-direction: column;
+        /*垂直而不是水平堆放弹性项目（主栏目和脚注元素）*/
+        background-color: #fff;
+        margin: 0;
+        font-family: Lato, sans-serif;
+        color: #222;
+        font-size: 0.9em;
+    }
+    
+    main {
+        /*填满剩余空间*/
+        flex: 1 0 auto;
+        /* 变成一个弹性项目*/
+        display: flex;
+        /*只包含这一行，现在就有一个弹性容器，带有弹性项目：侧边栏和主内容区*/
+    }
+    
+    footer {
+        flex: 0 0 90px;
+        /*不会放大或者收缩 - 只会固定在 90px 高度。*/
+        padding: 10px;
+        color: #fff;
+        background-color: rgba(61, 100, 158, .9);
+    }
+    
+    aside {
+        flex: 0 0 40px;
+        /*不会放大或者缩小。固定在 40px*/
+        display: flex;
+        /*现在也是一个弹性容器*/
+        flex-direction: column;
+        /*垂直堆放图标*/
+        /*因为方向改变了，如下在垂直方向上起作用。*/
+        justify-content: space-around;
+        align-items: center;
+        /*方向改变了！这条影响的是水平方向。将图标居中*/
+        background-color: #f2f2f2;
+        /*让我变漂亮*/
+    }
+    
+    aside i.fa {
+        font-size: 0.9em;
+        /*图标的字体大小*/
+    }
+    
+    .content {
+        display: flex;
+        flex: 1 0 auto;
+        /*这确保本区伸展到填满可用空间*/
+        flex-direction: column;
+    }
+    
+    .music-head {
+        flex: 0 0 280px;
+        /*相同的备忘，不要伸展或收缩 - 固定为 280px*/
+        display: flex;
+        padding: 40px;
+        background-color: #4e4e4e;
+    }
+    
+    .music-list {
+        flex: 1 0 auto;
+        list-style-type: none;
+        padding: 5px 10px 0px;
+    }
+    
+    li {
+        display: flex;
+        /*段落现在显示在一行上*/
+        padding: 0 20px;
+        /*留点呼吸空间*/
+        min-height: 50px;
+    }
+    
+    li p {
+        flex: 0 0 25%;
+        /*这是甜面酱*/
+    }
+    
+    li span.catty-cloud {
+        border: 1px solid black;
+        font-size: 0.6em;
+        padding: 3px;
+    }
+    
+    li:nth-child(2n) {
+        background-color: #f2f2f2;
+    }
+    
+    .catty-music {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+        font-weight: 300;
+        color: #fff;
+        padding-left: 50px;
+    }
+    
+    .catty-music div:nth-child(1) {
+        margin-bottom: auto;
+    }
+    
+    .catty-music div:nth-child(2) {
+        margin-top: 0;
+    }
+    
+    .catty-music div:nth-child(2) i.fa {
+        font-size: 0.9em;
+        padding: 0 0.7em;
+        font-weight: 300;
+    }
+    
+    .catty-music div:nth-child(1) p:first-child {
+        font-size: 1.8em;
+        margin: 0 0 10px;
+    }
+    
+    .catty-music div:nth-child(1) p:not(:first-child) {
+        font-size: 0.9em;
+        margin: 2px 0;
+    }
+    </style>
+</head>
+
+<body>
+    <main>
+        <aside>
+            <!--这代表侧边栏，其中包含了来自 font-awesome 的图标集-->
+            <i class="fa fa-bars"></i>
+            <i class="fa fa-home"></i>
+            <i class="fa fa-search"></i>
+            <i class="fa fa-volume-up"></i>
+            <i class="fa fa-user"></i>
+            <i class="fa fa-spotify"></i>
+            <i class="fa fa-cog"></i>
+            <i class="fa fa-soundcloud"></i>
+        </aside>
+        <section class="content">
+            <!--这一部分会容纳除侧边栏以外的所有东西-->
+            <div class="music-head">
+                <!--第一个列表项：包含音乐详情-->
+                <img src="img/cattyboard.png" />
+                <!--专辑封面-->
+                <section class="catty-music">
+                    <!--专辑的其它细节-->
+                    <div>
+                        <p>CattyBoard Top 100 Single Charts (11.06.36)</p>
+                        <p>Unknown Artist</p>
+                        <p>2016 . Charts . 100 songs</p>
+                    </div>
+                    <div>
+                        <!--Music controls--><i class="fa fa-play">Play all</i> <i class="fa fa-plus">Add to</i> <i class="fa fa-ellipsis-h">More</i> </div>
+                </section>
+            </div>
+            <!--end .music-head-->
+            <!--第二个列表项：包含专辑中的歌曲列表-->
+            <ul class="music-list">
+                <li>
+                    <p>1. One Dance</p>
+                    <p>Crake feat CatKid & Cyla</p>
+                    <p>2:54</p>
+                    <p><span class="catty-cloud">CATTY CLOUD SYNC</span></p>
+                </li>
+                <li>
+                    <p>2. Panda</p>
+                    <p>Cattee</p>
+                    <p>4:06</p>
+                    <p><span class="catty-cloud">CATTY CLOUD SYNC</span></p>
+                </li>
+                <li>
+                    <p>3. Can't Stop the Feeling!</p>
+                    <p>Catin Cimberlake</p>
+                    <p>3:56</p>
+                    <p><span class="catty-cloud">CATTY CLOUD SYNC</span></p>
+                </li>
+                <li>
+                    <p>4. Work From Home</p>
+                    <p>Cat Harmony feat Colla</p>
+                    <p>3:34</p>
+                    <p><span class="catty-cloud">CATTY CLOUD SYNC</span></p>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <!--用来包含应用的主栏目-->
+    <footer>2</footer>
+    <!--用来包含音乐控制按钮和歌曲细节-->
+</body>
+
+</html>

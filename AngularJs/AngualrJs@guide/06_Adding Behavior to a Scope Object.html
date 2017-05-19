@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="DoubleController">
+        Two times
+        <input ng-model="num"> equals {{ double(num) }}
+    </div>
+    <script type="text/javascript">
+    var myApp = angular.module('myApp', []);
+    myApp.controller('DoubleController', ['$scope', function($scope) {
+        $scope.double = function(value) {
+            return value * 2;
+        };
+    }]);
+    </script>
+</body>
+
+</html>

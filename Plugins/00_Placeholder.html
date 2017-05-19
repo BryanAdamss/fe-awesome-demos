@@ -41,8 +41,10 @@
     <textarea placeholder="文本域" rows="10"></textarea>
     <script>
     // 直接调用
-    console.log(MyPlaceholder);
-    (new MyPlaceholder).init();
+
+    window.onload = function() {
+        (new MyPlaceholder()).init();
+    };
     </script>
 </body>
 
