@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+    <style type="text/css">
+    .css-form input.ng-invalid.ng-touched {
+        background-color: #FA787E;
+    }
+    
+    .css-form input.ng-valid.ng-touched {
+        background-color: #78FA89;
+    }
+    </style>
+</head>
+
+<body ng-app="form-example-modify-validators">
+    <form name="form" class="css-form" novalidate>
+        <div>
+            <label>
+                Overwritten Email:
+                <input type="email" ng-model="myEmail" overwrite-email name="overwrittenEmail" />
+            </label>
+            <span ng-show="form.overwrittenEmail.$error.email">This email format is invalid!</span>
+            <br> Model: {{myEmail}}
+        </div>
+    </form>
+    <script>
+    var app = angular.module('form-example-modify-validators', []);
+
+    app.directive('overwriteEmail', function() {
+        var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@example\.com$/i;
+
+        return {
+            require: '?ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                // only apply the validator if ngModel is present and AngularJS has added the email validator
+                if (ctrl && ctrl.$validators.email) {
+
+                    // this will overwrite the default AngularJS email validator
+                    ctrl.$validators.email = function(modelValue) {
+                        return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
+                    };
+                }
+            }
+        };
+    });
+    </script>
+</body>
+
+</html>

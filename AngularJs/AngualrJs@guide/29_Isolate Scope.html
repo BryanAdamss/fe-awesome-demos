@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsIsolateScopeDirective">
+    <div ng-controller="ControllerP">
+        <div ng-controller="Controller">
+            <my-customer info="naomi"></my-customer>
+            <hr>
+            <my-customer info="igor"></my-customer>
+        </div>
+    </div>
+    <script>
+    angular.module('docsIsolateScopeDirective', [])
+        .controller('Controller', ['$scope', function($scope) {
+            // $scope.naomi = {
+            //     name: 'Naomi',
+            //     address: '1600 Amphitheatre'
+            // };
+            $scope.igor = {
+                name: 'Igor',
+                address: '123 Somewhere'
+            };
+        }]).controller('ControllerP', ['$scope', function($scope) {
+            $scope.naomi = {
+                name: '我是父controller中的naomi',
+                address: '1600 Amphitheatre'
+            };
+            $scope.igor = {
+                name: 'Igor',
+                address: '123 Somewhere'
+            };
+        }])
+        .directive('myCustomer', function() {
+            return {
+                restrict: 'E',
+                scope: {
+                    customerInfo: '=info'
+                },
+                templateUrl: 'tpl/29_my-customer.html'
+            };
+        });
+    </script>
+</body>
+
+</html>

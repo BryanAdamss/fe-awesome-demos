@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="expressionExample">
+    <div class="example2" ng-controller="ExampleController">
+        Name:
+        <input ng-model="name" type="text" />
+        <button ng-click="greet()">Greet</button>
+        <!-- angualr中无法直接访问window-->
+        <button ng-click="window.alert('Should not see me')">Won't greet</button>
+    </div>
+    <script type="text/javascript">
+    angular.module('expressionExample', [])
+        .controller('ExampleController', ['$window', '$scope', function($window, $scope) {
+            $scope.name = 'World';
+            $scope.greet = function() {
+                $window.alert('Hello ' + $scope.name);
+            };
+        }]);
+    </script>
+</body>
+
+</html>

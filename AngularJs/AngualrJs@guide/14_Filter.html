@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="FilterInControllerModule">
+    <div ng-controller="FilterController as ctrl">
+        <div>
+            All entries:
+            <span ng-repeat="entry in ctrl.array">{{entry.name}} </span>
+        </div>
+        <div>
+            Entries that contain an "a":
+            <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </span>
+        </div>
+    </div>
+    <script type="text/javascript">
+    angular.module('FilterInControllerModule', []).
+    controller('FilterController', ['filterFilter', function(filterFilter) { // 这里的filterFilter是一个根据条件筛选数组的，如果要用numer过滤器，则使用numberFilter
+        this.array = [{
+            name: 'Tobias'
+        }, {
+            name: 'Jeff'
+        }, {
+            name: 'Brian'
+        }, {
+            name: 'Igor'
+        }, {
+            name: 'James'
+        }, {
+            name: 'Brad'
+        }];
+        console.log(filterFilter);
+        this.filteredArray = filterFilter(this.array, 'a');
+    }]);
+    </script>
+</body>
+
+</html>

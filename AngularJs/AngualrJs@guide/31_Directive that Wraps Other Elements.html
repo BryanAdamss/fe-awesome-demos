@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsTransclusionDirective">
+    <div ng-controller="Controller">
+        <my-dialog>Check out the contents, {{name}}!</my-dialog>
+    </div>
+    <script>
+    angular.module('docsTransclusionDirective', [])
+        .controller('Controller', ['$scope', function($scope) {
+            $scope.name = 'Tobias';
+        }])
+        .directive('myDialog', function() {
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope: {},
+                templateUrl: 'tpl/31_my-dialog.html'
+            };
+        });
+    </script>
+</body>
+
+</html>

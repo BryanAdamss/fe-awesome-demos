@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html {
+        font: 16px/1.625 arial, "Hiragino Sans GB", "Microsoft YaHei", \5b8b\4f53, sans-serif;
+    }
+    
+    body {
+        margin: 0;
+        background-color: #fafafa;
+    }
+    
+    .Container {
+        width: 100%;
+        /*max-width: 1260px;*/
+        margin: 0 auto;
+        padding: 20px 0;
+        font-size: 0;
+    }
+    
+    .Panel {
+        display: inline-block;
+        vertical-align: top;
+        background-color: #fff;
+        width: 49%;
+        margin: 0.5%;
+        min-height: 400px;
+        transition: box-shadow .3s ease-in-out;
+        box-shadow: 0 0 3px 0px #c3c3c3;
+    }
+    
+    .Panel:hover {
+        box-shadow: 0 0 10px 0px #c3c3c3;
+    }
+    
+    .Panel-hd {
+        font-size: 16px;
+    }
+    
+    .Panel-ft {
+        font-size: 16px;
+    }
+    
+    .Slide {
+        position: relative;
+    }
+    
+    .Slide-hd {
+        padding: 10px 16px;
+        color: #6c6c6c;
+        position: relative;
+        cursor: pointer;
+        border-bottom: 1px solid #c7c7c7;
+    }
+    
+    .Slide-hd:after {
+        content: "﹀";
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        margin-top: -13px;
+    }
+    
+    .Slide-bd {
+        padding: 10px 16px;
+        display: none;
+        position: absolute;
+        top: 47px;
+        background-color: #fff;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 10;
+    }
+    
+    .Container h2 {
+        font-size: 18px;
+        padding: 0 10px;
+        color: #6c6c6c;
+    }
+    
+    .Toggle-hd {
+        padding: 0 10px;
+    }
+    
+    .Toggle-tag {
+        font-size: 18px;
+        color: #6c6c6c;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+    
+    .Toggle-tag.is-cur {
+        color: #4894e5;
+    }
+    
+    .Toggle-bdItem {
+        display: none;
+    }
+    
+    .Toggle-bdItem.is-cur {
+        display: block;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="Container">
+        <div class="Toggle">
+            <div class="Toggle-hd">
+                <span class="Toggle-tag is-cur">日</span>
+                <span class="Toggle-tag">周</span>
+                <span class="Toggle-tag">月</span>
+                <span class="Toggle-tag">年</span>
+            </div>
+            <div class="Toggle-bd">
+                <div class="Toggle-bdItem is-cur">
+                    <!-- 日 -->
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_ls_day"></div>
+                        <div class="Panel-ft">
+                            <!-- <div class="Slide">
+                    <div class="Slide-hd">用车建议</div>
+                    <div class="Slide-bd">sss</div>
+                </div> -->
+                        </div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_hgl_day"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_ls_day"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_hgl_day"></div>
+                    </div>
+                </div>
+                <div class="Toggle-bdItem">
+                    <!-- 周 -->
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_ls_week"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_hgl_week"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_ls_week"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_hgl_week"></div>
+                    </div>
+                </div>
+                <div class="Toggle-bdItem">
+                    <!-- 月 -->
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_ls_month"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_hgl_month"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_ls_month"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_hgl_month"></div>
+                    </div>
+                </div>
+                <div class="Toggle-bdItem">
+                    <!-- 年 -->
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_ls_year"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcz_hgl_year"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_ls_year"></div>
+                    </div>
+                    <div class="Panel">
+                        <div class="Panel-bd" id="jcx_hgl_year"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--       <h2>检测站流水</h2>
+        <h2>检测站合格率</h2>
+        <h2>检测线流水</h2>
+        <h2>检测线合格率</h2> -->
+    </div>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/dark-unica.js"></script>
+    <script>
+    $(function() {
+        $(".Slide-hd").on("click", function() {
+            $(this).siblings(".Slide-bd").stop().slideToggle();
+        });
+        $(".Toggle-tag").on("click", function() {
+            $(this).addClass("is-cur");
+            $(this).siblings().removeClass("is-cur");
+            $(".Toggle-bdItem").eq($(this).index()).addClass("is-cur");
+            $(".Toggle-bdItem").eq($(this).index()).siblings().removeClass("is-cur");
+        });
+        (function($) { // 检测站 流水
+            // 日
+            var jcz_ls_day = new Highcharts.Chart('jcz_ls_day', {
+                title: {
+                    text: '检测站及各检测线（日）检测流水统计',
+                    x: -20
+                },
+
+                xAxis: {
+                    title: {
+                        text: '日'
+                    },
+                    categories: ['20170220', '20170221', '20170222', '20170223', '20170224', '20170227', '20170228']
+                },
+                yAxis: {
+                    title: {
+                        text: '流水'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [195, 155, 164, 160, 178, 245, 231]
+                }, {
+                    name: '1号检测线',
+                    data: [73, 52, 66, 65, 56, 92, 102]
+                }, {
+                    name: '3号检测线',
+                    data: [54, 43, 35, 44, 49, 73, 59]
+                }, {
+                    name: '4号检测线',
+                    data: [68, 60, 63, 51, 73, 80, 70]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 周
+            var jcz_ls_week = new Highcharts.Chart('jcz_ls_week', {
+                title: {
+                    text: '检测站及各检测线（周）监测流水统计',
+                    x: -20
+                },
+
+                xAxis: {
+                    title: {
+                        text: '周'
+                    },
+                    categories: [3, 4, 5, 6, 7, 8, 9]
+                },
+                yAxis: {
+                    title: {
+                        text: '流水'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [955, 558, 326, 798, 951, 852, 476]
+                }, {
+                    name: '1号检测线',
+                    data: [408, 256, 139, 326, 327, 312, 194]
+                }, {
+                    name: '3号检测线',
+                    data: [216, 120, 76, 231, 288, 225, 132]
+                }, {
+                    name: '4号检测线',
+                    data: [331, 182, 111, 241, 336, 315, 150]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 月
+            var jcz_ls_month = new Highcharts.Chart('jcz_ls_month', {
+                title: {
+                    text: '检测站及各检测线（月）流水统计',
+                    x: -20
+                },
+
+                xAxis: {
+                    title: {
+                        text: '月'
+                    },
+                    categories: [201608, 201609, 201610, 201611, 201612, 201701, 201702]
+                },
+                yAxis: {
+                    title: {
+                        text: '流水'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [2745, 2750, 2459, 3159, 3468, 2912, 3403]
+                }, {
+                    name: '1号检测线',
+                    data: [946, 1024, 996, 1361, 1417, 1309, 1298]
+                }, {
+                    name: '3号检测线',
+                    data: [779, 938, 777, 906, 1051, 354, 952]
+                }, {
+                    name: '4号检测线',
+                    data: [1020, 788, 686, 892, 1000, 1249, 1153]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 年
+            var jcz_ls_year = new Highcharts.Chart('jcz_ls_year', {
+                title: {
+                    text: '检测站及各检测线（年）流水统计',
+                    x: -20
+                },
+
+                xAxis: {
+                    title: {
+                        text: '年'
+                    },
+                    categories: [2015, 2016, 2017]
+                },
+                yAxis: {
+                    title: {
+                        text: '流水'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [24105, 37967, 6315]
+                }, {
+                    name: '1号检测线',
+                    data: [8801, 14088, 2607]
+                }, {
+                    name: '3号检测线',
+                    data: [9923, 12334, 1306]
+                }, {
+                    name: '4号检测线',
+                    data: [5381, 11545, 2402]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+        })(jQuery);
+        (function($) { // 检测站 合格率
+            // 日
+            var jcz_hgl_day = new Highcharts.Chart('jcz_hgl_day', {
+                title: {
+                    text: '检测站（日）检测合格率',
+                    x: -20
+                },
+
+                xAxis: {
+                    categories: ['20170220', '20170221', '20170222', '20170223', '20170224', '20170227', '20170228']
+                },
+                yAxis: {
+                    title: {
+                        text: '合格率（%）'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [100.00, 100.00, 100.00, 100.00, 98.88, 100.00, 100.00]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 周
+            var jcz_hgl_week = new Highcharts.Chart('jcz_hgl_week', {
+                title: {
+                    text: '检测站（周）检测合格率',
+                    x: -20
+                },
+
+                xAxis: {
+                    title: {
+                        text: '周'
+                    },
+                    categories: ['3', '4', '5', '6', '7', '8', '9']
+                },
+                yAxis: {
+                    title: {
+                        text: '合格率（%）'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [99.79, 99.64, 99.08, 100.00, 99.79, 99.77, 100.00]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 月
+            var jcz_hgl_month = new Highcharts.Chart('jcz_hgl_month', {
+                title: {
+                    text: '检测站（月）检测合格率',
+                    x: -20
+                },
+                xAxis: {
+                    title: {
+                        text: '月'
+                    },
+                    categories: [201608, 201609, 201610, 201611, 201612, 201701, 201702]
+                },
+                yAxis: {
+                    title: {
+                        text: '合格率（%）'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [99.34, 99.49, 99.63, 99.84, 99.80, 99.31, 99.79]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+            // 年
+            var jcz_hgl_year = new Highcharts.Chart('jcz_hgl_year', {
+                title: {
+                    text: '检测站（年）检测合格率',
+                    x: -20
+                },
+                xAxis: {
+                    title: {
+                        text: '年'
+                    },
+                    categories: [2015, 2016, 2017]
+                },
+                yAxis: {
+                    title: {
+                        text: '合格率（%）'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '检测站',
+                    data: [98.80, 99.64, 99.57]
+                }],
+                credits: {
+                    enabled: false
+                },
+                chart: {
+                    reflow: true
+                }
+            });
+        })(jQuery);
+
+        (function($) { // 检测线 流水
+            // 日
+            $('#jcx_ls_day').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（日）检测流水统计'
+                },
+
+                xAxis: {
+                    categories: [20170220, 20170221, 20170222, 20170223, 20170224, 20170227, 20170228],
+                    crosshair: true,
+                    title: {
+                        text: '日'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '流水'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [73, 52, 66, 65, 56, 92, 102]
+                }, {
+                    name: '3号检测线',
+                    data: [54, 43, 35, 44, 49, 73, 59]
+                }, {
+                    name: '4号检测线',
+                    data: [68, 60, 63, 51, 73, 80, 70]
+                }]
+            });
+            // 周
+            $('#jcx_ls_week').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（周）检测流水统计'
+                },
+
+                xAxis: {
+                    categories: [3, 4, 5, 6, 7, 8, 9],
+                    crosshair: true,
+                    title: {
+                        text: '周'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '流水'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [408, 256, 139, 326, 327, 312, 194]
+                }, {
+                    name: '3号检测线',
+                    data: [216, 120, 76, 231, 288, 225, 132]
+                }, {
+                    name: '4号检测线',
+                    data: [331, 182, 111, 241, 336, 315, 150]
+                }]
+            });
+            // 月
+            $('#jcx_ls_month').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（月）检测流水统计'
+                },
+
+                xAxis: {
+                    categories: [201608, 201609, 201610, 201611, 201612, 201701, 201702],
+                    crosshair: true,
+                    title: {
+                        text: '月'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '流水'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [946, 1024, 996, 1361, 1417, 1309, 1298]
+                }, {
+                    name: '3号检测线',
+                    data: [779, 938, 777, 906, 1051, 354, 952]
+                }, {
+                    name: '4号检测线',
+                    data: [1020, 788, 686, 892, 1000, 1249, 1153]
+                }]
+            });
+            // 年
+            $('#jcx_ls_year').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（年）检测流水统计'
+                },
+
+                xAxis: {
+                    categories: [2015, 2016, 2017],
+                    crosshair: true,
+                    title: {
+                        text: '年'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '流水'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [8801, 14088, 2607]
+                }, {
+                    name: '3号检测线',
+                    data: [9923, 12334, 1306]
+                }, {
+                    name: '4号检测线',
+                    data: [5381, 11545, 2402]
+                }]
+            });
+        })(jQuery);
+        (function($) { // 检测线 合格率
+            // 日
+            $('#jcx_hgl_day').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（日）检测合格率对比'
+                },
+
+                xAxis: {
+                    categories: [20170220, 20170221, 20170222, 20170223, 20170224, 20170227, 20170228],
+                    crosshair: true,
+                    title: {
+                        text: '日'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '合格率（%）'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [100.00, 100.00, 100.00, 100.00, 98.21, 100.00, 100.00]
+                }, {
+                    name: '3号检测线',
+                    data: [100.00, 100.00, 100.00, 100.00, 97.96, 100.00, 100.00]
+                }, {
+                    name: '4号检测线',
+                    data: [100.00, 100.00, 100.00, 100.00, 100.00, 100.00, 100.00]
+                }]
+            });
+            // 周
+            $('#jcx_hgl_week').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（周）检测合格率对比'
+                },
+
+                xAxis: {
+                    categories: [3, 4, 5, 6, 7, 8, 9],
+                    crosshair: true,
+                    title: {
+                        text: '周'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '合格率（%）'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [99.51, 99.61, 99.28, 100.00, 99.39, 99.68, 100.00]
+                }, {
+                    name: '3号检测线',
+                    data: [100.00, 99.17, 98.68, 100.00, 100.00, 99.56, 100.00]
+                }, {
+                    name: '4号检测线',
+                    data: [100.00, 100.00, 99.10, 100.00, 100.00, 100.00, 100.00]
+                }]
+            });
+            // 月
+            $('#jcx_hgl_month').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（月）检测合格率对比'
+                },
+
+                xAxis: {
+                    categories: [201608, 201609, 201610, 201611, 201612, 201701, 201702],
+                    crosshair: true,
+                    title: {
+                        text: '月'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '合格率（%）'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [98.41, 98.93, 99.40, 99.78, 99.65, 99.47, 99.69]
+                }, {
+                    name: '3号检测线',
+                    data: [99.61, 99.68, 99.61, 99.89, 99.90, 96.61, 99.79]
+                }, {
+                    name: '4号检测线',
+                    data: [100.00, 100.00, 100.00, 99.89, 99.90, 99.92, 99.91]
+                }]
+            });
+            // 年
+            $('#jcx_hgl_year').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '检测线（年）检测合格率对比'
+                },
+
+                xAxis: {
+                    categories: [2015, 2016, 2017],
+                    crosshair: true,
+                    title: {
+                        text: '年'
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '合格率（%）'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '1号检测线',
+                    data: [97.66, 99.37, 99.58]
+                }, {
+                    name: '3号检测线',
+                    data: [99.41, 99.72, 98.93]
+                }, {
+                    name: '4号检测线',
+                    data: [99.54, 99.89, 99.92]
+                }]
+            });
+
+        })(jQuery);
+    });
+
+
+
+
+    // $(function() {
+    //     $('#char2').highcharts({
+    //         chart: {
+    //             type: 'bar'
+    //         },
+    //         title: {
+    //             text: '各洲不同时间的人口条形图'
+    //         },
+    //         subtitle: {
+    //             text: '数据来源: Wikipedia.org'
+    //         },
+    //         xAxis: {
+    //             categories: ['非洲', '美洲', '亚洲', '欧洲', '大洋洲'],
+    //             title: {
+    //                 text: "xxxx"
+
+    //             }
+    //         },
+    //         yAxis: {
+    //             min: 0,
+    //             title: {
+    //                 text: '人口总量 (百万)'
+
+    //             },
+    //             labels: {
+    //                 overflow: 'justify'
+    //             }
+    //         },
+    //         tooltip: {
+    //             valueSuffix: ' 百万'
+    //         },
+    //         plotOptions: {
+    //             bar: {
+    //                 dataLabels: {
+    //                     enabled: true,
+    //                     allowOverlap: true
+    //                 }
+    //             }
+    //         },
+    //         legend: {
+    //             layout: 'vertical',
+    //             align: 'right',
+    //             verticalAlign: 'top',
+    //             x: -40,
+    //             y: 100,
+    //             floating: true,
+    //             borderWidth: 1,
+    //             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+    //             shadow: true
+    //         },
+    //         credits: {
+    //             enabled: false
+    //         },
+    //         series: [{
+    //             name: '1800 年',
+    //             data: [107, 31, 635, 203, 2]
+    //         }, {
+    //             name: '1900 年',
+    //             data: [133, 156, 947, 408, 6]
+    //         }, {
+    //             name: '2008 年',
+    //             data: [973, 914, 4054, 732, 34]
+    //         }]
+    //     });
+    // });
+    // $(function() {
+    //     $('#char3').highcharts({
+    //         chart: {
+    //             type: 'column'
+    //         },
+    //         title: {
+    //             text: '月平均降雨量'
+    //         },
+    //         subtitle: {
+    //             text: '数据来源: WorldClimate.com'
+    //         },
+    //         xAxis: {
+    //             categories: [
+    //                 '一月',
+    //                 '二月',
+    //                 '三月',
+    //                 '四月',
+    //                 '五月',
+    //                 '六月',
+    //                 '七月',
+    //                 '八月',
+    //                 '九月',
+    //                 '十月',
+    //                 '十一月',
+    //                 '十二月'
+    //             ],
+    //             crosshair: true
+    //         },
+    //         yAxis: {
+    //             min: 0,
+    //             title: {
+    //                 text: '降雨量 (mm)'
+    //             }
+    //         },
+    //         plotOptions: {
+    //             column: {
+    //                 pointPadding: 0.2,
+    //                 borderWidth: 0
+    //             }
+    //         },
+    //         series: [{
+    //             name: '东京',
+    //             data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+    //         }, {
+    //             name: '纽约',
+    //             data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+    //         }, {
+    //             name: '伦敦',
+    //             data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+    //         }, {
+    //             name: '柏林',
+    //             data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+    //         }]
+    //     });
+    // });
+    // $(function() {
+    //     $('#char4').highcharts({
+    //         chart: {
+    //             plotBackgroundColor: null,
+    //             plotBorderWidth: null,
+    //             plotShadow: false
+    //         },
+    //         title: {
+    //             text: '2014 某网站上各个浏览器的访问量占比'
+    //         },
+    //         tooltip: {
+    //             headerFormat: '{series.name}<br>',
+    //             pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+    //         },
+    //         plotOptions: {
+    //             pie: {
+    //                 allowPointSelect: true,
+    //                 cursor: 'pointer',
+    //                 dataLabels: {
+    //                     enabled: false
+    //                 },
+    //                 showInLegend: true
+    //             }
+    //         },
+    //         series: [{
+    //             type: 'pie',
+    //             name: '浏览器访问量占比',
+    //             data: [
+    //                 ['Firefox', 45.0],
+    //                 ['IE', 26.8], {
+    //                     name: 'Chrome',
+    //                     y: 12.8,
+    //                     sliced: true,
+    //                     selected: true
+    //                 },
+    //                 ['Safari', 8.5],
+    //                 ['Opera', 6.2],
+    //                 ['其他', 0.7]
+    //             ]
+    //         }]
+    //     });
+    // });
+    </script>
+</body>
+
+</html>

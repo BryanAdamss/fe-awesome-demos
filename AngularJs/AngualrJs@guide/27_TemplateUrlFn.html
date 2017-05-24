@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsTemplateUrlDirective">
+    <div ng-controller="Controller">
+        <div my-customer type="name"></div>
+        <div my-customer type="address"></div>
+    </div>
+    <script>
+    angular.module('docsTemplateUrlDirective', [])
+        .controller('Controller', ['$scope', function($scope) {
+            $scope.customer = {
+                name: '我是名字',
+                address: '我是地址'
+            };
+        }])
+        .directive('myCustomer', function() {
+            return {
+                templateUrl: function(elem, attr) {
+                    return 'tpl/27_customer-' + attr.type + '.html'; // 通过函数返回不同的templateUrl
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

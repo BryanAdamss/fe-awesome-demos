@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+    <style type="text/css">
+    .css-form input.ng-invalid.ng-touched {
+        background-color: #FA787E;
+    }
+    
+    .css-form input.ng-valid.ng-touched {
+        background-color: #78FA89;
+    }
+    </style>
+</head>
+
+<body ng-app="customTriggerExample">
+    <div ng-controller="ExampleController">
+        <form>
+            <label>Name:
+                <input type="text" ng-model="user.name" ng-model-options="{ updateOn: 'blur' }" />
+            </label>
+            <br />
+            <label>
+                Other data:
+                <input type="text" ng-model="user.data" />
+            </label>
+            <br />
+        </form>
+        <pre>username = "{{user.name}}"</pre>
+        <pre>userdata = "{{user.data}}"</pre>
+    </div>
+    <script>
+    angular.module('customTriggerExample', [])
+        .controller('ExampleController', ['$scope', function($scope) {
+            $scope.user = {};
+        }]);
+    </script>
+</body>
+
+</html>

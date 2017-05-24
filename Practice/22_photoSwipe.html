@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="js/default-skin/photoswipe.css">
+    <link rel="stylesheet" href="js/default-skin/default-skin/default-skin.css">
+</head>
+
+<body>
+    <!-- 缩略图 -->
+    <div class="myThumb">
+        <img src="https://farm3.staticflickr.com/2567/5697107145_3c27ff3cd1_m.jpg" itemprop="thumbnail" alt="Image description" />
+        <img src="https://farm2.staticflickr.com/1043/5186867718_06b2e9e551_m.jpg" itemprop="thumbnail" alt="Image description" />
+        <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
+        <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
+    </div>
+    <!-- Gallery -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/photoswipe.min.js"></script>
+    <script src="js/photoswipe-ui-default.js"></script>
+    <script type="text/javascript">
+    function openGallery(slides) {
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        var options = {
+            index: 0,
+            escKey: false,
+            arrowKeys: false,
+            loop: false,
+            pinchToClose: false,
+            showHideOpacity: true,
+            closeOnScroll: false,
+            errorMsg: '<div class="pswp__error-msg">图片无法加载</div>'
+        };
+        var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, slides, options);
+        gallery.init();
+    }
+
+
+    var slides = [{
+        src: 'http://placehold.it/100x100',
+        w: 100,
+        h: 100,
+        title: '11'
+    }, {
+        src: 'http://placehold.it/100x100',
+        w: 100,
+        h: 100,
+        title: '12'
+    }];
+
+    var slides2 = [{
+        src: 'http://placehold.it/200x200',
+        w: 200,
+        h: 200,
+        title: '21'
+    }, {
+        src: 'http://placehold.it/200x200',
+        w: 200,
+        h: 200,
+        title: '22'
+    }];
+    var slides3 = [{
+        src: 'http://placehold.it/300x300',
+        w: 300,
+        h: 300,
+        title: '31'
+    }, {
+        src: 'http://placehold.it/300x300',
+        w: 300,
+        h: 300,
+        title: '32'
+    }];
+    var slides4 = [{
+        src: 'http://placehold.it/400x400',
+        w: 400,
+        h: 400,
+        title: '41'
+    }, {
+        src: 'http://placehold.it/400x400',
+        w: 400,
+        h: 400,
+        title: '42'
+    }];
+    openGallery(slides);
+    </script>
+</body>
+
+</html>

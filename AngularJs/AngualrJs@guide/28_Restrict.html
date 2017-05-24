@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsRestrictDirective">
+    <div ng-controller="Controller">
+        <my-customer></my-customer>
+        <div my-customer>我无法被匹配</div>
+    </div>
+    <script>
+    angular.module('docsRestrictDirective', [])
+        .controller('Controller', ['$scope', function($scope) {
+            $scope.customer = {
+                name: 'Naomi',
+                address: '1600 Amphitheatre'
+            };
+        }])
+        .directive('myCustomer', function() {
+            return {
+                restrict: 'A', // 限制指令只能匹配element，restrict默认值为AE(匹配element和attribute)
+                templateUrl: 'tpl/26_my-customer.html'
+            };
+        });
+    </script>
+</body>
+
+</html>

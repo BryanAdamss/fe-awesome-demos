@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="myStatefulFilterApp">
+    <div ng-controller="MyController">
+        Input:
+        <input ng-model="greeting" type="text">
+        <br> Decoration:
+        <input ng-model="decoration.symbol" type="text">
+        <br> No filter: {{greeting}}
+        <br> Decorated: {{greeting | decorate}}
+        <br>
+    </div>
+    <script type="text/javascript">
+    angular.module('myStatefulFilterApp', [])
+        .filter('decorate', ['decoration', function(decoration) {
+
+            function decorateFilter(input) {
+                return decoration.symbol + input + decoration.symbol;
+            }
+            decorateFilter.$stateful = true;
+
+            return decorateFilter;
+        }])
+        .controller('MyController', ['$scope', 'decoration', function($scope, decoration) {
+            $scope.greeting = 'hello';
+            $scope.decoration = decoration;
+        }])
+        .value('decoration', {
+            symbol: '*'
+        });
+    </script>
+</body>
+
+</html>

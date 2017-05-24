@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="myReverseFilterApp">
+    <div ng-controller="MyController">
+        <input ng-model="greeting" type="text">
+        <br> No filter: {{greeting}}
+        <br> Reverse: {{greeting|reverse}}
+        <br> Reverse + uppercase: {{greeting|reverse:true}}
+        <br> Reverse, filtered in controller: {{filteredGreeting}}
+        <br>
+    </div>
+    <script type="text/javascript">
+    angular.module('myReverseFilterApp', [])
+        .filter('reverse', function() { // 自定义filter
+            return function(input, uppercase) {
+                input = input || '';
+                var out = '';
+                for (var i = 0; i < input.length; i++) {
+                    out = input.charAt(i) + out;
+                }
+                // conditional based on optional argument
+                if (uppercase) {
+                    out = out.toUpperCase();
+                }
+                return out;
+            };
+        })
+        .controller('MyController', ['$scope', 'reverseFilter', function($scope, reverseFilter) {
+            $scope.greeting = 'hello';
+            $scope.filteredGreeting = reverseFilter($scope.greeting);
+        }]);
+    </script>
+</body>
+
+</html>

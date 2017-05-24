@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="eventExampleApp">
+    <div ng-controller="EventController">
+        <button ng-click="clickMe($event)">Event</button>
+        <p><code>$event</code>: <pre> {{$event | json}}</pre></p>
+        <p><code>clickEvent</code>: <pre>{{clickEvent | json}}</pre></p>
+    </div>
+    <script type="text/javascript">
+    angular.module('eventExampleApp', []).
+    controller('EventController', ['$scope', function($scope) {
+        /*
+         * expose the event object to the scope
+         */
+        $scope.clickMe = function(clickEvent) {
+            $scope.clickEvent = simpleKeys(clickEvent);
+            console.log(clickEvent);
+        };
+
+        /*
+         * return a copy of an object with only non-object keys
+         * we need this to avoid circular references
+         */
+        function simpleKeys(original) {
+            return Object.keys(original).reduce(function(obj, key) {
+                obj[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
+                return obj;
+            }, {});
+        }
+    }]);
+    </script>
+</body>
+
+</html>
