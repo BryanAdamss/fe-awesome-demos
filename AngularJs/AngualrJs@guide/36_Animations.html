@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+    <!--   <script src="js/angular-1.6.4/angular.js"></script>
+    <script src="js/angular-1.6.4/angular-animate.js"></script> -->
+    <script src="http://code.angularjs.org/1.2.25/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.25/angular-animate.min.js"></script>
+    <style>
+    .main {
+        padding: 10px;
+        border: 1px solid black;
+        background: white;
+        transition: all .3s ease-in-out;
+        opacity: 1;
+    }
+    
+    .main.ng-hide {
+        opacity: 0;
+    }
+    
+    .main.ng-hide-add,
+    .main.ng-hide-remove {
+        transition: all linear 0.5s;
+    }
+    
+    .main.ng-hide-add.ng-hide-add-active,
+    .main.ng-hide-remove {
+        opacity: 0;
+    }
+    
+    .main.ng-hide-add,
+    .main.ng-hide-remove.ng-hide-remove-active {
+        opacity: 1;
+    }
+    </style>
+</head>
+
+<body ng-app="testAnimate">
+    <div ng-init="checked=true" ng-controller="myCtrl">
+        <label>
+            <input type="checkbox" ng-model="checked" style="float:left; margin-right:10px;"> 可见...
+        </label>
+        <div class="check-element main" ng-show="checked" style="clear:both;">
+            可见...
+        </div>
+    </div>
+    <script>
+    var app = angular.module('testAnimate', ["ngAnimate"]);
+    console.dir(angular);
+    app.controller("myCtrl", ["$scope", "$animate", function(scope, anim) {
+        console.log(anim);
+
+    }])
+    </script>
+</body>
+
+</html>

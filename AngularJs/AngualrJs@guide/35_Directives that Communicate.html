@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsTabsExample">
+    <my-tabs>
+        <my-pane title="Hello">
+            <p>Lorem ipsum dolor sit amet</p>
+        </my-pane>
+        <my-pane title="World">
+            <em>Mauris elementum elementum enim at suscipit.</em>
+            <p>
+                <a href ng-click="i = i + 1">counter: {{i || 0}}</a>
+            </p>
+        </my-pane>
+    </my-tabs>
+    <script>
+    angular.module('docsTabsExample', [])
+        .directive('myTabs', function() {
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope: {},
+                controller: ['$scope', function MyTabsController($scope) { // directive中的controller用来在不同指令中通信
+                    var panes = $scope.panes = [];
+
+                    $scope.select = function(pane) {
+                        angular.forEach(panes, function(pane) {
+                            pane.selected = false;
+                        });
+                        pane.selected = true;
+                    };
+
+                    this.addPane = function(pane) {
+                        if (panes.length === 0) {
+                            $scope.select(pane);
+                        }
+                        panes.push(pane);
+                    };
+                }],
+                templateUrl: 'tpl/35_my-tabs.html'
+            };
+        })
+        .directive('myPane', function() {
+            return {
+                require: '^^myTabs', // 查找名为myTabs的controller，^代表在父元素上搜索
+                restrict: 'E',
+                transclude: true,
+                scope: {
+                    title: '@'
+                },
+                link: function(scope, element, attrs, tabsCtrl) { // tabsCtrl为require的控制器的实例
+                    tabsCtrl.addPane(scope);
+                },
+                templateUrl: 'tpl/35_my-pane.html'
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/angular-1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="docsIsoFnBindExample">
+    <div ng-controller="Controller">
+        {{message}}
+        <my-dialog ng-hide="dialogIsHidden" on-close="hideDialog(message)">
+            Check out the contents, {{name}}!
+        </my-dialog>
+    </div>
+    <script>
+    angular.module('docsIsoFnBindExample', [])
+        .controller('Controller', ['$scope', '$timeout', function($scope, $timeout) {
+            $scope.name = 'Tobias';
+            $scope.message = '';
+            $scope.hideDialog = function(message) {
+                $scope.message = message;
+                $scope.dialogIsHidden = true;
+                // $timeout(function() {
+                //     $scope.message = '';
+                //     $scope.dialogIsHidden = false;
+                // }, 2000);
+            };
+        }])
+        .directive('myDialog', function() {
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope: {
+                    'close': '&onClose'
+                },
+                templateUrl: 'tpl/33_my-dialog-close.html'
+            };
+        });
+    </script>
+</body>
+
+</html>
