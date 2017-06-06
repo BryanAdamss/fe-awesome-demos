@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-controller="myController">
+        <div book-list></div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    angular.module('myApp', []).directive("bookList", function() {
+        return {
+            restrict: "EAMC",
+            template: '<div><ul><li ng-repeat="book in books">{{book.name}}</li></ul><book-add></book-add></div>', // bookList指令中包含一个booAdd指令
+            replace: true,
+            controller: function($scope) {
+                this.addBook = function() { // 在controller上添加一个需要暴露给bookAdd的接口
+                    $scope.$apply(function() { // 直接用push，无法触发脏检查，需要使用$apply主动触发一次
+                        $scope.books.push({
+                            name: "angular"
+                        });
+                    });
+
+                };
+            },
+            controllerAs: "bookListCtrl" // 给controller起个别名
+
+        }
+    }).directive("bookAdd", function() {
+        return {
+            restrict: "EAMC",
+            template: '<button>添加</button>',
+            replace: true,
+            require: "^bookList", // 在父级中查找bookList指令
+            link: function(scope, iElement, iAttrs, bookListCtrl) { // 将bookList中controller做为第四个参数注入
+                iElement.on("click", function() {
+                    bookListCtrl.addBook();
+                });
+            }
+        }
+    }).controller('myController', ['$scope', function($scope) {
+        console.log($scope);
+        $scope.books = [{
+            name: "php"
+        }, {
+            name: "js"
+        }, {
+            name: "java"
+        }];
+    }]);
+    </script>
+</body>
+
+</html>

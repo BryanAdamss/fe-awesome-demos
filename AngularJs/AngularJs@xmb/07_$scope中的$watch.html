@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-app="test">
+        <div ng-controller="myCtrl">
+            <input type="text" ng-model="data.name">
+            <input type="text" ng-model="data.age">
+            <div>{{data.name}}</div>
+            <div>次数{{count}}</div>
+        </div>
+    </div>
+    <pre>
+       $watch主要用来手动的去监听一个变量，如果变化就触发某些事情
+    </pre>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var test = angular.module("test", []);
+    test.controller("myCtrl", ["$scope", function($scope) {
+        // $scope.name = "张三";
+        // $scope.count = 0;
+        // $scope.$watch('name', function(newValue, oldValue) {// 检查某个变量
+        //     console.log(oldValue + "," + newValue);
+        //     $scope.count++;
+        //     if ($scope.count > 5) {
+        //         $scope.name = "次数已经大于5次";
+        //     }
+        // });
+
+        $scope.data = {
+            name: "张三",
+            age: 18
+        };
+        $scope.count = 0;
+
+        $scope.$watch('data', function(newValue, oldValue) { // 检查某个引用类型值，需要用到第三个参数，为true,代表只要object中的一个属性变化了就会触发，默认为false,只有当data被赋值成另一个，才会触发
+            $scope.count++;
+            console.log(oldValue);
+            console.log(newValue);
+        }, true);
+    }]);
+    </script>
+</body>
+
+</html>

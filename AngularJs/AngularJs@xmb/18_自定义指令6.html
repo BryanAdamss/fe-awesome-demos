@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-controller="myController">
+        {{books}}
+        <div book-list book-a="books" book-b="books" book-c="{{title}}"></div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    angular.module('myApp', []).directive("bookList", function() {
+        return {
+            restrict: "EAMC",
+            template: '<div><h1>{{title}}</h1><ul><li ng-repeat="book in books">{{book.name}}</li></ul> </div>', // bookList指令中包含一个booAdd指令
+            replace: true,
+            // scope: false,// scope为独立作用域，当为false，表示直接使用父级作用域，为true，表示创建一个作用域并继承自父作用域；当scope为一个对象时，则表示创建了一个不继承父作用域的继承链的独立作用域(就是可以访问到父作用域，但是无法访问到父作用域之上的作用域)
+            scope: {
+                // &attr表示作用域将父作用域的属性包装成一个函数，从而以函数的形式读写父作用域的属性；一般用在执行父作用域上的某个事件处理函数；若作用域和父作用域的属性名称一要，则可以使用简写形式&,@和=同理
+                a: "&bookA" // 会查找当前指令匹配的元素上的bookA特性，然后取得值books，并将books做为a调用的返回值进行返回；
+
+
+                // =attr会将作用域上的属性和父级的作用域上的属性进行双向绑定，任何一方的修改都会修改另外一方
+                // b: "=bookB" // 会查找当前指令匹配的元素上的bookB特性，会将其值和b进行双向绑定
+
+                // @attr代表只能读取父级作用域上的值，单向的，并只能读取简单值，引用值不行，因为他最终得到的只会是简单值；
+                // c: "@bookC"
+            },
+            controller: function($scope) {
+                $scope.books = $scope.a();
+                console.log($scope.a());
+
+                // $scope.books = $scope.b;
+                // $scope.b.push({
+                //     name: "nodeJs"
+                // });
+                // console.log($scope.b);
+
+                // $scope.title = $scope.c;
+                // console.log($scope.c);
+            },
+
+
+        }
+    }).controller('myController', ['$scope', function($scope) {
+        $scope.books = [{
+            name: "php"
+        }, {
+            name: "js"
+        }, {
+            name: "java"
+        }];
+
+        $scope.title = "书籍";
+    }]);
+    </script>
+</body>
+
+</html>

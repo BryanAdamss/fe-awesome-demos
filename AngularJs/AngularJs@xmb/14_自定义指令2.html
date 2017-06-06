@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-app="myApp">
+        <div ng-controller="myController">
+            <my-tag>
+                自定义标签
+            </my-tag>
+        </div>
+        <script type="text/ng-template" id="ngTpl">
+            <h1>Hello 我是script模板 + {{name}}</h1>
+        </script>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    angular.module('myApp', []).directive('myTag', function() {
+        return {
+            restrict: "E",
+            replace: true, // 在针对E时，可以将replace设置为true
+            // templateUrl: 'tpl/testTpl.html', //设置模板路径，路径是相对当前文件的；当replace为true时，tpl文件内容必须被包裹在一个标签内，也即tpl文件只能有一个根标签；即不能存在有文本未被标签包裹，也不能存在多个根标签；
+            // template: "sss", //replace为true时，也一样，得有个外层标签，否则会报错
+            templateUrl: "ngTpl", // templateUrl中可以指定type=text/ng-template的script为模板，只需要在templateUrl中写上script模板的id
+        };
+    }).controller('myController', ['$scope', function($scope) {
+        $scope.name = "测试名字";
+    }]);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-controller="myController">
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    // 设置第三个参数和使用config都数据对ng进行配置
+    angular.module('myApp', [], ['$provide', function($provide) { // 显示依赖注入
+        $provide.constant();
+        $provide.value();
+        $provide.factory();
+        $provide.service();
+        $provide.provider();
+    }]);
+
+    angular.module('myApp', [], function($provide) { // 隐式依赖注入
+        $provide.constant();
+        $provide.value();
+        $provide.factory();
+        $provide.service();
+        $provide.provider();
+    });
+
+    angular.module('myApp', []).config(['$provide', function($provide) { // 使用config
+        $provide.constant();
+        $provide.value();
+        $provide.factory();
+        $provide.service();
+        $provide.provider();
+    }]);
+
+    // 快捷方法
+    angular.module('myApp', []).vaule();
+    angular.module('myApp', []).constant();
+    angular.module('myApp', []).factory();
+    angular.module('myApp', []).service();
+    angular.module('myApp', []).provider();
+
+    // run()进行的是初始化操作，他会在config后，用户实际操作之前执行
+    angular.module('myApp', []).run(function() {
+        xxxx
+    });
+    </script>
+</body>
+
+</html>

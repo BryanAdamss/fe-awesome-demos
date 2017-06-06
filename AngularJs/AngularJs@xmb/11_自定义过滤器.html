@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="myController">
+        <ul>
+            <li ng-repeat="user in data |filterAge">
+                {{user.name}} {{user.age}} {{user.city}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var myApp = angular.module("myApp", [], function($filterProvider, $provide, $controllerProvider) {
+
+        $provide.service("Data", function() {
+            return [{
+                name: "张三",
+                age: 20,
+                city: "上海"
+            }, {
+                name: "李四",
+                age: 30,
+                city: "北京"
+            }];
+        });
+        // 注册自定义过滤器第一种方法
+        // $filterProvider.register("filterAge", function() { // 会传入每个需要过滤的元素
+        //     return function(obj) { // return的匿名函数会被调用
+        //         var newObj = [];
+        //         angular.forEach(obj, function(value, key) {
+        //             console.log(value);
+        //             if (value.age > 20) {
+        //                 newObj.push(value);
+        //             }
+        //         });
+        //         return newObj; // 返回需要保留的数据
+        //     };
+        // });
+        $controllerProvider.register("myController", function($scope, Data) {
+            $scope.data = Data;
+        });
+    });
+    // 注册自定义过滤器第二种方法
+    myApp.filter("filterAge", function() {
+        return function(obj) {
+            var newObj = [];
+            angular.forEach(obj, function(value, key) {
+                if (value.age > 20) {
+                    newObj.push(value);
+                }
+            });
+            return newObj;
+        };
+    });
+    </script>
+</body>
+
+</html>

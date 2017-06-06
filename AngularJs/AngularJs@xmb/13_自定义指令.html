@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+	自定义指令
+		angular.module().directive();
+		angular.module("moduleName",["依赖"],[$compileProvider,function(){
+			$compileProvider.directive(); 
+		}]);
+</pre>
+    <div ng-app="myApp">
+        <my-tag>
+            自定义标签
+        </my-tag>
+        <div class="my-tag">自定义标签2</div>
+        <div my-tag>自定义标签3</div>
+        <!-- directive:my-tag -->
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    angular.module('myApp', [], ["$compileProvider", function($compileProvider) {
+        $compileProvider.directive('myTag', function() {
+            return {
+                restrict: "EAMC", // 默认为EA，即匹配element和attribute
+                template: '<h1>test</h1>', // 注意在匹配到M时，不会将template显示到页面上，可以通过判断compile执行次数，来确定是否匹配到M
+                replace: false, // 默认为false，只替换匹配元素的内容；若为true，则掉匹配元素+内容0会被template替换
+                compile: function() {
+                    console.log("1"); // 4次，代表匹配到M了
+                }
+            };
+        });
+    }]);
+
+    // angular.module('myApp', []).directive('myTag', function() {
+    //     return {
+    //         restrict: "E",
+    //         template: '<h1>test2</h1>'
+    //     };
+    // });
+    </script>
+</body>
+
+</html>

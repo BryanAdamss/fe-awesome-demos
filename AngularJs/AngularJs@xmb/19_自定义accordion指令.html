@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div ng-controller="myController">
+        <div class="container">
+            <accordion>
+                <accordion-item ng-repeat="item in items" heading="{{item.title}}">
+                    {{item.content}}
+                </accordion-item>
+            </accordion>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    var myApp = angular.module('myApp', []);
+    // 数据
+    myApp.factory('Data', function DataFactory() { // 利用factory抽象一个数据services
+        return [{
+            title: "No1",
+            content: "No1-content"
+        }, {
+            title: "No2",
+            content: "No2-content"
+        }, {
+            title: "No3",
+            content: "No3-content"
+        }];
+    });
+    // 控制器
+    myApp.controller('myController', ['$scope', 'Data', function($scope, Data) { // Data绑定到作用域上
+        $scope.items = Data;
+    }]);
+    myApp.directive("accordion", function() { // 外层指令
+        return {
+            restrict: "E",
+            replace: true,
+            transclude: true, // 需要保留原有数据
+            template: '<div class="panel-group" ng-transclude></div>', // 指定模板并指明原始数据保存位置
+            controller: function() { // 因为内层指令有个独立scope，无法访问其他作用域，需要借助外层指令上的controller
+                this.groups = []; // 保存每次点击的scope
+                this.closeOtherItem = function(nowScope) { // 关闭其他
+                    angular.forEach(this.groups, function(scope, key) {
+                        if (scope !== nowScope) {
+                            scope.isOpen = false;
+                        }
+                    });
+                };
+            },
+            controllerAs: "accordionController"
+
+        }
+    });
+    myApp.directive("accordionItem", function() {
+        return {
+            restrict: "E",
+            replace: true,
+            transclude: true, // 指明要保留原始数据
+            templateUrl: "tpl/accordionItem.html",
+            scope: {
+                heading: "@" // 单向绑定到匹配元素的heading的值上
+            },
+            require: "^accordion", // 依赖accordion
+            link: function(scope, iElement, iAttrs, accordionController) { // 需要accordionController中的closeOtherItem方法
+                scope.isOpen = false; // 通过isOpen配合特殊class实现隐藏
+                scope.changeOpen = function() {
+                    scope.isOpen = !scope.isOpen;
+                    accordionController.closeOtherItem(scope);
+                };
+                accordionController.groups.push(scope);
+            }
+
+        };
+    });
+    </script>
+</body>
+
+</html>

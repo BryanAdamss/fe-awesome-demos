@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-app="testApply">
+        <div ng-controller="myCtrl">
+            {{this.date}}
+        </div>
+    </div>
+    <pre>
+        $apply()方法可以在angular框架之外执行angularJs的表达式
+            ng自己的指令在执行后触发一次脏检查,非ng的指令(方法)并不会触发脏检查，需要手动触发使用$apply方法，进入angualr的context，然后自动通过$digest去触发脏检查。
+
+            $apply如果不给参数，会检查该$scope中的所有监听的属性，推荐给上参数
+
+        $apply方法过程
+            $apply->$eval->$parse->$watch->$digest
+    </pre>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var test = angular.module("testApply", []);
+    test.controller("myCtrl", ["$scope", function($scope) {
+        $scope.date = new Date();
+        // setInterval(function() { // 这样写，虽然date值变了，但页面不知道它变了，所以页面并没有实时更新，原因是用的不是ng的方法，无法触发脏检查
+        //     $scope.date = new Date();
+        // }, 1000);
+
+        setInterval(function() {
+            $scope.$apply(function() { // $apply执行完后会触发一次脏检查
+                $scope.date = new Date();
+            });
+        }, 1000);
+    }]);
+    </script>
+</body>
+
+</html>

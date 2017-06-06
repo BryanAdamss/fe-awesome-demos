@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-controller="myController">
+        <my-tag>
+            <h2>原始数据{{name}}</h2>
+        </my-tag>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    angular.module('myApp', []).directive("myTag", function() {
+        return {
+            restrict: "E",
+            replace: true,
+            template: '<h1>新数据 <span ng-transclude></span></h1>', //在模板中用ng-transclude指定原始数据的保存位置
+            transclude: true, // 指定需要保留原始数据
+        };
+    }).controller('myController', ['$scope', function($scope) {
+        $scope.name = "张三";
+    }]);
+    </script>
+</body>
+
+</html>

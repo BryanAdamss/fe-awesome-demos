@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div ng-controller="myController">
+        <div ng-repeat="user in users" my-tag my-tag2></div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script>
+    angular.module('myApp', []).directive('myTag', function() {
+        return {
+            restrict: "EAMC",
+            template: '<div>{{user.name}}</div>',
+            replace: true,
+            compile: function(tElement, tAttrs, transclude) { // 主要用来在实际渲染之前修改DOM结构，compile必须返回一个link函数
+                // console.log(tElement); //返回匹配的当前类jQuery对象
+                // console.log(tAttrs); // 返回tElement上的所有attr
+                // console.log(transclude); // 如果指令中transclue为true，则它返回的就是被transclude的原始数据
+                console.log("myTag 编译阶段");
+                // 在实际渲染前变更DOM结构
+                tElement.append(angular.element("<h1>test</h1>"));
+                return { // 若在compile中直接return一个函数，则返回的是postLink函数
+                    pre: function(scope, iElement, iAttrs, controller) { // preLink是在compile阶段结束后，link阶段之前触发
+                        console.log("myTag preLink");
+                    },
+                    post: function(scope, iElement, iAttrs, controller) { // postLink是指令link后触发
+                        console.log("myTag postLink");
+                    }
+                }
+            },
+            link: function(scope, iElement, iAttrs, controller) { // 主要在link中进行绑定事件和操纵DOM；一般定义了compile，就不会定义link了;此处的link其实就是compile中postLink
+                console.log("因为上面执行了，compile，所以我不会再被执行了");
+            }
+        }
+    }).directive('myTag2', function() {
+        return {
+            restrict: "EAMC",
+            compile: function(tElement, tAttrs, transclude) {
+                console.log("myTag2 编译阶段");
+                return {
+                    pre: function() {
+                        console.log("myTag2 preLink");
+                    },
+                    post: function() {
+                        console.log("myTag2 postLink");
+                    }
+                }
+            }
+        }
+    }).controller("myController", ["$scope", function($scope) {
+        $scope.users = [{
+            id: 10,
+            name: "张三"
+        }, {
+            id: 20,
+            name: "李四"
+        }];
+    }]);
+    </script>
+</body>
+
+</html>

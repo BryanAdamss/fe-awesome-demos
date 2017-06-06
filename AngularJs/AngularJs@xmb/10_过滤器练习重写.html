@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .orderColor {
+        color: red;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th {
+        padding: 10px 0;
+    }
+    
+    th:after {
+        content: "﹀";
+    }
+    
+    th.is_cur:after {
+        content: "︿";
+        color: red;
+    }
+    
+    td {
+        border: 1px solid #c7c7c7;
+        padding: 10px 0;
+    }
+    
+    .container {
+        width: 800px;
+        margin: 0 auto;
+        text-align: center
+    }
+    </style>
+</head>
+
+<body ng-app="product">
+    <div class="container" ng-controller="productController">
+        <input type="text" ng-model="search" placeholder="Search">
+        <table>
+            <thead>
+                <tr>
+                    <th ng-class="{is_cur:order===''}" ng-click="changeOrder('id')">ID</th>
+                    <th ng-class="{is_cur:order===''}" ng-click="changeOrder('name')">产品名称</th>
+                    <th ng-class="{is_cur:order===''}" ng-click="changeOrder('price')">产品单价</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in data |filter:search |orderBy:order+orderType">
+                    <!-- 使用filter过滤数据，要保留的关键字为model中绑定的search -->
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price |currency:'￥'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var product = angular.module("product", []);
+    product.controller('productController', function($scope, productData) {
+        $scope.data = productData;
+        $scope.orderType = 'id';
+        $scope.order = "-";
+        $scope.changeOrder = function(type) {
+            $scope.orderType = type;
+            if ($scope.order === "") {
+                $scope.order = "-";
+            } else {
+                $scope.order = "";
+            }
+        };
+
+    });
+    product.service('productData', function() {
+        return [{
+            id: 8888,
+            name: "iphone3",
+            price: 3000
+        }, {
+            id: 4444,
+            name: "iphone4",
+            price: 4000
+        }, {
+            id: 5555,
+            name: "ipad5",
+            price: 5000
+        }, {
+            id: 6666,
+            name: "iphone6",
+            price: 6000
+        }, {
+            id: 7777,
+            name: "iphone7",
+            price: 7000
+        }];
+    });
+    </script>
+</body>
+
+</html>

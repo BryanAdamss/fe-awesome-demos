@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="myCtrl">
+        <p> {{ now }}</p>
+        <h2>年</h2>
+        <p> {{ now |date:'y'}}</p>
+        <p> {{ now |date:'yy'}}</p>
+        <p> {{ now |date:'yyyy'}}</p>
+        <h2>月</h2>
+        <p> {{ now |date:'M'}}</p>
+        <p> {{ now |date:'MM'}}</p>
+        <!-- 月份英文简写 -->
+        <p> {{ now |date:'MMM'}}</p>
+        <!-- 月份英文全拼 -->
+        <p> {{ now |date:'MMMM'}}</p>
+        <h2>日</h2>
+        <p> {{ now |date:'d'}}</p>
+        <p> {{ now |date:'dd'}}</p>
+        <h2>周几</h2>
+        <p> {{ now |date:'EEE'}}</p>
+        <p> {{ now |date:'EEEE'}}</p>
+        <p> {{ now | date:'yyyy-MM-dd hh:mm:ss' }}</p>
+        <h2>小时</h2>
+        <!-- 24小时制 -->
+        <p> {{ now |date:'H'}}</p>
+        <p> {{ now |date:'HH'}}</p>
+        <!-- 12小时制，a为AM、PM -->
+        <p> {{ now |date:'h a'}}</p>
+        <p> {{ now |date:'hh a'}}</p>
+        <h2>分</h2>
+        <p> {{ now |date:'m'}}</p>
+        <p> {{ now |date:'mm'}}</p>
+        <h2>秒</h2>
+        <p> {{ now |date:'s'}}</p>
+        <p> {{ now |date:'ss'}}</p>
+        <p> {{ now | date:'yyyy-MM-dd hh:mm:ss' }}</p>
+        <h2>filter</h2>
+        <p>
+            {{city}}
+        </p>
+        <p>
+            {{city|filter:'上海'}}
+        </p>
+        <p>
+            {{city|filter:{name:'北京'} }}
+        </p>
+        <h2>orderBy</h2>
+        <p>
+            {{city |orderBy:'id'}}
+        </p>
+        <p>
+            {{city |orderBy:'-id'}}
+        </p>
+        <h2>json</h2>
+        <p>
+            {{city|json}}
+        </p>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    var test = angular.module("myApp", []);
+    test.controller("myCtrl", ["$scope", function($scope) {
+        $scope.now = new Date();
+        $scope.city = [{
+            id: "001",
+            name: "上海"
+        }, {
+            id: "002",
+            name: "北京"
+        }];
+    }]);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .is-red {
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <pre>
+        渲染指令
+            ng-bind->绑定单个变量
+            ng-bind-template->ng-bind无法一次绑定多个数据
+                ng-bind="name age"->出错
+                ng-bind-template="{{name age}}"
+            ng-bind-html->ng-bind-template无法绑定html，所以可以用ng-bind-html绑定html
+            ng-init->进行初始化，不要滥用，尽量在controller中初始化；
+            ng-repeat->遍历渲染数组，提供一些标识变量
+                $index->当前索引
+                $first->当前数组元素是否为第一个元素
+                $middle->当前数组元素是否为中间元素
+                $last->当前数组元素是否为最后一个元素
+            ng-include->加载其他文件
+        事件指令->相较原生事件，它会在结束后触发脏检查；可以将$event传入事件处理函数中
+            ng-click
+            ng-change
+        节点指令
+            ng-style->传入一个样式object，并将样式写到元素的style特性上
+            ng-class->传入一个样式类object，控制class类的有无，遇到特殊字符如-等，需要添加单引号
+            ng-class-odd/ng-class-even->在ng-repeat中，如果是奇数用odd中的样式，偶数用even
+            ng-show/hide->元素的显示隐藏
+            ng-if->根据表达式的真假值，显示元素，类似ng-show
+            ng-switch->类似switch..case，匹配哪个case就显示哪个
+            ng-src->类似原始的src，当在原始的src中放置一个{{imgSrc}}表达式，在ng还没执行到时，会直接显示{{imgSrc}}，从而导致图片无法被正确加载，使用ng-src后，会在ng执行到后，将src设置为ng-src的值，类似一种延迟加载图片技术
+            ng-href->类似ng-src
+        </pre>
+    <div ng-app="myApp">
+        <div ng-controller="myController">
+            <ul>
+                <li ng-repeat="item in testArr" ng-class-odd="'is-red'">
+                    {{ $index }} {{ $first }} {{ $middle }} {{ $last }}
+                </li>
+            </ul>
+        </div>
+        <div ng-controller="buttonController">
+            <button ng-click="changeStatus($event)">切换状态</button>
+            <p ng-class="{'is-red':status}">{{status}}</p>
+            <p ng-style="{color:'red',fontSize:'20px'}">大学生深刻每页表明室内前后兴奋规定一道组合拿出广西出租总</p>
+            <p ng-style="defaultStyle">大学生深刻每页表明室内前后兴奋规定一道组合拿出广西出租总</p>
+            <ul ng-switch="status">
+                <li ng-switch-when="false">switch-false</li>
+                <li ng-switch-when="true">switch-true</li>
+                <li ng-switch-default>switch-default</li>
+            </ul>
+        </div>
+        <div ng-include="'01_数据绑定.html'"></div>
+    </div>
+    <script type="text/javascript" src="js/angularjs.js"></script>
+    <script type="text/javascript">
+    angular.module('myApp', []).controller('myController', ['$scope', function($scope) {
+        $scope.testArr = ["a", "b", "c", "d"];
+    }]).controller('buttonController', ['$scope', function($scope) {
+        $scope.status = false;
+        $scope.changeStatus = function(event) {
+            $scope.status = !$scope.status;
+
+            angular.element(event.target).text("切换状态" + $scope.status); // angualr.element将dom对象转换成类jquery对象
+        };
+        $scope.defaultStyle = {
+            color: 'blue',
+            fontSize: '20px',
+            fontWeight: 'bold'
+        };
+    }])
+    </script>
+</body>
+
+</html>
