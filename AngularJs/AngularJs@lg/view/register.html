@@ -1,0 +1,42 @@
+<div class="Login">
+    <form class="Form" name="registerForm">
+        <fieldset class="Form-group">
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <label class="Form-label">
+                        <img src="image/account.png" alt="">
+                    </label>
+                    <input type="text" placeholder="输入手机号" class="Form-field" name="phone" validator="required,phone" ng-model="user.phone">
+                </div>
+            </div>
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <label class="Form-label">
+                        <img src="image/lock.png" alt="">
+                    </label>
+                    <input type="password" placeholder="输入密码" class="Form-field" name="password" validator="required,password" ng-model="user.password">
+                </div>
+            </div>
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <input type="text" placeholder="输入验证码" class="Form-field is-check" ng-model="user.code" name="code" validator="required">
+                    <span class="Form-info" ng-class="{'is-disabled':time}" ng-click="time?1==1:send();" ng-bind="time?time:'发送短信'">发送短信</span>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="Form-group">
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <button type="button" class="Form-btn is-register" validation-submit="registerForm" ng-click="submit();">注册</button>
+                </div>
+            </div>
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <button type="button" class="Form-btn is-login" ui-sref="login">登陆</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <!-- <div class="Totast" id="messageWp"></div> -->
+    <!-- <button ng-click="btn=!btn;" ng-model="btn" ng-init="btn=false">show</button> -->
+</div>

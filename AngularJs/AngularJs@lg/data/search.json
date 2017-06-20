@@ -1,0 +1,17 @@
+[
+  {
+    "id": "sf1232",
+    "imageUrl": "/image/company-1.jpg",
+    "job": "WEB前端",
+    "companyId": "mok1232",
+    "companyName": "慕课网",
+    "cityId": "0",
+    "cityName": "北京",
+    "experience": "3-5年",
+    "education": "本科",
+    "type": "成熟型",
+    "scale": "50-100",
+    "industry": "互联网",
+    "salary": "10k-20k"
+  }
+]

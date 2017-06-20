@@ -1,0 +1,13 @@
+<div class="Search">
+    <a href="javascript:;" class="Search-cancle" ng-click="name='';search();">取消</a>
+    <input type="search" class="Search-field" autocomplete="off" placeholder="搜索职位/公司/城市" ng-model="name">
+    <a href="javascript:; " class="Search-confirm " ng-click="search();">
+        <img src="image/search.png" alt="" width="12" height="12">&nbsp;搜索
+    </a>
+</div>
+<div app-tab list="tabList" tab-click="tClick(id,name);"></div>
+<div style="margin-top:85px;">
+    <div app-position-list source="positionList" filter-obj="filterObj"></div>
+</div>
+<div app-foot></div>
+<div app-sheet list="sheet.list" visible="sheet.visible" select="sClick(id,name);"></div>

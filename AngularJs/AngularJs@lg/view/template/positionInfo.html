@@ -1,0 +1,8 @@
+<div class="positionInfo">
+    <p><span ng-bind="pos.name">销售</span><span class="hasMarginLeft hasColorRed" ng-bind="pos.salaryName">3k-5k</span></p>
+    <p><span ng-bind="pos.cityName">上海</span><span class="hasMarginLeft" ng-bind="pos.experience">1-3年</span><span class="hasMarginLeft" ng-bind="pos.education">博士生</span></p>
+    <p ng-bind="pos.benefit">成长空间大</p>
+    <div class="star" ng-show="isLogin" ng-click="favorite();">
+        <img ng-src="{{imagePath}}" alt="">
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div app-head-bar head-title="职位详情"></div>
+<div app-position-info pos="position" is-login="isLogin" is-active="position.select"></div>
+<div app-company-info com="company"></div>
+<div class="positionBrief">
+    <h4>职位描述</h4>
+    <h5>岗位职责：</h5>
+    <pre ng-bind="position.description">1.销售商品<br>2.xxxxx</pre>
+</div>
+<button class="bottom-btn" ng-bind="message" ng-click="go();"></button>

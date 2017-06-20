@@ -1,0 +1,20 @@
+{
+    "id": "p3",
+    "imageUrl": "/image/company-3.png",
+    "name": "销售",
+    "companyId": "c3",
+    "companyName": "千度",
+    "cityId": "c1",
+    "cityName": "上海",
+    "scaleId": "s3",
+    "scaleName": "500人以上",
+    "industryId": "i1",
+    "industryName": "互联网",
+    "salaryId": "s2",
+    "salaryName": "3k-5k",
+    "experience": "1-3年",
+    "education": "专科",
+    "benefit": "成长空间大",
+    "description": "1.销售产品;\n2.扫厕所;"
+
+}

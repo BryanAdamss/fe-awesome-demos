@@ -1,0 +1,36 @@
+<div class="Login">
+    <form class="Form" name="loginForm">
+        <fieldset class="Form-group">
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <label class="Form-label">
+                        <img src="image/account.png" alt="">
+                    </label>
+                    <input type="text" placeholder="输入手机号" class="Form-field" name="phone" validator="required,phone" ng-model="user.phone">
+                </div>
+            </div>
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <label class="Form-label">
+                        <img src="image/lock.png" alt="">
+                    </label>
+                    <input type="password" placeholder="输入密码" class="Form-field" name="password" validator="required,password" ng-model="user.password">
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="Form-group">
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <button type="submit" class="Form-btn is-login" validation-submit="loginForm" ng-click="submit();">登陆</button>
+                </div>
+            </div>
+            <div class="Form-row">
+                <div class="Form-cell">
+                    <button type="button" class="Form-btn is-register" ui-sref="register" ui-sref="register">注册</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <!--    <div class="Totast" ng-show="btn" onclick="alert('ss');">Lorem ipsum dolor</div>
+    <button ng-click="btn=!btn;" ng-model="btn" ng-init="btn=false">show</button> -->
+</div>

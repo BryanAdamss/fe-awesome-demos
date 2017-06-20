@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <style>
+    html {
+        font: 16px/1.625 arial, "Microsoft YaHei", "Hiragino Sans GB", SimSun, sans-serif;
+    }
+    
+    body {
+        margin: 0;
+    }
+    
+    .active {
+        color: red;
+        font-weight: bolder;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>AngularJS Home Page (Ui-router Demonstration)</h1>
+    <div ui-view></div>
+    <script type="text/javascript" src="js/angular-1.2.32/angular.js"></script>
+    <script type="text/javascript" src="js/angular-ui-router.min.js"></script>
+    <script>
+    var myApp = angular.module("myApp", ['ui.router']);
+    myApp.config(function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.when("", "/PageTab");
+        $stateProvider.state("PageTab", {
+                url: "/PageTab",
+                templateUrl: "tpl/PageTab.html"
+            })
+            .state("PageTab.Page1", {
+                url: "/Page1",
+                templateUrl: "tpl/login.html"
+            }).state("PageTab.Page2", {
+                url: "/Page2",
+                templateUrl: "tpl/register.html"
+            })
+
+    });
+    </script>
+</body>
+
+</html>

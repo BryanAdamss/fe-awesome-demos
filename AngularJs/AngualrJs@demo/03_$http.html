@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <style>
+    html {
+        font: 16px/1.625 arial, SimSun, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    
+    body {
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <pre>
+    $http
+        $http下的常用方法
+            get、delete、head、jsonp等接收两个参数，一个url，一个config对象
+            post、put接收url、config、data(要发送给服务器的数据)
+    $http接收一个config对象
+        method
+        url
+        params
+        data
+        headers
+        transformRequest
+        transformResponse
+        cache
+        timeout
+        withCredentials
+        responseType
+
+</pre>
+    <button c-test>点我</button>
+    <script type="text/javascript" src="js/angular-1.2.32/angular.js"></script>
+    <script>
+    angular.module('myApp', []).directive('cTest', ['$http', function($http) {
+        return {
+            restrict: 'A',
+            link: function(scope, iEle, iAttar) {
+                iEle.on('click', function() {
+                    $http({
+                        method: 'JSONP',
+                        url: 'https://api.github.com/users/BryanAdamss/events/?callback=JSON_CALLBACK'
+                    }).success(function(data) {
+                        console.log(data);
+                    });
+                    // $http({
+                    //     method: 'JSONP',
+                    //     url: 'https://api.github.com/users/BryanAdamss/events/?callback=JSON_CALLBACK'
+                    // }).then(function(resp) {
+                    //     console.log(resp);
+                    // });
+                });
+            }
+        }
+    }]);
+    </script>
+</body>
+
+</html>

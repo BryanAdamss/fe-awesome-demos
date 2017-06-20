@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/require-2.3.3.min.js" data-main="js/04_main.js"></script>
+    <style>
+    html {
+        height: 100%;
+        font: 16px/1.625 arial, "Microsoft YaHei", \5b8b\4f53, "Hiragino Sans GB", , sans-serif;
+    }
+    
+    body {
+        margin: 0;
+    }
+    
+    .SortCursor {
+        cursor: pointer;
+        position: relative;
+        margin-left: 2px;
+    }
+    
+    .SortCursor:before {
+        content: "▲";
+        font-size: 12px;
+        position: absolute;
+        top: -6px;
+    }
+    
+    .SortCursor:after {
+        content: "▼";
+        font-size: 12px;
+        position: absolute;
+        top: 4px;
+    }
+    
+    th.is-up>.SortCursor:before {
+        color: #ed5e60;
+    }
+    
+    th.is-down>.SortCursor:after {
+        color: #ed5e60;
+    }
+    </style>
+</head>
+
+<body>
+    <table class="DataTable">
+        <thead>
+            <tr>
+                <th width="80" data-sort>排名</th>
+                <th data-sort>交警大队ID</th>
+                <th>交警大队名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3</td>
+                <td>5</td>
+                <td>庐阳大队</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>0</td>
+                <td>包河大队</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>6</td>
+                <td>蜀山大队</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>8</td>
+                <td>瑶海大队</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2</td>
+                <td>高新大队</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>1</td>
+                <td>滨湖大队</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>7</td>
+                <td>新站大队</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>4</td>
+                <td>经开大队</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>3</td>
+                <td>公巡一大队</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+[{
+    "id": "p1",
+    "imageUrl": "/AngularJs@lg/image/company-1.png",
+    "job": "WEB前端",
+    "companyId": "c1",
+    "companyName": "慕课网",
+    "cityId": "c1",
+    "cityName": "北京",
+    "scaleId": "s2",
+    "scaleName": "50-100人",
+    "industryId": "i1",
+    "industryName": "互联网",
+    "salaryId": "s5",
+    "salaryName": "10k-15k",
+    "experience": "1-3年",
+    "education": "本科",
+    "benefit": "发展前景好",
+    "description": "岗位职责：\n1.负责公司前端页面开发；...",
+    "date": "2016-06-01 01:05",
+    "select": true
+}]

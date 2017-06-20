@@ -1,0 +1,6 @@
+<div class="Sheet" ng-show="visible" ng-click="visible=false;">
+    <ul class="Sheet-list">
+        <li class="Sheet-item" ng-repeat="item in list" ng-bind="item.name" ng-click="select(item);">不限</li>
+    </ul>
+    <div class="Sheet-cancle" ng-click="visible=false;">取消</div>
+</div>

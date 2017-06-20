@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <style>
+    html {
+        font: 16px/1.625 arial, SimSun, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    
+    body {
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="ServiceController">
+        <label for="username">
+            Type in a GitHub username
+        </label>
+        <input type="text" ng-model="username" placeholder="Enter a GitHub username" />
+        <br> {{ events |json}}
+    </div>
+    <script type="text/javascript" src="js/angular-1.2.32/angular.js"></script>
+    <script>
+    angular.module('myApp', []).factory('githubService', ['$http', function($http) {
+        var githubUrl = 'https://api.github.com';
+        var runUserRequest = function(username, path) {
+            // 从使用JSONP调用Github API的$http服务中返回promise
+            return $http({
+                method: 'JSONP',
+                url: githubUrl + '/users/' +
+                    username + '/' +
+                    path + '?callback=JSON_CALLBACK'
+            });
+        };
+        // 返回带有一个events函数的服务对象
+        return {
+            events: function(username) {
+                return runUserRequest(username, 'events');
+            }
+        };
+    }]).controller('ServiceController', function($scope, $timeout, githubService) {
+        // 和上面的示例一样, 添加了$timeout服务
+        var timeout;
+        // 注意username属性的变化
+        // 如果有变化就运行该函数
+        $scope.$watch('username', function(newUserName) {
+            if (newUserName) {
+                // 如果在进度中有一个超时(timeout)
+                if (timeout) $timeout.cancel(timeout);
+                timeout = $timeout(function() {
+                    // 从使用JSONP调用Github API的$http服务中返回promise
+                    githubService.events(newUserName)
+                        .success(function(data, status) {
+                            // success函数在数据中封装响应;
+                            // 因此我们需要调用data.data来获取原始数据
+                            $scope.events = data.data;
+                        });
+                }, 350);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

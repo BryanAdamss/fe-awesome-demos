@@ -5,9 +5,9 @@ require.config({
         vendor: "vendor",
         jquery: "lib/jquery-1.12.4.min",
         domReady: "lib/domReady",
-        template: "vendor/00_template"
+        tableSort: "vendor/04_tableSort"
     }
 });
-require(["template"], function(template) {
-    console.log(template);
+require(['jquery', 'tableSort'], function($, tableSort) {
+    console.log(tableSort);
 });

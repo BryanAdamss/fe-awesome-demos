@@ -5,15 +5,19 @@ require.config({
         vendor: "vendor",
         jquery: "lib/jquery-1.12.4.min",
         domReady: "lib/domReady",
-        dialog: "vendor/01_dialog"
+        ruler: "vendor/02_ruler"
     }
 });
-require(["dialog"], function(dialog) {
-    $("#btn").on("click", function() {
-        var dialog = $(this).myDialog({
-            title: '我是测试标题',
-            content: '我是测试内容'
-        });
-        console.log(new dialog());
+require(['jquery', 'ruler'], function($, ruler) {
+    $("#cgh-Ruler").cgh_Ruler({ // 调用
+        initTime: new Date(),
+        clickHandler: function(time) {
+            console.log(time);
+            alert('click');
+        },
+        changeHandler: function(time, lastTime) {
+            console.log(time, lastTime);
+            alert('change');
+        }
     });
 });

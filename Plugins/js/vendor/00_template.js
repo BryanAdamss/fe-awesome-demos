@@ -10,26 +10,11 @@
 }(function($) {
     // 在我们插件容器内，创造一个公共变量来构建一个私有方法
     var myPlugin = {
-        pluginName: "myDialog",
+        pluginName: "cgh-Dialog",
         defaults: {
             hasCloseBtn: true,
             title: '标题',
             content: '内容'
-        },
-        template: {
-            alert: '<div class="Dialog"><div class="Dialog-mask"><div class="Dialog-main"><div class="Dialog-hd"><div class="Dialog-title">' +
-                '<%this.title%>' +
-                '</div><div class="Dialog-close" data-name="close">&times;</div></div><div class="Dialog-bd">' +
-                '<%this.content%>' +
-                '</div><div class="Dialog-ft "><div class="Dialog-btnG "><a href="javascript:; " class="Dialog-btn" data-name="ok">确定</a><a href="javascript:; " class="Dialog-btn is-cancle" data-name="cancle">取消</a></div></div></div></div></div>'
-        },
-        createDialog: function(settings) {
-            var sDialog = tools.templateEngine(myPlugin.template.alert, {
-                title: settings.title,
-                content: settings.content
-            });
-            var $Dialog = $(sDialog);
-            return $Dialog;
         }
     };
     // 工具方法
@@ -41,7 +26,7 @@
             };
         },
         templateEngine: function(html, options) {
-            var re = /<%([^%>]+)?%>/g,
+            var re = /<@([^@>]+)?@>/g,
                 reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
                 code = 'var r=[];\n',
                 cursor = 0;
@@ -60,17 +45,6 @@
         }
     };
 
-    var Dialog = function() {};
-    Dialog.prototype = {
-        constructor: Dialog,
-        init: function() {
-            console.log("Dialog初始化");
-            return Dialog;
-        },
-        popUp: function() {
-            console.log("Dialog弹出");
-        }
-    };
 
     // 通过字面量创造一个对象，存储我们需要的公有方法
     var methods = {
@@ -97,36 +71,9 @@
             }
 
             // 执行代码
-            // var createSingleDialog = tools.getSingle(myPlugin.createDialog);
-            // var $Dialog = createSingleDialog(settings);
 
 
 
-            // var $Dialog = myPlugin.createDialog(settings);
-            // console.log($Dialog);
-            // $Dialog.on("click", ".Dialog-close,.Dialog-btn", function(e) {
-            //     var $this = $(this);
-            //     var name = $(e.target).data("name");
-            //     switch (name) {
-            //         case "ok":
-            //             (function(target) {
-            //                 $Dialog.hide();
-            //             })($this);
-            //             break;
-            //         case "cancle":
-            //             (function(target) {
-            //                 $Dialog.hide();
-            //             })($this);
-            //             break;
-            //         case "close":
-            //             (function(target) {
-            //                 $Dialog.hide();
-            //             })($this);
-            //             break;
-            //     }
-            // });
-
-            return Dialog;
 
         },
         destroy: function(options) {

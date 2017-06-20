@@ -1,0 +1,15 @@
+<div class="positionClass">
+    <h5>职位分类</h5>
+    <button class="toggleBtn" ng-click="showPositionList($index)" ng-class="{active:isActive===$index}" ng-repeat="cls in com.positionClass" ng-bind="cls.name"></button>
+    <!--    <button class="toggleBtn active">技术</button>
+    <button class="toggleBtn">运营</button> -->
+    <ul class="positionListInfo">
+        <li class="positionListInfo-item" ng-repeat="pos in positionList">
+            <div class="left">
+                <p ng-bind="pos.name">IOS</p>
+                <p ng-bind="pos.createdDate">2016-04-16 12:23</p>
+            </div>
+            <span class="positionListInfo-salary" ng-bind="pos.salary"> 15k-25k</span>
+        </li>
+    </ul>
+</div>

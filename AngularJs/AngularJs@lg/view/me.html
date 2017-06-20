@@ -1,0 +1,18 @@
+<div class="me">
+    <div ng-if="name">
+        <div class="Avator">
+            <img ng-src="{{image}}" alt="">
+            <div ng-bind="name">墨客</div>
+        </div>
+        <div class="btnR">
+            <button type="button" class="tdBtn" ui-sref="post">投递</button>
+            <button type="button" class="scBtn" ui-sref="favorite">收藏</button>
+        </div>
+        <div class="btnR">
+            <button type="button" class="loginOutBtn" ng-click="logOut()">退出登录 </button>
+        </div>
+    </div>
+    <div ng-hide="name">
+        <button type="button" class="Form-btn is-login" ui-sref="login">去登录</button>
+    </div>
+</div>

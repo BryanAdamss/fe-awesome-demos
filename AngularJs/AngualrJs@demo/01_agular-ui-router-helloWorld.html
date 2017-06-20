@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <style>
+    html {
+        font: 16px/1.625 arial, SimSun, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    
+    body {
+        margin: 0;
+    }
+    
+    .active {
+        color: red;
+        font-weight: bolder;
+    }
+    </style>
+</head>
+
+<body>
+    <a ui-sref="hello" ui-sref-active="active">Hello</a>
+    <a ui-sref="about" ui-sref-active="active">About</a>
+    <ui-view></ui-view>
+    <script type="text/javascript" src="js/angular-1.2.32/angular.js"></script>
+    <script type="text/javascript" src="js/angular-ui-router.min.js"></script>
+    <script>
+    angular.module('myApp', ['ui.router']).config(['$stateProvider', function($stateProvider) {
+
+        var helloState = {
+            name: 'hello',
+            url: '/hello',
+            template: '<h3>hello world!</h3>'
+        };
+        var aboutState = {
+            name: 'about',
+            url: '/about',
+            template: '<h3>Its the UI-Router hello world app!</h3>'
+        };
+        $stateProvider.state(helloState);
+        $stateProvider.state(aboutState);
+    }]);
+    </script>
+</body>
+
+</html>

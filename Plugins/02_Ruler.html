@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="js/require-2.3.3.min.js" data-main="js/02_main.js"></script>
+    <style>
+    html {
+        height: 100%;
+        font: 16px/1.625 arial, "Microsoft YaHei", \5b8b\4f53, "Hiragino Sans GB", , sans-serif;
+    }
+    
+    body {
+        margin: 0;
+        background-color: #999;
+        padding-top: 20px;
+    }
+    
+    .Ruler {
+        position: relative;
+        padding: 30px 0 0 0;
+    }
+    
+    .Ruler-pegNumWp {
+        font-size: 0;
+    }
+    
+    .Ruler-pegNum {
+        display: inline-block;
+        width: 4.166666666666667%;
+        font-size: 14px;
+        color: #fff;
+        text-indent: -3px;
+    }
+    
+    .Ruler-track {
+        width: 100%;
+        border-bottom: 1px solid #fff;
+    }
+    
+    .Ruler-pegWp {
+        font-size: 0;
+    }
+    
+    .Ruler-pegItem {
+        display: inline-block;
+        width: 4.166666666666667%;
+        height: 10px;
+        font-size: 0;
+        box-sizing: border-box;
+    }
+    
+    .Ruler-peg {
+        display: inline-block;
+        width: 16.66666666666667%;
+        height: 4px;
+        box-sizing: border-box;
+        margin-bottom: 3px;
+        border-left: 1px solid #fff;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .Ruler-peg.is-cur {
+        border-left-color: #89cdef;
+    }
+    
+    .Ruler-peg.is-cur:after {
+        content: "\25bc";
+        color: #89cdef;
+        font-size: 15px;
+        position: absolute;
+        top: -24px;
+        left: 50%;
+        margin-left: -13px;
+        animation: jump 3s infinite ease-in-out;
+    }
+    
+    .Ruler-peg.is-cur:before {
+        content: attr(data-time);
+        position: absolute;
+        top: -51px;
+        left: 50%;
+        margin-left: -29px;
+        background-color: #333;
+        color: #FFF;
+        font-size: 12px;
+        text-shadow: 1px 1px 0 rgba(42, 45, 50, 0.5);
+        border-radius: 4px;
+        padding: 5px 9px;
+        animation: jump 3s infinite ease-in-out;
+    }
+    
+    @keyframes jump {
+        0 {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(16%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+    
+    .Ruler-peg:first-child {
+        height: 10px;
+        margin-bottom: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="cgh-Ruler"></div>
+    <script type="text/x-cgh-template" id="cgh_ruler_tpl">
+        <div class="Ruler">
+            <div class="Ruler-scale">
+                <div class="Ruler-pegWp">
+                    <@for(var idx in this) {@>
+                        <div class="Ruler-pegItem">
+                            <@for(var idx2 in this[idx].time) {@>
+                                <span class="Ruler-peg" data-time="<@this[idx].time[idx2]@>"></span>
+                                <@}@>
+                        </div>
+                        <@}@>
+                </div>
+                <div class="Ruler-track"></div>
+                <div class="Ruler-pegNumWp">
+                    <@for(var index in this) {@>
+                        <span class="Ruler-pegNum"><@this[index].pageNum@></span>
+                        <@}@>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--     <script src="js/lib/jquery-1.12.4.min.js"></script>
+    <script src="js/vendor/02_ruler.js"></script> -->
+    <script>
+    // (function($) {
+    //     $("#cgh-Ruler").cgh_Ruler({ // 调用
+    //         initTime: new Date(),
+    //         callBack: function(time) {
+    //             lastTime = lastTime.replace(':', '');
+    //             console.log(lastTime, time);
+    //             lastTime = time;
+    //         }
+    //     });
+    //     var lastTime = $('.Ruler-peg.is-cur').data('time');
+    // })(jQuery);
+    </script>
+</body>
+
+</html>

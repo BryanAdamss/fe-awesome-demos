@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>我是标题</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+</head>
+
+<body>
+    <div class="Header">
+        <div class="container">
+            <div class="row">
+                <ul class="nav nav-pills">
+                    <li role="presentation" ui-sref-active="active">
+                        <a ui-sref="home">首页</a>
+                    </li>
+                    <li role="presentation" ui-sref-active="active">
+                        <a ui-sref="login">登录</a>
+                    </li>
+                    <li role="presentation" ui-sref-active="active">
+                        <a ui-sref="register">注册</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container" ui-view="main"></div>
+    <script src="js/angular-1.2.32/angular.js"></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script>
+    angular.module('myApp', ['ui.router']).config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/home');
+        $stateProvider
+            .state('home', {
+                url: '/home',
+                views: {
+                    "main": {
+                        templateUrl: 'tpl/home.html'
+                    },
+                    "nav@home": {
+                        templateUrl: 'tpl/sideNav.html'
+                    },
+                    "content@home": {
+                        templateUrl: 'tpl/dashboard.html'
+                    }
+                }
+            })
+            .state('home.sideNav1', {
+                url: '/sideNav1',
+                views: {
+                    "content@home": {
+                        templateUrl: 'tpl/dashboard.html',
+                        controller: function($scope) {
+                            $scope.name = "nav1";
+                        }
+                    }
+                }
+            })
+            .state('home.sideNav2', {
+                url: '/sideNav2',
+                views: {
+                    "content@home": {
+                        templateUrl: 'tpl/dashboard.html',
+                        controller: function($scope) {
+                            $scope.name = "nav2";
+                        }
+                    }
+                }
+            })
+            .state('home.sideNav3', {
+                url: '/sideNav3',
+                views: {
+                    "content@home": {
+                        templateUrl: 'tpl/dashboard.html',
+                        controller: function($scope) {
+                            $scope.name = "nav3";
+                        }
+                    }
+                }
+            })
+            .state('login', {
+                url: '/login',
+                views: {
+                    "main": {
+                        templateUrl: 'tpl/login.html'
+                    }
+                }
+            })
+            .state('register', {
+                url: '/register',
+                views: {
+                    "main": {
+                        templateUrl: 'tpl/register.html'
+                    }
+                }
+            });
+    }]).controller();
+    </script>
+</body>
+
+</html>
