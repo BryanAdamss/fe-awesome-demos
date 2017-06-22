@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <style>
+    html {
+        height: 100%;
+    }
+    
+    body {
+        margin: 0;
+        height: 100%;
+    }
+    
+    .Header {
+        /*将原本的fixed定位转换成absolute定位*/
+        position: absolute;
+        height: 50px;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-color: red;
+    }
+    
+    .Footer {
+        /*将原本的fixed定位转换成absolute定位*/
+        position: absolute;
+        height: 34px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: blue;
+    }
+    
+    .Main {
+        /* 内容区main绝对定位，并进行内部滚动 */
+        position: absolute;
+        top: 50px;
+        bottom: 34px;
+        width: 100%;
+        /* 使之可以滚动，但滚动不顺滑*/
+        overflow-y: scroll;
+        /*添加-webkit-overflow-scrolling让其恢复顺滑的滚动*/
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    ul {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 页面顶部的头部 -->
+    <div class="Header">header</div>
+    <!-- 可以滚动的区域 -->
+    <div class="Main">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+            <li>14</li>
+            <li>15</li>
+            <li>16</li>
+            <li>17</li>
+            <li>18</li>
+            <li>19</li>
+            <li>20</li>
+            <li>21</li>
+            <li>22</li>
+            <li>23</li>
+            <li>24</li>
+            <li>25</li>
+            <li>26</li>
+            <li>27</li>
+            <li>28</li>
+            <li>29</li>
+            <li>30</li>
+            <li>31</li>
+            <li>32</li>
+            <li>33</li>
+            <li>34</li>
+            <li>35</li>
+            <li>36</li>
+            <li>37</li>
+            <li>38</li>
+            <li>39</li>
+            <li>40</li>
+            <li>41</li>
+            <li>42</li>
+            <li>43</li>
+            <li>44</li>
+            <li>45</li>
+            <li>46</li>
+            <li>47</li>
+            <li>48</li>
+            <li>49</li>
+            <li>50</li>
+        </ul>
+    </div>
+    <!-- 页面底部的footer -->
+    <div class="Footer">
+        <input type="text" placeholder="Footer..." id="footer_input" />
+        <button class="submit">提交</button>
+    </div>
+    <script>
+    // 解决input被键盘遮挡问题
+    var bfscrolltop = document.body.scrollTop; //获取软键盘唤起前浏览器滚动部分的高度
+    var oInput = document.querySelector('#footer_input');
+    var timer = null;
+    oInput.onfocus = function() { //在这里‘footer_input’是我的底部输入栏的输入框，当它获取焦点时触发事件
+        timer = setInterval(function() { //设置一个计时器，时间设置与软键盘弹出所需时间相近
+            document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+        }, 100)
+    };
+
+    oInput.onblur = function() { //设定输入框失去焦点时的事件
+        clearInterval(timer); //清除计时器
+        document.body.scrollTop = bfscrolltop; // 将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
+    };
+    </script>
+</body>
+
+</html>
