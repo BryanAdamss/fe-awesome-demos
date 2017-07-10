@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        v-text
+            会将对应表达式求值后，当做字符串替换元素内的内容
+        {{}}
+            是v-text的简写，求值后，当做字符串替换{{}}处的内容;{{}}中可以使用表达式，但不能使用语句(分号结尾)，流程控制也不能用(使用三元表达式代替)
+        v-html
+            会将对应表达表达式当做html解析后，输出到元素内
+        v-bind
+            主要用来绑定特性
+            v-bind:title="test" 将test绑定到元素的title特性上；
+            缩写
+                v-bind:href="url"->:href="url"
+        v-on
+            绑定事件
+            缩写
+                v-on:click="doSomething"->@click="doSomething
+    </pre>
+    <div id="app">
+        <h2 v-text="message">我是原有内容</h2>
+        <h2>我是原有内容{{message}}</h2>
+        <h2 v-html="message">我是原有内容</h2>
+        <div>{{ message?'message存在':'message' }}</div>
+    </div>
+    <div id="app2">
+        <span v-bind:title="message">悬停查看</span>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '<small>Hello Vue!</small>'
+        }
+    });
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            message: '悬停时间' + new Date()
+        }
+    });
+    </script>
+</body>
+
+</html>

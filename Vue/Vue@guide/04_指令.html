@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+    指令
+        v开头的都是vue自带的指令
+    filter
+        vue2中不自带过滤器，所有过滤器必须自己定义；和ng一样可串联
+    </pre>
+    <div id="app">
+        <a v-bind:href="URL">{{text | upperCase |reverse}}</a>
+        <button type="button" v-on:click="showName">按钮</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            URL: 'http://www.baidu.com',
+            text: 'click me'
+        },
+        methods: {
+            showName: function(event) {
+                console.log(this, event.target);
+            }
+        },
+        filters: {
+            upperCase: function(value) {
+                if (!value) {
+                    return ''
+                };
+                value = value.toString();
+                return value.toUpperCase();
+            },
+            reverse: function(value) {
+                if (!value) {
+                    return ''
+                };
+                value = value.toString();
+                return value.split('').reverse().join('');
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

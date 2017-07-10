@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        computed计算属性
+            会被缓存；只有在原属性更新时，计算属性才会更新；可以用在数据的过滤上
+        methods
+            也能实现computed的效果，但是只要被调用就会被执行，无论原数据是否发生变化；一般用在非数据过滤上
+        watch
+            监视数据，监视引用类型值时，val和oldVal会是同一个值。如果想得到旧值，可以事先将旧值保存起来。
+    </pre>
+    <div id="app">
+        {{message}}
+        <br> {{reverseMessage}}
+        <br>{{reverseMessage2()}}
+        <div>
+            <div>计数:{{counter}}</div>
+            <button type="button" @click="increment">增加</button>
+        </div>
+        <div>
+            <div>{{person.name}}
+                <br> 年龄:{{person.age}}</div>
+            <button type="button" @click="ageIncrement">增加年龄</button>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            counter: 1,
+            person: {
+                name: '张三',
+                age: 10
+            }
+        },
+        computed: {
+            reverseMessage: function() {
+                return this.message.split('').reverse().join('');
+            }
+        },
+        methods: {
+            reverseMessage2: function() {
+                return this.message.split('').reverse().join('')
+            },
+            increment: function() {
+                this.counter++;
+            },
+            ageIncrement: function() {
+                this.person.age++;
+            }
+        },
+        watch: {
+            counter: function(val, oldVal) { // 监视普通类型
+                console.log('新值:' + val, '旧值' + oldVal, typeof val, typeof oldVal);
+            },
+            person: { // 监视引用类型，如果需要观察对象某个属性的变化则需要设置deep为true
+                handler: function(val, oldVal) {
+                    console.log('新值:' + val, '旧值' + oldVal, typeof val, typeof oldVal);
+                    console.dir(val);
+                    console.dir(oldVal);
+                    console.log(val === oldVal);
+                },
+                deep: true
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

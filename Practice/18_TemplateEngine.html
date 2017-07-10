@@ -9,7 +9,7 @@
 <body>
     <script>
     var TemplateEngine = function(html, options) {
-        var re = /<%([^%>]+)?%>/g,
+        var re = /<@([^@>]+)?@>/g,
             reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g,
             code = 'var r=[];\n',
             cursor = 0;
@@ -26,7 +26,8 @@
         code += 'return r.join("");';
         return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
     };
-    var template = '<p>Hello, my name is <%this.name%>. I\'m <%this.profile.age%> years old.</p>';
+
+    var template = '<p>Hello, my name is <@this.name@>. I\'m <@this.profile.age@> years old.</p>';
     console.log(TemplateEngine(template, {
         name: "Krasimir Tsonev",
         profile: {

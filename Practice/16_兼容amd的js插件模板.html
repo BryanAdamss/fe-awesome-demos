@@ -11,24 +11,24 @@
     // 实际使用时，这段代码要放在一个单独的js文件中
     ;
     (function(root, moduleName, factory) {
-            // moduleName为模块名，最好和文件名保持一致
-            if (typeof define === 'function' && define.amd) {
-                // 注册一个无依赖的模块，并将全局对象导入
-                define([], function() {
-                    return (root[moduleName] = factory(root));
-                });
-            } else {
-                // 在全局环境上添加一个全局变量，供非AMD时调用
-                root[moduleName] = factory(root);
-            }
-        }(this, "testName", function(win) {
-            // 你的代码
-
-            // 导出值，可以是对象，也可以是函数
-            return {
-                test: "test"
-            };
-        });
+        // moduleName为模块名，最好和文件名保持一致
+        if (typeof define === 'function' && define.amd) {
+            // 注册一个无依赖的模块，并将全局对象导入
+            define([], function() {
+                return (root[moduleName] = factory(root));
+            });
+        } else {
+            // 在全局环境上添加一个全局变量，供非AMD时调用
+            root[moduleName] = factory(root);
+        }
+    }(this, "testName", function(win) {
+        // 你的代码
+        console.log(win);
+        // 导出值，可以是对象，也可以是函数
+        return {
+            test: "test"
+        };
+    }));
     </script>
 </body>
 

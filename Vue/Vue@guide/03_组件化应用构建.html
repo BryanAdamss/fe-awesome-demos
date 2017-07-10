@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app7">
+        <ol>
+            <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+        </ol>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{todo.text}}</li>'
+    });
+    var app7 = new Vue({
+        el: '#app7',
+        data: {
+            groceryList: [{
+                id: 0,
+                text: 'do1'
+            }, {
+                id: 1,
+                text: 'do2'
+            }]
+        }
+    });
+    </script>
+</body>
+
+</html>

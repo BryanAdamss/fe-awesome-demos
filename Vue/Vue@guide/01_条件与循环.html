@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <ul id="app4">
+        <li v-for="todo in todos">{{todo.time}} {{todo.content}}</li>
+    </ul>
+    <script src="js/vue.js"></script>
+    <script>
+    var app3 = new Vue({
+        el: '#app3',
+        data: {
+            seen: true
+        }
+    });
+    var app4 = new Vue({
+        el: '#app4',
+        data: {
+            todos: [{
+                time: '昨天',
+                content: '看电影'
+            }, {
+                time: '今天',
+                content: '写代码'
+            }]
+        }
+    });
+    </script>
+</body>
+
+</html>
