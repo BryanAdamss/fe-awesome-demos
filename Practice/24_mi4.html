@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html {
+        height: 100%;
+    }
+    
+    body {
+        margin: 0;
+        height: 100%;
+    }
+    
+    .PhotoMask {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .PhotoMask-img {
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    
+    .PhotoMask-imgWp {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .PhotoMask-imgWp.is-top {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 9;
+        width: 50%;
+        overflow: hidden;
+    }
+    
+    .PhotoMask-imgWp.is-bottom .PhotoMask-img {
+        background-image: url("img/Mobile-w.png");
+        background-color: #fff;
+    }
+    
+    .PhotoMask-imgWp.is-top .PhotoMask-img {
+        background-image: url("img/Mobile-b.png");
+        background-color: #101010;
+    }
+    
+    .PhotoMask-bar {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        z-index: 99;
+        width: 42px;
+        height: 42px;
+        margin-left: -21px;
+        margin-top: -21px;
+        background: url(img/Bar.png) no-repeat center;
+        cursor: move;
+        opacity: 0;
+        filter: alpha(opacity: 0);
+    }
+    </style>
+</head>
+
+<body>
+    <div class="PhotoMask">
+        <div class="PhotoMask-imgWp is-bottom">
+            <div class="PhotoMask-img"></div>
+        </div>
+        <div class="PhotoMask-imgWp is-top" id="js_mask">
+            <div class="PhotoMask-img"></div>
+        </div>
+        <span class="PhotoMask-bar" id="js_bar"></span>
+    </div>
+    <script>
+    (function() {
+        var bar = document.querySelector('#js_bar'),
+            barRect = bar.getBoundingClientRect(),
+            barW = barRect.right - barRect.left,
+            mask = document.querySelector('#js_mask'),
+            topImg = document.querySelector('#js_mask .PhotoMask-img'),
+            lastMaskW = -1, // resize之前mask的宽度
+            viewW = -1, // 视口宽度，在setTopImgWidth中计算具体值
+            lastViewW = -1; // resize之前视口的宽度
+
+        function throttle(fn, interval) {
+            var _self = fn, //保存需要被延迟的函数
+                firstTime = true, // 是否首次调用
+                intervalTime = interval || 500, // 间隔调用时间，默认500毫秒
+                timer; // 定时器
+            return function() {
+                var args = arguments,
+                    _me = this;
+                if (firstTime) { // 如果第一次，则无需延迟，直接调用
+                    _self.apply(_me, args);
+                    return firstTime = false;
+                }
+                if (timer) { // 如果定时器存在，说明前一次执行还没有完成
+                    return false;
+                }
+                timer = setTimeout(function() { // 延迟intervalTime后执行
+                    clearTimeout(timer);
+                    timer = null;
+                    _self.apply(_me, args);
+                }, intervalTime);
+            };
+        };
+
+        function getStyle(obj, name) {
+            return obj.currentStyle ? obj.currentStyle[name] : getComputedStyle(obj, false)[name];
+        }
+
+        function startMove(obj, json, fnEnd) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                var bStop = true; // 判断是否所有属性都运动到目标属性,默认都到达目标
+                for (var attr in json) { // 遍历json
+                    var cur = 0;
+                    if (attr === "opacity") { // 透明度特殊处理
+                        cur = Math.round(parseFloat(getStyle(obj, attr)) * 100); // 小数存在误差,所以选择四舍五入
+                    } else {
+                        cur = parseInt(getStyle(obj, attr));
+                    }
+                    var speed = (json[attr] - cur) / 6;
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed); // 缓冲运动速度需取整
+                    if (cur !== json[attr]) { // 如果出现一个属性未到达目标点,bStop置false
+                        bStop = false;
+                    }
+                    if (attr === "opacity") { // 透明度样式需要特殊处理
+                        obj.style.filter = "alpha(opacity:" + (cur + speed) + ")";
+                        obj.style.opacity = (cur + speed) / 100;
+                    } else {
+                        obj.style[attr] = cur + speed + "px";
+                    }
+                }
+                if (bStop) { // 所有属性全部到达,清定时器,执行回调
+                    clearInterval(obj.timer);
+                    if (fnEnd) {
+                        fnEnd();
+                    }
+                }
+            }, 30);
+        }
+
+        function getViewW() {
+            return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        }
+
+        function setTopImgWidth(w) {
+            topImg.style.width = w + 'px';
+        }
+
+        function barDrag() {
+            document.onmousemove = maskDrag;
+            document.onmouseup = mouseUpRemoveHandler;
+            return false;
+        }
+
+        function maskDrag(e) {
+            var oE = e || window.event;
+            var l = oE.clientX;
+            if (l < 0) { // 防止横向溢出
+                l = 0;
+            } else if (l > document.documentElement.clientWidth - barW / 2) {
+                l = document.documentElement.clientWidth - barW / 2;
+            }
+            bar.style.left = l + 'px';
+            mask.style.width = l + 'px';
+            console.log(l);
+            lastMaskW = l;
+        }
+
+        function mouseUpRemoveHandler() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+
+        function handleResize() {
+            viewW = getViewW();
+            setTopImgWidth(viewW);
+            console.log(lastMaskW, lastViewW, viewW);
+            var l = parseInt((viewW / lastViewW) * lastMaskW); // 计算新位置，此时viewW为最新视口宽度
+            bar.style.left = l + 'px'; // 重新设置mask和bar的位置
+            mask.style.width = l + 'px';
+            console.log(l);
+            lastMaskW = l; // 更新最后位置
+            lastViewW = viewW; // 更新视口大小
+        }
+
+        function init() {
+            viewW = getViewW(); // 获取当前视口大小
+            lastViewW = viewW; // 保存当前视口大小
+            setTopImgWidth(viewW); // 设置顶层图片宽度
+            startMove(mask, {
+                'width': viewW
+            }, function() {
+                startMove(mask, {
+                    'width': 0
+                }, function() {
+                    startMove(bar, {
+                        'opacity': 100
+                    }, function() {
+                        bar.onmousedown = barDrag;
+                    });
+                });
+            });
+        }
+
+        window.onload = init;
+        window.onresize = throttle(handleResize);
+    })();
+    </script>
+</body>
+
+</html>

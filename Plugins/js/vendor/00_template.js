@@ -10,7 +10,7 @@
 }(function($) {
     // 在我们插件容器内，创造一个公共变量来构建一个私有方法
     var myPlugin = {
-        pluginName: "cgh-Dialog",
+        pluginName: "template",
         defaults: {
             hasCloseBtn: true,
             title: '标题',
@@ -72,6 +72,9 @@
 
             // 执行代码
 
+            $this.css({ // 测试用
+                backgroundColor: 'red'
+            })
 
 
 

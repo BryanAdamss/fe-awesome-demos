@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="我是关键字">
+    <meta name="description" content="我是网站描述">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+    <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+    <title>Angular | TodoMVC</title>
+    <style>
+    [ng-cloak] {
+        /*防止闪屏*/
+        display: none;
+    }
+    </style>
+</head>
+
+<body ng-app="todomvc">
+    <ng-view></ng-view>
+    <script type="text/ng-template" id="todomvc-index.html">
+        <!-- 模板 -->
+        <section id="todoapp">
+            <header id="header">
+                <h1>todos</h1>
+                <!-- form提交时，触发addTodo()事件 -->
+                <form id="todo-form" ng-submit="addTodo()">
+                    <!-- 新todo的输入框，值绑定到newTodo上，根据状态saving来禁用 -->
+                    <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
+                </form>
+            </header>
+            <!-- #main根据todos的长度来显示隐藏 -->
+            <section id="main" ng-show="todos.length" ng-cloak>
+                <!-- #toggle-all 布尔值绑定到allChecked上，点击时触发markAll -->
+                <input id="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
+                <label for="toggle-all">Mark all as complete</label>
+                <ul id="todo-list">
+                    <!-- 遍历每个todo，并通过statusFilter进行过滤，通过todo.completed、editedTodo来切换class -->
+                    <li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+                        <div class="view">
+                            <!-- todo前的复选框，值绑定到todo.completed，change时触发toggleCompleted事件，并传入对应todo -->
+                            <input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="toggleCompleted(todo)">
+                            <!-- 展示用label，双击时触发editTodo，并传入对应todo -->
+                            <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
+                            <!-- 删除按钮，点击时，移除对应todo -->
+                            <button class="destroy" ng-click="removeTodo(todo)"></button>
+                        </div>
+                        <!-- 隐藏的再编辑表单，在表单提交时触发saveEdits -->
+                        <form ng-submit="saveEdits(todo, 'submit')">
+                            <!-- 再编辑input，值绑定到todo.title并不去除前后空格；按下esc时触发reverEdits事件，恢复到之前状态；失去焦点时自动提交；当双击展示用label时，todo和editedTodo相等，会触发todo-focus指令，显示再编辑input-->
+                            <input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')" todo-focus="todo == editedTodo">
+                        </form>
+                    </li>
+                </ul>
+            </section>
+            <footer id="footer" ng-show="todos.length" ng-cloak>
+                <!-- #todo-count 展示剩余待做todo数量 -->
+                <span id="todo-count"><strong>{{remainingCount}}</strong>
+                        <!-- 当count为1显示'item left'，否则显示'items left' -->
+                        <ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+                    </span>
+                <ul id="filters">
+                    <!-- 过滤状态，点击时触发$routeChangeSuccess事件，改变statusFilter，进而改变展示的数据 -->
+                    <li>
+                        <a ng-class="{selected: status == ''} " href="#/">All</a>
+                    </li>
+                    <li>
+                        <a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+                    </li>
+                    <li>
+                        <a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+                    </li>
+                </ul>
+                <!-- 清除所有已完成todo，点击时触发clearCompletedTodos -->
+                <button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+            </footer>
+        </section>
+    </script>
+    <!-- 资源文件 -->
+    <script src="node_modules/todomvc-common/base.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.js"></script>
+    <!-- 逻辑文件 -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers/todoCtrl.js"></script>
+    <script src="js/services/todoStorage.js"></script>
+    <script src="js/directives/todoFocus.js"></script>
+    <script src="js/directives/todoEscape.js"></script>
+</body>
+
+</html>
