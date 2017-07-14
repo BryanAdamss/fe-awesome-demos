@@ -10,6 +10,7 @@
         height: 100px;
         background-color: red;
         position: absolute;
+        left: 0;
     }
     </style>
 </head>
@@ -49,21 +50,28 @@
     var box = document.getElementById("box");
     console.log(window.requestAnimationFrame);
 
-    // 外部调用一次
-    window.requestAnimationFrame(draw);
-    var id = null;
-
     function draw() {
         if (box.offsetLeft <= 300) {
-            box.style.left = box.offsetLeft + 100 + "px";
-            // 内部再次调用一次
-            id = window.requestAnimationFrame(draw);
-
+            box.style.left = box.offsetLeft + 10 + "px";
+            return false;
         } else {
-            // 到达目标，取消调用
-            window.cancelAnimationFrame(id);
+            return true;
         }
     }
+
+    function makeRAFLoop(frameFn, context) { //requestAnimationFrame的递归调用的启动函数 
+        var isEnd = false,
+            RAFId = -1;
+        (function rafLoop() { // 通过具名自执行函数，完成requestAnimationFrame的递归调用，frameFn需要返回动画是否完成的标志量
+            isEnd = frameFn.call(context);
+            RAFId = window.requestAnimationFrame(rafLoop);
+            if (isEnd) {
+                window.cancelAnimationFrame(RAFId);
+            }
+        })();
+    }
+
+    makeRAFLoop(draw, window); // 启动
     </script>
 </body>
 
