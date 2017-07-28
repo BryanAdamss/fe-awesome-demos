@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .TopBar {
+        background-color: #333;
+    }
+
+    .Main {
+        height: 2000px;
+        border: 1px solid #c7c7c7;
+    }
+
+    .Nav {
+        line-height: 100px;
+        background-color: rgba(255, 0, 0, 0.2);
+    }
+
+    .Nav.is-fixed {
+        position: fixed;
+        top: 0;
+        z-index: 999;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="Header">
+        <div class="TopBar">
+            我是topBar
+        </div>
+        <div class="Nav">
+            <span>我是navItem001</span>
+            <span>我是navItem002</span>
+            <span>我是navItem003</span>
+            <span>我是navItem004</span>
+        </div>
+    </div>
+    <div class="Main">
+        我是main
+    </div>
+    <script src="js/require-2.3.3.min.js" data-main="js/08_main.js"></script>
+</body>
+
+</html>

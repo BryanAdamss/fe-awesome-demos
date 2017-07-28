@@ -101,7 +101,7 @@
             return data;
         }
     };
-    // 向jQuery中被保护的“fn”命名空间中添加你的插件代码，用“pluginName”作为插件的函数名称
+    // 向jQuery中被保护的“fn”命名空间中添加插件代码
     $.fn.cgh_Ruler = function(options) {
         //创建实例并返回
         return new Ruler(this, options);

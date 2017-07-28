@@ -12,14 +12,14 @@ define(['domReady!', 'myMove'], function(doc, myMove) {
         oBtn2 = doc.querySelector('#js_btn2');
 
     var move = new myMove(oDiv, {
-        'left': 600,
+        'left': 400,
         'opacity': 100
     }, function() {
         console.log('cg');
     });
 
     var move2 = new myMove(oDiv2, {
-        'left': 800,
+        'left': 400,
         'width': 200,
         'opacity': 100
     }, function() {

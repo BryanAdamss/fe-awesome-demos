@@ -8,8 +8,9 @@ require.config({
         ruler: "vendor/02_ruler"
     }
 });
-require(['jquery', 'ruler'], function($, ruler) {
-    $("#cgh-Ruler").cgh_Ruler({ // 调用
+require(['domReady!', 'jquery', 'ruler'], function(doc, $, ruler) {
+    console.log($, $.fn.cgh_Ruler);
+    var ruler = $("#cgh-Ruler").cgh_Ruler({ // 调用
         initTime: new Date(),
         clickHandler: function(time) {
             console.log(time);
@@ -20,4 +21,5 @@ require(['jquery', 'ruler'], function($, ruler) {
             alert('change');
         }
     });
+    console.log(ruler);
 });

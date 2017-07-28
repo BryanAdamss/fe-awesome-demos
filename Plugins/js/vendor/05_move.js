@@ -20,7 +20,7 @@
             this.fixRAF();
             this.RAFId = -1;
             this.isEnd = false;
-            this.makeRAFLoop(this.makeFrameMove, this);
+            this.makeRAFLoop(this.makeStep, this);
         },
         getStyle: function(obj, name) {
             if (obj.currentStyle) {
@@ -57,13 +57,13 @@
                 };
             }
         },
-        getNowTime: function() { // 获取当前时间
+        getNowTime: function() { // 获取当前时间的毫秒数
             if (typeof performance !== 'undefined' && performance.now) {
                 return performance.now();
             }
             return Date.now ? Date.now() : (new Date()).getTime();
         },
-        makeFrameMove: function() { // 实现动画及缓动效果，其实就是raf的每一帧动画
+        makeStep: function() { // 实现动画及缓动效果，其实就是raf的每一帧动画
             var bStop = true; // 判断是否所有属性都运动到目标属性,默认都到达目标
             for (var attr in this.moveParam) { // 遍历json
                 var cur = 0;
@@ -94,9 +94,9 @@
             }
 
         },
-        makeRAFLoop: function(frameFn, context) { // 实现raf的循环调用
+        makeRAFLoop: function(stepFn, context) { // 实现raf的循环调用
             (function rafLoop() {
-                isEnd = frameFn.call(context);
+                isEnd = stepFn.call(context);
                 RAFId = window.requestAnimationFrame(rafLoop);
                 if (isEnd) {
                     window.cancelAnimationFrame(RAFId);
