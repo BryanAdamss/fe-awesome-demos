@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button type="button" id="sortBtnAsc">name升序显示</button>
+    <button type="button" id="sortBtnDesc">name降序显示</button>
+    <input type="text" name="" placeholder="请输入要搜索的内容(我需要手动调用search方法)" id="search">
+    <button type="button" id="clearBtn">移除所有items</button>
+    <button type="button" id="filterBtn">过滤出所有name中带有est的</button>
+    <button type="button" id="showBtn">显示2、3、4项</button>
+    <div id="myList">
+        <button type="button" class="sort" data-sort="name">name排序</button>
+        <button type="button" class="sort" data-sort="city">city排序</button>
+        <input type="text" name="" placeholder="请输入要搜索的内容" class="search">
+        <ul class="list">
+            <li>
+                <h3 class="name">Jonny</h3>
+                <p class="city">Stockholm</p>
+            </li>
+        </ul>
+        <ul class="pagination"></ul>
+    </div>
+    <script type="text/javascript" src="list.js"></script>
+    <script type="text/javascript">
+    var options = {
+        valueNames: ['name', 'city'], // 字段名(class名，包含即可)
+        item: '<li><h3 class="name">Jonny</h3><p class="city">Stockholm</p></li>', // item模板，可以是id也可以是html字符串
+        i: 1, // 哪个item应该做为第一个展示，设置为其他值，则之前的item不会被渲染
+        listClass: 'list', // list容器
+        searchClass: 'search', // 搜索field，指定的search输入框必须在#myList容器内部
+        sortClass: 'sort', //排序按钮的class，指定的sort按钮必须在#myList容器内部
+        indexAsync: false, // 是否异步建立索引，对于item很多的list有优化作用
+        page: 2, // 同一时间能看到多少个item，这影响性能
+        pagination: true, // 是否开启分页功能
+        paginationClass: 'pagination', // 分页class
+        innerWindow: 2, // 当前页分页按钮前后各展示多少个分页按钮
+        outerWindow: 0, // 分页器最前和最后各显示几个分页按钮
+        left: 0, // 分页器最前显示几个分页按钮
+        right: 0 // 分页器最后显示几个分页按钮
+    };
+
+    var values = [{ // 初始化数据
+            name: 'test1',
+            city: 'cityTest1'
+        },
+        {
+            name: 'test3',
+            city: 'cityTest3'
+        },
+        {
+            name: 'test2',
+            city: 'cityTest2'
+        }
+    ];
+
+    var cghList = new List('myList', options, values);
+    // list属性
+    console.log('list容器', cghList.listContainer);
+    console.log('list', cghList.list);
+    console.log('所有item', cghList.items);
+    console.log('当前可见item', cghList.visibleItems);
+    console.log('匹配符合当前filter或者search的items', cghList.matchingItems);
+    console.log('如果list已经被搜索过则返回true', cghList.searched);
+    console.log('如果list处于某个filter激活状态则返回true', cghList.filtered);
+    // list方法
+    cghList.add([{ name: '狗子', city: '上海' }, { name: '狗子2', city: '上海2' }], function(items) { // 添加item时，即使是一个item也用数组包裹，因为内部需要使用splice方法
+        console.log(items.length + '个item被添加');
+    });
+    console.log('移除', cghList.remove('name', 'test1'), '个item'); // 移除name为'test1'的item，返回移除个数 !!!注意此处有坑，只能移除当前可见的item
+    console.log('获取name为狗子的item', cghList.get('name', '狗子')); // 获取name为'狗子'的item
+
+    document.querySelector('#sortBtnAsc').onclick = function() { // 手动调用sort方法的排序按钮，可以不放在#myList容器内
+        cghList.sort('name', { // 对name进行按字符大小进行升序排列
+            order: 'asc', // 升序
+            alphabet: undefined, // 排序表
+            insensitive: true, // 大小写敏感
+            sortFunction: undefined
+        });
+    };
+
+    document.querySelector('#sortBtnDesc').onclick = function() { // 手动调用sort方法的排序按钮，可以不放在#myList容器内
+        cghList.sort('name', { // 对name进行按字符大小进行降序排列
+            order: 'desc' // 降序
+        });
+    };
+    document.querySelector('#search').oninput = function() { // 手动调用search方法的field，可以不放在#myList容器内
+        cghList.search(this.value); // 在所有列搜索
+        // cghList.search(this.value, ['name']); // 只在name列搜索
+    };
+    document.querySelector('#clearBtn').onclick = function() { // 移除所有items
+        cghList.clear();
+    };
+    document.querySelector('#filterBtn').onclick = function() { // 移除所有items
+        cghList.filter(function(item) {
+            if (item.values().name.indexOf('est') > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    };
+    console.log('获取list大小(长度)', cghList.size());
+    document.querySelector('#showBtn').onclick = function() { // 移除所有items
+        cghList.show(2, 3); // 显示从2开始的3个item
+    };
+    console.log('手动更新(可用在隐藏某个元素后，更新list)', cghList.update());
+    // console.log('list被list.js以外的操作所修改时，可重新reindex)', cghList.reIndex());
+    cghList.on('updated', function() {
+        console.log('updated');
+    });
+    cghList.on('searchStart', function() {
+        console.log('searchStart');
+    });
+    cghList.on('searchComplete', function() {
+        console.log('searchComplete');
+    });
+    cghList.on('filterStart', function() {
+        console.log('filterStart');
+    });
+    cghList.on('filterComplete', function() {
+        console.log('filterComplete');
+    });
+    cghList.on('sortStart', function() {
+        console.log('sortStart');
+    });
+    cghList.on('sortComplete', function() {
+        console.log('sortComplete');
+    });
+    // item属性
+    var item = cghList.get('name', 'test3')[0];
+    console.log('item对应的DOM', item.elm);
+    console.log('item的value；避免使用这种方法', item._values); // 注意，不应该直接访问_values，应该通过value()方法来和_value交互item方法
+    console.log('item的value', item.values());
+    console.log('设置item新值', item.values({ name: 'newName' }));
+    console.log('item的新value', item.values());
+    console.log('设置item新值', item.values({ name: 'newName2', city: 'newCity2' }));
+    console.log('item的新value', item.values());
+    item.hide();
+    item.show();
+    console.log('item是否被search、fiter匹配到'，
+        item.matching()); //可见的items总被匹配到，但匹配到的不一定可见
+    console.log('item是否可见'，
+        item.visible()); //可见的items总被匹配到，但匹配到的不一定可见
+    </script>
+</body>
+
+</html>

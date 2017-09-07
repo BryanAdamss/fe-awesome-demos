@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .fade-enter,
+    .fade-leave {
+        opacity: 0;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all .3s ease-in-out;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <transition name="fade">
+            <!-- 没有加key,根据vue的就地复用原则，他们将只替换内容，因此不会产生过渡动画 -->
+            <!--     <button v-if="isEditing">
+                Save
+            </button>
+            <button v-else>
+                Edit
+            </button>  -->
+            <!-- 添加key -->
+            <!--   <button v-if="isEditing" key="save">
+                Save
+            </button>
+            <button v-else key="edit">
+                Edit
+            </button> -->
+            <!-- 在一些场景中，也可以给通过给同一个元素的 key 特性设置不同的状态来代替 v-if 和 v-else，上面的例子可以重写为： -->
+            <button v-bind:key="isEditing">
+                {{ isEditing ? 'Save' : 'Edit' }}
+            </button>
+        </transition>
+        <br>
+        <button @click="isEditing=!isEditing">点击</button>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            isEditing: true
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-num :init-num="price"></my-num>
+        <my-div></my-div>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    Vue.component('my-num', {
+        template: '<input type="num" v-model="num" @input="numChanged">',
+        props: {
+            'initNum': {
+                type: Number
+            }
+        },
+        data: function() {
+            return {
+                num: this.initNum
+            };
+        },
+        methods: {
+            numChanged: function() {
+                console.log(this.num);
+                bus.$emit('my-num-change', this.num); // 通过bus触发my-num-change
+            }
+        }
+    });
+
+    Vue.component('my-div', {
+        template: '<h1>{{text}}</h1>',
+        data: function() {
+            return {
+                text: '我将展示上面input的内容'
+            };
+        },
+        created: function() { // 创建后
+            var _self = this;
+            bus.$on('my-num-change', function(str) { // 监听my-num-change事件
+                _self.text = str;
+            });
+        }
+    });
+
+    var bus = new Vue();
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            price: 3
+        }
+    });
+    </script>
+</body>
+
+</html>

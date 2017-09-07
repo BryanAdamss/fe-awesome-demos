@@ -11,7 +11,7 @@
         v-text
             会将对应表达式求值后，当做字符串替换元素内的内容
         {{}}
-            是v-text的简写，求值后，当做字符串替换{{}}处的内容;{{}}中可以使用表达式，但不能使用语句(分号结尾)，流程控制也不能用(使用三元表达式代替)
+            是v-text的简写，求值后，当做字符串替换{{}}处的内容;{{}}中可以使用表达式，但不能使用语句，流程控制也不能用(使用三元表达式代替)
         v-html
             会将对应表达表达式当做html解析后，输出到元素内
         v-bind
@@ -22,7 +22,7 @@
         v-on
             绑定事件
             缩写
-                v-on:click="doSomething"->@click="doSomething
+                v-on:click="doSomething"->@click="doSomething"
     </pre>
     <div id="app">
         <h2 v-text="message">我是原有内容</h2>

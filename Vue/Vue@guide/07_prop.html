@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 处于实例外，无法使用 -->
+    <child></child>
+    <div id="app">
+        <child message='纯文本'></child>
+        <child message='test1'></child>
+        <child message='test2'></child>
+        <child v-bind:message='test2'></child>
+    </div>
+    <button>点击</button>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            test1: '我是变量1',
+            test2: '我是变量2'
+        },
+        components: {
+            'child': { // 注册了一个局部组件
+                props: ['message'],
+                template: '<h1>{{message}}</h1>'
+            }
+        }
+    });
+    document.querySelector('button').onclick = function() {
+        vm.test2 = '我是变量2，我被改变了';
+        console.log(vm);
+    };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <child :message="test1" :count="num"></child>
+        <child :message="test1" :count="text_num"></child>
+        <child :message="test1" :count="num" :val="parent_val"></child>
+    </div>
+    <button>点击</button>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            test1: '我是变量1',
+            num: 999,
+            text_num: '000', // count只接收Number，会报错
+            parent_val: 1 // 小于10，会报错
+        },
+        components: {
+            'child': {
+                props: {
+                    message: {
+                        type: String,
+                        required: true
+                    },
+                    count: {
+                        type: Number,
+                        default: 100
+                    },
+                    val: {
+                        validator: function(value) {
+                            return value > 10;
+                        }
+                    }
+                },
+                template: '<h1>{{message}}、<small>{{count}}</small>、<small>{{val}}</small></h1>'
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

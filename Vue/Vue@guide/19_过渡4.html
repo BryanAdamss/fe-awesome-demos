@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .custom-appear-class {
+        opacity: 0;
+        font-size: 0;
+    }
+
+    .custom-appear-active-class {
+        transition: all .3s ease-in-out;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <transition appear appear-class="custom-appear-class" appear-to-class="custom-appear-to-class" appear-active-class="custom-appear-active-class">
+            <p>{{msg}}</p>
+        </transition>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '测试'
+        }
+    });
+    </script>
+</body>
+
+</html>

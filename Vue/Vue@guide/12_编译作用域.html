@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <parent-comp>
+            {{test}}
+            <br>
+            <child-comp>
+                {{test2}}
+            </child-comp>
+        </parent-comp>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    Vue.component('parent-comp', {
+        template: '<h1><span>{{text}}</span><slot>我只在没有内容时才显示</slot></h1>',
+        data: function() {
+            return {
+                text: 'h1',
+                test: 'parent_test',
+                test2: 'parent_test2'
+            };
+        }
+    });
+    Vue.component('child-comp', {
+        template: '<small>{{text}} <slot>我只在没有内容时才显示</slot></small>',
+        data: function() {
+            return {
+                text: 'small',
+                test: 'child_test',
+                test2: 'child_test2'
+            }
+        }
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            test: 'Root_test',
+            test2: 'Root_test2'
+        }
+    });
+    </script>
+</body>
+
+</html>

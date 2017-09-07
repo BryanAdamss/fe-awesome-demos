@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .fade-enter {
+        transform: translateX(10px);
+    }
+
+    .fade-leave-to {
+        transform: translateX(-10px);
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all .3s ease-in-out;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <transition name="fade" mode="in-out">
+            <button :key="isEditing" @click="isEditing=!isEditing" :style="{position:'absolute'}">
+                {{ isEditing }}
+            </button>
+        </transition>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            isEditing: true
+        }
+    });
+    </script>
+</body>
+
+</html>

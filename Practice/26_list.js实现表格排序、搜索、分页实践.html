@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="js_c-Table">
+        <input type="text" name="" class="mySearch">
+        <table>
+            <thead>
+                <tr>
+                    <th class="canSort" data-sort="id">id</th>
+                    <th class="canSort" data-sort="carNum">车牌号</th>
+                    <th class="canSort" data-sort="place">违法地点</th>
+                    <th class="canSort" data-sort="time">违法时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="myListBody">
+            </tbody>
+        </table>
+        <ul class="pagination"></ul>
+    </div>
+    <script type="text/x-cgh-template" id="tpl_tbody_tr">
+        <tr>
+            <td class="id"></td>
+            <td class="carNum"></td>
+            <td class="place"></td>
+            <td class="time"></td>
+            <td class="operate"></td>
+        </tr>
+    </script>
+    <script type="text/javascript" src="js/list.js"></script>
+    <script type="text/javascript">
+    var options = {
+        valueNames: [
+            'id',
+            'carNum',
+            'place',
+            'time',
+            'operate', {
+                data: ['id', 'test']
+            }
+        ],
+        item: '<tr><td class="id"></td><td class="carNum"></td><td class="place"></td><td class="time"></td><td class="operate"></td></tr>',
+        listClass: 'myListBody',
+        sortClass: 'canSort',
+        searchClass: 'mySearch',
+        page: 3, // 同一时间能看到多少个item，这影响性能
+        pagination: true, // 是否开启分页功能
+        paginationClass: 'pagination', // 分页class
+        innerWindow: 2, // 当前页分页按钮前后各展示多少个分页按钮
+        outerWindow: 0, // 分页器最前和最后各显示几个分页按钮
+        left: 0, // 分页器最前显示几个分页按钮
+        right: 0 // 分页器最后显示几个分页按钮
+    };
+    var values = [{
+        id: 1,
+        carNum: 'A111111',
+        place: '北京',
+        time: '2016-07-23',
+        operate: '<a href="#">删除</a>',
+        test: 'test1'
+    }, {
+        id: 2,
+        carNum: 'A222222',
+        place: '北京2',
+        time: '2016-07-333',
+        operate: '<a href="#">删除</a>',
+        test: 'test2'
+    }, {
+        id: 1,
+        carNum: 'A111111',
+        place: '北京',
+        time: '2016-07-23',
+        operate: '<a href="#">删除</a>',
+        test: 'test1'
+    }, {
+        id: 2,
+        carNum: 'A222222',
+        place: '北京2',
+        time: '2016-07-333',
+        operate: '<a href="#">删除</a>',
+        test: 'test2'
+    }, {
+        id: 1,
+        carNum: 'A111111',
+        place: '北京',
+        time: '2016-07-23',
+        operate: '<a href="#">删除</a>',
+        test: 'test1'
+    }, {
+        id: 2,
+        carNum: 'A222222',
+        place: '北京2',
+        time: '2016-07-333',
+        operate: '<a href="#">删除</a>',
+        test: 'test2'
+    }, {
+        id: 1,
+        carNum: 'A111111',
+        place: '北京',
+        time: '2016-07-23',
+        operate: '<a href="#">删除</a>',
+        test: 'test1'
+    }, {
+        id: 2,
+        carNum: 'A222222',
+        place: '北京2',
+        time: '2016-07-333',
+        operate: '<a href="#">删除</a>',
+        test: 'test2'
+    }];
+
+    var myList = new List('js_c-Table', options, values);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>我是可以被更新的数据<strong>{{test1}}</strong></div>
+        <span v-once>我里面的数据只会在第一次被绑定，后面不会主动更新,<strong>{{test1}}</strong><strong>{{test2}}</strong></span>
+    </div>
+    <button>按钮</button>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            test1: '测试信息1',
+            test2: '测试信息2'
+        }
+    });
+    document.querySelector('button').onclick = function() {
+        vm.test1 = "我被改变了";
+    };
+    </script>
+</body>
+
+</html>

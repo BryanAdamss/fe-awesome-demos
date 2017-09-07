@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">{{ msg }}</div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '123'
+        }
+    });
+    vm.msg = 'new message'; // 更改数据
+    console.log(vm.$el.textContent); // '123'
+    console.log(vm.$el.textContent === 'new message'); // false
+    Vue.nextTick(function() {
+        console.log(vm.$el.textContent); // 'new message'
+        console.log(vm.$el.textContent === 'new message'); // true
+    });
+    </script>
+</body>
+
+</html>

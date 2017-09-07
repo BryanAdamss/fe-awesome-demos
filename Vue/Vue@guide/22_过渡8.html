@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .list-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .list-enter-active,
+    .list-leave-active {
+        transition: all 1s;
+    }
+
+    .list-enter,
+    .list-leave-to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    </style>
+</head>
+
+<body>
+    <div id="list-demo" class="demo">
+        <button v-on:click="add">Add</button>
+        <button v-on:click="remove">Remove</button>
+        <!-- 因为指定了tag特性，所以transition-group将被p取代 -->
+        <transition-group name="list" tag="p">
+            <!-- 绑定唯一的key -->
+            <span v-for="item in items" v-bind:key="item" class="list-item">{{ item }}</span>
+        </transition-group>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    new Vue({
+        el: '#list-demo',
+        data: {
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            nextNum: 10
+        },
+        methods: {
+            randomIndex: function() {
+                return Math.floor(Math.random() * this.items.length)
+            },
+            add: function() {
+                this.items.splice(this.randomIndex(), 0, this.nextNum++)
+            },
+            remove: function() {
+                this.items.splice(this.randomIndex(), 1)
+            },
+        }
+    })
+    </script>
+</body>
+
+</html>

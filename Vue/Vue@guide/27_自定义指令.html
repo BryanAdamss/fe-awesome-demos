@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://unpkg.com/tween.js@16.3.4"></script>
+</head>
+
+<body>
+    <div id="hook-arguments-example">
+        <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    Vue.directive('demo', {
+        bind: function(el, binding, vnode) {
+            console.log('bind');
+            var s = JSON.stringify;
+            el.innerHTML =
+                'name: ' + s(binding.name) + '<br>' +
+                'value: ' + s(binding.value) + '<br>' +
+                'expression: ' + s(binding.expression) + '<br>' +
+                'argument: ' + s(binding.arg) + '<br>' +
+                'modifiers: ' + s(binding.modifiers) + '<br>' +
+                'vnode keys: ' + Object.keys(vnode).join(', ');
+        },
+        inserted: function(el, binding, vnode) {
+            console.log('inserted');
+        },
+        unbind: function(el, binding, vnode) {
+            console.log('unbind');
+        }
+    });
+    new Vue({
+        el: '#hook-arguments-example',
+        data: {
+            message: 'hello!'
+        }
+    });
+    </script>
+</body>
+
+</html>

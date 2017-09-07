@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .fade-enter,
+    .fade-leave {
+        opacity: 0;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all .3s ease-in-out;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <transition name="fade">
+            <div v-if="items.length > 0">
+                divdiv
+            </div>
+            <p v-else>Sorry, no items found.</p>
+        </transition>
+        <button @click="del">点击</button>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            items: [{ text: 1 }, { text: 2 }]
+        },
+        methods: {
+            del: function() {
+                this.items = [];
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

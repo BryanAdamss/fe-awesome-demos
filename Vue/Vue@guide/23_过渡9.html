@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+    <style type="text/css">
+    /*设置-move*/
+
+    .flip-list-move {
+        transition: transform 1s;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="flip-list-demo" class="demo">
+        <button v-on:click="shuffle">洗牌</button>
+        <transition-group name="flip-list" tag="ul">
+            <li v-for="item in items" v-bind:key="item">
+                {{ item }}
+            </li>
+        </transition-group>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+    new Vue({
+        el: '#flip-list-demo',
+        data: {
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        },
+        methods: {
+            shuffle: function() {
+                this.items = _.shuffle(this.items) // 打乱
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>
