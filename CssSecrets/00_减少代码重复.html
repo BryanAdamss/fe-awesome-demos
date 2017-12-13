@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.c-Btn{
+			padding:6px 16px;
+			border:1px solid #446d88;
+			background: #58a linear-gradient(#77a0bb,#58a);
+			border-radius: 4px;
+			box-shadow:0 1px 5px gray;
+			color:#fff;
+			text-shadow:0 -1px 1px #335166;
+			font-size:20px;
+			line-height: 30px;
+			text-decoration: none;
+		}
+		.c-Btn--modifer{
+			font-size: 125%;
+			line-height: 1.5;
+			padding:.3em .8em;
+			border:1px solid #446d88;
+			background: #58a linear-gradient(#77a0bb,#58a);
+			border-radius: .2em;
+			box-shadow:0 .05em .25em gray;
+			color:#fff;
+			text-shadow: 0 -.05em .05em #335166;
+			text-decoration: none;
+		}
+		.c-Btn--large{
+			font-size:200%;
+		}
+	</style>
+</head>
+<body>
+<pre>
+		.c-Btn{
+			padding:6px 16px;
+			border:1px solid #446d88;
+			background: #58a linear-gradient(#77a0bb,#58a);
+			border-radius: 4px;
+			box-shadow:0 1px 5px gray;
+			color:#fff;
+			text-shadow:0 -1px 1px #335166;
+			font-size:20px;
+			line-height: 30px;
+			text-decoration: none;
+		}
+		大量使用了绝对单位，如果我们想换个字体大小，则需要调整的地方有很多。
+		为了减少代码的重复，我们应该尽可能的将一些存在依赖关系的值，使用相对单位(em/rem/%);	
+</pre>
+	<a href="javascript:;" class="c-Btn" role="button">按钮</a>
+	<a href="javascript:;" class="c-Btn c-Btn--large" role="button">按钮</a>
+
+	<a href="javascript:;" class="c-Btn--modifer" role="button">按钮</a>
+	<a href="javascript:;" class="c-Btn--modifer c-Btn--large" role="button">按钮</a>
+</body>
+</html>

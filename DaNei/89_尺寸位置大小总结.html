@@ -113,11 +113,27 @@
     console.log("屏幕高:" + screen.height); //屏幕的像素高度
     console.log("屏幕可用宽:" + screen.availWidth); //屏幕可用宽度，windows下要去除任务栏
     console.log("屏幕可用高:" + screen.availHeight); //屏幕可用高度，windows下要去除任务栏
-    console.log("屏幕可用区距屏幕最左侧距离:" + screen.availLeft); //可用屏幕区域左侧距屏幕最左侧的偏移值
-    console.log("屏幕可用区距屏幕最顶部距离:" + screen.availTop); //可用屏幕区域顶部距屏幕最顶部的偏移值
+    console.log("屏幕可用区距屏幕最左侧距离:" + screen.availLeft); //可用屏幕区域左侧距屏幕最左侧的偏移值，windows下要去除任务栏
+    console.log("屏幕可用区距屏幕最顶部距离:" + screen.availTop); //可用屏幕区域顶部距屏幕最顶部的偏移值，windows下要去除任务栏
 
     // 元素
     var ele = document.getElementById("box");
+
+    function getP(ele) {
+        var x = 0,
+            y = 0;
+        while (ele !== null) {
+            x += ele.offsetLeft;
+            y += ele.offsetTop;
+            ele = ele.offsetParent;
+        }
+        return {
+            x: x,
+            y: y
+        }
+    }
+    ele.scrollLeft = 10;
+    console.log(getP(ele));
 
     console.log("元素的偏移容器:" + ele.offsetParent); //获取偏移容器
     // 绝对定位下,ele.offsetLeft/Top就和left、top值一样
@@ -126,8 +142,8 @@
     console.log("元素相对偏移容器的上偏移量:" + ele.offsetTop); //元素顶边框相对与偏移容器的顶边框的偏移量
     console.log("元素content+padding+border+scroolbar:" + ele.offsetWidth); //返回一个元素的布局宽度。一个典型的（译者注：各浏览器的offsetWidth可能有所不同）offsetWidth是测量元素的边框(borders)、水平线上的内边距(padding)、竖直方向滚动条(scroolbar)（如果存在的话）、以及CSS设置的宽度(width)的值。
     console.log("元素content+padding+border+scroolbar:" + ele.offsetHeight); //返回一个元素的布局高度。一个典型的（译者注：各浏览器的offsetHeight可能有所不同）offsetWidth是测量元素的边框(borders)、水平线上的内边距(padding)、水平方向滚动条(scroolbar)（如果存在的话）、以及CSS设置的高度(width)的值。
-    console.log("元素内容区+padding的区域距离内容区+padding+border区域的左侧距离:" + ele.clientLeft); // 元素内容区+padding的区域距离内容区+padding+border区域的左侧距离,一般为左侧border宽度
-    console.log("元素内容区+padding的区域距离内容区+padding+border区域的上侧距离:" + ele.clientTop); // 元素内容区+padding的区域距离内容区+padding+border区域的左侧距离,一般为上侧border宽度
+    console.log("元素content+padding的区域距离content+padding+border区域的左侧距离:" + ele.clientLeft); // 元素content+padding的区域距离content+padding+border区域的左侧距离；一般为左侧border宽度
+    console.log("元素content+padding的区域距离content+padding+border区域的上侧距离:" + ele.clientTop); // 元素content+padding的区域距离content+padding+border区域的左侧距离；一般为上侧border宽度
     console.log("元素content+padding:" + ele.clientWidth); //属性表示元素的内部宽度，以像素计。该属性包括内边距，但不包括垂直滚动条（如果有的话）、边框和外边距
     console.log("元素content+padding:" + ele.clientHeight); //属性表示元素的内部高度，以像素计。该属性包括内边距，但不包括垂直滚动条（如果有的话）、边框和外边距
     console.log("元素左侧被卷起的距离:" + ele.scrollLeft); // 元素左侧被卷起的距离,一般为左滚动距离,可读写,横向滚动条相对于滚动区域宽度(scrollWidth)的位置【滚动条的位置】
@@ -163,28 +179,12 @@
     console.log("返回文档相对于文档显示区域的偏移量:" + window.pageYOffset);
 
     // 元素尺寸、位置(相对视口)
-    console.log(ele.getBoundingClientRect().top); //上border距离视口左上角的垂直距离
-    console.log(ele.getBoundingClientRect().left); //左border距离视口左上角的水平距离
-    console.log(ele.getBoundingClientRect().right); //左border距离视口左上角的水平距离,所以right-left为width
-    console.log(ele.getBoundingClientRect().bottom); //下border距离视口左上角的垂直距离,所以bottom-top为height
-    console.log(ele.getBoundingClientRect().width); //content+padding+border
-    console.log(ele.getBoundingClientRect().height);
-
-    function getP(ele) {
-        var x = 0,
-            y = 0;
-        while (ele !== null) {
-            x += ele.offsetLeft;
-            y += ele.offsetTop;
-            ele = ele.offsetParent;
-        }
-        return {
-            x: x,
-            y: y
-        }
-    }
-    ele.scrollLeft = 10;
-    console.log(getP(ele));
+    console.log('上border距离视口左上角的垂直距离', ele.getBoundingClientRect().top); //上border距离视口左上角的垂直距离
+    console.log('左border距离视口左上角的水平距离', ele.getBoundingClientRect().left); //左border距离视口左上角的水平距离
+    console.log('左border距离视口左上角的水平距离,所以right-left为width', ele.getBoundingClientRect().right); //左border距离视口左上角的水平距离,所以right-left为width
+    console.log('下border距离视口左上角的垂直距离,所以bottom-top为height', ele.getBoundingClientRect().bottom); //下border距离视口左上角的垂直距离,所以bottom-top为height
+    console.log('width:content+padding+border', ele.getBoundingClientRect().width); //content+padding+border
+    console.log('height:content+padding+border', ele.getBoundingClientRect().height);
     </script>
 </body>
 

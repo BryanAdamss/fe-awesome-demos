@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+	}
+	svg{
+		width: 100%;
+		height: 100%;
+		transform: rotate(-90deg);
+		background: yellowgreen;
+		border-radius: 50%;
+	}	
+	circle{
+		fill: yellowgreen;
+		stroke: #655;
+		stroke-width: 32;
+		/* 因为圆形的半径为16，所以周长2*3.14*16=100，故设置虚线的间隙为100 */
+		stroke-dasharray: 38 100;/* 可得到比率为38的扇形 */
+	}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<!-- 设置了viewBox能更好的适配 -->
+		<svg viewBox="0 0 32 32">
+			<circle r="16" cx="16" cy="16"></circle>
+		</svg>
+	</div>
+</body>
+</html>

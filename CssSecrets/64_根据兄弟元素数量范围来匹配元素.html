@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+</head>
+<body>
+	<pre>
+		前置知识点
+			li:first-child:nth-last-child(4)：选择li，li是第一个子元素，并且是倒数第4个子元素->满足条件的li必须是只有4个li元素中的第1个li元素->间接知道当前li总共有4个->配合A~B可完成根据兄弟元素数量来设置样式
+
+			li:nth-child(an+b)->选中li，li的位置将符合an+b(n从0到正无穷)，例如li:nth-child(2n+1)->li:nth-child(1),li:nth-child(3),li:nth-child(5)...其实就是所有奇数
+
+			li:nth-child(n+b)->选中li，li的位置将从b开始，例如li:nth-child(n+4)，将选中li:nth-child(4),li:nth-child(5),li:nth-child(6)...
+
+			li:nth-child(-n+b)->选中li，li的位置将从b往前直到1，例如li:nth-child(-n+4)，将选中li:nth-child(4),li:nth-child(3),li:nth-child(2),li:nth-child(1)
+
+			结合使用知识点1、3将可以完成匹配至少包含多少个
+			结合使用知识点1、4将可以完成匹配至多包含多少个
+	</pre>
+
+	<style>
+		li:first-child:nth-last-child(n+6),
+		li:first-child:nth-last-child(n+6)~li{
+			/*当前列表至少包含6项，命中所有列表项*/
+			color: blue;
+		}
+
+		li:first-child:nth-last-child(-n+5),
+		li:first-child:nth-last-child(-n+5)~li{
+			/*当前列表最多包含5项，命中所有列表项*/
+			color: pink;
+		}
+	</style>
+	<ul>
+		<li>1</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+		<li>10</li>
+	</ul>
+</body>
+</html>

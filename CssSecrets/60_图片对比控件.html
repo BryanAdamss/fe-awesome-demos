@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			margin: 0;
+		}
+		.image-slider{
+			display: inline-block;
+			position: relative;
+		}
+		.image-slider>div{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			/*初始宽度*/
+			width:50%;
+			/*防止缩放超过100%*/
+			max-width: 100%;
+			overflow: hidden;
+			/*水平缩放,resize可以应用在任何元素上*/
+			resize: horizontal;
+		}
+		.image-slider img{
+			display: block;
+			/*不让图片可选*/
+			user-select: none;
+		}
+		.image-slider > div::before{
+			/*用伪元素覆盖默认的缩放手柄*/
+			content: "";
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			width: 12px;
+			height: 12px;
+			background: linear-gradient(-45deg,white 50%,transparent 0);
+			/*鼠标指针为水平移动样式*/
+			cursor: ew-resize;
+			padding: 5px;
+			background-clip: content-box;
+			z-index: 5;
+		}
+	</style>
+</head>
+<body>
+	<div class="image-slider">
+		<div>
+			<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512061724280&di=4390ef9abb89896244c0d70766e3d911&imgtype=0&src=http%3A%2F%2Ff0.topitme.com%2F0%2F1f%2F8f%2F11198638053a18f1f0o.jpg" alt="">
+		</div>
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512061724281&di=5f717bacd3c5a25df3e536d165fdbc80&imgtype=0&src=http%3A%2F%2Fwww.liuba.gov.cn%2Fliuba%2Ftplb%2F201711%2FW020171108347932530224.jpg" alt="">
+	</div>
+</body>
+</html>

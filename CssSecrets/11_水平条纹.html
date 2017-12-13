@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		display: inline-block;
+		width:200px;
+		height: 200px;
+		border:1px solid red;
+
+	}	
+	.box1{
+		background: linear-gradient(red,blue);/*默认从上到下*/
+	}
+	.box2{
+		background: linear-gradient(to left,red,blue);/*右到左*/
+	}
+	.box3{
+		background: linear-gradient(to right,red,blue);/*左到右*/
+	}
+	.box4{
+		background: linear-gradient(to top,red,blue);/*下到上*/
+	}
+	.box5{
+		background: linear-gradient(to bottom,red,blue);/*上到下*/
+	}
+	.box6{
+		background: linear-gradient(45deg,red,blue);
+	}
+	.box7{
+		background: linear-gradient(red 0,blue 200px);	
+	}
+	.box8{
+		background: linear-gradient(red 100px,blue 200px);	
+	}
+	.box9{
+		background: linear-gradient(red 100px,blue 100px);	/*当起始坐标一致时，就会产生纯色条纹*/
+	}
+	.box10{
+		background: linear-gradient(red 30px,blue 30px);	/*当起始坐标一致时，就会产生纯色条纹*/
+	}
+	.box11{
+		background: linear-gradient(red 30px,blue 30px);
+		background-size: 20px 40px;/*可以将通过渐变语法产生的背景，理解为一张图片，可以使用任何针对背景图的语法*/
+		background-repeat: no-repeat;
+	}
+	.box12{
+		background: linear-gradient(red 30px,blue 30px);
+		background-size: 20px 40px;/*默认会水平垂直方向平铺，所以就产生了条纹背景*/
+	}
+	.box13{
+		background: linear-gradient(red 30px,blue 0);/*如果某个色标位置比整个列表中在它之前的色标的色标的位置都要小时，则该色标位置会被设置为它它前面所有色标位置值的最大值；这意味着，当把第二个色标位置设置为0时，那么它的位置将被设置成第一个的位置，从而实现了条文*/
+		background-size: 20px 40px;
+	}
+	.box14{
+		background: linear-gradient(red 10px,blue 0,blue 20px ,pink 0);/*3色条纹*/
+		/* 上面的相当于 */
+		/* background: linear-gradient(red 10px,blue 10px,blue 20px ,pink 20px); */
+		background-size: 100% 30px;
+		background-repeat: no-repeat;
+	}
+	</style>
+</head>
+<body>
+	<div class="box box1"></div>
+	<div class="box box2"></div>
+	<div class="box box3"></div>
+	<div class="box box4"></div>
+	<div class="box box5"></div>
+	<div class="box box6"></div>
+	<div class="box box7"></div>
+	<div class="box box8"></div>
+	<div class="box box9"></div>
+	<div class="box box10"></div>
+	<div class="box box11"></div>
+	<div class="box box12"></div>
+	<div class="box box13"></div>
+	<div class="box box14"></div>
+</body>
+</html>

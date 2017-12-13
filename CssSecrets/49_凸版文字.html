@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		p{
+			width: 30em;
+			font-size: 24px;
+			/*浅色背景上使用深色文本，实现凸版效果需要在底部加上浅色投影 */
+			background-color: hsl(210,13%,60%);
+			color: hsl(210,13%,30%);
+			text-shadow: 0 .03em .03em hsla(0,0%,100%,.8)
+		}
+		div{
+			width: 30em;
+			font-size: 24px;
+			/*深色背景上使用浅色文本，实现凸版效果需要在顶部加上深色投影 */
+			background-color: hsl(210,13%,30%);
+			color: hsl(210,13%,60%);
+			text-shadow: 0 -.03em .03em #000;
+		}
+	</style>
+</head>
+<body>
+	<p>xLorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis tempore ratione optio, porro autem nesciunt quo voluptate blanditiis praesentium, sint quia. Facere quasi aliquid est aut ea quidem, assumenda modi?</p>
+	<div>xLorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis tempore ratione optio, porro autem nesciunt quo voluptate blanditiis praesentium, sint quia. Facere quasi aliquid est aut ea quidem, assumenda modi?</div>
+</body>
+</html>

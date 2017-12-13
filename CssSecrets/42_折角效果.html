@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 240px;
+		height: 160px;
+		padding: 2em;
+		color: #fff;
+		background: #58a;
+		/* 使用渐变生成折角，注意先定义的渐变层会处于上方，所以先定义折角部分，后定义背景部分折角 */
+		/* background: linear-gradient(to left bottom,transparent 50%,rgba(0,0,0,.4) 0) no-repeat 100% 0/2em 2em,linear-gradient(-135deg,transparent 2em,#58a 0); */
+		/* 虽然都是2em，但二者没有贴合，因为渐变中的2em是渐变线上的坐标，解决方案是折角放大1.414倍，或者背景部分折角缩小1.414倍，2em/1.414=1.414，后者改动的要小，所以选后者 */
+		background: linear-gradient(to left bottom,transparent 50%,rgba(0,0,0,.4) 0) no-repeat 100% 0/2em 2em,linear-gradient(-135deg,transparent 1.414em,#58a 0);
+	}
+	</style>
+</head>
+<body>
+	<div class="box">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima ipsa nostrum, voluptatem inventore, ullam consequuntur velit vel fuga officiis, non repellendus ea qui nihil delectus voluptatum </div>
+</body>
+</html>

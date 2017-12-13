@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		dt,dd{
+			display: inline;
+		}
+		dd{
+			margin: 0;
+			font-weight: bold;
+		}
+		dd+dt::before{
+			content: "\A"; /*添加换行符*/
+			white-space: pre;/*添加换行符后，因为空白符会自动合并，所以用pre组织这行为*/
+		}
+		dd+dd::before{/*给多个dd之间添加逗号*/
+			content: ",";
+			font-weight: normal;
+			margin-left: -.25em;/*因为可能存在四分之一空格，所以使用负margin来抵消*/
+		}
+
+	</style>
+</head>
+<body>
+	<dl>
+		<dt>名字：</dt>
+		<dd>Test</dd>
+		<dt>Email：</dt>
+		<dd>test@test.com</dd>
+		<dd>test2@test2.com</dd>
+		<dt>位置：</dt>
+		<dd>地球</dd>
+	</dl>
+</body>
+</html>

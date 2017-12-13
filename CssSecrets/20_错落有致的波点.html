@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+	 	background: #655;
+		background-image: radial-gradient(tan 30%, transparent 0),radial-gradient(tan 30%,transparent 0);
+		background-size: 30px 30px;
+		/* 通过设置偏移值，来形成错落有致的波点图，第二个的偏移值应该是size的一半 */
+		background-position: 0 0 , 15px 15px;
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

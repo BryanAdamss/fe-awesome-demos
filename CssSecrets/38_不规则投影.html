@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		margin-top: 20px;
+		width: 200px;
+		height: 200px;
+		background-color: red;
+		position: relative;
+	}
+	.box::after{
+		content: "";
+		background-color: blue;
+		position: absolute;
+		right: -1em;
+		top: 50%;
+		width: 2em;
+		height: 2em;
+		margin-top: -1em;
+		transform: rotate(45deg)
+	}
+	.box1{
+		/* 普通的box-shadow无法应用到不规则图形上 */
+		box-shadow: 2px 2px 10px green;
+	}
+	.box2{
+		/* 使用滤镜drop-shadow */
+		filter:drop-shadow(2px 2px 10px green);
+	}
+	</style>
+</head>
+<body>
+	<div class="box box1"></div>
+	<div class="box box2"></div>
+</body>
+</html>

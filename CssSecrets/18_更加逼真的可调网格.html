@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+		/* 利用水平和垂直方向的条纹能生成网格 */
+		background: #58a;
+		background-image: linear-gradient(white 2px,transparent 0),linear-gradient(90deg,white 2px ,transparent 0),linear-gradient(hsla(0,0%,100%,.3) 1px,transparent 0),linear-gradient(90deg,hsla(0,0%,100%,.3) 1px ,transparent 0);
+		background-size: 75px 75px ,75px 75px,15px 15px,15px 15px;
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

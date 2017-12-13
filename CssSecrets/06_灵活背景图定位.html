@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html,body{
+		margin:0;
+		height:100%;
+	}
+	.box{
+		width:90%;
+		height: 90%;
+		background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505407398804&di=bb40f25f94f32585c5d8e3a86aec0d36&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fabpic%2Fitem%2Ffd428c45042f33108694737c.jpg");
+		background-repeat: no-repeat;
+		background-color: #666;
+		/*想实现背景图片下边缘距离容器下边缘20px，右边缘距离容器右边缘10px；如果容器宽度是固定，可以通过背景图计算出偏移值，实现效果，如果容器宽度不固定，用这种方法则很难实现，这时可以使用background-position的扩展语法来实现；支持IE9+*/
+	 	background-position:bottom 20px right 10px ;
+	 	/*上面的意思是背景图下边缘距离容器下边缘20px，右边缘距离容器右边缘10px*/
+	 	/*background-position: bottom right 10px;*/
+	 	/*距下边缘为0，右侧为10px*/
+	 	/*background-position: bottom right;*/
+	 	/*背景右下角和容器右下角重合，即距离下边缘为0，右边缘为0*/
+	 	/*background-position: 10px bottom 10px;*/
+	 	/*要注意的是：设置3个或4个值，偏移量前必须有关键字。也就是说，形如："10px bottom 20px" ，这样的参数设置是错误的，因为10px前面没有关键字。*/
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

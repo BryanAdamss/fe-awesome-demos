@@ -3,7 +3,7 @@
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
     } else {
-        factory(jquery);
+        factory(jQuery);
     }
 })(function($) {
     var settings = { // 默认配置

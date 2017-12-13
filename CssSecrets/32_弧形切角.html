@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+		
+		
+	}
+	.box1{
+		background: #58a;
+		/* 使用径向渐变 */
+		background: radial-gradient(circle at top left,transparent 15px,red 0) top left,
+		radial-gradient(circle at top right,transparent 15px,blue 0) top right,
+		radial-gradient(circle at bottom right,transparent 15px,yellow 0) bottom right,
+		radial-gradient(circle at bottom left,transparent 15px,pink 0) bottom left;
+		background-size: 50% 50%;
+		background-repeat: no-repeat;
+	}
+	
+ 
+	</style>
+</head>
+<body>
+	<div class="box box1"></div>
+</body>
+</html>

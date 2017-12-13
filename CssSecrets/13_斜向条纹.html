@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+		/* 这样无法完成斜向条纹 */
+		background: linear-gradient(45deg ,red 50% ,blue 0);
+		background-size: 20px 20px;
+		/* 这样能产生一个斜向条纹，但会出现锯齿，并且不灵活，如果换成其它角度会出问题 */
+		background: linear-gradient(45deg ,red 25% ,blue 0,blue 50%,red 0,red 75% ,blue 0);
+		background-size:42.4px 42.4px;
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

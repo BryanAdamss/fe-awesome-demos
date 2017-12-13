@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .box {
+        width: 100px;
+        border: 1px solid green;
+        margin: 0 0 0 0;
+    }
+
+    .box-hd {
+        background-color: red;
+        line-height: 2em;
+    }
+
+    .box-bd {
+        background-color: blue;
+        height: 5em;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="js_box">
+        <div class="box-hd" id="js_hd">hd</div>
+        <div class="box-bd">bd</div>
+    </div>
+    <div style="width:2000px;height: 1400px;border:1px solid red;"></div>
+    <script src="js/require-2.3.3.min.js" data-main="js/10_main.js"></script>
+</body>
+
+</html>

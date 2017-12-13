@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	label{
+		position: relative;
+	}
+	.callout{	
+		color: red;
+		background-color:blue;
+		position: absolute;
+		left: 0;
+		top: 100%;
+	}
+	
+	input:not(:focus)+.callout{
+		transform: scale(0)
+	}
+
+	.callout{
+		transition: transform .5s cubic-bezier(.25,.1,.3,1.5);/*指定调速曲线(缓冲函数)*/
+		transform-origin: 1.4em -.4em;
+	}
+
+	</style>
+</head>
+<body>
+	<label>
+		<input type="text">
+		<span class="callout">我是提示信息</span>
+	</label>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 240px;
+		height: 160px;
+		padding: 2em;
+		color: #fff;
+		background: #58a;
+		
+		/* 通过下面是可以生成非45度的折角，但和现实的折角不一样 */
+		background: linear-gradient(to left bottom,transparent 50%,rgba(0,0,0,.4) 0) no-repeat 100% 0/3em 1.73em,linear-gradient(-150deg,transparent 1.5em,#58a 0);
+	}
+	</style>
+</head>
+<body>
+	<div class="box">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima ipsa nostrum, voluptatem inventore, ullam consequuntur velit vel fuga officiis, non repellendus ea qui nihil delectus voluptatum </div>
+</body>
+</html>

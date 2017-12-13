@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html,body{
+		margin:0;
+		height:100%;
+	}
+	.box{
+		width:90%;
+		height: 90%;
+		background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505407398804&di=bb40f25f94f32585c5d8e3a86aec0d36&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fabpic%2Fitem%2Ffd428c45042f33108694737c.jpg");
+		background-repeat: no-repeat;
+		background-color: #666;
+	 	/*要实现背景图下边缘距容器下边缘20px，右边缘距离容器右边缘10px，还可以使用calc来完成*/
+	 	background-position:calc(100% - 10px) calc(100% - 20px) ;
+	 	/*使用calc时注意-和+前后需要保留空格，否则会出现解析错误，这样是为向未来兼容，因为以后可能会引进关键字*/
+	 	 
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

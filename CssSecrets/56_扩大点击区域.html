@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		a{
+			width: 4em;
+			height: 4em;
+			line-height: 4em;
+			text-align: center;
+			display: block;
+			text-decoration: none;
+			background-color: #28a;
+			color: #fff;
+			border-radius: 50%;
+			margin: 10em auto;
+
+			border: 2px solid red;
+			box-shadow: 0 0 10px 0 blue;
+			position: relative;
+		}
+		a::before{
+			/*利用伪元素扩大点击区域*/
+			content: "";
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			right: -10px;
+			bottom: -10px;
+		}
+	</style>
+</head>
+<body>
+	<a href="#">按钮</a>
+</body>
+</html>

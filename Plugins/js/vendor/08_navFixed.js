@@ -3,15 +3,14 @@
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
     } else {
-        factory(jquery);
+        factory(jQuery);
     }
 })(function($) {
-    var settings = {};
+    var settings = {},
+        $config = null;
+
     $.fn.cgh_navfixed = function(options) {
-
-
         $config = $.extend({}, settings, options); // 保存配置
-
         return this.each(function() {
             var $this = $(this),
                 $win = $(window),

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	/*使用一个元素需要使用box-shadow和outline来实现*/
+	.box{
+		background: tan;
+		padding:1em;
+		width:20em;
+		margin:2em auto;
+		border-radius: .8em;
+		box-shadow: 0 0 0 .6em #655;
+		/*box-shadow换个颜色就能看出原理*/
+		box-shadow: 0 0 0 .6em red;
+		outline: 1em solid #655;
+		/*关键在于box-shadow的延伸值，其实它不一定需要和outline的一样，只需要一个足够的值，来填满空隙就行了，根据勾股定理，可算出最小延伸值为border-radius值*(根号2-1)即可，为方便记忆可直接使用border-radius值的一半；因为(根号2-1)<0.5*/
+		box-shadow:0 0 0 .4em red;
+	}
+	</style>
+</head>
+<body>
+ 
+		<div class="box">Lorem ipsum dolor sit amet</div>
+ 
+</body>
+</html>

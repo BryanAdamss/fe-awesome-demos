@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+</head>
+<body>
+	<pre>
+		前置知识点
+			A+B：选择A元素之后紧邻的那一个兄弟元素B
+			A~B：选择A元素之后所有的兄弟元素B们
+			li:only-child：选择li，li是唯一一个子元素->相当于li:first-child:nth-last-child(1)
+			li:first-child：选择li，li是第一个子元素
+			li:nth-last-child(1)：选择li，li是从后往前数第一个子元素
+
+			li:first-child:nth-last-child(4)：选择li，li是第一个子元素，并且是倒数第4个子元素->满足条件的li必须是只有4个li元素中的第1个li元素->间接知道当前li总共有4个->配合A~B可完成根据兄弟元素数量来设置样式
+	</pre>
+
+	<style>
+		li:only-child{
+			color: red;
+		}
+
+		/*先选中总共只有2个li中的第一个，再选中其之后的所有li*/
+		li:first-child:nth-last-child(2),
+		li:first-child:nth-last-child(2)~li{
+			color: blue;
+		}
+
+		/*先选中总共只有3个li中的第一个，再选中其之后的所有li*/
+		li:first-child:nth-last-child(3),
+		li:first-child:nth-last-child(3)~li{
+			color: pink;
+		}
+	</style>
+	<ul>
+		<li>1</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+	</ul>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+</body>
+</html>

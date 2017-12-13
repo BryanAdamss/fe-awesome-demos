@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 60px;
+		padding: .5em 1em .35em 1em;
+		text-align: center;
+	 }	
+ 	.box1{
+ 		background-color: #58a;
+		transform: perspective(.5em) rotateX(10deg); /*文字也发生了倾斜*/
+ 	}
+ 	.box2{
+ 		margin-top: 60px;
+		position: relative;
+ 	}
+ 	.box2::after{
+ 		content: "";
+ 		position: absolute;
+ 		top: 0;
+ 		left: 0;
+ 		right: 0;
+ 		bottom: 0;
+ 		z-index: -1;
+ 		background-color: #58a;
+ 		/* 因为透视的问题，伪元素和内容大小有所出入，可以将变形的中心点放在底边并设置Y轴缩放来减少大小的偏差， */
+ 		transform: scaleY(1.5) perspective(.5em) rotateX(10deg);
+ 		transform-origin: bottom;
+
+ 		border-radius: 10px;
+ 	}
+	</style>
+</head>
+<body>
+	<div class="box box1">test</div>
+	<div class="box box2">test2</div>
+</body>
+</html>

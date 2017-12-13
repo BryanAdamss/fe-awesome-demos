@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			width: 150px;
+			height: 150px;
+			background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512753662132&di=259d0e97ea0b0595c17f26f59f440931&imgtype=0&src=http%3A%2F%2Ffile12.mafengwo.net%2FM00%2F74%2F27%2FwKgBpU6H7xKkrImWAADgvHS_cH459.groupinfo.w600.jpeg");
+			background-size: auto 100%;
+			animation: move 10s linear infinite alternate;
+			/*动画默认是暂停的*/
+			animation-play-state: paused;
+		}
+
+		.box:hover,.box:focus{
+			/*悬停时再运动，这就保证了在悬停时直接设置动画，鼠标离开时动画会回到第一帧*/
+			animation-play-state: running;
+		}
+		@keyframes move{
+			to{
+				background-position: 100% 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

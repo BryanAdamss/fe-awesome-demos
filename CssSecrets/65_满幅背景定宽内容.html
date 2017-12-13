@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box1{
+			background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512407899741&di=0ff71a16b36ceed327c8219cf874cc3b&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F57b18efecdbe2.jpg") no-repeat center;
+		}
+		.box1 .inner{
+			max-width: 900px;
+			margin: 1em auto;
+		}
+		.box2{
+			background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512407899741&di=0ff71a16b36ceed327c8219cf874cc3b&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F57b18efecdbe2.jpg") no-repeat center;	
+			padding: 1em;/*calc的回退方案*/
+			padding: 1em calc(50% - 450px);/*由于左右padding是通过calc动态计算的，所以中间内容始终是900，即使窗口小于900也能适配，达到以前width:100%;max-width:1260px;的效果*/
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">
+		<div class="inner">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, id laboriosam sunt, hic dolores vero unde, cupiditate excepturi voluptatum quod aspernatur? Repudiandae, officiis, repellendus! Ut quibusdam mollitia facere, voluptates, sint rerum rem ex, repellendus maiores minus dolorum quas voluptatum, quam deserunt repellat facilis? Numquam nobis fuga doloribus odit aut quis commodi mollitia in unde officia magnam, vero est eum voluptas earum sunt perspiciatis odio ut maiores quas aperiam cum dolor. Nostrum, inventore iure incidunt veritatis pariatur corporis magni, similique cupiditate praesentium, reiciendis est ipsa eveniet temporibus quam aut atque. Maxime illo dolorum, ut quaerat blanditiis neque nobis sequi quasi deserunt.</div>
+	</div>
+
+	<div class="box2">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, id laboriosam sunt, hic dolores vero unde, cupiditate excepturi voluptatum quod aspernatur? Repudiandae, officiis, repellendus! Ut quibusdam mollitia facere, voluptates, sint rerum rem ex, repellendus maiores minus dolorum quas voluptatum, quam deserunt repellat facilis? Numquam nobis fuga doloribus odit aut quis commodi mollitia in unde officia magnam, vero est eum voluptas earum sunt perspiciatis odio ut maiores quas aperiam cum dolor. Nostrum, inventore iure incidunt veritatis pariatur corporis magni, similique cupiditate praesentium, reiciendis est ipsa eveniet temporibus quam aut atque. Maxime illo dolorum, ut quaerat blanditiis neque nobis sequi quasi deserunt.
+	</div>
+</body>
+</html>

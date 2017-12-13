@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width:100px;
+		height:100px;
+		background-color: blue;
+		margin:100px auto;
+		border:10px solid red;
+		/*outline画在border外，不占空间；不可使用多重语法；不会随border-radius改变；支持IE9+*/
+		outline:10px dashed green;
+		outline-offset:20px;/*outline距离border距离，为负则向内部偏移；IE11都不支持*/
+		outline-offset:-20px;
+	}
+	</style>
+</head>
+<body>
+	<div class="box">
+		
+	</div>
+</body>
+</html>

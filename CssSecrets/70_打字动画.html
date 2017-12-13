@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		@keyframes typing{
+			from{
+				width: 0;
+			}
+		}
+		@keyframes caret{
+			50%{
+				border-color: currentColor;
+			}
+		}
+		h1{
+			white-space: nowrap;
+			overflow: hidden;
+			font-family: "monospace";
+
+			width: 15ch;/*ch为字符0的宽度，在等宽字体中，每个字符的宽度和0字符的宽度一致*/
+			border-right: .05em solid transparent;
+			animation: typing 6s steps(15),caret 1s steps(1) infinite;
+		}
+	</style>
+</head>
+<body>
+	<h1>CSS is awesome!</h1>
+</body>
+</html>

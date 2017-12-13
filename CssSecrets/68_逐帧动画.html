@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		@keyframes loader{
+			to{
+				background-position: -800px 0;
+			}
+		}
+		.box{
+			background: url("http://dabblet.com/img/loader.png") no-repeat 0 0;
+			width: 100px;
+			height: 100px;
+			animation: loader 1s infinite steps(8,end);/*stpes(n)会将动画切分为n帧，并在帧之间进行硬切换(不进行任何插值过渡)*/
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

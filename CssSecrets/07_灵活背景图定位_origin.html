@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html,body{
+		margin:0;
+		height:100%;
+	}
+	.box{
+		width:90%;
+		height: 90%;
+		background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505407398804&di=bb40f25f94f32585c5d8e3a86aec0d36&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fabpic%2Fitem%2Ffd428c45042f33108694737c.jpg");
+		background-repeat: no-repeat;
+		border:1px dashed red;
+		padding:20px;
+		/*默认情况下，背景图是根据padding-box区域左上角来定位的，如果想实现背景图右下角和padding-box的右下角对齐，应该如何实现？使用background-origin可以设置背景图的定位根据点*/
+		background-position: right bottom;
+		background-origin: content-box;
+	}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

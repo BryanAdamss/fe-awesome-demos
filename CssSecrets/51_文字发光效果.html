@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		p{
+			font-size: 24px;
+			background: #203;
+			color: white;
+			transition: 1s;
+			width: 4em;
+		}
+		p:hover{
+			/*text-shadow配合文字透明色可以实现悬停文字模糊的效果，使用filter:blur(.1em)也能实现此效果*/
+			color: transparent;
+			text-shadow: 0 0 .1em white,0 0 .3em white;
+		}
+	</style>
+</head>
+<body>
+	<p>test</p>
+</body>
+</html>

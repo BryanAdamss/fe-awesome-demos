@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 200px;
+		height: 200px;
+		border: 1px dashed red;
+		transition: all .3s ease-in-out;
+		
+		overflow: hidden;
+	}
+	.box>img{
+		max-width: 100%;
+	}
+
+	.box1,.box2{
+		transform: rotate(45deg);
+	}
+	.box1>img{
+		/* 通过让图片反向旋转来抵消父元素带来的正向旋转 */
+		transform: rotate(-45deg);
+	}
+
+	.box2,.box3{
+		margin-top: 100px;
+	}
+	.box2>img{
+		transform: rotate(-45deg) scale(1.42) ;
+	}
+
+ 	.box3>img{
+ 		transition: all .3s ease-in-out;
+ 		/* clip-path方案，可支持动画；IE不支持 */
+ 		clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+ 	}
+	.box3:hover > img {
+		clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+	}
+
+			 
+	</style>
+</head>
+<body>
+	<div class="box box1">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506446095512&di=d6748df5d7ec5eedd1066b407066fc65&imgtype=0&src=http%3A%2F%2Fimages.m.china.com.cn%2Fnewschina%2F2015_07_05%2F10%2F004cba182de9058e_600_9999.jpg" alt="">
+	</div>
+	<div class="box box2">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506446095512&di=d6748df5d7ec5eedd1066b407066fc65&imgtype=0&src=http%3A%2F%2Fimages.m.china.com.cn%2Fnewschina%2F2015_07_05%2F10%2F004cba182de9058e_600_9999.jpg" alt="">
+	</div>
+	<div class="box box3">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506446095512&di=d6748df5d7ec5eedd1066b407066fc65&imgtype=0&src=http%3A%2F%2Fimages.m.china.com.cn%2Fnewschina%2F2015_07_05%2F10%2F004cba182de9058e_600_9999.jpg" alt="">
+	</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html{
+			height: 100%;
+		}
+		body{
+			background-color: #eee;
+			 width: 500px;
+			 margin: 0 auto;
+		}
+		/*将所有需要模糊的元素全放在main元素中*/
+		.c-Main{
+			width: 100%;
+			height: 100%;
+		
+			/*filter可以使用过渡动画*/
+			transition: filter .6s ;
+		}
+		.c-Main.is-blured{
+			filter: blur(5px);
+		}
+		 .c-Dialog {
+			position: fixed;
+			top: 50%; left: 50%;
+			z-index: 1;
+			width: 10em;
+			padding: 2em;
+			margin: -5em;
+			border: 1px solid silver;
+			border-radius: .5em;
+			background-color: #fff;
+			/*通过巨大的box-shadow产生mask*/
+			box-shadow: 0 .2em .5em rgba(0,0,0,.5),
+			            0 0 0 100vmax rgba(0,0,0,.2);
+			            display: none;
+		}
+		.c-Dialog.is-show{
+			display: block;
+		}
+
+	</style>
+</head>
+<body>
+	
+	
+	<div class="c-Main">
+		<button>点击模糊</button>
+		<p>Show dialog
+Bacon ipsum dolor sit amet consectetur short loin ut tri-tip alcatra ground round jowl beef meatloaf in pork. Elit chicken ea spare ribs. Shank andouille ex boudin picanha turkey esse. Do doner fugiat tongue.</p>
+<p>
+Pork chop ad cow spare ribs capicola ball tip alcatra cillum magna short ribs tempor. Pork loin do sint magna ea pork belly duis. Shoulder ullamco chicken porchetta, ham anim veniam venison. Fugiat tenderloin venison, turducken non pork chop ribeye enim. Beef turkey salami, ipsum prosciutto commodo cupidatat. Tri-tip ham hock non brisket pig cupim commodo ball tip nulla turkey kielbasa corned beef flank. Hamburger pariatur ham, porchetta cupidatat sirloin pork loin quis nulla culpa tail esse.</p>
+<p>
+Chuck filet mignon flank pork chop mollit enim veniam sed pork loin aliquip sausage prosciutto in deserunt. Nostrud porchetta non nulla sunt. Cupim et velit picanha laborum salami capicola exercitation alcatra sausage cillum shoulder minim esse. Pig boudin aliquip aute, tail ut cow incididunt short loin aliqua.
+</p>
+<p>
+Et dolor occaecat dolore doner shoulder. Swine pancetta tri-tip irure turducken, kevin est meatball aliqua aute quis ham venison sunt. Consequat pancetta sint beef turkey. Fugiat occaecat commodo, short ribs corned beef aliquip elit eiusmod pork belly ut eu tri-tip. Sint aute picanha proident corned beef ad beef dolore landjaeger. Laboris est deserunt tempor, bresaola ham hock non brisket frankfurter ad leberkas aute sirloin. Minim et ribeye shank pork loin sint corned beef ball tip dolor.</p>
+<p>
+Doner alcatra pastrami pig, strip steak eu in frankfurter occaecat in filet mignon chuck short loin nulla meatloaf. Adipisicing aliqua kielbasa nulla proident. Ground round meatloaf kevin, shank adipisicing pork frankfurter t-bone spare ribs cupidatat. Sed ham non duis enim, in ipsum fugiat est tongue short ribs ad bresaola prosciutto. Non minim picanha, ad in occaecat fugiat veniam dolor deserunt.</p>
+	</div>
+	<div class="c-Dialog">我是弹窗内容</div>
+	<script>
+		document.querySelector('button').addEventListener('click',function(){
+			document.querySelector('.c-Dialog').className='c-Dialog is-show';
+			document.querySelector('.c-Main').className='c-Main is-blured';
+		});
+	</script>
+</body>
+</html>

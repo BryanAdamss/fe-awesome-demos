@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 70px;
+		line-height: 40px;
+		background-color: blue;
+		text-align: center;
+		/* 这样仍文字也倾斜了 */
+		transform: skewX(-45deg);
+	}
+
+	 .box2{
+		position: relative;
+		width: 70px;
+		line-height: 40px;
+		text-align: center;
+	 }
+	 /* 将倾斜背景应用在伪元素上 */
+	 .box2::before{
+	 	content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: -1;
+		background-color: blue;
+		transform: skewX(-45deg);
+	 }
+	</style>
+</head>
+<body>
+	<div class="box">test</div>
+	<div class="box2">test2</div>
+ 
+</body>
+</html>

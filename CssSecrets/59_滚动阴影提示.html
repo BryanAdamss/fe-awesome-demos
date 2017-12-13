@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul{
+			margin: 5em auto;
+			padding: 0;
+			overflow: auto;
+			width: 10em;
+			height: 20em;
+			padding: .3em .5em;
+			border: 1px solid #ccc;
+			
+			/*通过径向渐变生成阴影，线性渐变生成随元素内容滚动的蒙板*/
+			background: linear-gradient(white 30%, hsla(0,0%,100%,0)) 0 0 / 100% 50px,
+				            radial-gradient(at top, rgba(0,0,0,.2), transparent 70%) 0 0 / 100% 15px,
+				            linear-gradient(to top, white 30%, hsla(0,0%,100%,0)) bottom / 100% 50px,
+				            radial-gradient(at bottom, rgba(0,0,0,.2), transparent 70%) bottom / 100% 15px;
+			background-repeat: no-repeat;
+			/*local指定背景图跟随元素的内容滚动，是否可以用来制作视差效果?*/
+			background-attachment: local, scroll, local, scroll;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>内容1</li>
+		<li>内容2</li>
+		<li>内容3</li>
+		<li>内容4</li>
+		<li>内容5</li>
+		<li>内容6</li>
+		<li>内容7</li>
+		<li>内容8</li>
+		<li>内容9</li>
+		<li>内容10</li>
+		<li>内容1</li>
+		<li>内容2</li>
+		<li>内容3</li>
+		<li>内容4</li>
+		<li>内容5</li>
+		<li>内容6</li>
+		<li>内容7</li>
+		<li>内容8</li>
+		<li>内容9</li>
+		<li>内容10</li>
+		<li>内容1</li>
+		<li>内容2</li>
+		<li>内容3</li>
+		<li>内容4</li>
+		<li>内容5</li>
+		<li>内容6</li>
+		<li>内容7</li>
+		<li>内容8</li>
+		<li>内容9</li>
+		<li>内容10</li>
+	</ul>
+</body>
+</html>

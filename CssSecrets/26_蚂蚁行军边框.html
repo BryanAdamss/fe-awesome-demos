@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 400px;
+		height: 400px;
+		
+		padding: 1em;	
+		border: 1px solid transparent;/* 将border改为10px，可以看到原理 */
+		background: linear-gradient(#ccc,#ccc) padding-box,
+					repeating-linear-gradient(-45deg,black,black 25%,white 0,white 50%) 0 / .6em .6em;
+		animation: ants 12s linear infinite;
+	}
+	@keyframes ants{
+		to{
+			background-position: 100%;
+		}
+	}
+
+	</style>
+</head>
+<body>
+	<div class="box">1231</div>
+</body>
+</html>

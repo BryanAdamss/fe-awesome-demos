@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	 body{
+	 	/* 背景图注意设置为fixed */
+		background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507404558268&di=f0cf146db8aa19a0628cb60ab58ad247&imgtype=0&src=http%3A%2F%2Fwww.3dmgame.com%2Fuploads%2Fallimg%2F160616%2F271_160616071316_1.jpg")no-repeat center/cover fixed;
+	}
+	.box{
+		width: 600px;
+		height: 600px;
+		margin: 100px auto;
+		position: relative;
+		line-height: 1.6em;
+		font-size: 16px;
+		padding: 20px;
+		box-sizing: border-box;
+		border-radius: 10px;
+
+		background-color: hsla(0,0%,100%,.1);
+		/* 溢出隐藏解决伪元素负margin带来的负作用 */
+		overflow: hidden;
+	}
+	.box::before{
+		/* 使用伪元素创造毛玻璃背景 */
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	
+		/* 背景图注意设置和body一样，并为fixed */
+		background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507404558268&di=f0cf146db8aa19a0628cb60ab58ad247&imgtype=0&src=http%3A%2F%2Fwww.3dmgame.com%2Fuploads%2Fallimg%2F160616%2F271_160616071316_1.jpg") no-repeat center/cover fixed;
+		/* 将伪元素的背景放到下层 */
+		z-index: -1;
+		/* 设置模糊 */
+		filter: blur(20px);
+		/* 由于模糊存在一个边缘处没有彻底模糊，所以通过margin负值来补偿 */
+		margin: -30px;
+	}
+	</style>
+</head>
+<body>
+	<div class="box">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias debitis, sint, ipsum dolores maiores, id voluptate totam distinctio cupiditate quaerat recusandae delectus. Suscipit minima minus quod molestias voluptate enim consequatur excepturi veritatis. Temporibus provident quia veniam quaerat repellendus fuga dolores obcaecati doloribus porro delectus deserunt iste saepe reprehenderit, necessitatibus incidunt fugiat quis. Dignissimos ad nemo autem facilis quam eaque, quis omnis error sequi corporis temporibus nobis, expedita aliquam cupiditate harum, repellendus ratione laborum. Nostrum nesciunt quidem et cum illo minus praesentium nam, necessitatibus quis deleniti facere ut ex consectetur corporis nihil assumenda id quam, perspiciatis voluptates tempore libero eaque, aut magni sed ipsam. Omnis ipsa similique saepe nam et, deleniti recusandae quaerat. Eligendi magni itaque doloremque dolorem, officiis. Ullam magnam et, vero autem distinctio doloremque quam sequi laboriosam. Nulla sequi, voluptatem iusto cum. Iusto alias sequi, odit veniam deserunt cum ex eos perspiciatis reprehenderit quaerat, dolorem. Recusandae, ut velit tempore illo a officia maiores provident expedita atque inventore similique, animi fugiat consequuntur qui assumenda sequi reprehenderit doloremque laborum voluptatum mollitia aliquam cum. Facere molestiae voluptatem eius optio mollitia commodi et, quaerat ex impedit similique sequi eaque autem ea tempore temporibus maiores possimus architecto accusamus fugiat sapiente accusantium excepturi</div>
+	 
+</body>
+</html>

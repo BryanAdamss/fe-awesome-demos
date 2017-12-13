@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+			color:red;
+			/*当border-color、outline-color、text-shadow、box-shadow未指定时，都会默认采用color的值*/
+			border:1px solid;
+			height: 20px;
+			/*也可以采用currentColor变量，来引用当前的color值*/
+			text-shadow: 0 1px 5px currentColor;
+		}
+	</style>
+</head>
+<body>
+	<div>test</div>
+</body>
+</html>

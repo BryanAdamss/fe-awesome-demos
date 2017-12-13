@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.pie{
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		color: transparent;
+		/* 容器左侧红色，右侧蓝色 */
+		background-color: red;
+		background-image: linear-gradient(90deg,transparent 50%,blue 0);
+	 }	
+ 	 .pie::before{
+ 	 	content: "";
+ 	 	display: block;
+ 	 	height: 100%;
+ 	 	border: 1px solid #333;
+ 		box-sizing: border-box;
+ 	 	/* 旋转的半圆，居在右侧 */
+ 	 	margin-left: 50%;
+ 	 	border-radius: 0 100% 100% 0/50%;
+ 	 	background-color: inherit;/* 使用宿主元素的背景色red */
+ 	 	transform-origin: 0 50%;/* 变形的原点在左侧中心点 */
+ 	 }
+    .pie1::before{/* 动态 */
+    	animation: spin 3s linear infinite,bg 6s step-end infinite;/* 每3s转半圈；背景色动画持续6s，3s时背景色从红色变为蓝色，并保留动画最后的状态 */
+    }
+    .pie2::before{/* 静态，通过暂停动画并设置animation-delay为负值来实现百分比 */
+    	animation: spin 50s linear infinite,bg 100s step-end infinite;
+    	animation-play-state: paused;
+    	animation-delay: inherit;/* 使用继承值 */
+    }
+    .pie3::before{
+    	animation: spin 50s linear infinite,bg 100s step-end infinite;
+    	animation-play-state: paused;
+    	animation-delay: inherit;
+    }
+ 	 @keyframes spin{
+ 	 	/* 一次转半圈 */
+		to{transform:rotate(.5turn);}
+ 	 }
+
+ 	 @keyframes bg{
+ 	 	/* 一半时改变颜色 */
+ 	 	50%{background-color:blue;}
+ 	 }
+	</style>
+</head>
+<body>
+	<div class="pie pie1"></div>
+	<div class="pie pie2" style="animation-delay:-20s">20%</div>
+	<div class="pie pie3" style="animation-delay:-60s">60%</div>
+</body>
+</html>

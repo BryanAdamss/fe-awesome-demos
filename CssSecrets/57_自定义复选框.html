@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.c-Checkbox{
+			font-size: 16px;
+			position: relative;
+		}
+
+		.c-Checkbox-field{
+			/*隐藏复选框*/
+			position: absolute;
+			clip: rect(0,0,0,0);
+		}
+		.c-Checkbox-text{
+			vertical-align: middle;
+		}
+		.c-Checkbox-text::before{
+			content: "\a0";/*不换行空格*/
+			display: inline-block;
+			vertical-align: -.1em;
+			box-sizing: border-box;
+			width: 1em;
+			height: 1em;
+			line-height: 1em;
+			text-align: center;
+			border: 1px solid #4791ff;
+			margin-left: .2em;
+			margin-right: .2em;
+			border-radius: .2em;
+		}
+
+		.c-Checkbox-field:checked+.c-Checkbox-text::before{
+			content: "\2713";
+			color: #4791ff;
+		}
+		.c-Checkbox-field:disabled+.c-Checkbox-text::before{
+			background-color: #eee;
+			border-color: #eee;
+			cursor: not-allowed;
+		}	
+	</style>
+</head>
+<body>
+	<label class="c-Checkbox">
+		<input type="checkbox" class="c-Checkbox-field">
+		<span class="c-Checkbox-text">Awesomex</span>
+	</label>
+	<label class="c-Checkbox">
+		<input type="checkbox" class="c-Checkbox-field" disabled>
+		<span class="c-Checkbox-text">Awesomex 禁用</span>
+	</label>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 240px;
+		height: 160px;
+		padding: 2em;
+		color: #fff;
+		position: relative;
+
+		background: #58a;
+		background: linear-gradient(-150deg,transparent 1.5em,#58a 0);
+	
+		border-radius: .5em;
+	}
+	/* 使用伪元素生成折角 */
+	.box::before{
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		/* 渐变生成折角 */
+		background: linear-gradient(to left bottom,transparent 50%,rgba(0,0,0,.4) 0,rgba(0,0,0,.4)) no-repeat 100% 0;
+		/* 调换宽高，让折角竖起来 */
+		width: 1.73em;
+		height: 3em;
+		/* 先往上移动1.3em，再按照右下脚旋转-30度 */
+		transform:translateY(-1.3em) rotate(-30deg) ;
+		transform-origin: right bottom;
+		/* 可以添加圆角 */
+		border-bottom-left-radius: inherit;		
+		box-shadow: -.2em .2em .3em -.1em rgba(0,0,0,.15);
+	}
+	</style>
+</head>
+<body>
+	<div class="box">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima ipsa nostrum, voluptatem inventore, ullam consequuntur velit vel fuga officiis, non repellendus ea qui nihil delectus voluptatum </div>
+</body>
+</html>

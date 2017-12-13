@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		background-color: yellowgreen;
+	}
+	.box{
+		width: 200px;
+		height: 200px;
+		border: 1px solid red;
+	}
+	.box1{
+		/* 设置背景色为透明可以知道box-shadow并不是完整的一层，它中间被裁剪了一部分 */
+		background-color: transparent;
+		box-shadow: 5px 5px 5px blue;
+	}
+	.box2{
+		margin-top: 20px;
+		/* 单侧投影只需要设置第四个值(扩张半径)为负值(为负值会缩小阴影)并和第三个值(模糊半径)相抵消，再配合第一第二值做偏移即可实现 */
+		box-shadow: 0 5px 4px -4px blue;
+	}
+	.box3{
+		margin-top: 20px;
+		/* 邻边投影，设置偏移并扩张半径为模糊半径的一半 */
+		box-shadow: 3px 3px 6px -3px blue;
+	}
+	.box4{
+		margin-top: 20px;
+		/* 双侧阴影，需要使用多重阴影 */
+		box-shadow: 5px 0 5px -5px blue,
+					-5px 0px 5px -5px blue;
+	}
+	</style>
+</head>
+<body>
+	<div class="box box1"></div>
+	<div class="box box2"></div>
+	<div class="box box3"></div>
+	<div class="box box4"></div>
+</body>
+</html>

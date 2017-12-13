@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box1{
+		background-color: hsl(335,100%,50%);
+	}
+	 .box1>img{
+	 	/* 设置图片和box1的背景色进行混合，这个无法完成动画 */
+		mix-blend-mode: luminosity;	 	 
+	 }
+
+	 .box2{
+	 	width: 600px;
+	 	height: 600px;
+		transition: all .3s ease-in-out;
+
+		background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506446095512&di=d6748df5d7ec5eedd1066b407066fc65&imgtype=0&src=http%3A%2F%2Fimages.m.china.com.cn%2Fnewschina%2F2015_07_05%2F10%2F004cba182de9058e_600_9999.jpg");
+		background-color: hsl(335,100%,50%);
+		/* 设置背景图和下一层背景进行混合，当和transparent混合时不会产生任何效果，可利用这个完成动画 */
+		background-blend-mode: luminosity;
+	 }
+	 .box2:hover{
+	 	background-color: transparent;
+	 }
+	</style>
+</head>
+<body>
+	<div class="box1">
+	 	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506446095512&di=d6748df5d7ec5eedd1066b407066fc65&imgtype=0&src=http%3A%2F%2Fimages.m.china.com.cn%2Fnewschina%2F2015_07_05%2F10%2F004cba182de9058e_600_9999.jpg" alt="">
+	</div>
+	<div class="box2">
+		
+	</div>
+</body>
+</html>

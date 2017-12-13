@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 400px;
+		height: 400px;
+		
+		padding: 1em;
+		border: 1em solid transparent;
+		/* 用渐变生成实色背景 */
+		background: linear-gradient(#ccc,#ccc),url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505326987557&di=7b062c02391b9a5fc5794fc44d526ee1&imgtype=0&src=http%3A%2F%2Fimg2.niutuku.com%2Fdesk%2F1207%2F1100%2Fbizhi-1100-7201.jpg");
+		/* 保证背景一直覆盖到容器 */
+		background-size: cover;
+		/* 设置实色背景在padding-box区域可见，背景图在border-box区域可见 */
+		background-clip: padding-box,border-box;
+		/* 由于计算背景图位置的参考点在padding-box左上角，出现了拼接怪异的情况。需设置原点为border-box左上角 */
+		background-origin: border-box;
+
+	}
+	</style>
+</head>
+<body>
+	<div class="box">1231</div>
+</body>
+</html>

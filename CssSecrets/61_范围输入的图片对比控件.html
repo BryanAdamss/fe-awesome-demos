@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			margin: 0;
+		}
+		.image-slider{
+			display: inline-block;
+			position: relative;
+		}
+		.image-slider>div{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			width:50%;
+			overflow: hidden;
+		}
+		.image-slider img{
+			display: block;
+			
+		}
+		.image-slider input{
+			position: absolute;
+			left: 0;
+			bottom: 10px;
+			margin: 0;
+			/*让滑块和图片更加融合*/
+			filter: contrast(.5);;
+			mix-blend-mode: luminosity;
+			/*根据Fitts法则，增加滑块的操作区域，宽度减少一半，再放大*/
+			width: 50%;
+			transform: scale(2);
+			transform-origin: left bottom;
+		}
+	</style>
+</head>
+<body>
+	<div class="image-slider">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512061724280&di=4390ef9abb89896244c0d70766e3d911&imgtype=0&src=http%3A%2F%2Ff0.topitme.com%2F0%2F1f%2F8f%2F11198638053a18f1f0o.jpg" alt="">
+		<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512061724281&di=5f717bacd3c5a25df3e536d165fdbc80&imgtype=0&src=http%3A%2F%2Fwww.liuba.gov.cn%2Fliuba%2Ftplb%2F201711%2FW020171108347932530224.jpg" alt="">
+
+	</div>
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+		      document.querySelectorAll('.image-slider').forEach(function(slider){
+	      		// 创建附加的div元素，并用它包住第一个图片元素
+	      		var div=document.createElement('div');
+	      		var img=slider.querySelector('img');
+      			slider.insertBefore(div,img);
+      			div.appendChild(img);
+
+      			// 创建滑块
+      			var range=document.createElement('input');
+      			range.type='range';
+      			range.oninput=function(){
+      				div.style.width=this.value+'%';
+      			};
+      			slider.appendChild(range);
+		      });
+		  });
+	</script>
+</body>
+</html>
