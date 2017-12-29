@@ -1,12 +1,7 @@
- @font-face {
-     font-family: 'MyFont';
-     src: url('./SourceCodePro-Medium.ttf') format('truetype');
-     font-weight: 600;
-     font-style: normal;
- }
-
- .hello {
-     color: red;
-     font-family: 'MyFont';
-     background: url("./icon.png");
- }
+.hello {
+    color: red;
+    width: 600px;
+    height: 500px;
+    border: 1px solid red;
+    background: url("./img/cat.jpg") no-repeat bottom 100px right 100px;
+}

@@ -1,29 +1,29 @@
 {
-  "name": "webpack-test",
+  "name": "webpack-guide",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "lodash": "^4.17.4"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "build_prod": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --open",
+    "start_dev": "webpack-dev-server --open --config webpack.dev.js",
+    "server": "node server.js"
   },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
-    "csv-loader": "^2.1.1",
-    "file-loader": "^1.1.5",
+    "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
-    "style-loader": "^0.19.0",
-    "uglifyjs-webpack-plugin": "^1.1.2",
-    "webpack": "^3.9.1",
-    "webpack-merge": "^4.1.1",
-    "xml-loader": "^1.2.1"
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1"
   },
-  "scripts": {
-    "watch": "webpack --watch",
-    "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "task": "webpack"
-  },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }

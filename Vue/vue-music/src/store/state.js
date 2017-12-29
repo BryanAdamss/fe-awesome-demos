@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/12/11.
  */
 import {playMode} from 'common/js/config'
+import {loadSearch,loadPlay,loadFavorite} from 'common/js/cache'
 
 const state = {
   singer: {},
@@ -11,6 +12,11 @@ const state = {
   sequenceList: [],
   mode: playMode.sequence,
   currentIndex: -1,
+  disc:{},
+  topList:{},
+  searchHistory:loadSearch(),
+  playHistory:loadPlay(),
+  favoriteList:loadFavorite(),
 };
 
 export default state

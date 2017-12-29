@@ -24,6 +24,14 @@
       listenScroll:{
         type:Boolean,
         default:false
+      },
+      pullup:{
+        type:Boolean,
+        default:false
+      },
+      beforeScroll:{
+        type:Boolean,
+        default:false
       }
     },
     mounted() {
@@ -48,6 +56,19 @@
           });
         }
 
+        if(this.pullup){
+          this.scroll.on('scrollEnd',()=>{
+            if(this.scroll.y<=(this.scroll.maxScrollY+50)){
+              this.$emit('scrollToEnd');
+            }
+          });
+        }
+
+        if(this.beforeScroll){
+          this.scroll.on('beforeScrollStart',()=>{
+            this.$emit('beforeScroll');
+          });
+        }
       },
       enable(){
         this.scroll && this.enable();
@@ -56,8 +77,8 @@
         this.scroll && this.disable();
       },
       refresh(){
-        console.log('re');
-        this.scroll && this.refresh();
+        console.log('refresh');
+        this.scroll && this.scroll.refresh();
       },
       scrollTo(){
         this.scroll&&this.scroll.scrollTo.apply(this.scroll,arguments);

@@ -24,7 +24,7 @@ export const playlistMixin = {
       throw new Error('component must implement handlePlaylist method')
     }
   }
-}
+};
 
 export const playerMixin = {
   computed: {
@@ -88,13 +88,13 @@ export const playerMixin = {
       'deleteFavoriteList'
     ])
   }
-}
+};
 
 export const searchMixin = {
   data() {
     return {
       query: '',
-      refreshDelay: 120
+      // refreshDelay: 120
     }
   },
   computed: {
@@ -121,3 +121,4 @@ export const searchMixin = {
     ])
   }
 }
+

@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
 import config from './config.json';
-import styles from './Greeter.css';
+import styles from './Greeter.css';//导入
 
-class Greeter extends Component {
-    render() {
-        return ( 
-        	<div className={styles.root}>
-        		{config.greetText}
-    		</div>
-        );
-    }
+function Greeter(){
+	let h1=document.createElement('h1');
+	h1.innerHTML=config.greetText;
+	h1.className=styles.root;
+	document.querySelector('#root').appendChild(h1);
 }
 
-export default Greeter;
+
+export default Greeter

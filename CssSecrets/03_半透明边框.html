@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<style>
-	html{
-		height:100%;
-	}
-	body{
-		background:url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505326987557&di=7b062c02391b9a5fc5794fc44d526ee1&imgtype=0&src=http%3A%2F%2Fimg2.niutuku.com%2Fdesk%2F1207%2F1100%2Fbizhi-1100-7201.jpg") no-repeat center;
-		height:100%;
-		margin:0;
-	}
-	.box{
-		width:300px;
-		height: 300px;
-		margin:100px auto;
-		background-color: red;
-		padding:20px;
-		/*半透明边框*/
-		/*其实这种情况下，半透明边框已经出来了，只是因为背景色渲染到背景下，结合半透明，最后的视觉效果，就像没有生效一样。所以必须让背景不渲染到border下*/
-		border:10px solid hsla(0,0%,100%,.5);
-		/*默认情况下，背景的渲染区域为content+padding+border区域即为border-box区域；指定为padding-box时，即表明背景只会渲染content+padding区域，自然半透明边框就出来了；支持IE9+*/
-		background-clip:padding-box;
- 
-	}
-	</style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        background: url("http://pic.jj20.com/up/allimg/1011/112G6002358/16112F02358-1.jpg") no-repeat center;
+        height: 100%;
+        margin: 0;
+    }
+
+    .box {
+        width: 300px;
+        height: 300px;
+        margin: 100px auto;
+        background-color: red;
+        padding: 20px;
+        /*半透明边框*/
+        /*其实这种情况下，半透明边框已经出来了，只是因为背景色渲染到背景下，结合半透明，最后的视觉效果，就像没有生效一样。所以必须让背景不渲染到border下*/
+        border: 10px solid hsla(0, 0%, 100%, .5);
+        /*默认情况下，背景的渲染区域为content+padding+border区域即为border-box区域；指定为padding-box时，即表明背景只会渲染content+padding区域，自然半透明边框就出来了；支持IE9+*/
+        background-clip: padding-box;
+    }
+    </style>
 </head>
+
 <body>
-	<div class="box">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga ipsa esse quas numquam, consequuntur a, praesentium nihil, sed sunt excepturi minus voluptas quos, minima saepe temporibus provident reiciendis ipsam accusantium.
-	</div>
+    <div class="box">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga ipsa esse quas numquam, consequuntur a, praesentium nihil, sed sunt excepturi minus voluptas quos, minima saepe temporibus provident reiciendis ipsam accusantium.
+    </div>
 </body>
+
 </html>

@@ -1,9 +1,9 @@
-// main.js
-import React from 'react';
-import {render} from 'react-dom';
+//main.js
 import Greeter from './Greeter';
+import './main.css';
+import './test.scss';
 
-import './main.css';//使用require导入css文件
+Greeter();
 
-render(<Greeter />, document.getElementById('root'));
 
+ 
