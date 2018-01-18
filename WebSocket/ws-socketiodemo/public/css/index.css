@@ -1,0 +1,225 @@
+@charset "UTF-8";
+
+*,
+*:after,
+*:before,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+ ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background-color: transparent;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+html {
+    box-sizing: border-box;
+    font: 16px/1.625 "Microsoft YaHei";
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+
+.c-Login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0 0 0 100em #333;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+.c-Login h1 {
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+}
+
+.c-Login.is-hide {
+    display: none;
+}
+
+.c-Login-field {
+    font-size: 14px;
+    color: #333;
+    width: 20em;
+    height: 2.4em;
+    line-height: 2.4em;
+    padding: 0 .5em;
+    margin-top: 1em;
+}
+
+.c-Login-btn {
+    font-size: 14px;
+    color: #333;
+    width: 5em;
+    height: 2.4em;
+    line-height: 2.4em;
+    vertical-align: top;
+}
+
+.c-Chat {
+    height: 100%;
+    font-size: 14px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fefefe;
+}
+
+.c-Chat-hd {
+    width: 100%;
+    height: 60px;
+    color: #333;
+    padding: 10px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+    border-radius: 0 0 3px 3px;
+    overflow: auto;
+}
+
+.c-Chat-bd {
+    height: calc(100% - 60px - 60px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.c-Chat-ft {
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 -3px 3px rgba(0, 0, 0, .1);
+    padding: 10px;
+}
+
+.c-ChatList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.c-ChatList-item {
+    padding: 10px;
+}
+
+.c-ChatList-item+.c-ChatList-item {
+    margin-top: 10px;
+}
+
+.c-ChatList-item.is-me {
+    text-align: right;
+}
+
+.c-ChatList-item.is-me .c-ChatList-text {
+    background-color: #78cdf8;
+    color: #fff;
+    margin-left: 0;
+    margin-right: .5em;
+    text-align: left;
+}
+
+.c-ChatList-item.is-tips {
+
+    text-align: center;
+}
+
+.c-ChatList-tip {
+    color: #aaa;
+    background-color: #eee;
+    padding: .2em 1em;
+    border-radius: 1em;
+    font-size: 12px;
+}
+
+.c-ChatList-cont {
+    font-size: 14px;
+}
+
+.c-ChatList-name {
+    display: inline-block;
+    vertical-align: top;
+    color: #333;
+}
+
+.c-ChatList-text {
+    display: inline-block;
+    vertical-align: top;
+    background-color: #eee;
+    color: #333;
+    margin-left: .5em;
+    padding: .5em;
+    word-wrap: break-word;
+    word-break: break-all;
+    border-radius: 3px;
+}
+
+.c-Message-field {
+    padding: 10px;
+    resize: none;
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 3em;
+    /*line-height: 3em;*/
+    border: 1px solid #c7c7c7;
+    outline: none;
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+
+        transform: translateX(40px);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+}
+
+.fadeInLeft {
+    animation: fadeInLeft .3s;
+}
+
+.fadeInRight {
+    animation: fadeInRight .3s;
+}
+
+.c-Loading {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+}
+
+.c-Loading>img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

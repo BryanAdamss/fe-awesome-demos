@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    html {
+        box-sizing: border-box;
+    }
+
+    *,
+    *::after,
+    *::before,
+    *:after,
+    *:before {
+        box-sizing: inherit;
+    }
+
+    .c-Paginations {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .c-Paginations-size {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .c-Paginations-select {
+        width: 3em;
+        height: 2em;
+        line-height: 2em;
+        outline: none;
+        border: 1px solid #bbb;
+        margin: 0 0 0 .4em;
+        font-size: 14px;
+    }
+
+    .c-Paginations-prev,
+    .c-Paginations-next,
+    .c-Paginations-first,
+    .c-Paginations-last,
+    .c-Paginations-total,
+    .c-Paginations-jump,
+    .c-Paginations-list,
+    .c-Paginations-main,
+    .c-Paginations-item,
+    .c-Paginations-btn,
+    .c-Paginations-jumpfield {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .c-Paginations-main {
+        margin: 0 1em;
+    }
+
+    .c-Paginations-list {
+        padding: 0;
+        list-style: none;
+        margin: 0;
+    }
+
+    .c-Paginations-item {
+        width: 3em;
+        padding: 0 .4em;
+        height: 2em;
+        text-align: center;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    .c-Paginations-item:hover {
+        background-color: #fafafa;
+    }
+
+    .c-Paginations-item:hover .c-Paginations-link {
+        color: #4fa2ff;
+    }
+
+
+    .c-Paginations-item:last-child {
+        border-right: 1px solid #ccc;
+    }
+
+    .c-Paginations-item.is-cur {
+        background-color: #4fa2ff;
+        border-color: #4fa2ff;
+    }
+
+    .c-Paginations-item.is-cur .c-Paginations-link {
+        color: #fff;
+    }
+
+
+    .c-Paginations-link {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        line-height: 2em;
+    }
+
+    .c-Paginations-next,
+    .c-Paginations-prev,
+    .c-Paginations-first,
+    .c-Paginations-last,
+    .c-Paginations-btn {
+        text-decoration: none;
+        color: #333;
+        min-width: 2em;
+        padding: 0 .4em;
+        height: 2em;
+        line-height: 2em;
+    }
+
+
+    .c-Paginations-next:hover,
+    .c-Paginations-prev:hover,
+    .c-Paginations-first:hover,
+    .c-Paginations-last:hover {
+        background-color: #fafafa;
+        color: #4fa2ff;
+    }
+
+    .c-Paginations-prev,
+    .c-Paginations-first {
+        border-left: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .c-Paginations-next,
+    .c-Paginations-last {
+        border-right: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .c-Paginations-next.is-disabled,
+    .c-Paginations-prev.is-disabled,
+    .c-Paginations-first.is-disabled,
+    .c-Paginations-last.is-disabled {
+        color: #ddd;
+        cursor: not-allowed;
+        background-color: #fafafa;
+        pointer-events: none;
+    }
+
+    .c-Paginations-total {
+        margin-left: .2em;
+    }
+
+    .c-Paginations-jumpfield {
+        width: 3em;
+        height: 2em;
+        line-height: 2em;
+        outline: none;
+        border: 1px solid #bbb;
+        font-size: 14px;
+        padding: 0 .5em;
+    }
+
+    .c-Paginations-btn {
+        border: 1px solid #bbb;
+        margin-left: .5em;
+    }
+
+    .c-Paginations-btn:hover {
+        color: #4fa2ff;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="js_page"></div>
+    <script src="js/vendor/11_pagination.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        var page = new c_Pagination('js_page', {
+            skin: 'mySkin',
+            totalCount: 500,
+            curPage: 1,
+            pageShowCount: 5,
+            pageSizeList: [5, 10, 15, 20, 25, 50],
+            defaultPageSize: 10,
+            showJump: true,
+            showPageSizeSelector: true,
+            showPN: true,
+            showFL: true,
+            callback: function(curPage, pageSize, ele) {
+                console.log(this, curPage, pageSize, ele);
+            }
+        });
+        setTimeout(function() {
+            page.goLast();
+        }, 1000);
+    };
+    </script>
+</body>
+
+</html>

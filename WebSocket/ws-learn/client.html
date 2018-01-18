@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .message {
+        width: 60%;
+        margin: 0 10px;
+        display: inline-block;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+        border-radius: 5px;
+        border: 1px solid #B3D33F;
+    }
+
+    .form {
+        width: 100%;
+        position: fixed;
+        bottom: 300px;
+        left: 0;
+    }
+
+    .connect {
+        height: 40px;
+        vertical-align: top;
+        /* padding: 0; */
+        width: 80px;
+        font-size: 20px;
+        border-radius: 5px;
+        border: none;
+        background: #B3D33F;
+        color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="content"></ul>
+    <form class="form">
+        <input type="text" placeholder="请输入发送的消息" class="message" id="message" />
+        <input type="button" value="发送" id="send" class="connect" />
+        <input type="button" value="连接" id="connect" class="connect" />
+    </form>
+    <script>
+    var oUl = document.getElementById('content');
+    var oConnect = document.getElementById('connect');
+    var oSend = document.getElementById('send');
+    var oInput = document.getElementById('message');
+    var ws = null;
+    oConnect.onclick = function() {
+        ws = new WebSocket('ws://localhost:5000');
+        ws.onopen = function() {
+            oUl.innerHTML += "<li>客户端已连接</li>";
+        }
+        ws.onmessage = function(evt) {
+            oUl.innerHTML += "<li>" + evt.data + "</li>";
+        }
+        ws.onclose = function() {
+            oUl.innerHTML += "<li>客户端已断开连接</li>";
+        };
+        ws.onerror = function(evt) {
+            oUl.innerHTML += "<li>" + evt.data + "</li>";
+
+        };
+    };
+    oSend.onclick = function() {
+        if (ws) {
+            ws.send(oInput.value);
+        }
+    }
+    </script>
+</body>
+
+</html>

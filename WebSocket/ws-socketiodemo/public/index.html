@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>在线聊天室</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="c-Login" id="js_loginBox">
+        <h1>多人在线聊天室</h1>
+        <input type="text" name="" placeholder="请输入昵称，回车键确认" class="c-Login-field" id="js_loginInput">
+    </div>
+    <div class="c-Chat">
+        <div class="c-Chat-hd" id="js_chatHd">
+            <div class="c-Loading">
+                <img src="img/loading.gif" alt="">
+            </div>
+        </div>
+        <div class="c-Chat-bd" id="js_chartBd">
+            <ul class="c-ChatList" id="js_chatList">
+            </ul>
+        </div>
+        <div class="c-Chat-ft">
+            <div class="c-Message">
+                <input type="text" class="c-Message-field" speech x-webkit-speech placeholder="请输入内容，回车键发送" id="js_chatInput" />
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

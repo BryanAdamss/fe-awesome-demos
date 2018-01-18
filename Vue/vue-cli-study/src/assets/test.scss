@@ -1,0 +1,10 @@
+* {
+  text-align: center;
+}
+
+.hello {
+  color: red;
+  @at-root #{&}-title {
+    font-size: 20px;
+  }
+}
