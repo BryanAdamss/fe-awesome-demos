@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    #test {
+        background-color: red;
+        width: 200px;
+        height: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="https://unpkg.com/fastclick@1.0.6/lib/fastclick.js"></script>
+    <script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     FastClick.attach(document.body);
+    // }, false);
+
+    var start = 0,
+        end = 0;
+    document.querySelector('#test').ontouchstart = function() {
+        start = new Date().getTime();
+    };
+    document.ontouchmove = function(e) {
+        e.preventDefault();
+    };
+    document.querySelector('#test').ontouchend = function() {
+        end = new Date().getTime();
+        this.innerHTML = start + '、' + end + '、' + (end - start) + '；';
+    };
+    </script>
+</body>
+
+</html>

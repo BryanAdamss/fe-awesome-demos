@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="js/vendor/12_jsonp.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        main();
+    };
+
+    function main() {
+        getList();
+    }
+
+    function getList() {
+        c_jsonp({
+            url: 'http://192.168.23.126:8080/hfgj/app/cgh.do',
+            data: {
+                id: 3,
+                name: 'cgh'
+            },
+            success: function(resp) {
+                console.log(resp);
+            },
+            error: function() {
+                console.log('出错了');
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>
