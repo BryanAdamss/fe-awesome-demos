@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="js/des.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var key = "changxinganhui2016*04*25"; // key
+    var str = "{jd:117.205659,wd:31.846219}"; // 需要加密解密的字符串
+
+    var des3en = DES3.encrypt(key, str);
+    document.write("</br>des3加密:</br>" + des3en);
+
+    document.write("</br>des3解密:</br>" + DES3.decrypt(key, des3en));
+    </script>
+</body>
+
+</html>

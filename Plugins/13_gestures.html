@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>Document</title>
+    <style>
+    body {
+        background-color: #f0f0f0;
+        margin: 0;
+    }
+
+    .swipeLeft {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-left: none;
+        border-right: none;
+        padding: 0 10px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .swipeLeft.is-swipeLeft .item {
+        margin-left: -3em;
+    }
+
+    .swipeLeft.is-swipeLeft .del {
+        right: 0;
+    }
+
+    .item {
+        height: 3em;
+        line-height: 3em;
+        margin: 0;
+        transition: .3s;
+    }
+
+    .swipeLeft .del {
+        height: 3em;
+        line-height: 3em;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: -3em;
+        background-color: red;
+        padding: 0 .5em;
+        transition: .3s;
+        color: #fff;
+    }
+
+    .longTap {
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-left: none;
+        border-right: none;
+        padding: 0 10px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .doubleTap {
+        transition: .3s;
+        margin: 20px auto 0 auto;
+        display: block;
+    }
+
+    .doubleTap.zoom {
+        transform: scale(1.2);
+    }
+
+    .test {
+        background-color: #fff;
+        width: 100px;
+        height: 100px;
+        margin: 20px auto;
+        border: 1px dashed red;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="test"></div>
+    <div class="swipeLeft">
+        <p class="item">左滑删除</p>
+        <p class="del">删除</p>
+    </div>
+    <div class="longTap">
+        <p class="item">长按</p>
+    </div>
+    <img src="http://placehold.it/200x200" alt="" class="doubleTap">
+    <script type="text/javascript" src="js/vendor/13_gestures.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        main();
+    };
+
+    function main() {
+        var toucher = new c_toucher('.swipeLeft', {
+            callbacks: {
+                swipeLeft: function(e) {
+                    this.className += ' is-swipeLeft';
+                },
+                swipeRight: function(e) {
+                    this.className = 'swipeLeft';
+                }
+            }
+        });
+        var toucher2 = new c_toucher('.longTap', {
+            callbacks: {
+                longTap: function(e) {
+                    alert('longTap');
+                }
+            }
+        });
+        var toucher3 = new c_toucher('.doubleTap', {
+            callbacks: {
+                doubleTap: function(e) {
+                    console.log(this.className.indexOf('zoom'));
+                    if (this.className.indexOf('zoom') > -1) {
+                        this.className = 'doubleTap';
+                    } else {
+                        this.className += ' zoom';
+                    }
+
+                }
+            }
+        });
+        var toucher4 = new c_toucher('.test', {
+            callbacks: {
+                start: function(e) {
+                    console.log('callbacks_start', this, e);
+                },
+                move: function(e) {
+                    console.log('callbacks_move', this, e);
+                },
+                end: function(e) {
+                    console.log('callbacks_end', this, e);
+                },
+                tap: function(e) {
+                    console.log('callbacks_tap', this, e);
+                },
+                longTap: function(e) {
+                    console.log('callbacks_longtap', this, e);
+                },
+                doubleTap: function(e) {
+                    console.log('callbacks_doubleTap', this, e);
+                },
+                swipeLeft: function(e) {
+                    console.log('callbacks_swipeLeft', this, e);
+                },
+                swipeRight: function(e) {
+                    console.log('callbacks_swipeRight', this, e);
+                },
+                swipeUp: function(e) {
+                    console.log('callbacks_swipeUp', this, e);
+                },
+                swipeDown: function(e) {
+                    console.log('callbacks_swipeDown', this, e);
+                }
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>

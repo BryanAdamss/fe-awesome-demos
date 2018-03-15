@@ -1,0 +1,18 @@
+/**app.wxss**/
+
+page {
+  background-color: #eee;
+  font: 32rpx/1.5 -apple-system,
+          BlinkMacSystemFont,
+          "PingFang SC",
+          "Helvetica Neue",
+          STHeiti,
+          "Microsoft Yahei",
+          Tahoma,
+          Simsun,
+          sans-serif;
+}
+
+.itemHover {
+  background-color: #fcfcfc;
+}

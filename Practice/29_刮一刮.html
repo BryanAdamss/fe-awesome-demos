@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    #js_canvas {
+        border: 1px dashed red;
+        margin: 20px auto;
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="js_canvas" width="200" height="50"></canvas>
+    <script>
+    window.onload = function() {
+        main();
+    };
+
+    function main() {
+        makePaint();
+    }
+
+    function makePaint() {
+        var canvas = document.querySelector('#js_canvas');
+        var ctx = canvas.getContext('2d');
+
+        var w = 200;
+        var h = 50;
+
+        // 设置覆盖物
+        ctx.beginPath();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, w, h);
+        ctx.closePath();
+
+        // 加载背景图
+        var img = new Image();
+        var src = 'http://placehold.it/200x50';
+        img.src = src;
+
+        img.onload = function() {
+            canvas.style.background = 'url("' + src + '") no-repeat center / 100%';
+
+            ctx.lineWidth = 20; //线的宽度
+            ctx.lineCap = "round"; //线的两头样式为圆
+            ctx.lineJoin = "round"; //线的拐角样式为圆
+
+            ctx.beginPath();
+            canvas.onmousemove = function(e) {
+                var x = e.offsetX;
+                var y = e.offsetY;
+                ctx.globalCompositeOperation = "destination-out";
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                // 计算擦除面积
+                var imgData = ctx.getImageData(0, 0, w, h); // 获取像素点对象
+                var pixelArr = imgData.data; // 获取像素字节数组
+                var sum = 0; // 设置一个变量来记录已经变为透明的像素点的数量
+                var len = pixelArr.length; // 像素点总数
+                for (var i = 0; i < len; i += 4) { //循环遍历每一个像素，注意i每次+4，因为一个像素点由rgba组成
+                    var alpha = pixelArr[i + 3]; //获取每个像素的透明度数值
+                    if (alpha < 10) { //当透明度小于10时，认为它已经被擦除
+                        sum++;
+                    }
+                }
+                if (sum / (len / 4) > 0.6) { // 计算未擦除部分的占比，小于比例则直接全部清除，并解除事件
+                    ctx.clearRect(0, 0, w, h);
+                    canvas.onmousemove = null;
+                }
+            };
+        };
+    }
+    </script>
+</body>
+
+</html>

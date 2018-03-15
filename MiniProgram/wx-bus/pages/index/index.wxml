@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="c-TopBar">
+  <view class="c-Logo">
+    <image src="http://placehold.it/120x80" lazy-load="true"></image>
+  </view>
+  <view class="c-FakeSearch" bindtap="goSearch">
+    <icon type="search" size="14"></icon>
+    <text>查询公交线路</text>
+  </view>
+</view>
+
+<view class="c-LineList">
+  <view class="c-LineList-hd" bindtap="goSite" data-selected-station-index="{{selectedStationIndex}}">
+    <text>距您最近的站点为:{{nearestSiteName}}</text>
+    <text>❯</text>
+  </view>
+  <view class="c-LineList-bd">
+    <view class="c-LineList-item" hover-class="itemHover" wx:for="{{sameSiteLines}}" wx:key="{{index}}" data-linename="{{item.LINENAME}}" bindtap="itemClick">
+      <view class="c-LineList-main">
+        <view>
+          <text class="c-LineList-name">线路名:{{item.LINENAME}}</text>
+        </view>
+        <view>
+          <text>开往:{{item.FSTATION_NAME_ID}}</text>
+        </view>
+      </view>
+      <view class="c-LineList-extra">
+        <text wx:if="{{item.haveBus}}">最近公交车离您还有{{item.differ_statione}}站</text>
+        <text wx:else>{{item.differ_statione}}</text>
+      </view>
+    </view>
+  </view>
+</view>

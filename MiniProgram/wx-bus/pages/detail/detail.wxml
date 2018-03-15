@@ -1,0 +1,36 @@
+<!--pages/detail/detail.wxml-->
+<view class="c-Line" wx:if="{{lineList.length}}">
+  <view class="c-Line-hd">
+    <view class="c-Line-info">
+      <view class="c-Line-text">
+        <text>{{lineList[lineType].LINENAME}}</text>
+        <text>{{lineList[lineType].SSTATION_NAME_ID}}->{{lineList[lineType].FSTATION_NAME_ID}}</text>
+      </view>
+      <view class="c-Line-sub">
+        <text>首班 {{lineList[lineType].SBCSJ}}</text>
+        <text>末班 {{lineList[lineType].MBCSJ}}</text>
+      </view>
+    </view>
+    <view class="c-Line-change" bindtap="changeType">
+      <image style="width: 40rpx; height: 40rpx;" mode="aspectFit" src="./change.png"></image>
+    </view>
+  </view>
+  <scroll-view class="c-Line-list">
+
+    <view class="c-Line-item" wx:for="{{lineList[lineType].stationlist}}" wx:key="{{index}}" wx:for-item="station" style="background-color:{{station.STATIONNAME===nearestSiteName?'#fcfcfc':'transparent'}};font-weight:{{station.STATIONNAME===nearestSiteName?'bold':'normal'}};"
+      data-name="{{station.STATIONNAME}}" data-jd="{{station.JD}}" data-wd="{{station.wd}}">
+      <view class="c-Line-wrap">
+        <view class="c-Line-inner">
+          <view>
+            <text>{{station.STATIONNAME}}</text>
+            <text class="c-Line-closet" wx:if="{{station.STATIONNAME===nearestSiteName}}">(离我最近)</text>
+          </view>
+          <view class="c-Line-bus" wx:for="{{lineList[lineType].buslist}}" wx:for-item="bus" wx:for-index="idx" wx:key="{{idx}}" wx:if="{{bus.stationname===station.STATIONNAME}}">
+            <image style="width: 40rpx; height: 40rpx;" mode="aspectFit" src="./bus.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

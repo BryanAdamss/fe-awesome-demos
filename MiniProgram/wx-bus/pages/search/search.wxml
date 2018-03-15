@@ -1,0 +1,48 @@
+<!--pages/search/search.wxml-->
+<view class="c-Wrap">
+  <view class="c-Search">
+    <icon type="search" size="12"></icon>
+    <input type="text" placeholder="请输入线路" confirm-type="search" class="c-Search-input" focus="{{focused}}" bindinput="search" value="{{inputValue}}" />
+    <icon type="clear" size="12" class="c-Search-clear" wx:if="{{inputValue}}" bindtap="clearInput"></icon>
+  </view>
+  <view class="c-Panel">
+
+    <!--搜索建议-->
+    <view class="c-List c-List--suggest" wx:if="{{suggestShow}}">
+
+      <!--线路-->
+      <view class="c-List-lines" wx:if="{{lines.length}}">
+        <text class="c-List-hd">线路</text>
+        <view class="c-List-item" wx:for="{{lines}}" wx:key="{{index}}" wx:for-item="line" data-name="{{line.LINEORSTATIONNAME}}" data-flag="{{line.FLAG}}" bindtap="itemClick">{{line.LINEORSTATIONNAME}}</view>
+      </view>
+
+      <!--站点-->
+      <!-- <view class="c-List-sites" wx:if="{{sites.length}}">
+        <text class="c-List-hd">站点</text>
+        <view class="c-List-item" wx:for="{{sites}}" wx:key="{{index}}" wx:for-item="site" data-name="{{site.LINEORSTATIONNAME}}" data-flag="{{site.FLAG}}" bindtap="itemClick">{{site.LINEORSTATIONNAME}}</view>
+      </view> -->
+
+    </view>
+
+    <!--搜索历史-->
+    <view class="c-List c-List--history" wx:if="{{historyShow}}">
+      <text class="c-List-hd">历史记录</text>
+
+      <view class="c-List-item" wx:for="{{histories.lines}}" wx:key="{{index}}" wx:for-item="historyLine" data-name="{{historyLine.LINEORSTATIONNAME}}" data-flag="{{historyLine.FLAG}}" bindtap="itemClick">{{historyLine.LINEORSTATIONNAME}}</view>
+
+      <view class="c-List-item" wx:for="{{histories.sites}}" wx:key="{{index}}" wx:for-item="historySite" data-name="{{historySite.LINEORSTATIONNAME}}" data-flag="{{historySite.FLAG}}" bindtap="itemClick">{{historySite.LINEORSTATIONNAME}}</view>
+
+      <view class="c-List-clearHistory" bindtap="clearHistoryClick">清空搜索记录</view>
+
+    </view>
+
+    <view class="c-NoResult" wx:if="{{noResultsShow}}">
+      <text>暂无搜索结果</text>
+    </view>
+
+    <view class="c-NoResult" wx:if="{{noHistoryRecordsShow}}">
+      <text>暂无历史记录</text>
+    </view>
+
+  </view>
+</view>

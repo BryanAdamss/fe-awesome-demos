@@ -1,0 +1,9 @@
+<!--pages/site/site.wxml-->
+<view class="c-SiteList">
+  <view class="c-SiteList-item" hover-class="itemHover" wx:for="{{nearbyStations}}" wx:key="{{index}}" data-name="{{item}}" bindtap="itemClick">
+    <view class="c-SiteList-main">
+      <text>{{item}}</text>
+    </view>
+    <view class="c-SiteList-extra" wx:if="{{item===nearestSiteName}}">✔</view>
+  </view>
+</view>

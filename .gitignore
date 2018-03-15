@@ -50,3 +50,4 @@ Temporary Items
 # 忽略所有angular-1.6.4文件夹
 node_modules/
 angular-1.6.4/
+.svn/
