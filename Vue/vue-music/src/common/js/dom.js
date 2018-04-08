@@ -22,9 +22,12 @@ export function getData(el, name, val) {
   }
 }
 
-let elementStyle = document.createElement('div').style;
 
+// 能力检测，判断是哪种前缀
+let elementStyle = document.createElement('div').style;
+// 利用IIFE得到支持的前缀
 let vendor = (()=> {
+  // 利用transform做能力检测，来判断支持哪种前缀
   let transformNames = {
     webkit: 'webkitTransform',
     Moz: 'MozTransform',
@@ -34,21 +37,26 @@ let vendor = (()=> {
   };
 
   for (let key in transformNames) {
+    // 支持某种前缀则直接返回
     if (elementStyle[transformNames[key]] !== undefined) {
       return key;
     }
   }
 
+  // 如果没有匹配，则返回false
   return false;
 })();
 
+// 添加前缀
 export function prefixStyle(style) {
   if (vendor === false) {
     return false;
   }
+  // 支持标准，则直接返回
   if (vendor === 'standard') {
     return style;
   }
+  // 否则返回prefix后的字符串
   return vendor + style.charAt(0).toUpperCase() + style.substr(1);
 }
 
