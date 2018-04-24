@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 数组的浅拷贝
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Array]}   array [description]
+     * @return {[Array]}         [返回一个新数组]
+     */
+    function copyArr(array) {
+        var length = array.length ? array.length : 0;
+        if (!length) {
+            return false;
+        }
+
+        // concat不传递参数，会返回一个新数组
+        return array.concat();
+    }
+
+
+    // 原始值拷贝的是实际值，引用值拷贝的是引用，所以是浅拷贝，copy前后的引用值会相互影响
+    var arr = [1, 2, 3, {
+        test: 'test'
+    }];
+
+    var arr2 = copyArr(arr);
+
+    console.log(JSON.stringify(arr), JSON.stringify(arr2), arr === arr2);
+    arr2[3].test = '我改变了';
+    console.log(JSON.stringify(arr), JSON.stringify(arr2));
+    </script>
+</body>
+
+</html>

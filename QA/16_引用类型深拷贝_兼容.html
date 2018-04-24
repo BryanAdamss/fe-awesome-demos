@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 引用类型的深拷贝
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Object]}   object [description]
+     * @return {[Object]}          [返回一个新对象]
+     */
+    function deepCopy(obj) {
+        if (typeof obj !== 'object') {
+            return false;
+        }
+
+        var result = obj.constructor === Array ? [] : {};
+
+        // 优先使用JSON完成拷贝
+        if (window.JSON) {
+            result = JSON.parse(JSON.stringify(obj));
+        } else {
+            // 遍历对象
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    var value = obj[prop];
+
+                    // 值为引用类型，则递归
+                    if (typeof value === 'object') {
+                        result[prop] = deepCopy(value);
+                    } else {
+                        result[prop] = value;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // 优先使用JSON来完成深拷贝
+    // 注意，由于JSON无法序列化函数，所以拷贝后函数会被丢弃
+    // 建议要进行深拷贝的对象最好是数据对象，不要包含函数
+    // 使用递归调用时，函数仍将被公用
+    var obj = {
+        a: 1,
+        test: [2, 3],
+        // 使用JSON方法时，foo将被丢失；使用递归调用时，foo将被公用
+        foo: function() {
+            console.log(bar)
+        }
+    };
+
+    var obj2 = deepCopy(obj);
+
+    console.log(JSON.stringify(obj), JSON.stringify(obj2), obj === obj2);
+    obj2.test[0] = '我改变了';
+    console.log(obj, obj2);
+    </script>
+</body>
+
+</html>

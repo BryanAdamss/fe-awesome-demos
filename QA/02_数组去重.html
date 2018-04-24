@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 数组去重复
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Array]}   array [description]
+     * @return {[Array]}         [返回一个新数组]
+     */
+    function unique(array) {
+        var length = array.length ? array.length : 0;
+        if (!length) {
+            return false;
+        }
+        // 创建一个新的临时数组
+        var result = [];
+
+        for (var i = 0; i < length; i++) {
+            var item = array[i];
+            // indexOf()判断当前元素第一次出现的位置，为未出现则为-1
+            if (result.indexOf(item) === -1) {
+                // 不存在，则放临时数组中
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    // indexOf会遍历到数组最后一项才停止
+    // 所以性能一般
+
+    console.log(unique([1, 2, 2, 3, 6, 8, 6]));
+    </script>
+</body>
+
+</html>

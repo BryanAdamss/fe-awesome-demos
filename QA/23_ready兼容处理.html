@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function ready(callback) {
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', function(e) {
+                callback.call(null, e);
+            }, false);
+        } else if (document.attachEvent) {
+            // 不支持的默认为IE8及以下
+            document.attachEvent('onreadystatechange', function(e) {
+                if (document.readyState === 'complete') {
+                    document.detachEvent('onreadystatechange');
+                    callback.call(null, e);
+                }
+            });
+        }
+    }
+    // 使用document.readyState==='complete'来判断完成在IE678上可能会出现问题，当页面有张巨大的图时，用此判断的结果和onload事件一样
+
+    ready(function(e) {
+        console.log('ready事件已经触发');
+        console.log('事件对象为', e);
+    });
+    </script>
+</body>
+
+</html>

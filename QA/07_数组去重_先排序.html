@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 数组去重复
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Array]}   array [description]
+     * @return {[Array]}         [返回一个新数组]
+     */
+    function unique(array) {
+        var length = array.length ? array.length : 0;
+        if (!length) {
+            return false;
+        }
+
+        // 复制原数组并排序，将相同数据靠拢
+        var sorted = array.slice(0).sort();
+        // 临时数组中先保存排序后数组第一项
+        var result = [sorted[0]];
+
+        for (var i = 0; i < length; i++) {
+            var item = sorted[i];
+            // 将当前值同临时数组的最后一项比较，不同则推入
+            if (item !== result[result.length - 1]) {
+                result.push(item);
+            }
+        }
+
+        return result;
+    }
+
+    // 中庸方法，减少了比较次数。这种方式比使用indexOf()的一般姿势要快，比使用hash表的最快姿势要慢，但是占用内存要少
+    console.log(unique([1, 2, 2, 3, 6, 8, 6]));
+    </script>
+</body>
+
+</html>

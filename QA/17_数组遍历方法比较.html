@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var arr = [1, 2, 3, '', false, 0, undefined];
+
+    console.log('-------------普通for循环-------------');
+
+    // 支持提前break、return
+    for (var i = 0, len = arr.length; i < len; i++) {
+        console.log(arr[i], i)
+    }
+
+    console.log('-------------es5支持(IE9+)-------------');
+
+    var testContext = {
+        test: '我是测试context的'
+    };
+
+    console.log('-------------forEach-------------');
+    // 遍历数组每一项；无返回值；只能用在数组上；不支持提前跳出；不改变原数组；支持传入上下文
+    arr.forEach(function(item, index, selfArr) {
+        // 假设想把数组每一项值*2，但forEach不会改变原数组，除非在selfArr上做操作
+        item *= 2;
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(item, index, selfArr, selfArr === arr);
+    }, testContext);
+    console.log('原数组的值未发生改变', arr);
+
+    console.log('-------------map-------------');
+    // 为数组每一项执行一次回调函数，回调函数的返回值将成为新数组对应项的值；不支持提前跳出；返回新数组；不改变原数组；支持传入上下文
+    var mapArr = arr.map(function(item, index, selfArr) {
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(item, index, selfArr, selfArr === arr);
+        // return的值将做为新数组的值
+        return false;
+    }, testContext);
+    console.log(arr, mapArr, arr === mapArr);
+
+    // 正确用法
+    var mapArr2 = arr.map(Math.sqrt);
+    console.log('mapArr2', mapArr2);
+
+    console.log('-------------filter-------------');
+    // 返回符合return 条件的值组成的数组；不支持提前跳出；返回新数组；不改变原数组；支持传入上下文
+    var filterArr = arr.filter(function(item, index, selfArr) {
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(item, index, selfArr, selfArr === arr);
+        return item > 1;
+    }, testContext);
+    console.log('filterArr', filterArr);
+
+    console.log('-------------some-------------');
+    // 用来测试数组，只要有一项满足返回条件，则返回true;不支持提前跳出；返回新数组；不改变原数组；支持传入上下文
+    var someArr = arr.some(function(item, index, selfArr) {
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(item, index, selfArr, selfArr === arr);
+        return item > 1;
+    }, testContext);
+    console.log('someArr', someArr);
+
+    console.log('-------------every-------------');
+    // 用来测试数组，每一项都满足返回条件时，则返回true;不支持提前跳出；返回新数组；不改变原数组；支持传入上下文
+    var everyArr = arr.every(function(item, index, selfArr) {
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(item, index, selfArr, selfArr === arr);
+        return item > 1;
+    }, testContext);
+    console.log('everyArr', everyArr);
+
+    console.log('-------------reduce-------------');
+    // reduce中文为减少，实际会用在数据的累加上，回调函数会包含上一次回调的值，第二个参数为累加的初始值；不支持提前跳出；返回新数组；不改变原数组；
+    var reduceArr = arr.reduce(function(prevItem, item, index, selfArr) {
+        console.log('上下文环境为:', this, this === testContext);
+        console.log(prevItem, item, index, selfArr, selfArr === arr);
+        return prevItem + item;
+    }, 0);
+    console.log('reduceArr', reduceArr);
+
+    console.log('-------------es6支持-------------');
+    console.log('-------------includes-------------');
+    // 表示某个数组是否包含给定的值，第二个参数可传入判断的起始位置；不穿第二个参数的场景可用some来变相实现
+    var includesArr = arr.includes(3);
+    console.log('includesArr', includesArr);
+    // 等价
+    var someIncludesArr = arr.some(function(item) {
+        return item === 3;
+    });
+    console.log('someIncludesArr', someIncludesArr);
+
+    // 总结
+    // 所有es5的数组遍历方法:
+    // 不支持提前跳出
+    // 不会改变原数组
+    </script>
+</body>
+
+</html>

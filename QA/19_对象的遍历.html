@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var obj = {
+        name: 'test',
+        age: 3,
+        foo: function() {}
+    };
+
+    console.log('-------------for...in-------------');
+    // 利用for...in遍历，for...in会遍历所有可枚举的属性，包含原型对象上的
+    for (var prop in obj) {
+        console.log(prop, obj[prop]);
+    }
+
+    console.log('-------------使用hasOwnProperty过滤原型属性-------------');
+    // 使用hasOwnProperty过滤原型属性
+    for (var prop2 in obj) {
+        if (obj.hasOwnProperty(prop2)) {
+            console.log(prop2, obj[prop2]);
+        }
+    }
+
+    console.log('-------------es5支持(IE9+)-------------');
+    console.log('-------------keys-------------');
+    // 通过Object.keys获得对象的所有属性名组成的数组
+    console.log(Object.keys(obj));
+
+    console.log('-------------es6支持-------------');
+    console.log('-------------values-------------');
+    // 通过Object.values获得对象的所有值组成的数组
+    console.log(Object.values(obj));
+    console.log('-------------entries-------------');
+    // 通过Object.entries获得对象的键值对组成的的多维数组
+    console.log(Object.entries(obj));
+    </script>
+</body>
+
+</html>

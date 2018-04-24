@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 对象的浅拷贝
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Object]}   object [description]
+     * @return {[Object]}          [返回一个新对象]
+     */
+    function copyObj(obj) {
+        var result = {};
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                result[prop] = obj[prop];
+            }
+        }
+        return result;
+    }
+
+
+    // 原始值拷贝的是实际值，引用值拷贝的是引用，所以是浅拷贝，copy前后的引用值会相互影响
+    var obj = {
+        a: 1,
+        test: [2, 3]
+    };
+
+    var obj2 = copyObj(obj);
+
+    console.log(JSON.stringify(obj), JSON.stringify(obj2), obj === obj2);
+    obj2.test[0] = '我改变了';
+    console.log(JSON.stringify(obj), JSON.stringify(obj2));
+    </script>
+</body>
+
+</html>

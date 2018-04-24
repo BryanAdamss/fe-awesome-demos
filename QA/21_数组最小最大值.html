@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var arr = [80, 70, 86, 58, 90, 35, 89, 67, 50, 99];
+
+    // 循环
+    var min = arr[0];
+    for (var i = 1, len = arr.length; i < len; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    console.log('循环', min);
+
+    // 借用Math.min
+    var min = Math.min.apply(null, arr);
+    console.log('借用Math.min', min)
+
+    // 扩展运算符
+    var min = Math.min(...arr);
+    console.log('扩展运算符', min);
+
+    // 借用排序
+    var min = arr.slice(0).sort(function(a, b) {
+        return a - b;
+    })[0];
+    console.log('借用排序', min)
+    </script>
+</body>
+
+</html>

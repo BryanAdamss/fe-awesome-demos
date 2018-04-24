@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 数组去重复
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Array]}   array [description]
+     * @return {[Array]}         [返回一个新数组]
+     */
+    function unique(array) {
+        var length = array.length ? array.length : 0;
+        if (!length) {
+            return false;
+        }
+        // hash为hash表，result为临时数组
+        var hash = {};
+        var result = [];
+
+        for (var i = 0; i < length; i++) {
+            var item = array[i];
+            // 如果hash表中没有当前项
+            if (!hash[item]) {
+                // 存入hash表
+                hash[item] = true;
+                // 把当前数组的当前项push到临时数组里面
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    // 此方法速度较快，利用空间换时间
+    console.log(unique([1, 2, 2, 3, 6, 8, 6]));
+    </script>
+</body>
+
+</html>

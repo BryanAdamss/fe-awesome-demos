@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 创建一个新数组并包含原数组中所有的非假值元素
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[type]}   array [description]
+     * @return {[type]}         [返回一个新数组]
+     * @example
+     *
+     * compact([0, 1, false, 2, '', 3]);
+     * // => [1, 2, 3]  
+     */
+    function compact(array) {
+        var index = 0;
+        var length = array.length ? array.length : 0;
+        var result = [];
+
+        if (!length) {
+            return result;
+        }
+
+        while (index < length) {
+            var value = array[index];
+            if (value) {
+                result.push(value);
+            }
+            index++;
+        }
+        return result;
+    }
+    console.log(compact([0, 1, false, 2, '', 3]));
+    </script>
+</body>
+
+</html>

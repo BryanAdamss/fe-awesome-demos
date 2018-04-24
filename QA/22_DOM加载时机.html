@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="http://dummyimage.com/300x200/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- defer 会异步下载，并在HTML文档被完全加载和解析之后，DOMContentLoade事件触发前执行，所以可以在DOMContentLoaded中访问到lodash -->
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/lodash/3.5.0/lodash.js" defer></script>
+    <!-- async 会异步下载，什么时候下载完，什么时候执行，适合无任何依赖的js，例如谷歌的网页流量分析 -->
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/layer/2.1/layer.js" async></script>
+    <script type="text/javascript">
+    console.log('我是同步代码我会最先触发');
+
+    // jquery的ready和DOMContentLoaded几乎同时触发，二者触发时机应该一样
+    $(document).ready(function() {
+        console.log('---------------------------------------');
+        console.log('jquery的ready已经触发');
+        console.log('此时可以访问到页面的img对象', $('img'));
+        console.log('但无法获取到图片的宽度，说明图片此时还没有真正加载完成', $('img')[0].width);
+        console.log('此时我可以访问到defer的js文件lodash', _);
+        console.log('此时我无法访问到async的js文件layer');
+        console.log(layer);
+    });
+
+    // DOMContentLoaded会在初始的 HTML 文档被完全加载和解析完成之后触发(html标签结构、直接写在<script>内的js执行完)，而无需等待样式表、图像和子框架的完成加载。
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log('---------------------------------------');
+        console.log("DOMContentLoaded已经触发");
+        console.log('此时可以访问到页面的img对象', document.querySelector('img'));
+        console.log('但无法获取到图片的宽度，说明图片此时还没有真正加载完成', document.querySelector('img').width);
+        console.log('我可以访问到defer的js文件lodash', _);
+        console.log('此时我无法访问到async的js文件layer');
+        console.log(layer);
+    });
+
+    // jquery的load和原生的load一样，二者都是在所有资源都加载完成后触发
+    $(window).load(function() {
+        console.log('jquery load触发');
+    });
+
+    window.onload = function() {
+        console.log("onload触发");
+    };
+    </script>
+</body>
+
+</html>

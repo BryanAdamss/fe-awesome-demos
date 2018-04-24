@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 将一个数组按size拆分成多个数组的块，然后把这些块组成新的数组
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[type]}   array [description]
+     * @param  {[type]}   size  [description]
+     * @return {[type]}         [返回一个新数组]
+     * @example
+     *
+     * chunk(['a', 'b', 'c', 'd'], 2);
+     * // => [['a', 'b'], ['c', 'd']]
+     *
+     * chunk(['a', 'b', 'c', 'd'], 3);
+     * // => [['a', 'b', 'c'], ['d']]
+     */
+    function chunk(array, size) {
+        var length = array.length ? array.length : 0;
+        if (!length || !size) {
+            return [];
+        }
+        var index = 0;
+        var resIndex = 0;
+        var result = new Array(Math.ceil(length / size));
+
+        while (index < length) {
+            result[resIndex++] = array.slice(index, index += size);
+        }
+        return result;
+    }
+
+    console.log(chunk(['a', 'b', 'c', 'd'], 2));
+    console.log(chunk(['a', 'b', 'c', 'd'], 3));
+    </script>
+</body>
+
+</html>

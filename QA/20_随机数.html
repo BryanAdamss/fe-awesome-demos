@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // Math.random()返回[0,1)
+    // 如果需要得到[n,m]则需要		
+    // [0,1)*(m-n+1)得到[0,m-n+1)
+    // [0,m-n+1)+n得到[n,m+1)
+    // Math.floor([n,m+1))得到[n,m]
+    // 返回[n,m]整数的公式为Math.floor(Math.random()*(n-m+1)+n);
+
+    /**
+     * 返回1个[min,max]之间的整数
+     * @author cgh
+     * @time   2018-04-10
+     * @param  {[Number]}   min [区间最小值]
+     * @param  {[Number]}   max [区间最大值]
+     * @return {[Number]}       [区间内的一个随机整数]
+     */
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    // 取10个[10,100]不重复的数组成数组，要求按升序
+    var index = 0;
+    var temp = [];
+    var num = -1;
+
+    while (index < 10) {
+        num = getRandom(10, 100);
+        if (temp.indexOf(num) === -1) {
+            temp.push(num);
+            index++;
+        }
+    }
+
+    temp.sort(function(a, b) {
+        return a - b;
+    });
+    console.log(temp)
+    </script>
+</body>
+
+</html>

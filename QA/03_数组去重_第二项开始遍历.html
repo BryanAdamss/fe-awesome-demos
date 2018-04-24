@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /**
+     * 数组去重复
+     * @author cgh
+     * @time   2018-04-09
+     * @param  {[Array]}   array [description]
+     * @return {[Array]}         [返回一个新数组]
+     */
+    function unique(array) {
+        var length = array.length ? array.length : 0;
+        if (!length) {
+            return false;
+        }
+
+        // 创建一个新的临时数组，并且把当前数组的第一元素存入到数组中
+        var result = [array[0]];
+        // 从第二项开始遍历
+        for (var i = 1; i < length; i++) {
+            var item = array[i];
+            // 如果当前数组的第i项在当前数组中第一次出现的位置不是i，那么表示第i项是重复的，忽略掉，否则存入结果数组
+            if (array.indexOf(item) === i) {
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    console.log(unique([1, 2, 2, 3, 6, 8, 6]));
+    </script>
+</body>
+
+</html>
