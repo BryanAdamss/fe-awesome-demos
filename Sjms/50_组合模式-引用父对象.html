@@ -38,7 +38,7 @@
     };
     var File = function(name) {
         this.name = name;
-        this.parent = null;
+        this.parent = null; // 设置父对象
     };
     File.prototype.add = function() {
         throw new Error('不能添加在文件下面');

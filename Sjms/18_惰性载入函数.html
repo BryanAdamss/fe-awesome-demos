@@ -10,6 +10,7 @@
     <div id="div1">点我绑定事件</div>
     <script type="text/javascript">
     var addEvent = function(elem, type, handler) {
+        // 首次点击时判断绑定方式，后续点击时无需再判断
         if (window.addEventListener) {
             addEvent = function(elem, type, handler) {
                 elem.addEventListener(type, handler, false);

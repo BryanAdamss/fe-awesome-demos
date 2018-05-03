@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+		输入数据 http://www.domain.com/?user=anonymous&id=123&id=456&city=%E5%8C%97%E4%BA%AC&d&enabled
+		返回数据
+		{
+		  user: 'anonymous',
+		  id: [123, 456],     // 重复出现的 key 要组装成数组，能被转成数字的就转成数字类型
+		  city: '北京',        // 中文
+		  enabled: true,      // 未指定值的 key 约定值为 true
+		}
+	</pre>
+    <script type="text/javascript">
+    let url = 'http://www.domain.com/?user=anonymous&id=123&id=45.6&id=780&city=%E5%8C%97%E4%BA%AC&d&enabled';
+
+    function queryString(str) {
+        if (typeof str !== 'string') {
+            return {};
+        }
+
+        let startIndex = str.indexOf('?');
+        str = startIndex === -1 ? str : str.slice(startIndex + 1);
+
+        let paramsArr = decodeURIComponent(str).split('&');
+        let formatedObj = {};
+        paramsArr.forEach((params, index) => {
+            let param = params.split('=');
+            let key = param[0];
+            let value = param[1];
+
+            if (!value) {
+                value = true;
+            }
+
+            if (!isNaN(parseFloat(value))) {
+                value = parseFloat(value);
+            }
+
+            if (typeof formatedObj[key] === 'undefined') {
+                formatedObj[key] = value;
+            } else {
+                if (Array.isArray(formatedObj[key])) {
+                    formatedObj[key].push(value);
+                } else {
+                    formatedObj[key] = [formatedObj[key], value];
+                }
+            }
+        });
+        return formatedObj;
+
+    }
+
+    console.log(queryString(url));
+    </script>
+</body>
+
+</html>

@@ -9,13 +9,16 @@
 <body>
     <script type="text/javascript">
     var event = {
+        // 缓存列表
         clientList: {},
+        // 订阅
         listen: function(key, fn) {
             if (!this.clientList[key]) {
                 this.clientList[key] = [];
             }
             this.clientList[key].push(fn);
         },
+        // 触发
         trigger: function() {
             var key = Array.prototype.shift.call(arguments);
             var fns = this.clientList[key];
@@ -26,14 +29,17 @@
                 fn.apply(this, arguments);
             }
         },
+        // 移除
         remove: function(key, fn) {
             var fns = this.clientList[key];
             if (!fns) {
                 return false;
             }
             if (!fn) {
+                // 移除key对应的所有事件
                 fns && (fns.length = 0);
             } else {
+                // 移除key对应下的某一个事件
                 for (var l = fns.length - 1; l >= 0; l--) { // 反向遍历订阅的回调函数列表
                     var _fn = fns[l];
                     if (_fn === fn) {
@@ -63,13 +69,13 @@
     var salesOffices = cloneObj(event);
 
     salesOffices.listen('squareMeter88', fn1 = function(price) { // 小明订阅售楼1 88平消息
-        console.log('售楼1通知小明价格= ' + price);
+        console.log('售楼1通知小明88平米价格= ' + price);
     });
     salesOffices.listen('squareMeter88', fn2 = function(price) { // 小周订阅售楼1 88平消息
-        console.log('售楼1通知小周价格= ' + price);
+        console.log('售楼1通知小周88平米价格= ' + price);
     });
     salesOffices.listen('squareMeter100', fn3 = function(price) { // 小红订阅售楼1 100平消息
-        console.log('售楼1通知小红价格= ' + price);
+        console.log('售楼1通知小红100平米价格= ' + price);
     });
 
     // 售楼1发布88平米的消息
