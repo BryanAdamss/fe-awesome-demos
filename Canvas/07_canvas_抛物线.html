@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var ball = {
+      x: 700,
+      y: 100,
+      r: 20,
+      g: 2,
+      vx: -4,
+      vy: 0,
+      color: 'red'
+    }
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 400
+
+      var ctx = canvas.getContext('2d')
+
+      function step(n) {
+
+        render(ctx)
+        update()
+
+        requestAnimationFrame(step)
+      }
+
+      requestAnimationFrame(step)
+    }
+
+    function update() {
+      ball.x += ball.vx
+      ball.y += ball.vy
+      ball.vy += ball.g
+
+      if (ball.y >= 400 - ball.r) {
+        ball.y = 400 - ball.r
+        ball.vy = -ball.vy * 0.75
+      }
+    }
+
+    function render(ctx) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+      ctx.fillStyle = ball.color
+      ctx.beginPath()
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas = document.getElementById('myCanvas')
+    var context = canvas.getContext('2d')
+    canvas.width = 1024
+    canvas.height = 768
+
+    // * canvas是先设置状态，再进行绘制
+    // * 先想好要绘制的图形，再选好对应的笔，最后再绘制
+
+    // * 先设置绘制状态(想好要绘制的图形)
+    context.moveTo(100, 100)
+    context.lineTo(700, 700)
+    context.lineTo(100, 700)
+    context.lineTo(100, 500)
+
+    // * 选好对应的笔
+    context.lineWidth = 5
+    context.strokeStyle = "red"
+
+    // * 选好对应的油漆桶
+    context.fillStyle = "#0f0"
+
+    // * 实际绘制
+    context.stroke() // 绘制形状
+    context.fill() // 绘制填充
+
+    // * 试图绘制第二个形状
+    context.moveTo(200, 100)
+    context.lineTo(700, 600)
+    // * 并设置线条为蓝色
+    context.strokeStyle = "blue"
+    // * 实际绘制后，得到所有形状的线条颜色都是蓝色了
+    // * 因为canvas是基于状态进行绘制的
+    // * 调用stroke()时，会将调用前的未封闭所有形状相关状态收集起来(出现重复时，后定义的会覆盖先定义的)，统一绘制
+    // * 其实第一个stroke被调用时，绘制了一个红色线条的形状，然后第二个stroke被调用时，将其调用前的未封闭形状相关状态收集起来，重新绘制
+    // * 所以第一个形状被绘制了两次
+    context.stroke()
+  </script>
+</body>
+
+</html>

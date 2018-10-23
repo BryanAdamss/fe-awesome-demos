@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // * ctx.arc(圆心x,圆心y,半径,开始弧度,结束弧度,是否逆时针绘制默认false即顺时针绘制)
+      // ! 弧度的递增方向一直是顺时针，不受最后一个参数影响即右侧为0，下侧为0.5pi，左侧为1pi，上侧为1.5pi，右侧为2pi这样循环下去
+      ctx.arc(300, 300, 200, 0, 1.5 * Math.PI)
+      ctx.stroke()
+    }
+  </script>
+</body>
+
+</html>

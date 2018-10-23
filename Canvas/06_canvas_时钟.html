@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script src="./digit.js"></script>
+  <script>
+    var RADIUS = 4
+    var GAP = 1
+    var MARGIN_TOP = 60
+    var MARGIN_LEFT = 30
+    var COLOR = 'rgb(0,102,153)'
+    var WIDTH = 800
+    var HEIGHT = 400
+
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = WIDTH
+      canvas.height = HEIGHT
+
+      var ctx = canvas.getContext('2d')
+
+      var lastTime = null
+
+      var now = null
+
+      function step(n) {
+        if (!lastTime) lastTime = new Date().getTime()
+
+        now = new Date().getTime()
+
+        if (now - lastTime >= 1000) {
+          render(ctx)
+          lastTime = now
+        }
+
+        requestAnimationFrame(step)
+      }
+
+      requestAnimationFrame(step)
+    }
+
+    function getCurTimeStr() {
+      var now = new Date();
+
+      var hours = '' + now.getHours();
+      hours = '' + (hours < 10 ? '0' + hours : hours);
+
+      var minutes = '' + now.getMinutes();
+      minutes = '' + (minutes < 10 ? '0' + minutes : minutes);
+
+      var seconds = now.getSeconds();
+      seconds = '' + (seconds < 10 ? '0' + seconds : seconds);
+
+      var timeStr = hours + ':' + minutes + ':' + seconds
+
+      return timeStr
+    }
+
+    function render(ctx) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+      var timerStrArr = getCurTimeStr().split('')
+
+      for (var i = 0, len = timerStrArr.length; i < len; i++) {
+        var str = timerStrArr[i]
+        renderDigit(MARGIN_LEFT + (i + 1) * 15 * (RADIUS + 1), MARGIN_TOP, str, ctx)
+      }
+    }
+
+    function renderDigit(x, y, num, ctx) {
+      ctx.fillStyle = COLOR
+      var numArr = digit[num]
+      for (var i = 0, len = numArr.length; i < len; i++) {
+        for (var j = 0; j < numArr[i].length; j++) {
+          if (numArr[i][j] === 1) {
+            var centerX = x + j * 2 * (RADIUS + GAP) + (RADIUS + GAP)
+            var centerY = y + i * 2 * (RADIUS + GAP) + (RADIUS + GAP)
+
+            ctx.beginPath()
+            ctx.arc(centerX, centerY, RADIUS, 0, 2 * Math.PI)
+            ctx.closePath()
+
+            ctx.fill()
+          }
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

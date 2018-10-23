@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var PANELS = [{
+      path: [{ x: 0, y: 0 }, { x: 800, y: 0 }, { x: 400, y: 400 }],
+      color: '#caff67'
+    }, {
+      path: [{ x: 0, y: 0 }, { x: 400, y: 400 }, { x: 0, y: 400 }],
+      color: 'blue'
+    }, {
+      path: [{ x: 800, y: 0 }, { x: 400, y: 400 }, { x: 800, y: 200 }],
+      color: 'pink'
+    }, {
+      path: [{ x: 800, y: 200 }, { x: 400, y: 400 }, { x: 800, y: 800 }],
+      color: '#f0a'
+    }, {
+      path: [{ x: 800, y: 800 }, { x: 400, y: 400 }, { x: 400, y: 800 }],
+      color: '#901'
+    }, {
+      path: [{ x: 400, y: 800 }, { x: 400, y: 400 }, { x: 0, y: 800 }],
+      color: '#bcf'
+    }, {
+      path: [{ x: 0, y: 800 }, { x: 400, y: 400 }, { x: 0, y: 400 }],
+      color: '#fc0'
+    }]
+
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      for (var i = 0, len = PANELS.length; i < len; i++) {
+        draw(PANELS[i], ctx)
+      }
+    }
+
+    function draw(panel, ctx) {
+      var color = panel.color
+      var path = panel.path
+
+      ctx.beginPath()
+      ctx.moveTo(path[0].x, path[0].y)
+      for (var i = 1, len = path.length; i < len; i++) {
+        ctx.lineTo(path[i].x, path[i].y)
+      }
+      ctx.closePath()
+
+      ctx.lineWidth = 3
+      ctx.strokeStyle = "#333"
+      ctx.fillStyle = color
+
+      ctx.stroke()
+      ctx.fill()
+    }
+  </script>
+</body>
+
+</html>

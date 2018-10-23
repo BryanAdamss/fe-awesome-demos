@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas = document.getElementById('myCanvas')
+    var context = canvas.getContext('2d')
+    canvas.width = 1024
+    canvas.height = 768
+
+    // * canvas是先设置状态，再进行绘制
+    // * 先想好要绘制的图形，再选好对应的笔，最后再绘制
+
+    // * 先设置绘制状态(想好要绘制的图形)
+    context.moveTo(100, 100)
+    context.lineTo(700, 700)
+    context.lineTo(100, 700)
+    context.lineTo(100, 500)
+
+    // * 选好对应的笔
+    context.lineWidth = 5
+    context.strokeStyle = "#00f"
+
+    // * 选好对应的油漆桶
+    context.fillStyle = "#0f0"
+
+    // * 实际绘制
+    context.stroke() // 绘制形状
+    context.fill() // 绘制填充
+  </script>
+</body>
+
+</html>

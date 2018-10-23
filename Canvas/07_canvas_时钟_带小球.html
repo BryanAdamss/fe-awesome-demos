@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script src="./digit.js"></script>
+  <script>
+    var RADIUS = 4
+    var GAP = 1
+    var MARGIN_TOP = 60
+    var MARGIN_LEFT = 30
+    var COLOR = 'rgb(0,102,153)'
+    var WIDTH = 800
+    var HEIGHT = 400
+
+    var COLORS_BALL = ['#007633', '#22884F', '#4A2A82', '#BF4E30', '#BFAE30']
+    var balls = []
+
+    var timeObj = {
+      timeArr: [],
+      timeStrFormated: '',
+      timeStrSplited: []
+    }
+
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = WIDTH
+      canvas.height = HEIGHT
+
+      var ctx = canvas.getContext('2d')
+
+      function step() {
+
+        render(ctx)
+        updateTimeObj()
+
+        requestAnimationFrame(step)
+      }
+      requestAnimationFrame(step)
+    }
+
+    function updateTimeObj() {
+      var newTimeObj = getNewTimeObj()
+      var oldTimeStrSplited = timeObj.timeStrSplited
+      var newTimeStrSplited = newTimeObj.timeStrSplited
+
+      for (var i = 0, len = oldTimeStrSplited.length; i < len; i++) {
+        if (oldTimeStrSplited[i] !== newTimeStrSplited[i]) {
+          makeBall(MARGIN_LEFT + (i + 1) * 15 * (RADIUS + 1), MARGIN_TOP, oldTimeStrSplited[i])
+        }
+      }
+
+      timeObj = newTimeObj
+    }
+
+    function getNewTimeObj() {
+      var obj = {}
+
+      var now = new Date();
+
+      var hours = now.getHours()
+      var minutes = now.getMinutes()
+      var seconds = now.getSeconds()
+
+      var timeArr = [hours, minutes, seconds]
+      obj.timeArr = timeArr
+
+      var temp = []
+      for (var i = 0, len = timeArr.length, time = null; i < len; i++) {
+        time = timeArr[i]
+
+        var formated = formateTime(time)
+        temp.push(formated)
+      }
+
+      obj.timeStrFormated = temp.join(':')
+      obj.timeStrSplited = obj.timeStrFormated.split('')
+
+      return obj
+    }
+
+    function formateTime(time) {
+      return time < 10 ? '0' + time : '' + time
+    }
+
+    function render(ctx) {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+      renderTime(ctx)
+
+      renderBalls(ctx)
+    }
+
+    function renderTime(ctx) {
+      var timeStrSplited = timeObj.timeStrSplited
+
+      for (var i = 0, len = timeStrSplited.length, timeStr = null; i < len; i++) {
+        timeStr = timeStrSplited[i]
+        renderDigit(MARGIN_LEFT + (i + 1) * 15 * (RADIUS + 1), MARGIN_TOP, timeStr, ctx)
+      }
+    }
+
+    function renderDigit(x, y, num, ctx) {
+      ctx.fillStyle = COLOR
+      var numArr = digit[num]
+      for (var i = 0, len = numArr.length; i < len; i++) {
+        for (var j = 0; j < numArr[i].length; j++) {
+          if (numArr[i][j] === 1) {
+            var centerX = x + j * 2 * (RADIUS + GAP) + (RADIUS + GAP)
+            var centerY = y + i * 2 * (RADIUS + GAP) + (RADIUS + GAP)
+
+            ctx.beginPath()
+            ctx.arc(centerX, centerY, RADIUS, 0, 2 * Math.PI)
+            ctx.closePath()
+
+            ctx.fill()
+          }
+        }
+      }
+    }
+
+    function renderBalls(ctx) {
+      for (var i = balls.length - 1; i >= 0; i--) {
+        balls[i].x += balls[i].vx
+        balls[i].y += balls[i].vy
+        balls[i].vy += balls[i].g
+
+        if (balls[i].y > HEIGHT - RADIUS) {
+          balls[i].y = HEIGHT - RADIUS
+          balls[i].vy = -balls[i].vy * 0.75
+        }
+
+        if (balls[i].x < 0 || balls[i].x > WIDTH) {
+          balls.splice(i, 1)
+        }
+      }
+
+      for (var j = 0, len = balls.length; j < len; j++) {
+        ctx.fillStyle = balls[j].color
+        ctx.beginPath()
+        ctx.arc(balls[j].x, balls[j].y, balls[j].r, 0, 2 * Math.PI, true)
+        ctx.fill()
+      }
+    }
+
+    function makeBall(x, y, num) {
+      var numArr = digit[num]
+      for (var i = 0, len = numArr.length; i < len; i++) {
+        for (var j = 0; j < numArr[i].length; j++) {
+          if (numArr[i][j] === 1) {
+            var ball = {
+              x: x + j * 2 * (RADIUS + GAP) + (RADIUS + GAP),
+              y: y + i * 2 * (RADIUS + GAP) + (RADIUS + GAP),
+              r: RADIUS,
+              g: 1.5 + Math.random(),
+              vx: Math.pow(-1, Math.ceil(Math.random() * 1000)) * 4,
+              vy: -5,
+              color: COLORS_BALL[Math.floor(Math.random() * COLORS_BALL.length)]
+            }
+
+            balls.push(ball)
+          }
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

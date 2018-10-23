@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      for (var i = 0; i < 10; i++) {
+        ctx.beginPath()
+        // * 顺势针画
+        ctx.arc(50 + i * 100, 60, 40, 0, 2 * Math.PI * (i + 1) / 10)
+        ctx.stroke()
+      }
+
+      for (var i = 0; i < 10; i++) {
+        ctx.beginPath()
+        // * 逆时针画
+        ctx.arc(50 + i * 100, 150, 40, 0, 2 * Math.PI * (i + 1) / 10, true)
+        ctx.stroke()
+      }
+
+      for (var i = 0; i < 10; i++) {
+        ctx.beginPath()
+        ctx.arc(50 + i * 100, 240, 40, 0, 2 * Math.PI * (i + 1) / 10)
+        // * 关闭路径
+        ctx.closePath()
+        ctx.stroke()
+      }
+
+      for (var i = 0; i < 10; i++) {
+        ctx.beginPath()
+        ctx.arc(50 + i * 100, 330, 40, 0, 2 * Math.PI * (i + 1) / 10)
+        // * 关闭路径
+        ctx.closePath()
+        ctx.fill()
+      }
+
+      for (var i = 0; i < 10; i++) {
+        ctx.beginPath()
+        ctx.arc(50 + i * 100, 420, 40, 0, 2 * Math.PI * (i + 1) / 10)
+        // * 不关闭路径
+        // ctx.closePath()
+        // * 结果和上面一个一样，说明closePath对fill没用，仅对路径绘制有效果
+        // * 调用fill，会自动帮你closePath
+        ctx.fill()
+      }
+
+    }
+  </script>
+</body>
+
+</html>

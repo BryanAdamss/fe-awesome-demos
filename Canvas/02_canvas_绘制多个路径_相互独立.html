@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    var canvas = document.getElementById('myCanvas')
+    var context = canvas.getContext('2d')
+    canvas.width = 1024
+    canvas.height = 768
+
+    // * 调用beginPath告诉stroke要画一个新路径
+    context.beginPath()
+    context.moveTo(100, 100)
+    context.lineTo(700, 700)
+    context.lineTo(100, 700)
+    context.lineTo(100, 500)
+
+    // context.closePath() // * closePath其实和beginPath没有关联关系，closePath的作用是关闭路径(让路径首尾相连形成闭环)，而不是开始一个新的路径
+
+    context.lineWidth = 5
+    context.strokeStyle = "red"
+    context.fillStyle = "#0f0"
+
+
+    // * 绘制第一个形状
+    context.stroke() // 绘制形状
+
+    context.beginPath()
+    context.moveTo(200, 100)
+    context.lineTo(700, 600)
+
+    context.strokeStyle = "blue"
+
+    // * 绘制第二个形状
+    context.stroke()
+  </script>
+</body>
+
+</html>
