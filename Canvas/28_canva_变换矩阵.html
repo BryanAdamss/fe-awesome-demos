@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // transform(a,b,c,d,e,f)
+      //  a   c   e  
+      //  b   d   f
+      //  0   0   1
+      // a、d分别控制水平、垂直缩放
+      // b、c分别控制水平、垂直倾斜
+      // e、f分别控制水平、垂直位移
+      // 默认情况下a、d为1，其余为0，即呈现为一个单位矩阵
+      //  1   0   0  
+      //  0   1   0
+      //  0   0   1
+
+      ctx.fillStyle = 'red'
+      ctx.strokeStyle = '#58'
+      ctx.lineWidth = 5
+
+      ctx.save()
+      ctx.transform(2, 0, 0, 1, 50, 100)
+      ctx.fillRect(50, 50, 300, 300)
+      ctx.strokeRect(50, 50, 300, 300)
+      ctx.restore()
+    }
+  </script>
+</body>
+
+</html>
