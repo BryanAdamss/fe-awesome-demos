@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // createRadialGradient(x0,y0,r0,x1,y1,r1)
+      var grd = ctx.createRadialGradient(400, 400, 100, 400, 400, 500)
+      grd.addColorStop(0.0, '#fff') // 添加色标
+      grd.addColorStop(0.25, '#0ff') // 添加色标
+      grd.addColorStop(0.5, '#f00')
+      grd.addColorStop(0.75, '#f0f')
+      grd.addColorStop(1.0, '#000')
+
+      ctx.fillStyle = grd; // 赋值
+      ctx.fillRect(0, 0, 800, 800)
+    }
+  </script>
+</body>
+
+</html>
