@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.moveTo(100, 100)
+      ctx.lineTo(200, 150)
+      ctx.lineTo(100, 200)
+
+      ctx.moveTo(300, 100) // 使用moveTo移动笔尖(拿起笔将笔尖放到一个新位置)
+      ctx.lineTo(400, 150) // 使用lineTo画到规定位置(按着笔画到规定位置)
+      ctx.lineTo(300, 200)
+
+      ctx.moveTo(500, 100)
+      ctx.lineTo(600, 150)
+      ctx.lineTo(500, 200)
+
+      ctx.lineWidth = 4
+      ctx.strokeStyle = 'red'
+
+      ctx.stroke()
+
+    }
+
+  </script>
+</body>
+
+</html>
