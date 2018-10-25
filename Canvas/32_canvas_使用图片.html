@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // createPattern(img|canvas|video,repeat) createPattern可以使用一张图片或另一个canvas和video来做图形
+
+      var img = new Image()
+      img.src = 'http://images.cpooo.com/files/201004/product/233/1271300511.jpg.small.jpg'
+      img.onload = function () {
+        var pat = ctx.createPattern(img, 'no-repeat')
+        ctx.fillStyle = pat
+        ctx.fillRect(0, 0, 800, 800)
+      }
+    }
+  </script>
+</body>
+
+</html>
