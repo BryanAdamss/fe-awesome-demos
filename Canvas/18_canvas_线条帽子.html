@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.beginPath()
+      ctx.moveTo(100, 100)
+      ctx.lineTo(600, 100)
+
+      ctx.lineWidth = 50
+      ctx.lineCap = 'butt' // 默认值，无帽子，lineCap样式只能用在线条开始和结束处，无法使用在线条连接处
+
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(100, 200)
+      ctx.lineTo(600, 200)
+
+      ctx.lineWidth = 50
+      ctx.lineCap = 'round' // 圆形
+
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(100, 300)
+      ctx.lineTo(600, 300)
+
+      ctx.lineWidth = 50
+      ctx.lineCap = 'square' // 方形
+
+      ctx.stroke()
+
+      // baseLine
+      ctx.beginPath()
+      ctx.moveTo(100, 0)
+      ctx.lineTo(100, 800)
+
+      ctx.lineWidth = 1
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(600, 0)
+      ctx.lineTo(600, 800)
+
+      ctx.lineWidth = 1
+      ctx.stroke()
+
+
+    }
+
+  </script>
+</body>
+
+</html>
