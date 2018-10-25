@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.beginPath()
+      ctx.moveTo(100, 350)
+      ctx.lineTo(500, 350)
+      ctx.lineTo(500, 200)
+      ctx.lineTo(700, 400)
+      ctx.lineTo(500, 600)
+      ctx.lineTo(500, 450)
+      ctx.lineTo(100, 450)
+
+      ctx.closePath()
+
+      ctx.lineWidth = 10
+      ctx.stroke() // 先描边
+
+      ctx.fillStyle = 'yellow'
+      ctx.fill() // 后填充，会导致填充色覆盖一半lineWidth，正确做法应该是先填充再描边
+    }
+
+  </script>
+</body>
+
+</html>
