@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.lineWidth = 10
+      // ctx.lineJoin = 'bevel' // 设置线条连接样式，默认miter尖角,bevel斜接,round圆角
+      ctx.lineJoin = 'miter' // 设置线条连接样式，默认miter尖角,bevel斜接,round圆角
+      ctx.miterLimit = 10 // 尖角阈值，默认10；当lineJoin为miter时，显示尖角的一个阈值，当超过此阈值会转而用bevel绘制连接样式。一般此值不修改
+      drawStar(ctx, 10, 300, 400, 400, 30) // 此时，超过阈值，连接处采用bevel绘制，可调整miterLimit
+    }
+
+    function drawStar(ctx, r, R, x, y, rot) {
+      ctx.beginPath()
+      for (var i = 0; i < 5; i++) {
+        ctx.lineTo(Math.cos((18 + i * 72 - rot) / 180 * Math.PI) * R + x,
+          -Math.sin((18 + i * 72 - rot) / 180 * Math.PI) * R + y)
+        ctx.lineTo(Math.cos((54 + i * 72 - rot) / 180 * Math.PI) * r + x,
+          -Math.sin((54 + i * 72 - rot) / 180 * Math.PI) * r + y)
+      }
+      ctx.closePath()
+
+      ctx.stroke()
+    }
+
+  </script>
+</body>
+
+</html>
