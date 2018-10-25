@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.fillStyle = 'red'
+      ctx.translate(100, 100)// 移动绘制原点到100,100处，所以fillRect实际绘制在100,100处
+      ctx.fillRect(0, 0, 400, 400)
+      ctx.translate(-100, -100) // 手动将原点恢复
+
+      ctx.fillStyle = 'blue'
+      ctx.translate(300, 300)
+      ctx.fillRect(0, 0, 400, 400)
+      ctx.translate(-300, -300)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.save() // 建立save调用时的状态快照
+      /*
+      save会保存下面的状态
+      当前应用的变形（即移动，旋转和缩放）
+      strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation 的值
+      当前的裁切路径（clipping path）
+      */
+      ctx.fillStyle = 'red'
+      ctx.translate(100, 100)// 移动绘制原点到100,100处，所以fillRect实际绘制在100,100处
+      ctx.fillRect(0, 0, 400, 400)
+      ctx.restore() // 恢复上一次save的快照
+
+      // ！ 在绘制一个完整图形时（特别是包含变换时）应该先save再restore
+
+      ctx.save()
+      ctx.fillStyle = 'blue'
+      ctx.translate(300, 300)
+      ctx.fillRect(0, 0, 400, 400)
+      ctx.restore()
+    }
+  </script>
+</body>
+
+</html>

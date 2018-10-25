@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.lineWidth = 5
+
+      ctx.save()
+      ctx.scale(1, 1)
+      ctx.strokeRect(50, 50, 200, 200)
+      ctx.restore()
+
+      ctx.save()
+      ctx.scale(2, 2)
+      ctx.strokeRect(50, 50, 200, 200)
+      ctx.restore()
+
+      ctx.save()
+      ctx.scale(3, 3)
+      ctx.strokeRect(50, 50, 200, 200)
+      ctx.restore()
+
+      // scale副作用
+      // scale会同时放大原点位置、线条宽度，使用时必须注意
+
+    }
+  </script>
+</body>
+
+</html>

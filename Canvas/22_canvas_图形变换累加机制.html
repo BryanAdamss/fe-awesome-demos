@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.fillStyle = 'red'
+      ctx.translate(100, 100)// 移动绘制原点到100,100处，所以fillRect实际绘制在100,100处
+      ctx.fillRect(0, 0, 400, 400)
+
+      ctx.fillStyle = 'blue'
+      ctx.translate(300, 300)// 原本想将原点移动到300,300处，但是变形的计算是会累加的，所以最后fillRect将绘制在100+300=400,100+300=400处
+      ctx.fillRect(0, 0, 400, 400)
+
+    }
+  </script>
+</body>
+
+</html>

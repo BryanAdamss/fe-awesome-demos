@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // 绘制背景
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // 绘制星星
+      for (var i = 0; i < 200; i++) {
+        var r = Math.random() * 10 + 10
+        var x = Math.random() * canvas.width
+        var y = Math.random() * canvas.height
+        var rot = Math.random() * 360
+        drawStar(ctx, x, y, r, r / 2, rot)
+      }
+    }
+
+    function drawStar(ctx, x, y, R, r, rot) {
+
+      ctx.save()
+
+      ctx.translate(x, y)
+      ctx.rotate(rot / 180 * Math.PI)
+      ctx.scale(R, R)
+
+      starPath(ctx)
+
+      ctx.fillStyle = '#fb3'
+      // 由于scale对store相关样式有副作用，所以舍弃stroke相关样式
+      // ctx.strokeStyle = '#fd5'
+      // ctx.lineWidth = 3
+      // ctx.lineJoin = 'round'
+
+      ctx.fill()
+      // ctx.stroke()
+
+      ctx.restore()
+    }
+
+    function starPath(ctx) {
+      ctx.beginPath()
+      for (var i = 0; i < 5; i++) {
+        ctx.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI),
+          -Math.sin((18 + i * 72) / 180 * Math.PI))
+        ctx.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5,
+          -Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5)
+      }
+      ctx.closePath()
+    }
+  </script>
+</body>
+
+</html>
