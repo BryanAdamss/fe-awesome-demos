@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+      drawRoundRect(ctx, 100, 100, 600, 500, 50)
+    }
+
+    function drawRoundRect(ctx, x, y, width, height, radius) {
+      ctx.save()
+
+      ctx.translate(x, y)
+      pathRect(ctx, width, height, radius)
+
+      ctx.strokeStyle = 'black'
+
+      ctx.stroke()
+
+      ctx.restore()
+    }
+
+    function pathRect(ctx, w, h, r) {
+      ctx.beginPath()
+
+      ctx.arc(w - r, h - r, r, 0, Math.PI / 2)
+      ctx.lineTo(r, h)
+
+      ctx.arc(r, h - r, r, Math.PI / 2, Math.PI)
+      ctx.lineTo(0, r)
+
+      ctx.arc(r, r, r, Math.PI, Math.PI * 3 / 2)
+      ctx.lineTo(w - r, 0)
+
+      ctx.arc(w - r, r, r, Math.PI * 3 / 2, Math.PI * 2)
+
+      ctx.closePath()
+    }
+  </script>
+</body>
+
+</html>

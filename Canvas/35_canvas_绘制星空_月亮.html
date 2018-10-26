@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // 绘制背景
+      var grd = ctx.createLinearGradient(0, 0, 0, 800)
+      grd.addColorStop(0.0, '#000')
+      grd.addColorStop(1.0, '#035')
+      ctx.fillStyle = grd
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // 绘制星星
+      for (var i = 0; i < 200; i++) {
+        var r = Math.random() * 10 + 10
+        var x = Math.random() * canvas.width
+        var y = Math.random() * canvas.height * 0.55
+        var rot = Math.random() * 360
+        drawStar(ctx, x, y, r, r / 2, rot)
+      }
+
+      // 绘制月亮
+      fillMoon(ctx, 2, 900, 200, 100, 30)
+    }
+
+    function drawStar(ctx, x, y, R, r, rot) {
+
+      ctx.save()
+
+      ctx.translate(x, y)
+      ctx.rotate(rot / 180 * Math.PI)
+      ctx.scale(R, R)
+
+      starPath(ctx)
+
+      ctx.fillStyle = '#fb3'
+
+      ctx.fill()
+
+      ctx.restore()
+    }
+
+    function starPath(ctx) {
+      ctx.beginPath()
+      for (var i = 0; i < 5; i++) {
+        ctx.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI),
+          -Math.sin((18 + i * 72) / 180 * Math.PI))
+        ctx.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * 0.5,
+          -Math.sin((54 + i * 72) / 180 * Math.PI) * 0.5)
+      }
+      ctx.closePath()
+    }
+
+    function fillMoon(ctx, d, x, y, R, rot, fillColor) {
+      ctx.save()
+
+      ctx.translate(x, y)
+      ctx.rotate(rot * Math.PI / 180)
+      ctx.scale(R, R)
+
+      pathMoon(ctx, d)
+
+      ctx.fillStyle = fillColor || '#fb3'
+
+      ctx.fill()
+
+      ctx.restore()
+    }
+
+    function pathMoon(ctx, d) {
+      ctx.beginPath();
+
+      ctx.arc(0, 0, 1, 0.5 * Math.PI, 1.5 * Math.PI, true)
+      ctx.moveTo(0, -1)
+      ctx.arcTo(d, 0, 0, 1, dis(0, -1, d, 0) / d)
+
+      ctx.closePath()
+    }
+
+    function dis(x1, y1, x2, y2) {
+      return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+    }
+  </script>
+</body>
+
+</html>
