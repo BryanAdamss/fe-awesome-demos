@@ -94,3 +94,38 @@
   - [DOM 加载时机](https://github.com/BryanAdamss/SourceSave/blob/master/QA/22_DOM%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA.html)
   - [ready 兼容处理](https://github.com/BryanAdamss/SourceSave/blob/master/QA/23_ready%E5%85%BC%E5%AE%B9%E5%A4%84%E7%90%86.html)
   - [ready 终极处理](https://github.com/BryanAdamss/SourceSave/blob/master/QA/24_ready%E7%BB%88%E6%9E%81%E5%A4%84%E7%90%86.html)
+
+### [Canvas](https://github.com/BryanAdamss/SourceSave/tree/master/Canvas)
+
+- 慕课网 canvas 教程学习总结
+
+### [AngularJs](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs)
+
+- [AngularJs 官方文档 demo 总结](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs/AngualrJs%40guide)
+- [AngularJs 慕课网 demo 总结](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs/AngualrJs%40imooc)
+- [AngularJs 拉勾网实例](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs/AngularJs%40lg)
+- [AngularJs 小猫杯教程总结](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs/AngularJs%40xmb)
+- [TodoMVC](https://github.com/BryanAdamss/SourceSave/tree/master/TodoMVC/angularjs)
+
+### [Vue](https://github.com/BryanAdamss/SourceSave/tree/master/Vue)
+
+- [Vue 官网学习 demo 总结](https://github.com/BryanAdamss/SourceSave/tree/master/Vue/Vue%40guide)
+  - 详情可查看[此链接](https://bryanadamss.github.io/2017/08/01/Vue-guide/)
+- [Vue 音乐 App 实例](https://github.com/BryanAdamss/SourceSave/tree/master/Vue/vue-music)
+- [VueCli 详细注释总结](https://github.com/BryanAdamss/SourceSave/tree/master/Vue/vue-cli-study)
+
+### [Webpack](https://github.com/BryanAdamss/SourceSave/tree/master/Webpack)
+
+- [Webpack 官网学习 demo 总结](https://github.com/BryanAdamss/SourceSave/tree/master/Webpack/webpack-guide)
+  - 详情可查看[此链接](https://bryanadamss.github.io/2017/12/21/webpack/)
+- [Webpack 多页面实践总结](https://github.com/BryanAdamss/SourceSave/tree/master/Webpack/webpack-multi-page)
+  - 详情可查看[此链接](https://bryanadamss.github.io/2018/01/02/webpack-multi-page/)
+  - 相关 repo[WebpackTemplate](https://github.com/BryanAdamss/WebpackTemplate)
+
+### [Sjms](https://github.com/BryanAdamss/SourceSave/tree/master/Sjms)
+
+- 设计模式学习 demo 总结
+- 常用模式
+  - [通用的惰性单例](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/24_%E9%80%9A%E7%94%A8%E7%9A%84%E6%83%B0%E6%80%A7%E5%8D%95%E4%BE%8B.html)
+  - [JS 中的策略模式](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/27_JS%E4%B8%AD%E7%9A%84%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.html)
+  - [支持先发布再订阅、并提供命名空间的观察者模式](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/44_%E6%94%AF%E6%8C%81%E5%85%88%E5%8F%91%E5%B8%83%E5%86%8D%E8%AE%A2%E9%98%85%E3%80%81%E5%B9%B6%E6%8F%90%E4%BE%9B%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.html)
