@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.moveTo(100, 100)
+      ctx.lineTo(100, 300)
+      ctx.lineTo(600, 10)
+      ctx.lineTo(500, 700)
+      ctx.lineTo(60, 100)
+      ctx.closePath()
+
+      ctx.fillStyle = 'blue'
+
+      ctx.fill()
+      // canvas填充、stroke等区域永远只绘制路径内部区域，如何确定某区域是在路径内部呢？
+      // 非零环绕原则 https://www.jianshu.com/p/f1590d4fb5c5
+      // 假设路径某一方向为正方向记为1，相反方向为反方向记为-1
+      // 在区域任意一点往外侧引一条射线，看其同路径有几个交点并累加相应焦点所在路径方向的标记值，如果相加结果为非0，则代表此区域在路径内部，需要绘制
+      // 否则视为外部区域，不绘制
+    }
+  </script>
+</body>
+
+</html>

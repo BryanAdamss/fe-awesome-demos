@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // canvas的阴影永远只产生在绘制区域外侧
+      // 所以如果想绘制一个内环带阴影的圆环就必须使用到非零环绕原则
+
+      ctx.beginPath()
+      ctx.arc(400, 400, 300, 0, Math.PI * 2, false)
+      ctx.arc(400, 400, 150, 0, Math.PI * 2, true)
+      ctx.closePath()
+
+      ctx.fillStyle = 'blue'
+
+      ctx.shadowColor = 'gray'
+      ctx.shadowOffsetX = 20
+      ctx.shadowOffsetY = 20
+      ctx.shadowBlur = 10
+
+      ctx.fill()
+
+    }
+  </script>
+</body>
+
+</html>
