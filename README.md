@@ -1,8 +1,8 @@
 # SourceSave
 
-此 repo 用于保存平时学习的一些 demo
+此 repo 用于保存平时学习的一些 demo，绝大部分 demo 都带有注释
 
-## 目录
+## 目录介绍
 
 ### [DaNei](https://github.com/BryanAdamss/SourceSave/tree/master/DaNei)
 
@@ -25,3 +25,19 @@
 ### [Zns](https://github.com/BryanAdamss/SourceSave/tree/master/Zns)
 
 - 智能社教程相关 demo
+
+### [CssSecrets](https://github.com/BryanAdamss/SourceSave/tree/master/CssSecrets)
+
+- CssSecrets 书籍的 demo
+- 在线演示可以查看[此链接](https://bryanadamss.github.io/2017/12/13/CSS-Secrets/)
+
+### [Plugins](https://github.com/BryanAdamss/SourceSave/tree/master/Plugins)
+
+- 自己模仿造的一些简单轮子
+- 重要点的
+
+  - [jQuery 插件模板](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/00_template.js)
+  - [倒计时](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/09_timeCountDown.js)
+  - [拖拽](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/10_drag.js)
+  - [本地分页器](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/11_pagination.js)
+  - [jsonp 实现](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/12_jsonp.js) -[移动端手势组件](https://github.com/BryanAdamss/SourceSave/blob/master/Plugins/js/vendor/13_gestures.js)
