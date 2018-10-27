@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.beginPath()
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, 800, 800)
+
+      ctx.beginPath()
+      ctx.arc(400, 400, 150, 0, Math.PI * 2)
+
+      ctx.fillStyle = '#fff'
+
+      ctx.fill()
+
+      ctx.clip() // 利用path创建一个剪辑区域，只有此剪辑区域内的绘制才可见
+
+      ctx.font = '150px bold Arial'
+      ctx.textAlign = 'center'
+      ctx.textBaseLine = 'middle'
+
+      ctx.fillStyle = '#058'
+
+      ctx.fillText('CANVAS', canvas.width / 2, canvas.height / 2)
+
+    }
+  </script>
+</body>
+
+</html>
