@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.font = 'bold 40px Arial'
+      ctx.fillStyle = 'blue'
+
+      // fillText(str,x,y[,maxLen])
+      ctx.fillText('你好', 40, 40)
+
+      ctx.strokeText('你也好', 80, 80)
+
+      ctx.beginPath()
+      var grd = ctx.createLinearGradient(0, 0, 160, 0)
+      grd.addColorStop(0.0, 'red')
+      grd.addColorStop(1.0, 'blue')
+      ctx.fillStyle = grd
+
+      ctx.fillText('渐变文字', 0, 300)
+    }
+  </script>
+</body>
+
+</html>

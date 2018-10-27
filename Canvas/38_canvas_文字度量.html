@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.font = 'bold 40px Arial'
+      ctx.fillStyle = 'blue'
+
+      ctx.fillText('你好', 40, 40)
+
+      var text = ctx.measureText('你好')
+      console.log(text)
+      var textW = text.width // 暂时只能度量宽度，并没有高度
+      ctx.fillText('宽度为:' + textW, 40, 200)
+    }
+  </script>
+</body>
+
+</html>
