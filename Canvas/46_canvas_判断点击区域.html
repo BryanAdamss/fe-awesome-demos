@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.fillStyle = 'blue'
+
+      ctx.rect(100, 100, 400, 400)
+
+      ctx.fill()
+
+
+      canvas.addEventListener('mouseup', function (e) {
+        // 鼠标在canvas中的位置
+        var x = e.clientX - canvas.getBoundingClientRect().left
+        var y = e.clientY - canvas.getBoundingClientRect().top
+
+        console.log(x, y)
+        // ! 注意isPointInPath只能判断点是否在路径中，所以前面必须要有个能判断的路径，使用fillRect是不行的，因为他没有产生路径，可以使用rect产生一个路径
+        console.log(ctx.isPointInPath(x, y))
+        if (ctx.isPointInPath(x, y)) {
+
+          ctx.fillStyle = 'red'
+
+          ctx.rect(100, 100, 400, 400)
+
+          ctx.fill()
+        } else {
+          ctx.fillStyle = 'blue'
+
+          ctx.rect(100, 100, 400, 400)
+
+          ctx.fill()
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
