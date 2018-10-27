@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.save()
+      ctx.fillStyle = 'red'
+
+      ctx.shadowColor = 'blue'
+      ctx.shadowOffsetX = 20
+      ctx.shadowOffsetY = 20
+      ctx.shadowBlur = 5
+
+      ctx.fillRect(100, 100, 200, 200)
+
+      ctx.restore()
+
+      ctx.strokeRect(300, 300, 200, 200)
+    }
+  </script>
+</body>
+
+</html>

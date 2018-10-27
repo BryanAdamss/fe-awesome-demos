@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.save()
+      ctx.globalAlpha = 0.5
+
+      ctx.fillStyle = 'red'
+
+      ctx.fillRect(100, 100, 400, 400)
+
+      ctx.font = '40px bold Arial'
+      ctx.fillText('你好', 600, 600)
+      ctx.restore()
+
+      ctx.fillStyle = 'red'
+      ctx.font = '40px bold Arial'
+      ctx.fillText('你好', 800, 600)
+    }
+  </script>
+</body>
+
+</html>
