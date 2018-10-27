@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 1200
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      ctx.fillStyle = 'blue'
+      ctx.fillRect(100, 200, 400, 400)
+
+      // globalCompositeOperation 属性设置或返回如何将一个源（新的）图像绘制到目标（已有）的图像上。
+      // 源图像 = 您打算放置到画布上的绘图。
+      // 目标图像 = 您已经放置在画布上的绘图。
+
+      // ctx.globalCompositeOperation = 'source-over' // 默认source-over;源图像覆盖目标图像
+      // ctx.globalCompositeOperation = 'source-atop' // 目标图像会给源图像确定一个绘制边界，后绘制的会覆盖目标图像
+      // ctx.globalCompositeOperation = 'source-in' // 目标图像会给源图像确定一个绘制边界，只显示源图像在目标图像边界内的部分
+      // ctx.globalCompositeOperation = 'source-out' // 目标图像会给源图像确定一个绘制边界，只显示源图像在目标图像边界外的部分
+
+      // ctx.globalCompositeOperation = 'destination-over' // 目标图像覆盖源图像
+      // ctx.globalCompositeOperation = 'destination-atop' // 源图像会给目标图像图形确定一个绘制边界，目标图像会覆盖源图像
+      // ctx.globalCompositeOperation = 'destination-in' // 源图像会给目标图像确定一个绘制边界，只显示目标图像在源图像边界内的部分
+      // ctx.globalCompositeOperation = 'destination-out' // 源图像会给目标图像确定一个绘制边界，只显示目标图像在源图像边界外的部分
+
+      // ctx.globalCompositeOperation = 'lighter' //源图像、目标图像重叠部分会高亮显示
+      // ctx.globalCompositeOperation = 'xor' // 源图像、目标图像重叠部分会被挖空
+      ctx.globalCompositeOperation = 'copy' // 只显示源图像
+
+
+      ctx.fillStyle = 'red'
+
+      ctx.beginPath()
+      ctx.moveTo(400, 300)
+      ctx.lineTo(650, 700)
+      ctx.lineTo(150, 700)
+      ctx.closePath()
+
+      ctx.fill()
+
+    }
+  </script>
+</body>
+
+</html>
