@@ -1,6 +1,7 @@
 # SourceSave
 
-此 repo 用于保存平时学习的一些 demo，绝大部分 demo 都带有注释
+此 repo 用于保存平时学习的一些 demo，绝大部分 demo 都带有注释。
+如果您喜欢此 repo，欢迎`star`、`fork`
 
 ## 目录介绍(由易入难)
 
@@ -129,3 +130,10 @@
   - [通用的惰性单例](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/24_%E9%80%9A%E7%94%A8%E7%9A%84%E6%83%B0%E6%80%A7%E5%8D%95%E4%BE%8B.html)
   - [JS 中的策略模式](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/27_JS%E4%B8%AD%E7%9A%84%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.html)
   - [支持先发布再订阅、并提供命名空间的观察者模式](https://github.com/BryanAdamss/SourceSave/blob/master/Sjms/44_%E6%94%AF%E6%8C%81%E5%85%88%E5%8F%91%E5%B8%83%E5%86%8D%E8%AE%A2%E9%98%85%E3%80%81%E5%B9%B6%E6%8F%90%E4%BE%9B%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.html)
+
+### 其他
+
+- [个人博客](https://github.com/BryanAdamss/BryanAdamss.github.io)
+- [一个 pc、移动端项目脚手架](https://github.com/BryanAdamss/ProjectTemplate)
+- [webpack 多页面脚手架](https://github.com/BryanAdamss/WebpackTemplate)
+- [Vue 脚手架](https://github.com/BryanAdamss/VueTemplate)
