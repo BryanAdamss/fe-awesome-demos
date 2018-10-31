@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 800
+      canvas.height = 800
+
+
+      var ctx = canvas.getContext('2d')
+
+      var URL = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540998433892&di=029077118e9e385d23e73c1958a5e183&imgtype=0&src=http%3A%2F%2Fimg.lanrentuku.com%2Fimg%2Fallimg%2F1512%2F14513711216938.jpg'
+
+      var img = new Image();
+      img.src = URL;
+
+      img.onload = function () {
+        // * drawImg(image,sx,sy,sw,sh,dx,dy,dw,dh)
+        // * 将源图的特定区域绘制到画布上的特定区域
+        // * sw、sh默认为源图片的尺寸,dx、dy默认为0，dw、dh为canvas的宽高
+
+        // * 只传image、sx、sy相当于将一张图片平铺到画布上
+        // * 图片会按照原始比例展示，图片像素和画布像素为点1：1对齐，不存在缩放
+        // * 如果画布尺寸小于图片，图片不会缩放，将仍按照原始比例绘制，多出部分会被裁剪
+        ctx.drawImage(img, 0, 0)
+      }
+
+    }
+  </script>
+</body>
+
+</html>
