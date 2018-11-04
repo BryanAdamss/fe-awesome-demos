@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <canvas id="offCanvas" style="border:1px solid blue;display: none;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+      canvas.width = 400
+      canvas.height = 400
+
+      var ctx = canvas.getContext('2d')
+
+      var URL = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540998433892&di=029077118e9e385d23e73c1958a5e183&imgtype=0&src=http%3A%2F%2Fimg.lanrentuku.com%2Fimg%2Fallimg%2F1512%2F14513711216938.jpg'
+
+      var offCanvas = document.getElementById('offCanvas')
+      var offCtx = offCanvas.getContext('2d')
+
+      var scale = -1;
+
+      var isMouseDown = false;
+
+      var img = new Image();
+      img.src = URL;
+
+      img.onload = function () {
+        offCanvas.width = img.width
+        offCanvas.height = img.height
+
+        scale = offCanvas.width / canvas.width
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        offCtx.drawImage(img, 0, 0)
+      }
+
+      function clientPosToCanvasPos(x, y) {
+        var el = canvas.getBoundingClientRect()
+        return {
+          x: x - el.left,
+          y: y - el.top
+        }
+      }
+
+      canvas.onmousedown = function (e) {
+        e.preventDefault();
+        isMouseDown = true
+
+        var point = clientPosToCanvasPos(e.clientX, e.clientY)
+
+        drawMagnifier(true, point)
+
+        console.log(point.x, point.y)
+      }
+
+      canvas.onmousemove = function (e) {
+        e.preventDefault();
+        if (isMouseDown) {
+          var point = clientPosToCanvasPos(e.clientX, e.clientY)
+          console.log(point.x, point.y)
+          drawMagnifier(true, point)
+        }
+      }
+
+      canvas.onmouseup = function (e) {
+        e.preventDefault();
+        isMouseDown = false
+        drawMagnifier(false)
+      }
+
+      canvas.onmouseout = function (e) {
+        e.preventDefault();
+        isMouseDown = false
+        drawMagnifier(false)
+      }
+
+      function drawMagnifier(isShowMagnifier, point) {
+
+        ctx.clearRect(0, 0, 400, 400)
+        ctx.drawImage(img, 0, 0, 400, 400)
+        if (isShowMagnifier) {
+          drawFdj(point);
+        }
+      }
+
+      function drawFdj(point) {
+        var imgLg_cx = point.x * scale
+        var imgLg_cy = point.y * scale
+
+        var mr = 100
+
+        var sx = imgLg_cx - mr
+        var sy = imgLg_cy - mr
+
+        var dx = point.x - mr
+        var dy = point.y - mr
+
+        ctx.save()
+
+        ctx.lineWidth = 2
+        ctx.storeStyle = "#069"
+
+
+        ctx.beginPath()
+        ctx.arc(point.x, point.y, mr, 0, 2 * Math.PI)
+
+        ctx.stroke()
+        ctx.clip()
+
+        ctx.drawImage(offCanvas, sx, sy, 2 * mr, 2 * mr, dx, dy, 2 * mr, 2 * mr)
+
+        ctx.restore()
+      }
+    }
+
+
+
+
+
+  </script>
+</body>
+
+</html>
