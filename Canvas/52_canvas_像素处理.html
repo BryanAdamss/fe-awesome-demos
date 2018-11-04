@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <button type="button" id="btn">转换</button>
+  <canvas id="myCanvasB" style="border:1px solid blue;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+      var canvasB = document.getElementById('myCanvasB')
+      var btn = document.getElementById('btn')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      canvasB.width = 800
+      canvasB.height = 800
+
+      var ctx = canvas.getContext('2d')
+      var ctxB = canvasB.getContext('2d')
+
+      var URL = './sea.jpg'
+
+      var img = new Image();
+      img.src = URL;
+
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0)
+      }
+
+      btn.onclick = function () {
+        filter()
+      }
+
+      function filter() {
+        // * getImageData(sx, sy, sw, sh)
+        // sx
+        // 将要被提取的图像数据矩形区域的左上角 x 坐标。
+        // sy
+        // 将要被提取的图像数据矩形区域的左上角 y 坐标。
+        // sw
+        // 将要被提取的图像数据矩形区域的宽度。
+        // sh
+        // 将要被提取的图像数据矩形区域的高度
+        // 返回一个ImageData对象
+
+        // ImageData.data 只读
+        // Uint8ClampedArray 描述了一个一维数组，包含以 RGBA 顺序的数据，数据使用  0 至 255（包含）的整数表示。
+        // 一个数组包含像素信息（从左至右，从上至下）[r,g,b,a,r,g,b,a,r,g,b,a,...]
+        // 第i个像素信息
+        // r-pixelData[4*i+0]
+        // g-pixelData[4*i+1]
+        // b-pixelData[4*i+2]
+        // a-pixelData[4*i+3]
+        // 第x行第y列像素信息（x,y从0开始）
+        // i=x*width+y
+        // r-pixelData[4*i+0]
+        // g-pixelData[4*i+1]
+        // b-pixelData[4*i+2]
+        // a-pixelData[4*i+3]
+
+        // ImageData.height 只读
+        // 无符号长整型（unsigned long），使用像素描述 ImageData 的实际高度。
+        // ImageData.width 只读
+        // 无符号长整型（unsigned long），使用像素描述 ImageData 的实际宽度。
+        var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+        var pixelData = imgData.data
+        console.log(pixelData)
+        ctxB.putImageData(imgData, 0, 0, 0, 0, canvasB.width, canvasB.height)
+      }
+
+    }
+  </script>
+</body>
+
+</html>
