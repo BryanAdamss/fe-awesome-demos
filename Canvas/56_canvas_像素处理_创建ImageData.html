@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+
+
+      canvas.width = 800
+      canvas.height = 800
+
+      var ctx = canvas.getContext('2d')
+
+      // ImageData ctx.createImageData(width, height);
+      // ImageData ctx.createImageData(imagedata);
+      // width
+      // ImageData 新对象的宽度。
+      // height
+      // ImageData 新对象的高度。
+      // imagedata
+      // 从现有的 ImageData 对象中，复制一个和其宽度和高度相同的对象。图像自身不允许被复
+      // 返回值
+      // 指定了宽度和高度的，新的 ImageData 对象。 新对象使用透明的像素进行填充。
+
+      var imgData = ctx.createImageData(canvas.width, canvas.height)
+
+      var pixData = imgData.data
+
+      for (var i = 0; i < canvas.height; i++) {
+        for (var j = 0; j < canvas.width; j++) {
+          var p = i * canvas.width + j
+
+          pixData[4 * p + 0] = parseInt(Math.pow(Math.cos(Math.atan2(j - 400, i - 400) / 2), 2) * 255)
+          pixData[4 * p + 1] = parseInt(Math.pow(Math.cos(Math.atan2(j - 400, i - 400) / 2 - 2 * Math.acos(-1) / 3), 2) * 255)
+          pixData[4 * p + 2] = parseInt(Math.pow(Math.cos(Math.atan2(j - 400, i - 400) / 2 + 2 * Math.acos(-1) / 3), 2) * 255)
+
+          pixData[4 * p + 3] = 255
+        }
+      }
+
+      ctx.putImageData(imgData, 0, 0, 0, 0, canvas.width, canvas.height)
+    }
+  </script>
+</body>
+
+</html>
