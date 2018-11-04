@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <canvas id="myCanvas" style="border:1px solid red;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+  <button type="button" id="btn">转换</button>
+  <canvas id="myCanvasB" style="border:1px solid blue;">
+    当前浏览器不支持canvas，请更换浏览器后再试
+  </canvas>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('myCanvas')
+      var canvasB = document.getElementById('myCanvasB')
+      var btn = document.getElementById('btn')
+
+      canvas.width = 800
+      canvas.height = 800
+
+      canvasB.width = 800
+      canvasB.height = 800
+
+      var ctx = canvas.getContext('2d')
+      var ctxB = canvasB.getContext('2d')
+
+      var URL = './sea.jpg'
+
+      var img = new Image();
+      img.src = URL;
+
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0)
+      }
+
+      btn.onclick = function () {
+        filter()
+      }
+
+      function filter() {
+        var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+        var pixelData = imgData.data
+
+        for (var i = 0; i < canvasB.width * canvasB.height; i++) {
+          var r = pixelData[4 * i + 0]
+          var g = pixelData[4 * i + 1]
+          var b = pixelData[4 * i + 2]
+
+          // * 转黑白算法
+          var grey = r * 0.3 + g * 0.59 + b * 0.11
+
+          if (grey > 255 / 2) {
+            pixelData[4 * i + 0] = 255
+            pixelData[4 * i + 1] = 255
+            pixelData[4 * i + 2] = 255
+          } else {
+            pixelData[4 * i + 0] = 0
+            pixelData[4 * i + 1] = 0
+            pixelData[4 * i + 2] = 0
+          }
+        }
+
+        ctxB.putImageData(imgData, 0, 0, 0, 0, canvasB.width, canvasB.height)
+      }
+
+    }
+  </script>
+</body>
+
+</html>
