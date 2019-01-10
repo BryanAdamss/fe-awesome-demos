@@ -62,6 +62,7 @@
   - [自定义滚动条总结](https://github.com/BryanAdamss/SourceSave/blob/master/Practice/28_%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BB%9A%E5%8A%A8%E6%9D%A1.html)
   - [des3 加密、解密总结](https://github.com/BryanAdamss/SourceSave/blob/master/Practice/30_des3%E5%8A%A0%E5%AF%86%E3%80%81%E8%A7%A3%E5%AF%86.html)
   - [常用地图坐标转换算法总结](https://github.com/BryanAdamss/SourceSave/blob/master/Practice/31_%E5%9C%B0%E5%9B%BE%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2.html)
+  - [生成复合层demo](https://github.com/BryanAdamss/SourceSave/blob/master/Practice/34_CompositingLayer.html)
 
 ### [QA](https://github.com/BryanAdamss/SourceSave/tree/master/QA)
 
