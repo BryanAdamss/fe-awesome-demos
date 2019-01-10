@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /*
+   创建层的标准
+1.3D or perspective transform CSS properties
+2.<video> elements using accelerated video decoding
+3.<canvas> elements with a 3D (WebGL) context or accelerated 2D context
+4.Composited plugins (i.e. Flash)
+5.Elements with CSS animation for their opacity or using an animated transform
+6.Elements with accelerated CSS filters
+7.Element has a descendant that has a compositing layer (in other words if the element has a child element that’s in its own layer)
+8.Element has a sibling with a lower z-index which has a compositing layer (in other words the it’s rendered on top of a composited layer)
+ */
+      .c-Test {
+        width: 100px;
+        height: 40px;
+        border: 1px solid #aaa;
+        padding: 10px;
+
+        /* 不会创建层 */
+        /* transform: translate(10px); */
+
+        /* transform: translateX(10px); */
+
+        /* transform: translateY(10px); */
+
+        /* transform: rotate(10deg); */
+
+        /* transform: rotateZ(10deg); */
+
+        /* 会创建层 */
+        /* transform: translateZ(10px); */
+
+        /* transform: translateZ(0); */
+
+        /* transform: translate3d(0, 0, 0); */
+
+        /* transform: translate3d(10px, 10px, 0); */
+
+        /* transform: rotateX(10deg); */
+
+        /* transform: rotateY(10deg); */
+
+        /* transform: rotateZ(10deg); */
+      }
+
+      .c-Inner {
+        border: 1px solid red;
+        /* transform: rotateY(45deg); */
+      }
+
+      /* .c-Video {
+        position: relative;
+        z-index: 1;
+      } */
+
+      .c-Canvas {
+        border: 1px solid #eee;
+      }
+
+      .c-Anim {
+        border: 1px solid #eee;
+        /* 涉及到opacity和transform的animation、transition都会创建层，transition创建的层只在transition持续时间内生效，而animation创建的层会一直存在；其余属性的animation、transition都不会创建层 */
+
+        /* animation: anim 3s infinite; */
+        transition: opacity 10s;
+      }
+      @keyframes anim {
+        from {
+          opacity: 0;
+          /* transform: translateX(0); */
+
+          /* margin-left: 0; */
+        }
+        to {
+          opacity: 1;
+          /* transform: translateX(100px); */
+
+          /* margin-left: 100px; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="c-Test"><div class="c-Inner">Inner</div></div>
+
+    <!-- video元素会创建自己的层 -->
+    <video
+      class="c-Video"
+      src="http://vali.cp31.ott.cibntv.net/youku/6774042ECCE4D71F25C8E5F86/03000801005C2C2B8942AFC003E880C763850D-9B6A-48BB-AAA0-D8991E71F808.mp4?sid=054708212333813382785_00_A3a7d2e92a733cd420b7ec52a59c9940b&sign=f75e6bdb6af032e0c1fdd373e69657a1&ctype=50&hd=1"
+    ></video>
+
+    <!-- 拥有 3D (WebGL) 上下文或加速的 2D 上下文的 <canvas> 元素会创建层 -->
+    <canvas class="c-Canvas" width="300" height="100"></canvas>
+
+    <div class="c-Anim">opacity</div>
+
+    <script>
+      window.onload = function() {
+        var el = document.querySelector('.c-Canvas')
+        var ctx = el.getContext('2d')
+
+        ctx.fillStyle = '#FF0000'
+        ctx.fillRect(0, 0, 80, 100)
+      }
+    </script>
+  </body>
+</html>
