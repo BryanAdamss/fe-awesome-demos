@@ -1,6 +1,6 @@
-# SourceSave
+# fe-awesome-demos
 
-此 repo 用于保存平时学习的一些 demo，绝大部分 demo 都带有注释。
+此 repo 用于保存平时学习的一些 demo，绝大部分 demo 都带有详细注释。
 如果您喜欢此 repo，欢迎`star`、`fork`
 
 ## 目录介绍(由易入难)
