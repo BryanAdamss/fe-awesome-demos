@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      //  fillText(text, x, y [, maxWidth])
+      // 在指定的(x,y)位置填充指定的文本，绘制的最大宽度是可选的(最大宽度限制了字体宽度).
+      // strokeText(text, x, y [, maxWidth])
+      // 在指定的(x,y)位置绘制文本边框，绘制的最大宽度是可选的.
+
+      ctx.font = '48px serif'
+      ctx.fillText('Hello world', 10, 50)
+
+      ctx.strokeText('Hello world', 100, 100)
+
+      // font = value
+      // 当前我们用来绘制文本的样式. 这个字符串使用和 CSS font 属性相同的语法. 默认的字体是 10px sans-serif。
+      // textAlign = value
+      // 文本对齐选项. 可选的值包括：start, end, left, right or center. 默认值是 start。
+      // textBaseline = value
+      // 基线对齐选项. 可选的值包括：top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic。
+      // direction = value
+      // 文本方向。可能的值包括：ltr, rtl, inherit。默认值是 inherit。
+
+      // measureText()
+      // 将返回一个 TextMetrics对象的宽度、所在像素，这些体现文本特性的属性，用于确定换行
+
+      var text = ctx.measureText('foo') //
+      console.log(text.width) // 72;
+    </script>
+  </body>
+</html>

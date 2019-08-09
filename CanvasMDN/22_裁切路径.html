@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 裁切路径和普通的 canvas 图形差不多，不同的是它的作用是遮罩，用来隐藏不需要的部分(只有位于裁切路径内部的区域才会显示)
+
+      // clip()
+      // 将当前正在构建的路径转换为当前的裁剪路径。
+      // 我们使用 clip()方法来创建一个新的裁切路径。
+
+      // 默认情况下，canvas 有一个与它自身一样大的裁切路径（也就是没有裁切效果）。
+
+      function drawStar(ctx, r) {
+        ctx.save()
+        ctx.beginPath()
+        ctx.moveTo(r, 0)
+        for (var i = 0; i < 9; i++) {
+          ctx.rotate(Math.PI / 5)
+          if (i % 2 == 0) {
+            ctx.lineTo((r / 0.525731) * 0.200811, 0)
+          } else {
+            ctx.lineTo(r, 0)
+          }
+        }
+        ctx.closePath()
+        ctx.fill()
+        ctx.restore()
+      }
+
+      ctx.fillRect(0, 0, 150, 150)
+      ctx.translate(75, 75)
+
+      // 原型裁切路径
+      ctx.beginPath()
+      ctx.arc(0, 0, 60, 0, Math.PI * 2, true) // 已经闭合无需closePath
+      ctx.clip()
+
+      // 背景
+      var lingrad = ctx.createLinearGradient(0, -75, 0, 75)
+      lingrad.addColorStop(0, '#232256')
+      lingrad.addColorStop(1, '#143778')
+
+      ctx.fillStyle = lingrad
+      ctx.fillRect(-75, -75, 150, 150)
+
+      // 绘制星星
+      for (var j = 1; j < 50; j++) {
+        ctx.save()
+        ctx.fillStyle = '#fff'
+        ctx.translate(
+          75 - Math.floor(Math.random() * 150),
+          75 - Math.floor(Math.random() * 150)
+        )
+        drawStar(ctx, Math.floor(Math.random() * 4) + 2)
+        ctx.restore()
+      }
+    </script>
+  </body>
+</html>

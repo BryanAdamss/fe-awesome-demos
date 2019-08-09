@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+    <canvas id="zoom" width="400" height="400"></canvas>
+    <label>
+      <input
+        type="checkbox"
+        checked="true"
+        name=""
+        id="smoothbtn"
+      />smoothbtn</label
+    >
+    <script>
+      var img = new Image()
+      img.src = './pattern.png'
+      img.onload = function() {
+        draw(this)
+      }
+
+      function draw(img) {
+        var canvas = document.getElementById('board')
+        var ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        img.style.display = 'none'
+        var zoomctx = document.getElementById('zoom').getContext('2d')
+
+        var smoothbtn = document.getElementById('smoothbtn')
+        var toggleSmoothing = function(event) {
+          // 切换反锯齿
+          zoomctx.imageSmoothingEnabled = this.checked
+          zoomctx.mozImageSmoothingEnabled = this.checked
+          zoomctx.webkitImageSmoothingEnabled = this.checked
+          zoomctx.msImageSmoothingEnabled = this.checked
+        }
+        smoothbtn.addEventListener('change', toggleSmoothing)
+
+        var zoom = function(event) {
+          var x = event.layerX
+          var y = event.layerY
+          zoomctx.drawImage(
+            canvas,
+            Math.abs(x - 5),
+            Math.abs(y - 5),
+            10,
+            10,
+            0,
+            0,
+            200,
+            200
+          )
+        }
+
+        canvas.addEventListener('mousemove', zoom)
+      }
+    </script>
+  </body>
+</html>

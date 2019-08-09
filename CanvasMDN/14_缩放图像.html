@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+      // drawImage 方法的又一变种是增加了两个用于控制图像在 canvas 中缩放的参数。
+
+      // drawImage(image, x, y, width, height)
+      // 这个方法多了2个参数：width 和 height，这两个参数用来控制 当向canvas画入时应该缩放的大小，若width、height同源图片比例不同，会出现扭曲
+
+      var img = new Image()
+      img.src = './pattern.png'
+      img.onload = function() {
+        // 原图39x39,强行绘制到100,200区域中，会扭曲
+        ctx.drawImage(img, 0, 0, 100, 200)
+      }
+    </script>
+  </body>
+</html>

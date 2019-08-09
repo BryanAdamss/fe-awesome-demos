@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+      // globalAlpha = transparencyValue
+      // 这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0。
+
+      // 画背景
+      ctx.fillStyle = '#FD0'
+      ctx.fillRect(0, 0, 75, 75)
+      ctx.fillStyle = '#6C0'
+      ctx.fillRect(75, 0, 75, 75)
+      ctx.fillStyle = '#09F'
+      ctx.fillRect(0, 75, 75, 75)
+      ctx.fillStyle = '#F30'
+      ctx.fillRect(75, 75, 75, 75)
+      ctx.fillStyle = '#FFF'
+
+      // 设置透明度值,影响之后的绘制
+      ctx.globalAlpha = 0.2
+
+      // 画半透明圆
+      for (var i = 0; i < 7; i++) {
+        ctx.beginPath()
+        ctx.arc(75, 75, 10 + 10 * i, 0, Math.PI * 2, true)
+        ctx.fill()
+      }
+    </script>
+  </body>
+</html>

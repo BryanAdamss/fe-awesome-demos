@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 在离屏canvas上预渲染相似的图形或重复的对象
+      // 离屏canvas,不在dom上渲染的canvas(虽然不在dom上渲染，但还是可以在其上进行绘制)
+      // offscreenCanvas = document.createElement('canvas')
+      // offscreenCanvas.width = width
+      // offscreenCanvas.height = height
+      // offscreenContext = offscreenCanvas.getContext('2d')
+
+      // 避免浮点数的坐标点，用整数取而代之
+      // 浏览器为了达到抗锯齿的效果会做额外的运算。为了避免这种情况，请保证在你调用drawImage()函数时，用Math.floor()函数对所有的坐标点取整
+
+      // 不要在用drawImage时缩放图像
+      // 在离屏canvas中缓存图片的不同尺寸，而不要用drawImage()去缩放它们。
+
+      // 使用多层画布去画一个复杂的场景
+      // 层叠多个图层展示复杂场景
+      // 针对不会变化的背景，可以考虑在canvas下放一个img元素，避免每次都要重绘背景
+
+      // 用CSS transforms特性缩放画布
+      // CSS transforms 特性由于调用GPU，因此更快捷。最好的情况是，不要将小画布放大，而是去将大画布缩小。
+
+      // 关闭透明度
+      // 如果你的图形不需要透明，当使用 HTMLCanvasElement.getContext() 创建一个绘图上下文时把 alpha 选项设置为 false 。这个选项可以帮助浏览器进行内部优化。
+      // var ctx = canvas.getContext('2d', { alpha: false });
+
+      // 将画布的函数调用集合到一起（例如，画一条折线，而不要画多条分开的直线）
+
+      // 避免不必要的画布状态改变
+
+      // 渲染画布中的不同点，而非整个新状态
+
+      // 尽可能避免 shadowBlur特性
+
+      // 尽可能避免text rendering
+
+      // 使用不同的办法去清除画布(clearRect() vs. fillRect() vs. 调整canvas大小)
+
+      //  有动画，请使用window.requestAnimationFrame() 而非window.setInterval()
+
+      // 请谨慎使用大型物理库
+    </script>
+  </body>
+</html>

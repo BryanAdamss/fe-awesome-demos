@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 使用路径绘制图形的步骤
+      // 1.创建路径起始点
+      // 2.描述路径
+      // 3.封闭路径(部分方法会在渲染时自动封闭路径)
+      // 4.使用描边或填充路径区域工具来渲染图形
+
+      // beginPath()
+      // 新建一条路径，生成之后，图形绘制命令被指向到路径上生成路径。
+      // closePath()
+      // 闭合路径之后图形绘制命令又重新指向到上下文中。
+      // stroke()
+      // 通过线条来绘制图形轮廓。
+      // fill()
+      // 通过填充路径的内容区域生成实心的图形。
+
+      // 路径由多个子路径(直线、弧线等)组成
+      // 子路径维护在一个列表中
+      // 调用beginPath后，会清空此列表，即路径为空状态
+      // 当路径为空时，即调用beginPath()之后，或者canvas刚建的时候，第一条路径构造命令通常被视为是moveTo（），无论实际上是干什么，所以在每次调用beginPath后，最好手动调用moveTo，重设下笔触位置
+
+      // 手动闭合路径closePath(非必需)
+      // 当路径未闭合时，可调用closePath手动闭合路径（连接首尾）
+      // 如果图形是已经闭合了的，即当前点为开始点，该函数什么也不做
+      // fill相关函数(fillRect、fill等)会自动闭合路径，无需手动调用closePath
+      // 但是调用stroke时，不会自动闭合(存在只想绘制非闭合路径的场景，但是fill(填充)相关命令必需要一个闭合的路径，才能填充)
+
+      ctx.beginPath()
+      ctx.moveTo(150, 50)
+      ctx.lineTo(175, 150)
+      ctx.lineTo(175, 25)
+      ctx.fill() // 自动闭合路径
+
+      ctx.beginPath() // 清空了上个路径列表，需要重设笔触位置
+      // ctx.moveTo(0, 0)
+      ctx.lineTo(280, 140) // 不手动调用moveTo时，此命令视为moveTo,所以笔触被定位到280 140位置了
+      ctx.lineTo(280, 0)
+      ctx.stroke()
+
+      // moveTo(x, y)
+      // 将笔触移动到指定的坐标x以及y上。
+      // 绘制笑脸
+      ctx.beginPath()
+      ctx.arc(75, 75, 50, 0, Math.PI * 2, true) // 绘制圆
+      ctx.moveTo(110, 75)
+      ctx.arc(75, 75, 35, 0, Math.PI, false) // 口(顺时针)
+      ctx.moveTo(65, 65)
+      ctx.arc(60, 65, 5, 0, Math.PI * 2, true) // 左眼
+      ctx.moveTo(95, 65)
+      ctx.arc(90, 65, 5, 0, Math.PI * 2, true) // 右眼
+      ctx.stroke()
+
+      // 绘制直线，需要用到的方法lineTo()
+      // lineTo(x, y)
+      // 绘制一条从当前位置到指定x以及y位置的直线
+      // 填充三角形
+      ctx.beginPath()
+      ctx.moveTo(25, 25)
+      ctx.lineTo(105, 25)
+      ctx.lineTo(25, 105)
+      ctx.fill() //自动closePath
+
+      // 描边三角形
+      ctx.beginPath()
+      ctx.moveTo(125, 125)
+      ctx.lineTo(125, 45)
+      ctx.lineTo(45, 125)
+      ctx.closePath() // 需要手动closePath
+      ctx.stroke()
+
+      // 绘制圆弧或者圆，使用arc()
+      // arc(x, y, radius, startAngle, endAngle, anticlockwise)
+      // 画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针即false）来生成。
+      // startAngle、endAngle为弧度制
+      // 弧度=(Math.PI/180)*角度
+
+      // 弧度制坐标系
+      // 十字向右为0
+      // 逆时针旋转90度为二分之PI
+      // 180度为PI
+      // 270度为二分之三PI
+      // 360度为二PI
+      ctx.beginPath()
+      var x = 300 // x 坐标值
+      var y = 300 // y 坐标值
+      var radius = 20 // 圆弧半径
+      var startAngle = 0 // 开始点
+      var endAngle = (Math.PI / 180) * 90 // 结束点
+      var anticlockwise = true // 逆时针
+      ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise)
+      ctx.stroke()
+
+      // 矩形路径
+      // rect(x, y, width, height)
+      // 绘制一个左上角坐标为（x,y），宽高为width以及height的矩形路径
+
+      ctx.beginPath()
+      ctx.rect(100, 200, 100, 100)
+      ctx.stroke()
+
+      // 贝塞尔曲线
+      // quadraticCurveTo(cp1x, cp1y, x, y)
+      // 绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点。
+      // bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+      // 绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点。
+
+      // 二次贝塞尔曲线
+      ctx.beginPath()
+      ctx.moveTo(75, 25)
+      ctx.quadraticCurveTo(25, 25, 25, 62.5)
+      ctx.quadraticCurveTo(25, 100, 50, 100)
+      ctx.quadraticCurveTo(50, 120, 30, 125)
+      ctx.quadraticCurveTo(60, 120, 65, 100)
+      ctx.quadraticCurveTo(125, 100, 125, 62.5)
+      ctx.quadraticCurveTo(125, 25, 75, 25)
+      ctx.stroke()
+
+      //三次贝塞尔曲线
+      ctx.beginPath()
+      ctx.moveTo(75, 40)
+      ctx.bezierCurveTo(75, 37, 70, 25, 50, 25)
+      ctx.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5)
+      ctx.bezierCurveTo(20, 80, 40, 102, 75, 120)
+      ctx.bezierCurveTo(110, 102, 130, 80, 130, 62.5)
+      ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25)
+      ctx.bezierCurveTo(85, 25, 75, 37, 75, 40)
+      ctx.fill()
+    </script>
+  </body>
+</html>

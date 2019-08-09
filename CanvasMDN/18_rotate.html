@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      //  rotate(angle)
+      // 这个方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
+      // 以原点为中心旋转 canvas
+      // 注意它接收的是角度值，不是弧度值
+      // 旋转的中心点始终是 canvas 的原点，如果要改变它，我们需要用到 translate 方法
+      // 旋转时以顺时针旋转
+
+      ctx.save()
+      // 改变旋转点
+      ctx.translate(75, 75)
+
+      for (var i = 1; i < 6; i++) {
+        // Loop through rings (from inside to out)
+        ctx.save()
+        ctx.fillStyle = 'rgb(' + 51 * i + ',' + (255 - 51 * i) + ',255)'
+
+        for (var j = 0; j < i * 6; j++) {
+          // draw individual dots
+          ctx.rotate((Math.PI * 2) / (i * 6))
+          ctx.beginPath()
+          ctx.arc(0, i * 12.5, 5, 0, Math.PI * 2, true)
+          ctx.fill()
+        }
+
+        ctx.restore()
+      }
+
+      ctx.restore()
+
+      // 不恢复时，此矩形将绘制到(75,75)位置
+      ctx.fillRect(0, 0, 100, 100)
+    </script>
+  </body>
+</html>

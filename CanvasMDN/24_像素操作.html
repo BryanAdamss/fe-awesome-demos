@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // ImageData对象中存储着canvas对象真实的像素数据，它包含以下几个只读属性：
+
+      // width
+      // 图片宽度，单位是像素
+      // height
+      // 图片高度，单位是像素
+      // data
+      // Uint8ClampedArray类型的一维数组，包含着RGBA格式的整型数据，范围在0至255之间（包括255）a的范围也是0~255；Uint8ClampedArray  包含高度 × 宽度 × 4 bytes数据，索引值从0到(高度×宽度×4)-1；每个像素点包含rgba对应值,[r,g,b,a, r,g,b,a, r,g,b,a, ....]四位对应一个像素点，顺序是由左向右，由上向下；像素点总数为data.length/4
+
+      // 所以计算当前canvs图像占据的内存大小
+      // 像素总数*4 (一个像素点由rgba组成，rgba每个占据2^8位，即一个byte)
+      // data.length/4 * 4
+      // 所以内存大小即为data.length byte
+
+      // 获取某行某列素点rgba值
+      // imageData.data[((行数-1)*imageData.width + (列数-1))*4 - 1 + 1/2/3/4];
+
+      // 创建ImageData
+      // var myImageData = ctx.createImageData(width, height);
+      // 创建了一个新的具体特定尺寸的ImageData对象。所有像素被预设为透明黑，全为0
+
+      // 获取像素分布
+      // ctx.getImageData(left, top, width, height)
+
+      // 写入像素数据
+      // ctx.putImageData(myImageData, dx, dy);
+      // dx,dy为最终绘制的起点坐标
+
+      var d = ctx.createImageData(200, 100) // 创建长度为200x100x4长度的数组，其值全为0
+      // console.log(d)
+
+      for (let i = 0; i < d.data.length; i += 4) {
+        // 将像素点的a设置为255，以显示像素
+        d.data[i + 3] = 255
+      }
+      ctx.putImageData(d, 0, 0)
+    </script>
+  </body>
+</html>

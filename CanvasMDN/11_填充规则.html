@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 填充，一般是填充路径内部
+      // 如何区分内外部就是填充规则规定的
+
+      // 当我们用到 fill（或者 clip和isPointinPath ）你可以选择一个填充规则，该填充规则根据某处在路径的外面或者里面来决定该处是否被填充，这对于自己与自己路径相交或者路径被嵌套的时候是有用的
+
+      // 两个可能的值：
+      // "nonzero": non-zero winding rule, 默认值.非0环绕原则
+      // "evenodd":  even-odd winding rule.奇偶原则
+      // 参考:https://www.zhangxinxu.com/wordpress/2018/10/nonzero-evenodd-fill-mode-rule/
+
+      ctx.beginPath()
+      ctx.arc(50, 50, 30, 0, Math.PI * 2, true)
+      ctx.arc(50, 50, 15, 0, Math.PI * 2, true)
+      ctx.fill('evenodd')
+    </script>
+  </body>
+</html>

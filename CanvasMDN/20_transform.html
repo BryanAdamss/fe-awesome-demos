@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 矩阵变换
+      // transform(m11, m12, m21, m22, dx, dy)
+      // 这个方法是将当前的变形矩阵乘上一个基于自身参数的矩阵，在这里我们用下面的矩阵：
+      // m11 m21 dx
+      // m12 m22 dy
+      // 0 	0 	1
+
+      // m11：水平方向的缩放
+
+      // m12：水平方向的倾斜偏移
+
+      // m21：竖直方向的倾斜偏移
+
+      // m22：竖直方向的缩放
+
+      // dx：水平方向的移动
+
+      // dy：竖直方向的移动
+
+      // setTransform(m11, m12, m21, m22, dx, dy)
+      // 该方法是取消了当前变形,然后设置为指定的变形,一步完成。
+
+      // resetTransform()
+
+      // 重置当前变形为单位矩阵，它和调用以下语句是一样的：
+      // ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+      var sin = Math.sin(Math.PI / 6)
+      var cos = Math.cos(Math.PI / 6)
+      ctx.translate(100, 100)
+      var c = 0
+      for (var i = 0; i <= 12; i++) {
+        c = Math.floor((255 / 12) * i)
+        ctx.fillStyle = 'rgb(' + c + ',' + c + ',' + c + ')'
+        ctx.fillRect(0, 0, 100, 10)
+        ctx.transform(cos, sin, -sin, cos, 0, 0)
+      }
+
+      ctx.setTransform(-1, 0, 0, 1, 100, 100)
+      ctx.fillStyle = 'rgba(255, 128, 255, 0.5)'
+      ctx.fillRect(0, 50, 100, 100)
+    </script>
+  </body>
+</html>

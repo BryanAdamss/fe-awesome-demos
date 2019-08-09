@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // lineWidth = value
+      // 设置线条宽度。
+      // lineCap = type
+      // 设置线条末端样式。
+      // lineJoin = type
+      // 设定线条与线条间接合处的样式。
+      // miterLimit = value
+      // 限制当两条线相交时交接处最大长度；所谓交接处长度（斜接长度）是指线条交接处内角顶点到外角顶点的长度。
+      // getLineDash()
+      // 返回一个包含当前虚线样式，长度为非负偶数的数组。
+      // setLineDash(segments)
+      // 设置当前虚线样式。
+      // lineDashOffset = value
+      // 设置虚线样式的起始偏移量。
+
+      for (var i = 0; i < 10; i++) {
+        ctx.lineWidth = 1 + i
+        ctx.beginPath()
+        ctx.moveTo(5 + i * 14, 5)
+        ctx.lineTo(5 + i * 14, 140)
+        ctx.stroke()
+      }
+
+      // 奇数线宽的线条在绘制时，可能存在模糊情况
+      // 例如绘制一个(3,1)到(3,5)宽度为1px的垂直直线
+      // 那其将占据坐标3左右各0.5个像素，这就导致一个像素需要渲染半个色值的情况
+      // canvas针对这种情况，会渲染半个色值，然后剩下半个像素会用一半色调的颜色来填充
+      // 这样就会出现边缘模糊的情况
+      // 具体参考：https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Applying_styles_and_colors
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // fillStyle = color
+      // 设置图形的填充颜色。
+      // strokeStyle = color
+      // 设置图形轮廓的颜色。
+
+      // 一旦您设置了 strokeStyle 或者 fillStyle 的值，那么这个新值就会成为新绘制的图形的默认值。如果你要给每个图形上不同的颜色，你需要重新设置 fillStyle 或 strokeStyle 的值
+      // 可以将fill相关操作当作用油漆桶来填充
+      // stroke相关操作当作用毛笔来描边
+      // fillStyle相当于往油漆桶倒入某种颜色
+      // strokeStyle相当于毛笔蘸取了某种颜色
+      // 如果你不重新倒桶的颜色或者重新为毛笔蘸取颜色，那他们将永远保持当前颜色
+
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          ctx.fillStyle =
+            'rgb(' +
+            Math.floor(255 - 42.5 * i) +
+            ',' +
+            Math.floor(255 - 42.5 * j) +
+            ',0)'
+          ctx.fillRect(j * 25, i * 25, 25, 25)
+        }
+      }
+
+      for (var k = 0; k < 6; k++) {
+        for (var l = 0; l < 6; l++) {
+          ctx.strokeStyle =
+            'rgb(0,' +
+            Math.floor(255 - 42.5 * k) +
+            ',' +
+            Math.floor(255 - 42.5 * l) +
+            ')'
+          ctx.beginPath()
+          ctx.arc(120.5 + l * 25, 120.5 + k * 25, 10, 0, Math.PI * 2, true)
+          ctx.stroke()
+        }
+      }
+    </script>
+  </body>
+</html>

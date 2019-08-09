@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="board"></canvas>
+    <script>
+      // Path2D对象已可以在较新版本的浏览器中使用，用来缓存或记录绘画命令，这样你将能快速地回顾路径(撤销)
+
+      // Path2D()
+      // Path2D()会返回一个新初始化的Path2D对象（可能将某一个路径作为变量——创建一个它的副本，或者将一个包含SVG path数据的字符串作为变量）。
+
+      // new Path2D() // 空的Path对象
+      // new Path2D(path) // 克隆Path对象
+      // new Path2D(d) // 从SVG建立Path对象
+
+      // Path2D.addPath(path [, transform])​
+      // 添加了一条路径到当前路径（可能添加了一个变换矩阵）。
+
+      var canvas = document.getElementById('board')
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d')
+
+        var rectangle = new Path2D()
+        rectangle.rect(10, 10, 50, 50)
+
+        var circle = new Path2D()
+        circle.moveTo(125, 35)
+        circle.arc(100, 35, 25, 0, 2 * Math.PI)
+
+        var p = new Path2D('M50 50 h 80 v 80 h -80 Z')
+
+        ctx.stroke(rectangle)
+        ctx.fill(circle)
+
+        ctx.stroke(p)
+      }
+    </script>
+  </body>
+</html>

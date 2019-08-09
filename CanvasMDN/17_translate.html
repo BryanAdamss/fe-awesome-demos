@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 在变形前save相关状态，结束后再restore是个好习惯
+
+      // translate(x, y)
+      // translate 方法接受两个参数。x 是左右偏移量，y 是上下偏移量，如右图所示。
+      // 它用来移动 canvas 和它的原点到一个不同的位置
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+          ctx.save()
+          ctx.fillStyle = 'rgb(' + 51 * i + ', ' + (255 - 51 * i) + ', 255)'
+          // 移动坐标原点
+          ctx.translate(10 + j * 50, 10 + i * 50)
+          // 当ij都为1时，fillRect实际原点为(10+1*50 + 0,10+1*50 + 0)
+          // 使用这样方法比每次计算坐标位置要方便
+          // 因为可以基于相对位置绘制图形了
+          ctx.fillRect(0, 0, 25, 25)
+          ctx.restore()
+        }
+      }
+    </script>
+  </body>
+</html>

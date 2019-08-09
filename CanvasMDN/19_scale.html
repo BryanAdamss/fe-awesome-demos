@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+      // scale(x, y)
+      // scale  方法可以缩放画布的水平和垂直的单位。两个参数都是实数，可以为负数，x 为水平缩放因子，y 为垂直缩放因子，如果比1小，会缩放图形， 如果比1大会放大图形。默认值为1， 为实际大小。
+      // 用它来增减图形在 canvas 中的像素数目，对形状，位图进行缩小或者放大
+
+      ctx.save()
+      ctx.scale(10, 3)
+      // 矩形实际宽度为 100x30
+      ctx.fillRect(0, 0, 10, 10)
+      ctx.restore()
+
+      ctx.save()
+      // 水平镜像
+      ctx.scale(-1, 1)
+      ctx.font = '48px serif'
+      ctx.fillText('MDN', -135, 120)
+      ctx.restore()
+
+      ctx.save()
+      // 垂直镜像
+      ctx.scale(1, -1)
+      ctx.font = '48px serif'
+      ctx.fillText('MDN', 135, -120)
+      ctx.restore()
+    </script>
+  </body>
+</html>

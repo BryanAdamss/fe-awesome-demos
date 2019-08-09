@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 渲染重复出现的图案
+      // createPattern(image, type)
+      // 该方法接受两个参数。Image 可以是一个 Image 对象的引用，或者另一个 canvas 对象。Type 必须是下面的字符串值之一：repeat，repeat-x，repeat-y 和 no-repeat。
+
+      var img = new Image()
+      img.src = 'pattern.png'
+      img.onload = function() {
+        var ptrn = ctx.createPattern(img, 'repeat-x')
+
+        ctx.fillStyle = ptrn // 当作填充
+        ctx.fillRect(0, 0, 150, 150)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+    <button id="btn">btn</button>
+    <script>
+      // HTMLCanvasElement  提供一个toDataURL()方法，此方法在保存图片的时候非常有用。它返回一个包含被类型参数规定的图像表现格式的数据链接。返回的图片分辨率是96dpi。
+
+      // canvas.toDataURL('image/png')
+      // 默认设定。创建一个PNG图片。
+      // canvas.toDataURL('image/jpeg', quality)
+      // 创建一个JPG图片。你可以有选择地提供从0到1的品质量，1表示最好品质，0基本不被辨析但有比较小的文件大小。
+      // 当你从画布中生成了一个数据链接，例如，你可以将它用于任何<image>元素，或者将它放在一个有download属性的超链接里用于保存到本地。
+
+      // 你也可以从画布中创建一个Blob对像。
+      // canvas.toBlob(callback, type, encoderOptions)
+      // 这个创建了一个在画布中的代表图片的Blob对像。
+
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      var img = new Image()
+      img.src = './pattern.png'
+      img.onload = function() {
+        ctx.drawImage(this, 0, 0)
+      }
+
+      var btn = document.getElementById('btn')
+      btn.onclick = function() {
+        console.log(canvas.toDataURL('image/jpeg', 0.5))
+        canvas.toBlob(function(blob) {
+          console.log(blob)
+
+          var newImg = new Image()
+          // 转换成对象url
+          newImg.src = URL.createObjectURL(blob)
+          document.body.appendChild(newImg)
+        })
+      }
+    </script>
+  </body>
+</html>

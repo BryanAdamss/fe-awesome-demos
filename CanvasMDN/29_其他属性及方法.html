@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // ctx.isPointInPath(x, y, fillRule);
+      // 判断xy点是否在路径内
+      // ctx.isPointInStroke()
+      // 判断检测点是否在路径的描边线上。
+
+      // 查看全部属性和方法
+      console.log(ctx)
+
+      // https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D
+    </script>
+  </body>
+</html>

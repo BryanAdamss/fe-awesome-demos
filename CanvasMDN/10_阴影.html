@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // shadowOffsetX = float
+      // shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。
+
+      // shadowOffsetY = float
+      // shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。
+      // shadowBlur = float
+      // shadowBlur 用于设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认为 0。
+      // shadowColor = color
+      // shadowColor 是标准的 CSS 颜色值，用于设定阴影颜色效果，默认是全透明的黑色。
+
+      // 全局阴影
+      ctx.shadowOffsetX = 2
+      ctx.shadowOffsetY = 2
+      ctx.shadowBlur = 2
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'
+
+      ctx.font = '20px Times New Roman'
+      ctx.fillStyle = 'Black'
+      ctx.fillText('Sample String', 5, 30)
+
+      ctx.fillRect(100, 100, 100, 100)
+    </script>
+  </body>
+</html>

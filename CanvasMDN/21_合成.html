@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 定义图形层叠规则
+      // globalCompositeOperation = type
+      // 这个属性设定了在画新图形时采用的遮盖策略，其值是一个标识12种遮盖方式的字符串。
+      // 默认source-over
+
+      // 具体层叠demo参考:https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Compositing
+    </script>
+  </body>
+</html>

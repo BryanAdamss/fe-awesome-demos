@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // 在canvas中绘制图像
+      // 1.提供个图像源(CanvasImageSource类型，包含HTMLImageElement、HTMLVideoElement、HTMLCanvasElement、ImageBitmap)
+      // 2.调用drawImage()
+
+      // 使用跨域图片会污染canvas (tain canvas)
+      // 如果是使用image为绘制源，则可以指定crossOrigin="anonymous"来跨域获取图片，避免污染
+
+      // drawImage(image, x, y)
+      // 其中 image 是 image 或者 canvas 对象，x 和 y 是其在目标 canvas 里的起始坐标。
+
+      var img = new Image()
+      img.src = './pattern.png'
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0)
+      }
+    </script>
+  </body>
+</html>

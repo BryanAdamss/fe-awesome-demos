@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board"></canvas>
+    <script>
+      // canvas 坐标系原点在左上角，横向 x轴 竖向 y轴
+
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      ctx.fillStyle = 'red'
+      // 在原点绘制一个矩形
+      ctx.fillRect(0, 0, 20, 20)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board" width="400" height="400"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // createLinearGradient(x1, y1, x2, y2)
+      // createLinearGradient 方法接受 4 个参数，表示渐变的起点 (x1,y1) 与终点 (x2,y2)。
+      // createRadialGradient(x1, y1, r1, x2, y2, r2)
+      // createRadialGradient 方法接受 6 个参数，前三个定义一个以 (x1,y1) 为原点，半径为 r1 的圆，后三个参数则定义另一个以 (x2,y2) 为原点，半径为 r2 的圆。
+
+      // 创建出 canvasGradient 对象后，我们就可以用 addColorStop 方法给它上色了。
+      // gradient.addColorStop(position, color)
+      // addColorStop 方法接受 2 个参数，position 参数必须是一个 0.0 与 1.0 之间的数值，表示渐变中颜色所在的相对位置。例如，0.5 表示颜色会出现在正中间。color 参数必须是一个有效的 CSS 颜色值（如 #FFF， rgba(0,0,0,1)，等等）。
+
+      // 线性渐变
+      var lingrad = ctx.createLinearGradient(0, 0, 0, 150)
+      lingrad.addColorStop(0, '#00ABEB')
+      lingrad.addColorStop(0.5, '#fff')
+      lingrad.addColorStop(0.5, '#26C000')
+      lingrad.addColorStop(1, '#fff')
+
+      var lingrad2 = ctx.createLinearGradient(0, 50, 0, 95)
+      lingrad2.addColorStop(0.5, '#000')
+      lingrad2.addColorStop(1, 'red')
+
+      ctx.fillStyle = lingrad
+      ctx.strokeStyle = lingrad2
+
+      ctx.fillRect(10, 10, 130, 130)
+      ctx.strokeRect(50, 50, 50, 50)
+
+      // 径向渐变
+      var radgrad = ctx.createRadialGradient(45, 45, 10, 52, 50, 30)
+      radgrad.addColorStop(0, '#A7D30C')
+      radgrad.addColorStop(0.9, '#019F62')
+      radgrad.addColorStop(1, 'rgba(1,159,98,0)')
+
+      var radgrad2 = ctx.createRadialGradient(105, 105, 20, 112, 120, 50)
+      radgrad2.addColorStop(0, '#FF5F98')
+      radgrad2.addColorStop(0.75, '#FF0188')
+      radgrad2.addColorStop(1, 'rgba(255,1,136,0)')
+
+      var radgrad3 = ctx.createRadialGradient(95, 15, 15, 102, 20, 40)
+      radgrad3.addColorStop(0, '#00C9FF')
+      radgrad3.addColorStop(0.8, '#00B5E2')
+      radgrad3.addColorStop(1, 'rgba(0,201,255,0)')
+
+      var radgrad4 = ctx.createRadialGradient(0, 150, 50, 0, 140, 90)
+      radgrad4.addColorStop(0, '#F4F201')
+      radgrad4.addColorStop(0.8, '#E4C700')
+      radgrad4.addColorStop(1, 'rgba(228,199,0,0)')
+
+      // 画图形
+      ctx.fillStyle = radgrad4
+      ctx.fillRect(0, 0, 150, 150)
+      ctx.fillStyle = radgrad3
+      ctx.fillRect(0, 0, 150, 150)
+      ctx.fillStyle = radgrad2
+      ctx.fillRect(0, 0, 150, 150)
+      ctx.fillStyle = radgrad
+      ctx.fillRect(0, 0, 150, 150)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="board"></canvas>
+
+    <script>
+      var canvas = document.getElementById('board')
+      var ctx = canvas.getContext('2d')
+
+      // canvas只支持一种原生的图形绘制：矩形
+      // 其余的都需要通过路径来绘制(圆形、三角、椭圆等)
+
+      // fillRect(x, y, width, height)
+      // 绘制一个填充的矩形
+      // strokeRect(x, y, width, height)
+      // 绘制一个矩形的边框
+      // clearRect(x, y, width, height)
+      // 清除指定矩形区域，让清除部分完全透明。
+
+      // 绘制一个填充的矩形
+      ctx.fillRect(25, 25, 100, 100)
+      // 挖空中间
+      ctx.clearRect(45, 45, 60, 60)
+      // 内部绘制一个边框
+      ctx.strokeRect(50, 50, 50, 50)
+
+      // * 这三个方法是调用了就立即生效
+    </script>
+  </body>
+</html>
