@@ -97,9 +97,10 @@
   - [ready 兼容处理](https://github.com/BryanAdamss/SourceSave/blob/master/QA/23_ready%E5%85%BC%E5%AE%B9%E5%A4%84%E7%90%86.html)
   - [ready 终极处理](https://github.com/BryanAdamss/SourceSave/blob/master/QA/24_ready%E7%BB%88%E6%9E%81%E5%A4%84%E7%90%86.html)
 
-### [Canvas](https://github.com/BryanAdamss/SourceSave/tree/master/Canvas)
+### Canvas
 
-- 慕课网 canvas 教程学习总结
+- [慕课网 canvas 教程学习总结](https://github.com/BryanAdamss/SourceSave/tree/master/Canvas)
+- [MDN canvas教程](https://github.com/BryanAdamss/fe-awesome-demos/tree/master/CanvasMDN)
 
 ### [AngularJs](https://github.com/BryanAdamss/SourceSave/tree/master/AngularJs)
 
