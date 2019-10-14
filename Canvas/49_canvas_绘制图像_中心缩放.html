@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+  <body>
+    <canvas id="myCanvas" style="border:1px solid red;">
+      当前浏览器不支持canvas，请更换浏览器后再试
+    </canvas>
+    <input type="range" value="1" min="0.5" max="3.0" step="0.01" id="slider" />
+    <script>
+      window.onload = function() {
+        var canvas = document.getElementById('myCanvas')
 
-<body>
-  <canvas id="myCanvas" style="border:1px solid red;">
-    当前浏览器不支持canvas，请更换浏览器后再试
-  </canvas>
-  <input type="range" value="1" min="0.5" max="3.0" step="0.01" id="slider">
-  <script>
-    window.onload = function () {
-      var canvas = document.getElementById('myCanvas')
+        canvas.width = 800
+        canvas.height = 800
 
-      canvas.width = 800
-      canvas.height = 800
+        var ctx = canvas.getContext('2d')
 
-      var ctx = canvas.getContext('2d')
+        var slider = document.getElementById('slider')
 
-      var slider = document.getElementById('slider')
+        var scale = slider.value
 
-      var scale = slider.value
+        var URL =
+          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571026487857&di=b60e191b4324f5aff3bc40fcaa936723&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F5%2F552db9ca6b69c.jpg'
 
-      var URL = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540998433892&di=029077118e9e385d23e73c1958a5e183&imgtype=0&src=http%3A%2F%2Fimg.lanrentuku.com%2Fimg%2Fallimg%2F1512%2F14513711216938.jpg'
+        var img = new Image()
+        img.src = URL
 
-      var img = new Image();
-      img.src = URL;
+        img.onload = function() {
+          drawImgByScale(scale)
+        }
 
-      img.onload = function () {
-        drawImgByScale(scale)
+        function drawImgByScale(scale) {
+          var scaledImgW = 800 * scale
+          var scaledImgH = 800 * scale
+          // * 总是显示一整张图，通过dx、dy将图像偏移到指定位置
+          // * canvas以外的图像将被自动裁剪掉
+
+          // * 计算出目标偏移位置
+          var dx = canvas.width / 2 - scaledImgW / 2
+          var dy = canvas.height / 2 - scaledImgH / 2
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+          ctx.drawImage(img, dx, dy, scaledImgW, scaledImgH)
+        }
+
+        slider.addEventListener(
+          'input',
+          function(e) {
+            drawImgByScale(e.target.value)
+          },
+          false
+        )
       }
-
-      function drawImgByScale(scale) {
-        var scaledImgW = 800 * scale;
-        var scaledImgH = 800 * scale;
-        // * 总是显示一整张图，通过dx、dy将图像偏移到指定位置
-        // * canvas以外的图像将被自动裁剪掉
-
-        // * 计算出目标偏移位置
-        var dx = canvas.width / 2 - scaledImgW / 2
-        var dy = canvas.height / 2 - scaledImgH / 2
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        ctx.drawImage(img, dx, dy, scaledImgW, scaledImgH)
-      }
-
-      slider.addEventListener('input', function (e) {
-        drawImgByScale(e.target.value)
-      }, false)
-    }
-
-
-
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
