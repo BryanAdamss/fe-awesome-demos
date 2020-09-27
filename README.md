@@ -1,5 +1,7 @@
 # fe-awesome-demos
 
+> `vue-awesome-template`[https://github.com/BryanAdamss/vue-awesome-template](https://github.com/BryanAdamss/vue-awesome-template)；一个基于vue-cli@4.x的vue@2.x 项目模板；集成各种常用组件、轮子、最佳实践；新手友好😊
+
 此 `repo` 保存了学习前端时积累的一些demo案例，绝大部都带有详细注释，对新手入门有很大帮助；
 如果您喜欢此 repo，欢迎`star`、`fork`
 
